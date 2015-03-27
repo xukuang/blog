@@ -1,5 +1,5 @@
-﻿---
-title: 空间流行病学
+---
+title: 空间统计学
 layout: page
 ---
 
