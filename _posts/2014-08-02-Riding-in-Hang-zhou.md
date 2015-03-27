@@ -1,7 +1,7 @@
 ﻿---
 layout: post
 title: 印象西湖和大运河
-date: 2014-08-01 17:41
+date: 2014-08-01
 comments: true
 categories: 
 - 生活
