@@ -1,21 +1,23 @@
 ---
-title: Links
+title: links
 layout: page
 comments: yes
 ---
 
-### Personal webpage
+# 个人
 
-- [Cheng-Jun Wang](http://chengjun.github.io/): About me.
-- [Blog](http://chengjun.github.io/cn/): Chinese blog.
-- [Blog](http://chengjun.github.io/en/): English blog.
-- [CV](http://chengjun.github.io/cv/): My CV
-- [Slides](http://chengjun.github.io/slides/): My slides.
+姓名拼音排序：
 
-### Web Mining Lab
+- [Roger D. Peng](http://www.biostat.jhsph.edu/~rpeng/) 约翰霍普金斯副教授，推崇可重复性研究，环境流行病学
+- [谢益辉](http://yihui.name/) 国内R软件的领军人物，谢boss！
 
-- [Web Mining Lab](weblab.com.cityu.edu.hk/): Lab website.
+# 统计
 
-### R Language
+- [统计之都](http://cos.name) 国内的统计学网站先驱
 
-- [The R Project](http://www.r-project.org/)
+# 软件
+
+- [R语言](http://www.r-project.org) 自由的统计计算和图形软件
+- [pandoc](http://johnmacfarlane.net/pandoc/) 强大的文档转换工具，极客必备杀器
+- [Latex](http://www.latex-project.org/)  最先进的排版软件
+

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Spatial-R" />
+    <title>时间、空间和时空 | Spatial-R</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://spatial-r.github.io/cn/feed/" rel="alternate" title="Spatial-R" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+    <!--highlight.js Start-->
+    <link rel="stylesheet" title="Default" href="/media/js/styles/tomorrow-night-blue.css">
+    <script type="text/javascript" src="/media/js/highlight.pack.js"></script>
+    <script>
+    hljs.configure({tabReplace: '    '});
+    hljs.initHighlightingOnLoad();
+    </script>
+    <!--highlight.js End-->
+    <!--mathjax start-->
+    <script type="text/javascript"
+            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+
+    <!--mathjax end-->
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>时间、空间和时空</h1>
+        </header>
+        <nav>
+		<!-- Sidebar -->
+        <h5 id="logo" style="text-align:center;">
+      <a href="http://spatial-r.github.io/">Spatial-R</a></h5>
+	<span><a title="blog" class="" href="http://spatial-r.github.io/cn/">Blog</a></span>
+        <span><a title="about" class="" href="http://spatial-r.github.io/cn/about/">About</a></span>
+        <span><a title="categories" class="" href="http://spatial-r.github.io/cn/categories/">Categories</a></span>
+        <span><a title="vitae" class="" href="http://spatial-r.github.io/cn/vitae/">Vitae</a></span>
+        <span><a title="tags" class="" href="http://spatial-r.github.io/cn/tags/">Tags</a></span>
+        <span><a title="links" class="" href="http://spatial-r.github.io/cn/links/">Links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://spatial-r.github.io/cn/feed/">Subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>接触空间统计学已有近3年了，从毕设开始，得知R在空间统计方面的优势后，毅然扎进”Spatial”和”R”的世界里，Spatial-R的也名称应运而生。我从不夸大空间统计学和R软件在我研究生时候的贡献，但自己对于这两样宝贝的热爱，却也不是其他东西能够比拟的。书呆子的生活自是如此，乐此不疲。</p>
+
+<p>还是进入正题，这次主要讨论的主题是空间统计学和时空数据模型等，当然，全部是基于R来实现。因篇幅有限，在此只给大概思路，感兴趣的朋友可以进一步探讨(邮箱：(zhangbing4502431@outlook.com)[zhangbing4502431@outlook.com])。</p>
+
+<hr />
+<p>### 空间统计
+空间统计其实是个很宽泛的概念，世间万物都有其空间属性，但并不代表都能用空间统计学去诠释。当然，也有很多原本不存在明显空间熟悉的事物，我们可以将其转换成或者理解成具有空间属性。这里所强调的，也就是不仅仅只有带有经纬度属性的事物才具备空间数据。</p>
+
+<p>目前在公共卫生领域比较常见的两类是：点数据和面数据。点数据比如传染病的发病地点；面数据比如各个区县的发病总人数。针对点数据，主要是来探讨空间点格局分布进而探讨可能的热点区域；而面数据更多是建立空间回归模型，如空间滞后模型，空间杜宾模型等。当然，空间点数据也可以建立空间回归模型，空间权重的选择往往成为头疼的话题(多大的带宽或者阈值距离最合适)。面数据也可以用以探讨热点，但其揭示的热点往往有点泛(如整个区县是热点，公共卫生的意义并不大)。</p>
+
+<hr />
+<p>#### 点数据热点探测</p>
+
+<p>公共卫生(Public Health)中较为常见的是点数据，但传染病监测系统中登记的往往是患者的详细地址信息，因而在进行热点探测时，需要将详细地址信息转换成经纬度信息。因为google地图API被封，我们可以借助百度地图API，具体操作的方式可以参考我的博文((Here)[])。</p>
+
+<p>具有经纬度信息后，则可利用R中的DCluster程序包和Spatsta程序包分别进行热点探测和点格局分析。热点探测也叫聚集性分析，主要包括全局检验和局部检验。顾名思义，全局检验是看疾病在整体或者全局水平上是否具有聚集性，而不管聚集点分布在何处；而局部检验则从底层去探讨和发现可能存在的局部热点。全局聚集性探测可采用Knox和Rogerson等方法，局部聚集性探测则可采用Turnbull、Besag-Newell和时空扫描等方法。  </p>
+
+<ul>
+  <li>
+    <p>Knox，最早也最为经典的全局检验方法，能充分利用病例的时空信息，不需要人口学数据，计算简便。基本原理如下：</p>
+
+    <pre><code>  病例两两配对，然后设定时间和空间临界值，以此标准来判断病例对间距离是"近"还是"远"。
+  若时间和空间距离均为"近"的病例对与期望值的差异具有统计意义，则该区域内该病存在时空聚集性。
+</code></pre>
+  </li>
+  <li>
+    <p>Rogerson，能对传染病的时空进行动态监测，可利用历史数据和不同传染病的危害程度来调整参数和报警界值，有效降低漏报和误报。基本原理如下：  </p>
+
+    <pre><code>  在Tango方法的基础上，将样本按n个单位进行分割，使得Zi呈正态或者接近正态。  
+</code></pre>
+  </li>
+</ul>
+
+<hr />
+
+
+</section>
+<section class="meta">
+
+
+
+<span>
+	<a  href="http://spatial-r.github.io/cn/2014/08/mermaid/" class="pageNav"  >Previous</a>
+	&nbsp;&nbsp;&nbsp;
+	<a   class="pageNavInvalid"  >Next</a>
+</span>
+
+
+<span class="author">
+  <a href="http://spatial-r.github.io/cn">Spatial-R</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2015-01-25">2015-01-25</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://spatial-r.github.io/cn/categories/#统计" title="统计">统计</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://spatial-r.github.io/cn/tags/#空间统计" title="空间统计">空间统计</a>&nbsp;
+  
+  <a href="http://spatial-r.github.io/cn/tags/#时空模型" title="时空模型">时空模型</a>&nbsp;
+  
+  <a href="http://spatial-r.github.io/cn/tags/#R" title="R">R</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname ='ChengjunWANG'; // required: replace example with your forum shortname
+    var disqus_url = 'http://spatial-r.github.io/cn/2015/01/Spatial-and-Spatial-temporal/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    if (e.target.nodeName.toUpperCase() != 'BODY') return;
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://spatial-r.github.io/cn/2014/08/mermaid/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>
