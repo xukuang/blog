@@ -1,5 +1,5 @@
-﻿---
-title: 空间和时空
+---
+title: 计算传播学
 layout: page
 ---
 
