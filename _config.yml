@@ -1,6 +1,6 @@
 markdown: kramdown
 permalink: /:year/:month/:title/
-url: http://chengjun.github.io/cn
-author: Cheng-Jun Wang
+url: http://spatial-r.github.io/cn
+author: Spatial-R
 pygments: true
 
