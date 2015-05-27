@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -68,7 +68,7 @@
 
 <p>公共卫生(Public Health)中较为常见的是病例个案(也就是点数据)，记录着病例个案详细的地址信息。因而在热点探测时，需将详细地址信息转换成经纬度信息。因Google地图API被封，我们可以借助百度地图API，具体操作的方式可参考我的博文(<a href="http://spatial-r.github.io/en/2014/06/Two-ways-to-get-coordinate-data/">点点</a>)。</p>
 
-<p>获取经纬度信息后，则可利用R中的DCluster程序包和Spatsta程序包分别进行热点探测(Cluster Dectecting)和点格局分析(Pattern Analysis)。热点探测也叫聚集性分析，主要包括全局检验和局部检验。顾名思义，全局检验是看疾病在整体或者全局水平上是否具有聚集性，而不管聚集点分布在何处；而局部检验则从底层去探讨和发现可能存在的局部热点。全局聚集性探测可采用<strong>Knox</strong>和 <strong>Rogerson</strong> 等方法，局部聚集性探测则可采用<strong>Turnbull</strong>、<strong>Besag-Newell</strong> 和 <strong>时空扫描</strong> 等方法。  </p>
+<p>获取经纬度信息后，则可利用R中的DCluster程序包和Spatsta程序包分别进行热点探测(Cluster Dectecting)和点格局分析(Pattern Analysis)。热点探测也叫聚集性分析，主要包括全局检验和局部检验。顾名思义，全局检验是看疾病在整体或者全局水平上是否具有聚集性，而不管聚集点分布在何处；而局部检验则从底层去探讨和发现可能存在的局部热点。全局聚集性探测可采用<strong>Knox</strong>和 <strong>Rogerson</strong> 等方法，局部聚集性探测则可采用<strong>Turnbull</strong>、<strong>Besag-Newell</strong> 和 <strong>时空扫描</strong> 等方法。</p>
 
 <hr />
 
@@ -85,14 +85,40 @@
 
 <p>假设n个病例，则可配成N=n*(n-1)/2个病例对子，如果知道了每个个案的发病时间和发病位置，则可计算每个病例对之间的空间距离和时间距离。在定义了时间界值(t)和空间界值(s)后，Nt则为时间距离为近的病例对子总数，Ns则为空间距离较近的病例对子总数，X是时间距离和空间距离均为近的病例对子总数，也就是Knox方法的统计检验量，可得到如下的四格表：</p>
 
-<pre><code>   | 时间距离       | &lt;s             | &gt;s    |  合计  | 
-   | ------------- |:-------------: | -----:|  :--:  |   
-   | &lt;t            |    X           | b     |   Nt   |
-   | &gt;t            | c              |   d   |    Nt1 |  
-   | 合计           | Ns             |  NS1  |    n   |    
-</code></pre>
+<table>
+  <thead>
+    <tr>
+      <th>时间距离</th>
+      <th style="text-align: center">&lt;s</th>
+      <th style="text-align: right">&gt;s</th>
+      <th style="text-align: center">合计</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>&lt;t</td>
+      <td style="text-align: center">X</td>
+      <td style="text-align: right">b</td>
+      <td style="text-align: center">Nt</td>
+    </tr>
+    <tr>
+      <td>&gt;t</td>
+      <td style="text-align: center">c</td>
+      <td style="text-align: right">d</td>
+      <td style="text-align: center">Nt1</td>
+    </tr>
+    <tr>
+      <td>合计</td>
+      <td style="text-align: center">Ns</td>
+      <td style="text-align: right">NS1</td>
+      <td style="text-align: center">n</td>
+    </tr>
+  </tbody>
+</table>
 
-<p><strong>统计推断方法包括</strong>：   </p>
+<hr />
+
+<p><strong>统计推断方法包括</strong>：</p>
 
 <ul>
   <li><strong>卡方检验</strong>：样本量较大时，可采用卡方检验，对Knox方法而言，其本身要求设定的空间临界值足够小，因而X样本量偏小的情况较常见。</li>
@@ -101,6 +127,8 @@
   <li><strong>Barton-David</strong>: 仍假设X服从正态分布，但当Ns和Nt较大时，仍能进行无偏推断。</li>
   <li><strong>蒙特卡罗法</strong>：一种无偏的估计方法，目前较好地能够进行Knox检验。</li>
 </ul>
+
+<hr />
 
 <p><strong>时间、空间临界值的确定</strong>：</p>
 
@@ -112,7 +140,7 @@
 <hr />
 
 <h5 id="rogerson">Rogerson</h5>
-<p><strong>Rogerson</strong>，能对传染病的时空进行动态监测，可利用历史数据和不同传染病的危害程度来调整参数和报警界值，有效降低漏报和误报。基本原理如下：  </p>
+<p><strong>Rogerson</strong>，能对传染病的时空进行动态监测，可利用历史数据和不同传染病的危害程度来调整参数和报警界值，有效降低漏报和误报。基本原理如下：</p>
 
 <pre><code>    在Tango方法的基础上，将样本按n个单位进行分割，使得Zi呈正态或者接近正态。  
 </code></pre>
@@ -130,7 +158,7 @@
 <span>
 	<a  href="http://spatial-r.github.io/cn/2014/08/mermaid/" class="pageNav"  >Previous</a>
 	&nbsp;&nbsp;&nbsp;
-	<a   class="pageNavInvalid"  >Next</a>
+	<a  href="http://spatial-r.github.io/cn/2015/05/Summer-In-Hangzhou/" class="pageNav"  >Next</a>
 </span>
 
 
@@ -195,6 +223,8 @@ $(function(){
         }
         else if (e.which == 39 || e.which == 75) {  // Right arrow and K
             
+        url = 'http://spatial-r.github.io/cn/2015/05/Summer-In-Hangzhou/';
+        
         }
         if (url) {
             window.location = url;
