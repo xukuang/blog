@@ -7,8 +7,64 @@
     <title>Spatial-R</title>
     <atom:link href="http://spatial-r.github.io/cn/feed/" rel="self" type="application/rss+xml" />
     <link>http://chengjun.github.io</link>
-    <lastBuildDate>2015-06-03T23:07:24+08:00</lastBuildDate>
+    <lastBuildDate>2015-06-03T23:49:35+08:00</lastBuildDate>
     <webMaster>wangchj04@gmail.com</webMaster>
+    
+    <item>
+      <title>surveillance 程序包简介(一)</title>
+      <link>http://spatial-r.github.io/cn/2015/06/Surveillance/</link>
+      <pubDate>2015-06-03T00:00:00+08:00</pubDate>
+      <author>Spatial-R</author>
+      <guid>http://spatial-r.github.io/cn/2015/06/Surveillance</guid>
+      <content:encoded><![CDATA[<p>Welcome to surveillance Project! 这是一篇针对surveillance程序包相关方法的总结，有疑问请联系：<a href="zhangbing4502431@outlook.com">张兵</a></p>
+
+<p><a href="http://surveillance.r-forge.r-project.org/">Surveillance</a> 程序包提供了一系列前瞻性爆发探测和回顾性的时空模型，主要适用的数据类型是时间序列频数、时序百分比和时序分类数据。</p>
+
+<h2>前瞻性暴发探测</h2>
+
+<p>Aberration Detection(Change-point detection, Outbreak Detection)，我将其都翻译为暴发探测，但仔细推敲，各词组间含义差别还是有点大。具体如下：</p>
+
+<ol>
+<li><p><a href="http://baike.baidu.com/view/25914.htm?fromtitle=Aberration&amp;fromid=8102429&amp;type=syn">Aberration</a> 原指光行差，是指同一瞬间运动中观测者所观测的天体视方向与静止观察者所观测到天体的真方向之差，通俗理解就是偏差。</p></li>
+<li><p><a href="http://baike.baidu.com/view/4399435.htm">Change-Point</a> 指在某一位置或时刻点，前后观测值遵循两个不同的模型。<a href="http://CRAN.R-project.org/package=changepoint">changepoint</a> 程序包也提供了一系列变点探测的方法，主要依托于变点前后均值或和方差的差异性。</p></li>
+<li><p><a href="http://baike.baidu.com/link?url=xnLkGt0RfVwftGje17US3jJHmST1IKCoS9qEZnJ9A-5eGQ8ms4GAgTp5mCstsGjYpzkRHpaZiJ6F8Gt7nHqQj_">Disease Outbreak</a> 指在局限的区域范围和短时间内突然出现许多同类病例的现象，对于区域范围、时间范围和案例数目都没有确切定义，因而不同空间尺度下，可能会存在截然不同的疾病分布状态。</p></li>
+</ol>
+
+
+<p>  综上所述，用Aberration或Change-point来归纳surveillance程序包中的方法可能更加确切。同时也需注意，上述两种都是正向改变，也就是说个案数目应增多。</p>
+
+<p><strong>surveillance</strong>程序包以<strong>S4</strong>方式，按照<strong>STS</strong>(surveillance time series)格式编排数据(该数据格式的说明可参考<a href="http://arxiv.org/pdf/1411.1292v1.pdf">此文</a>)。很多文章都对传染病监测方法进行了介绍，包括若干已经成功应用于疾病预防控制中心常规监测系统中的方法，如rki，已成功应用于德国的Robert Koch Institute。总的说来，<a href="http://arxiv.org/abs/1411.1292">Salmon et.al 2014</a>一文系统详细地介绍了目前异常值监测方法，主要分为<strong>单个异常点监测</strong>、<strong>异常时段监测</strong>和 <strong>分类数据异常监测</strong>。</p>
+
+<p>异常点监测较为常规的方式是基于历史数据(<strong>in-control</strong>)来估计某个时刻的病例数，并与阈值想比较，若高于阈值，则将其定义为 <strong>out-control</strong>。通过比较每个时间点的in-control和out-control状态，即可获得相应变点。</p>
+
+<hr />
+
+<h3>单个异常点</h3>
+
+<p>单个异常点监测是监测系统中较为常见的方式，通俗地理解就是一段时序数据中在某个时间点发生了较为重要的改变。</p>
+
+<ol>
+<li><p>Method <strong>EARS</strong>： CDC异常检测系统中的早期方法，surveillance程序包中的 <strong>sarsC</strong> 可实现这个过程，更为详细地说明可参考<a href="http://onlinelibrary.wiley.com/doi/10.1002/sim.3197/abstract">Fricker，Hegler 和 Dunfee</a>。当疾病历史数据较少时且数据较平稳时，此方法较合适，同时该程序包提供了<strong>C1</strong>、<strong>C2</strong>和<strong>C3</strong>方式来实现变点探测。但该方法没有考虑到疾病时序数据如过度离散、周期性、长期趋势和过往疾病暴发对现状的影响等特性，同时也没有对将来数据进行区间预测。</p></li>
+<li><p>Method <strong>Farrington</strong>： 该方法最初由Farrington在<a href="http://www.jstor.org/pss/2983331">Farrington et.al. 1996</a> 提出，<a href="http://www.statistik.lmu.de/~hoehle/pubs/hoehle_mazick2009-preprint.pdf">Hohle和Mazick 2010</a>一文中详细介绍了该方法，其主要基于广义线性或相加模型来探测异常值，而<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3692796/">Noufaily et.al 2012</a>在原方法的基础上，采用因子来校准季节性，同时当Anscombe残差大于2或者3时采用再加权进而有效改善了<strong>"低加权"</strong>现象(Down-weighting)。 FarringtonFlexible函数可实现该过程。</p></li>
+<li><p>Method <strong>Boda</strong>: 在FarringtonFlexible方法的基础上，boda (Bayesian Outbreak Detection Algorithm)采用成熟的贝叶斯广义线性或相加模型，通过惩罚样条函数(Penalized Spline)来校准长期和季节性趋势，并能即时调整以往暴发或以往疾病情况对当前个案数的影响。为了更好地获得参数的后验分布，boda采用<a href="http://www.sciencedirect.com/science/article/pii/S0167947313001552">Integrated Nested Laplace Approximaxion</a>方法来逼近贝叶斯推断。</p></li>
+</ol>
+
+
+<hr />
+
+<h3>异常时段</h3>
+
+<p>时序中的异常时段由单个异常点组成，但其具体实现过程则完全不同于单个异常点监测。控制图(Control Chart)是实现异常时段监测常用方式，其来源于<a href="http://baike.baidu.com/link?url=YzdmviFnqYGO1IDJ-bN0UlPA4KG1em8MixjvW5y45cpmsULww494C3pEFtwvP2mCNVOsjtbLif7h492JVb0II_">统计控制过程</a>(Statistical process control)。然后需要注意的是，控制图并没有考虑到监测数据的过度离散和季节性特性，因而，<a href="http://www.sciencedirect.com/science/article/pii/S0167947308000716">Hohle 和 Paul 2008</a>在传统监测方法上结合统计控制过程，有效地实现异常时段监测。surveillance中的 <strong>glrnb</strong>(负二项分布) 和 <strong>glrPois</strong>(Possion分布) 函数可实现这个过程。该程序包中其他函数如 <strong>cusum</strong> 和 <strong>rogerson</strong> 等也可实现针对异常时段的监测，其效果与glrnb相比可参考<a href="http://www.sciencedirect.com/science/article/pii/S0167947308000716">Hohle 和 Paul 2008</a>。</p>
+
+<p>在控制图中，以广义相加模型结合Possion 或 Negative binomial 分布来定义 in control 状态，而 out control 状态则由 in control 状态来反映。in control 状态的均值可由当前时刻点案例数和参数k获得（参数k可以事先设定或通过模型再估计获得），或是结合当前时刻点案例数和自相关成分综合反映。</p>
+
+<hr />
+
+<h3>分类数据</h3>
+
+<p>在公共卫生监测中，目标变量可能会是分为若干亚组(Categories)的时序数据，如在疫苗接种情况下，不同年龄层传染病的发病情况异常值监测。<a href="http://www.tandfonline.com/doi/abs/10.1080/01621459.1978.10481577">Chen 1978</a>、 <a href="http://link.springer.com/article/10.1023%2FA%3A1007671903559">Reynods和Stoumbos 2000</a>和 <a href="http://www.cdc.gov/mmwr//preview/mmwrhtml/su5301a18.htm">Rogerson和Yamada 2004</a> 等文章强调了针对二分类时序数据异常值探测方法，这些方法都基于常规CUSUM方法，并没有考虑到时序数据过度离散的特性。<a href="http://www.statistik.lmu.de/~hoehle/pubs/hoehle2010-preprint.pdf">Hohle 2010</a>在上述方法的基础上，提出通过采用广义线性模型框架进而有效解决了基础SUSUM方法的缺陷(1,仅适用二分类时序数据；2，无法掌控过度离散特性)，该方法可由surveillance程序包中的<strong>categoricalCUSUM</strong> 函数实现。</p>
+]]></content:encoded>
+    </item>
     
     <item>
       <title>那年夏天</title>
@@ -16,11 +72,11 @@
       <pubDate>2015-05-15T00:00:00+08:00</pubDate>
       <author>Spatial-R</author>
       <guid>http://spatial-r.github.io/cn/2015/05/Summer-In-Hangzhou</guid>
-      <content:encoded><![CDATA[<h3 id="section">试问闲愁都几许？一川烟草，满城风絮，梅子黄时雨。又是柳絮纷飞的季节，窗外之景，思绪在哪？哦，那年！</h3>
+      <content:encoded><![CDATA[<h3>试问闲愁都几许？一川烟草，满城风絮，梅子黄时雨。又是柳絮纷飞的季节，窗外之景，思绪在哪？哦，那年！</h3>
 
 <hr />
 
-<h2 id="section-1">那年夏天，心在躁动</h2>
+<h2>那年夏天，心在躁动</h2>
 
 <p>躁动的心境，其实也是一种享受。</p>
 
@@ -28,11 +84,11 @@
 
 <p>夏天和躁动如果能够划上一个等号，那我只适合生活在北极。</p>
 
-<p>躁动的根本原因是无力扯开生命前那层薄纱—生命的不对等。</p>
+<p>躁动的根本原因是无力扯开生命前那层薄纱---生命的不对等。</p>
 
 <hr />
 
-<h2 id="section-2">那年夏天，心在迷惘</h2>
+<h2>那年夏天，心在迷惘</h2>
 
 <p>世界万物，迷惘只是过程，不会是结果。</p>
 
@@ -46,7 +102,7 @@
 
 <hr />
 
-<h2 id="section-3">那年夏天，心在期待</h2>
+<h2>那年夏天，心在期待</h2>
 
 <p>还年轻，也庆幸自己还有梦。</p>
 
@@ -60,7 +116,7 @@
 
 <hr />
 
-<h2 id="section-4">那年夏天，心在成长</h2>
+<h2>那年夏天，心在成长</h2>
 
 <p>迷惘和期待，终究会推着你成长，不管愿不愿意。</p>
 
@@ -74,75 +130,7 @@
 
 <hr />
 
-<h3 id="section-5">内心腾开一片空地，等待，下一次躁动；等到，下一个那年！</h3>
-
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>surveillance 程序包简介(一)</title>
-      <link>http://spatial-r.github.io/cn/2015/01/Surveillance/</link>
-      <pubDate>2015-01-25T00:00:00+08:00</pubDate>
-      <author>Spatial-R</author>
-      <guid>http://spatial-r.github.io/cn/2015/01/Surveillance</guid>
-      <content:encoded><![CDATA[<p>Welcome to surveillance Project! 这是一篇针对surveillance程序包相关方法的总结，有疑问请联系：<a href="zhangbing4502431@outlook.com">张兵</a></p>
-
-<p><a href="http://surveillance.r-forge.r-project.org/">Surveillance</a> 程序包提供了一系列前瞻性爆发探测和回顾性的时空模型，主要适用的数据类型是时间序列频数、时序百分比和时序分类数据。</p>
-
-<h2 id="section">前瞻性暴发探测</h2>
-
-<p>Aberration Detection(Change-point detection, Outbreak Detection)，我将其都翻译为暴发探测，但仔细推敲，各词组间含义差别还是有点大。具体如下：</p>
-
-<ol>
-  <li>
-    <p><a href="http://baike.baidu.com/view/25914.htm?fromtitle=Aberration&amp;fromid=8102429&amp;type=syn">Aberration</a> 原指光行差，是指同一瞬间运动中观测者所观测的天体视方向与静止观察者所观测到天体的真方向之差，通俗理解就是偏差。</p>
-  </li>
-  <li>
-    <p><a href="http://baike.baidu.com/view/4399435.htm">Change-Point</a> 指在某一位置或时刻点，前后观测值遵循两个不同的模型。<a href="http://CRAN.R-project.org/package=changepoint">changepoint</a> 程序包也提供了一系列变点探测的方法，主要依托于变点前后均值或和方差的差异性。</p>
-  </li>
-  <li>
-    <p><a href="http://baike.baidu.com/link?url=xnLkGt0RfVwftGje17US3jJHmST1IKCoS9qEZnJ9A-5eGQ8ms4GAgTp5mCstsGjYpzkRHpaZiJ6F8Gt7nHqQj_">Disease Outbreak</a> 指在局限的区域范围和短时间内突然出现许多同类病例的现象，对于区域范围、时间范围和案例数目都没有确切定义，因而不同空间尺度下，可能会存在截然不同的疾病分布状态。</p>
-  </li>
-</ol>
-
-<p>综上所述，用Aberration或Change-point来归纳surveillance程序包中的方法可能更加确切。同时也需注意，上述两种都是正向改变，也就是说个案数目应增多。</p>
-
-<p><strong>surveillance</strong>程序包以<strong>S4</strong>方式，按照<strong>STS</strong>(surveillance time series)格式编排数据(该数据格式的说明可参考<a href="http://arxiv.org/pdf/1411.1292v1.pdf">此文</a>)。很多文章都对传染病监测方法进行了介绍，包括若干已经成功应用于疾病预防控制中心常规监测系统中的方法，如rki，已成功应用于德国的Robert Koch Institute。总的说来，<a href="http://arxiv.org/abs/1411.1292">Salmon et.al 2014</a>一文系统详细地介绍了目前异常值监测方法，主要分为<strong>单个异常点监测</strong>、<strong>异常时段监测</strong>和 <strong>分类数据异常监测</strong>。</p>
-
-<p>异常点监测较为常规的方式是基于历史数据(<strong>in-control</strong>)来估计某个时刻的病例数，并与阈值想比较，若高于阈值，则将其定义为 <strong>out-control</strong>。通过比较每个时间点的in-control和out-control状态，即可获得相应变点。</p>
-
-<hr />
-
-<h3 id="section-1">单个异常点</h3>
-
-<p>单个异常点监测是监测系统中较为常见的方式，通俗地理解就是一段时序数据中在某个时间点发生了较为重要的改变。</p>
-
-<ol>
-  <li>
-    <p>Method <strong>EARS</strong>： CDC异常检测系统中的早期方法，surveillance程序包中的 <strong>sarsC</strong> 可实现这个过程，更为详细地说明可参考<a href="http://onlinelibrary.wiley.com/doi/10.1002/sim.3197/abstract">Fricker，Hegler 和 Dunfee</a>。当疾病历史数据较少时且数据较平稳时，此方法较合适，同时该程序包提供了<strong>C1</strong>、<strong>C2</strong>和<strong>C3</strong>方式来实现变点探测。但该方法没有考虑到疾病时序数据如过度离散、周期性、长期趋势和过往疾病暴发对现状的影响等特性，同时也没有对将来数据进行区间预测。</p>
-  </li>
-  <li>
-    <p>Method <strong>Farrington</strong>： 该方法最初由Farrington在<a href="http://www.jstor.org/pss/2983331">Farrington et.al. 1996</a> 提出，<a href="http://www.statistik.lmu.de/~hoehle/pubs/hoehle_mazick2009-preprint.pdf">Hohle和Mazick 2010</a>一文中详细介绍了该方法，其主要基于广义线性或相加模型来探测异常值，而<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3692796/">Noufaily et.al 2012</a>在原方法的基础上，采用因子来校准季节性，同时当Anscombe残差大于2或者3时采用再加权进而有效改善了<strong>“低加权”</strong>现象(Down-weighting)。 FarringtonFlexible函数可实现该过程。</p>
-  </li>
-  <li>
-    <p>Method <strong>Boda</strong>: 在FarringtonFlexible方法的基础上，boda (Bayesian Outbreak Detection Algorithm)采用成熟的贝叶斯广义线性或相加模型，通过惩罚样条函数(Penalized Spline)来校准长期和季节性趋势，并能即时调整以往暴发或以往疾病情况对当前个案数的影响。为了更好地获得参数的后验分布，boda采用<a href="http://www.sciencedirect.com/science/article/pii/S0167947313001552">Integrated Nested Laplace Approximaxion</a>方法来逼近贝叶斯推断。</p>
-  </li>
-</ol>
-
-<hr />
-
-<h3 id="section-2">异常时段</h3>
-
-<p>时序中的异常时段由单个异常点组成，但其具体实现过程则完全不同于单个异常点监测。控制图(Control Chart)是实现异常时段监测常用方式，其来源于<a href="http://baike.baidu.com/link?url=YzdmviFnqYGO1IDJ-bN0UlPA4KG1em8MixjvW5y45cpmsULww494C3pEFtwvP2mCNVOsjtbLif7h492JVb0II_">统计控制过程</a>(Statistical process control)。然后需要注意的是，控制图并没有考虑到监测数据的过度离散和季节性特性，因而，<a href="http://www.sciencedirect.com/science/article/pii/S0167947308000716">Hohle 和 Paul 2008</a>在传统监测方法上结合统计控制过程，有效地实现异常时段监测。surveillance中的 <strong>glrnb</strong>(负二项分布) 和 <strong>glrPois</strong>(Possion分布) 函数可实现这个过程。该程序包中其他函数如 <strong>cusum</strong> 和 <strong>rogerson</strong> 等也可实现针对异常时段的监测，其效果与glrnb相比可参考<a href="http://www.sciencedirect.com/science/article/pii/S0167947308000716">Hohle 和 Paul 2008</a>。</p>
-
-<p>在控制图中，以广义相加模型结合Possion 或 Negative binomial 分布来定义 in control 状态，而 out control 状态则由 in control 状态来反映。in control 状态的均值可由当前时刻点案例数和参数k获得（参数k可以事先设定或通过模型再估计获得），或是结合当前时刻点案例数和自相关成分综合反映。</p>
-
-<hr />
-
-<h3 id="section-3">分类数据</h3>
-
-<p>在公共卫生监测中，目标变量可能会是分为若干亚组(Categories)的时序数据，如在疫苗接种情况下，不同年龄层传染病的发病情况异常值监测。<a href="http://www.tandfonline.com/doi/abs/10.1080/01621459.1978.10481577">Chen 1978</a>、 <a href="http://link.springer.com/article/10.1023%2FA%3A1007671903559">Reynods和Stoumbos 2000</a>和 <a href="http://www.cdc.gov/mmwr//preview/mmwrhtml/su5301a18.htm">Rogerson和Yamada 2004</a> 等文章强调了针对二分类时序数据异常值探测方法，这些方法都基于常规CUSUM方法，并没有考虑到时序数据过度离散的特性。<a href="http://www.statistik.lmu.de/~hoehle/pubs/hoehle2010-preprint.pdf">Hohle 2010</a>在上述方法的基础上，提出通过采用广义线性模型框架进而有效解决了基础SUSUM方法的缺陷(1,仅适用二分类时序数据；2，无法掌控过度离散特性)，该方法可由surveillance程序包中的<strong>categoricalCUSUM</strong> 函数实现。</p>
-
+<h3>内心腾开一片空地，等待，下一次躁动；等到，下一个那年！</h3>
 ]]></content:encoded>
     </item>
     
@@ -152,7 +140,7 @@
       <pubDate>2015-01-25T00:00:00+08:00</pubDate>
       <author>Spatial-R</author>
       <guid>http://spatial-r.github.io/cn/2015/01/Spatial-and-Spatial-temporal</guid>
-      <content:encoded><![CDATA[<p>接触空间统计学已有近3年了，从毕设开始，得知R在空间统计方面的优势后，毅然扎进”Spatial”和”R”的世界里，Spatial-R的名称应运而生。我从不夸大空间统计学和R软件在我研究生时候的贡献，但自己对于这两样宝贝的热爱，却也不是其他东西能够比拟的。书呆子的生活自是如此，乐此不疲。</p>
+      <content:encoded><![CDATA[<p>接触空间统计学已有近3年了，从毕设开始，得知R在空间统计方面的优势后，毅然扎进"Spatial"和"R"的世界里，Spatial-R的名称应运而生。我从不夸大空间统计学和R软件在我研究生时候的贡献，但自己对于这两样宝贝的热爱，却也不是其他东西能够比拟的。书呆子的生活自是如此，乐此不疲。</p>
 
 <p>还是进入正题，这次主要讨论的主题是空间统计学和时空数据模型等，当然，全部是基于R来实现。因篇幅有限，在此只给大概思路，感兴趣的朋友可以进一步探讨(邮箱：<a href="zhangbing4502431@outlook.com">zhangbing4502431@outlook.com</a>)。</p>
 
@@ -162,7 +150,7 @@
 
 <hr />
 
-<h2 id="section">空间统计</h2>
+<h2>空间统计</h2>
 
 <p>空间统计其实是个很宽泛的概念，世间万物都有其空间属性，但并不代表都能用空间统计学去诠释。当然，也有很多原本不存在明显空间熟悉的事物，我们可以将其转换成或者理解成具有空间属性。这里所强调的，也就是不仅仅只有带有经纬度属性的事物才具备空间数据。</p>
 
@@ -170,9 +158,9 @@
 
 <hr />
 
-<h3 id="section-1">热点探测</h3>
+<h3>热点探测</h3>
 
-<p>地方病、传染病及环境污染所致疾病均可表现出空间聚集性，而传染病在传播途径、流行机制等方面的特殊性决定了其病例的分布特征与其他疾病存在较大差异，其空间属性主要体现在<strong>空间自相关</strong>(空间依赖性)和<strong>空间异质性</strong>。空间自相关性表现为目标地区与邻近地区发病水平及特征较强，与距离远的地区差异大，空间异质性表现为不同地区因为其”位置”原因而存在差异。</p>
+<p>地方病、传染病及环境污染所致疾病均可表现出空间聚集性，而传染病在传播途径、流行机制等方面的特殊性决定了其病例的分布特征与其他疾病存在较大差异，其空间属性主要体现在<strong>空间自相关</strong>(空间依赖性)和<strong>空间异质性</strong>。空间自相关性表现为目标地区与邻近地区发病水平及特征较强，与距离远的地区差异大，空间异质性表现为不同地区因为其"位置"原因而存在差异。</p>
 
 <p>公共卫生(Public Health)中较为常见的是病例个案(也就是点数据)，记录着病例个案详细的地址信息。因而在热点探测时，需将详细地址信息转换成经纬度信息。因Google地图API被封，我们可以借助百度地图API，具体操作的方式可参考我的博文(<a href="http://spatial-r.github.io/en/2014/06/Two-ways-to-get-coordinate-data/">点点</a>)。</p>
 
@@ -180,83 +168,87 @@
 
 <hr />
 
-<h4 id="section-2">全局性热点探测</h4>
+<h4>全局性热点探测</h4>
 
 <hr />
 
-<h5 id="knox">Knox</h5>
+<h5>Knox</h5>
+
 <p>Knox，最早也最为经典的全局检验方法(1964由统计学家E.G.Knox提出来，用以检验疾病的时空交互作用)，能充分利用病例的时空信息，不需要人口学数据，计算简便。基本原理如下：</p>
 
 <pre><code>    病例两两配对，然后设定时间和空间临界值，以此标准来判断病例对间距离是"近"还是"远"。
     若时间和空间距离均为"近"的病例对与期望值的差异具有统计意义，则该区域内该病存在时空聚集性。
 </code></pre>
 
-<p>假设n个病例，则可配成N=n*(n-1)/2个病例对子，如果知道了每个个案的发病时间和发病位置，则可计算每个病例对之间的空间距离和时间距离。在定义了时间界值(t)和空间界值(s)后，Nt则为时间距离为近的病例对子总数，Ns则为空间距离较近的病例对子总数，X是时间距离和空间距离均为近的病例对子总数，也就是Knox方法的统计检验量，可得到如下的四格表：</p>
+<p>   假设n个病例，则可配成N=n*(n-1)/2个病例对子，如果知道了每个个案的发病时间和发病位置，则可计算每个病例对之间的空间距离和时间距离。在定义了时间界值(t)和空间界值(s)后，Nt则为时间距离为近的病例对子总数，Ns则为空间距离较近的病例对子总数，X是时间距离和空间距离均为近的病例对子总数，也就是Knox方法的统计检验量，可得到如下的四格表：</p>
 
 <table>
-  <thead>
-    <tr>
-      <th>时间距离</th>
-      <th style="text-align: center">&lt;s</th>
-      <th style="text-align: right">&gt;s</th>
-      <th style="text-align: center">合计</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>&lt;t</td>
-      <td style="text-align: center">X</td>
-      <td style="text-align: right">b</td>
-      <td style="text-align: center">Nt</td>
-    </tr>
-    <tr>
-      <td>&gt;t</td>
-      <td style="text-align: center">c</td>
-      <td style="text-align: right">d</td>
-      <td style="text-align: center">Nt1</td>
-    </tr>
-    <tr>
-      <td>合计</td>
-      <td style="text-align: center">Ns</td>
-      <td style="text-align: right">NS1</td>
-      <td style="text-align: center">n</td>
-    </tr>
-  </tbody>
+<thead>
+<tr>
+<th> 时间距离       </th>
+<th style="text-align:center;"> &lt;s             </th>
+<th style="text-align:right;"> >s    </th>
+<th style="text-align:center;">  合计  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> &lt;t            </td>
+<td style="text-align:center;">    X           </td>
+<td style="text-align:right;"> b     </td>
+<td style="text-align:center;">   Nt   </td>
+</tr>
+<tr>
+<td> >t            </td>
+<td style="text-align:center;"> c              </td>
+<td style="text-align:right;">   d   </td>
+<td style="text-align:center;">    Nt1 </td>
+</tr>
+<tr>
+<td> 合计           </td>
+<td style="text-align:center;"> Ns             </td>
+<td style="text-align:right;">  NS1  </td>
+<td style="text-align:center;">    n   </td>
+</tr>
+</tbody>
 </table>
 
+
 <hr />
 
-<p><strong>统计推断方法包括</strong>：</p>
+<p>   <strong>统计推断方法包括</strong>：</p>
 
 <ul>
-  <li><strong>卡方检验</strong>：样本量较大时，可采用卡方检验，对Knox方法而言，其本身要求设定的空间临界值足够小，因而X样本量偏小的情况较常见。</li>
-  <li><strong>Possion估计法</strong>：当Nt和Ns相对于N来说较小时，X的方差接近于它的均数，此时可采用Possion估计法。但当Nt和Ns较大时，使用该方法进行推断时会有偏性。</li>
-  <li><strong>基于Possion分布的估计法</strong>：与Possion估计法相似，其以<strong>正态分布</strong>代替Possion分布，一般当u&gt;20时，Possion分布近似正态分布。</li>
-  <li><strong>Barton-David</strong>: 仍假设X服从正态分布，但当Ns和Nt较大时，仍能进行无偏推断。</li>
-  <li><strong>蒙特卡罗法</strong>：一种无偏的估计方法，目前较好地能够进行Knox检验。</li>
+<li> <strong>卡方检验</strong>：样本量较大时，可采用卡方检验，对Knox方法而言，其本身要求设定的空间临界值足够小，因而X样本量偏小的情况较常见。</li>
+<li> <strong>Possion估计法</strong>：当Nt和Ns相对于N来说较小时，X的方差接近于它的均数，此时可采用Possion估计法。但当Nt和Ns较大时，使用该方法进行推断时会有偏性。</li>
+<li> <strong>基于Possion分布的估计法</strong>：与Possion估计法相似，其以<strong>正态分布</strong>代替Possion分布，一般当u>20时，Possion分布近似正态分布。</li>
+<li> <strong>Barton-David</strong>: 仍假设X服从正态分布，但当Ns和Nt较大时，仍能进行无偏推断。</li>
+<li> <strong>蒙特卡罗法</strong>：一种无偏的估计方法，目前较好地能够进行Knox检验。</li>
 </ul>
+
 
 <hr />
 
-<p><strong>时间、空间临界值的确定</strong>：</p>
+<p>   <strong>时间、空间临界值的确定</strong>：</p>
 
 <ul>
-  <li>已知疾病信息，时间界值可按照设为其潜伏期天数，空间界值可设定为相邻农场的距离。</li>
-  <li>未知疾病信息，可设置一系列时间界值和空间界值，分别对各个组合进行检验。需注意时间界值和空间界值的设定不能超过其所有病例对子的平均时间距离或平均空间距离(平均时间距离=所有病例对子的时间间隔之和/病例对子总数，平均空间距离=所有病例对子的空间距离之和/病例对子总和)</li>
+<li> 已知疾病信息，时间界值可按照设为其潜伏期天数，空间界值可设定为相邻农场的距离。</li>
+<li> 未知疾病信息，可设置一系列时间界值和空间界值，分别对各个组合进行检验。需注意时间界值和空间界值的设定不能超过其所有病例对子的平均时间距离或平均空间距离(平均时间距离=所有病例对子的时间间隔之和/病例对子总数，平均空间距离=所有病例对子的空间距离之和/病例对子总和)</li>
 </ul>
+
 
 <hr />
 
-<h5 id="rogerson">Rogerson</h5>
-<p><strong>Rogerson</strong>，能对传染病的时空进行动态监测，可利用历史数据和不同传染病的危害程度来调整参数和报警界值，有效降低漏报和误报。基本原理如下：</p>
+<h5>Rogerson</h5>
+
+<p>  <strong>Rogerson</strong>，能对传染病的时空进行动态监测，可利用历史数据和不同传染病的危害程度来调整参数和报警界值，有效降低漏报和误报。基本原理如下：</p>
 
 <pre><code>    在Tango方法的基础上，将样本按n个单位进行分割，使得Zi呈正态或者接近正态。  
 </code></pre>
 
 <hr />
 
-<p>未完待续</p>
-
+<p> 未完待续</p>
 ]]></content:encoded>
     </item>
     
@@ -267,72 +259,76 @@
       <author>Spatial-R</author>
       <guid>http://spatial-r.github.io/cn/2014/08/mermaid</guid>
       <content:encoded><![CDATA[<hr />
-<p>我是渔夫，          <br />
-在日暮之时，映着夕阳， <br />
+
+<p>我是渔夫，          <br/>
+在日暮之时，映着夕阳， <br/>
 渴望再次听一曲她的赞歌。</p>
 
 <hr />
-<p>辽阔寂静的海边，有人在贮视， <br />
-那片他早已熟悉的区域． <br />
-他的思绪，浸润在海风中， <br />
-一直飘，一直飘… <br />
-直至消散在海天相接的地方， <br />
+
+<p>辽阔寂静的海边，有人在贮视， <br/>
+那片他早已熟悉的区域． <br/>
+他的思绪，浸润在海风中， <br/>
+一直飘，一直飘... <br/>
+直至消散在海天相接的地方， <br/>
 他想，那地方，很美吧．</p>
 
 <hr />
-<p>那天，天也是这般蓝，<br />
-蓝得只允许人去陶醉．<br />
-他，静静地望着夕阳，<br />
-望着夕阳在海天相接的地方点点消散．<br />
-蓦然，一丝乐符渗进他的耳际，<br />
+
+<p>那天，天也是这般蓝，<br/>
+蓝得只允许人去陶醉．<br/>
+他，静静地望着夕阳，<br/>
+望着夕阳在海天相接的地方点点消散．<br/>
+蓦然，一丝乐符渗进他的耳际，<br/>
 他的心，猛然地被拉紧．</p>
 
 <hr />
 
-<p>是谁，在夕阳下如此轻柔地歌唱 <br />
-是谁，在海边为他带来了如此动人的乐章 <br />
-是谁，又是谁…<br />
-转身，从容却又那么迫不及待． <br />
-那是一条融在夕阳里的美人鱼， <br />
+<p>是谁，在夕阳下如此轻柔地歌唱 <br/>
+是谁，在海边为他带来了如此动人的乐章 <br/>
+是谁，又是谁...<br/>
+转身，从容却又那么迫不及待． <br/>
+那是一条融在夕阳里的美人鱼， <br/>
 一条他只能选择远望的美人鱼．</p>
 
 <hr />
-<p>她，高贵地立在海面上， <br />
-忘我般演绎着一首生命的赞歌，<br />
-这，是他见过的最美的风景， <br />
-这，是他永生都忘记不了的记忆． <br />
-她，依旧在醉然地歌唱，  <br />
+
+<p>她，高贵地立在海面上， <br/>
+忘我般演绎着一首生命的赞歌，<br/>
+这，是他见过的最美的风景， <br/>
+这，是他永生都忘记不了的记忆． <br/>
+她，依旧在醉然地歌唱，  <br/>
 他，依旧在醉然地聆听．</p>
 
 <hr />
 
-<p>多久，他不知道． <br />
-只是，歌声渐渐地飘渺，变淡， <br />
-最后，淡的他只能听见海风的呼啸． <br />
-他才觉悟地猛然抬头， <br />
-她，游走了，向着海天相交的地方， <br />
+<p>多久，他不知道． <br/>
+只是，歌声渐渐地飘渺，变淡， <br/>
+最后，淡的他只能听见海风的呼啸． <br/>
+他才觉悟地猛然抬头， <br/>
+她，游走了，向着海天相交的地方， <br/>
 向着那个他认为最美的地方．</p>
 
 <hr />
 
-<p>天，依旧那么蓝． <br />
-等待着，伴随间歇有力的涛声． <br />
-尽管他并不知道，这一次，下一次，<br />
-她，是否会出现； <br />
-尽管他已经知道，很多次，很多次， <br />
+<p>天，依旧那么蓝． <br/>
+等待着，伴随间歇有力的涛声． <br/>
+尽管他并不知道，这一次，下一次，<br/>
+她，是否会出现； <br/>
+尽管他已经知道，很多次，很多次， <br/>
 她，都没有出现．</p>
 
 <hr />
 
-<p>夕阳隐没在海天的地方，<br />
-他，又望望了那片熟悉的区域， <br />
-默然间扎进了海中…</p>
+<p>夕阳隐没在海天的地方，<br/>
+他，又望望了那片熟悉的区域， <br/>
+默然间扎进了海中...</p>
 
 <hr />
 
 <p>09年写的小诗，无意中想起，过去的岁月，总是这样让人放不下。渔夫是孤独的，但却一如既往地守着自己的梦，有梦的生活，是幸福的。</p>
 
-<p><img src="https://i.imgur.com/a3u3nI4.jpg" alt="Drawing" style="width: 500px;" class="alignleft" /></p>
+<p><img src="https://i.imgur.com/a3u3nI4.jpg" alt="Drawing" style="width: 500px;" class="alignleft"/></p>
 ]]></content:encoded>
     </item>
     
@@ -346,25 +342,27 @@
 
 <p>恰逢七夕，与好友兼同学兼同事兼室友(头衔有点多)组队看西湖和大运河。骑上车，“七夕”也就抛脑后。由滨江经复兴大桥，然后直驱杭州市区到达京杭大运河的南终点——拱宸桥。</p>
 
-<blockquote>
-  <p>碧云天，绿叶地，夏色连片，片上知了醉。清风几许如何，一醉到天明！</p>
-</blockquote>
+<blockquote><p>碧云天，绿叶地，夏色连片，片上知了醉。清风几许如何，一醉到天明！</p></blockquote>
 
-<p><img src="https://i.imgur.com/I8dRAyP.jpg" alt="Drawing" style="width: 400px;" class="alignleft" /></p>
+<p><img src="https://i.imgur.com/I8dRAyP.jpg" alt="Drawing" style="width: 400px;" class="alignleft"/></p>
 
 <hr />
+
 <p><a href="http://baike.baidu.com/view/552989.htm?fromtitle=%E5%A4%8D%E5%85%B4%E5%A4%A7%E6%A1%A5&amp;fromid=8798773&amp;type=syn">复兴大桥</a>相比于<a href="http://baike.baidu.com/view/16154.htm">武汉长江大桥</a>，略显娇小，尽管两者的主桥长度相近(分别为1156米和1145米)，但武汉长江大桥略显霸气的引桥，是复兴大桥无法比拟的；同时，复兴大桥距水面较近，这也使得其气势大减。个人很钟爱武汉长江大桥，感觉就是一种宿命。在武汉七年，不管是同学过来游玩还是带老师参观，都会去武汉长江大桥上走走，看看长江，也感受下武汉敢为人先的魄力(各种怀念啊)。人虽离开武汉，但牵挂依旧在，只等哪天，再次带着闲暇的心境，去走走那“万里长江第一桥”。复兴大桥和钱塘江大桥的人行道都很窄，使得骑车让道变得很有技术含量，个人技术不行，一听到后面的喇叭声，立马停车靠边，心中还有些许忐忑。三座大桥的夜景都很nice，走走看看，都是一种享受！</p>
 
 <hr />
+
 <p>骑车2小时后，到达京杭大运河。作为世界里程最长、工程最大的古代运河，与<a href="http://baike.baidu.com/subview/2203/6173557.htm">长城</a>、<a href="http://baike.baidu.com/view/2942.htm">坎儿井</a>并称为中国古代三项伟大工程沿着大运河。继西湖申遗成功后，2014年6月，中国大运河成功入选世界文化遗产名录，为杭州这座六朝古都，又添上了一抹浓重的文化气息。沿着大运河慢走，绿树，垂柳，行人几许，生活极尽舒坦。这不由地让我想起了著有“天府之国”之称的成都，同样有2处世遗(<a href="http://baike.baidu.com/subview/2240/12000340.htm">都江堰</a>和<a href="http://baike.baidu.com/view/539806.htm">大熊猫栖息地</a>),也是极尽休闲的旅游城市。依然怀念柳絮纷飞的季节，在桥边静坐，喝茶，看云卷云舒，听小巧流水，品人来人往，心静地没有一点瑕疵。不知何时，在杭州也能重现那时的心境，洒脱地连自己都能忽略。</p>
 
-<p><img src="http://i.imgur.com/rBl0yUt.jpg" alt="Drawing" style="width: 370px;" class="alignleft" /></p>
+<p><img src="http://i.imgur.com/rBl0yUt.jpg" alt="Drawing" style="width: 370px;" class="alignleft"/></p>
 
 <hr />
+
 <p>终点站，往往是姗姗来迟。拱宸桥对于杭州人的意义不一般，但对于我们这样的“东飘者”，只是一座带有杭州特色的古桥而已。旁边的中国刀剪剑博物馆、中国扇博物馆和中国伞博物馆都因时间太晚，早已打烊。在各种里弄里穿梭，终寻得一宁静之处，吆喝一声，开始晚餐，只可惜，晓甫的减盐项目再次受挑战，看来，口味重的人，要想健康生活，真不容易。</p>
 
 <hr />
-<p>往回走，早已夜色弥漫，灯火通明的街道，行人都在往家的方向赶！六年前，也是和晓甫他们在夜色中穿梭，闯红灯，赶速度，看着自行车和小车之间的”亲密接触”,各种不文明的行为，在杭州很是收敛。夜逛西湖，繁华热闹的苏堤在九点还是人声鼎沸，上坡，下坡，再上坡，再下坡…淡妆的西子，只能用心去感受，还好有明月相伴，至少不那么落寞。行程匆匆，没有细看，也没有细品，只缘自己知道，还会再来。</p>
+
+<p>往回走，早已夜色弥漫，灯火通明的街道，行人都在往家的方向赶！六年前，也是和晓甫他们在夜色中穿梭，闯红灯，赶速度，看着自行车和小车之间的”亲密接触",各种不文明的行为，在杭州很是收敛。夜逛西湖，繁华热闹的苏堤在九点还是人声鼎沸，上坡，下坡，再上坡，再下坡...淡妆的西子，只能用心去感受，还好有明月相伴，至少不那么落寞。行程匆匆，没有细看，也没有细品，只缘自己知道，还会再来。</p>
 ]]></content:encoded>
     </item>
     
