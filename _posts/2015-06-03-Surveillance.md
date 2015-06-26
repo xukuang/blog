@@ -15,6 +15,8 @@ Welcome to surveillance Project! 这是一篇针对surveillance程序包相关�
 
 [Surveillance](http://surveillance.r-forge.r-project.org/) 程序包提供了一系列前瞻性爆发探测和回顾性的时空模型，主要适用的数据类型是时间序列频数、时序百分比和时序分类数据。
 
+-----------------------------------------------------
+
 ## 前瞻性暴发探测
 
 Aberration Detection(Change-point detection, Outbreak Detection)，我将其都翻译为暴发探测，但仔细推敲，各词组间含义差别还是有点大。具体如下： 
