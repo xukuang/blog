@@ -7,8 +7,77 @@
     <title>Spatial-R</title>
     <atom:link href="http://spatial-r.github.io/cn/feed/" rel="self" type="application/rss+xml" />
     <link>http://chengjun.github.io</link>
-    <lastBuildDate>2015-06-26T22:52:59+08:00</lastBuildDate>
+    <lastBuildDate>2015-07-01T23:32:32+08:00</lastBuildDate>
     <webMaster>wangchj04@gmail.com</webMaster>
+    
+    <item>
+      <title>R中SPODT介绍: 基于斜分类树的空间聚集性探测</title>
+      <link>http://spatial-r.github.io/cn/2015/07/SPODT-IN-R/</link>
+      <pubDate>2015-07-01T00:00:00+08:00</pubDate>
+      <author>Spatial-R</author>
+      <guid>http://spatial-r.github.io/cn/2015/07/SPODT-IN-R</guid>
+      <content:encoded><![CDATA[<h2>空间聚集丛探测常用方法</h2>
+
+<hr />
+
+<p>流行病学中一个较为常见的问题就是探测疾病的空间聚集丛, 包括<strong>热点</strong>(hot spot)或<strong>冷点</strong>(cold spot), 主要分为全局性探测(Globe Detection),局部性(Local detection)探测和焦点探测(Force Decetion)。全局性探测的方法有<strong>样方分析法</strong>(Quadrat analysis), <strong>最近邻分析法</strong>(Nearest neighbor analysis), <strong>Ripley's K 函数法</strong>, <strong>Cuzick-Edwards法</strong>, <strong>全局空间自相关分析法</strong>(Global spatial autocorrelation analysis)和 <strong>Tango最大超额事件检验法</strong>；局部性探测的分析方法有<strong>空间扫描统计量</strong>(Spatial scan statistic), <strong>Besag-Newell法</strong>, <strong>聚集性评价排列组合法</strong>和<strong>局部空间自相关法</strong>;焦点探测的分析方法主要为<strong>Stone检验法</strong>, <strong>Lawson-Waller得分检验法</strong>和<strong>Diggle检验</strong>,各个方法的描述可参考<a href="http://www.cnki.com.cn/Article/CJFDTOTAL-JBJC201005019.htm">Here1</a>, <a href="http://spatial-r.github.io/cn/2015/01/Spatial-and-Spatial-temporal/">Here2</a>。</p>
+
+<hr />
+
+<h2>SPODT 简介</h2>
+
+<p>SPODT的全称是Spatial Oblique Decision Tree, 一种基于斜决策树(Oblique decision tree)的空间分类方法。对于空间流行病数据而言，这种非参回归方法通过递归方式在整个研究区域不断寻找阈值范围或者边界，使得不同区域内的差异尽可能大。相对于分类与回归树方法(Classification and regression tree, CART)而言，斜决策树可以将研究区域进行斜划分，而非局限的矩形(CART划分结果)。与上述局部性探测方法相比较，对该方法对边缘效应的敏感性要低很多。</p>
+
+<hr />
+
+<h3>方法介绍</h3>
+
+<p>总的说来，斜决策树是CART的改版，其函数形式如下:
+$$
+z-{i}=f(x<em>{i},y</em>{i})+\epsilon<em>{i} \
+f(x</em>{i},y<em>{i})=\sum\limits</em>{j=1}^{P} mz<em>{j}\prod{\small(x</em>{i},y<em>{i})\in{class</em>{j}}}
+$$
+其中，${x<em>{i},y</em>{i}}$是位置点$i$的经纬度，对于小区域最好采用欧几里德或地理坐标系统(<strong>注意</strong>:若不进行正确投影，可能会得到错误的结果)。$class<em>{j}$是将整个研究区域划分后形成的子区域个数，$mz</em>{j}$是所有子区域内样点观测值的均值。所有不同区域间的边界线($s<em>{j}(x</em>{i}+y<em>{i})$)是基于平行坐标系的线性函数($ax</em>{i}+by_{i}+c=0$)，这些边界线或是分割方向，对每个位置点(也称为结点$\xi$)进行反复迭代，最终将区域划分为若干个子区域。当结点达到如下条件时，该区域不再增加样本点:</p>
+
+<ol>
+<li>新的区域划分不再增加变异性，也就是说该区域内新增样本点时不会产生新变异。</li>
+<li>结点的大小不能低于事先设定好的样本点大小(parent node)。</li>
+<li>当划分子区域时，两个子区域的大小不能低于子区域最小值(child node)。</li>
+<li>达到分类树水平的最大值。</li>
+</ol>
+
+
+<p>总的说来，SPODT中提供了三个重要函数，即<strong>spodt</strong>, <strong>spodt.tree</strong>, <strong>spodtSpatialLines</strong>,和<strong>test.spodt</strong>。spdot是核心函数，其中的weight, graft,level.max, min.parent, min.child和rtwo.min参数可详细控制斜分类树算法；spodt.tree和spodtSpatialLines是spdot后结果的可视化；test.spodt是采用蒙托卡罗模拟来检验分类的有效性。</p>
+
+<hr />
+
+<h3>例子</h3>
+
+<p>此处选择了Bandiagara区域分布在168个地点的300个儿童数据，观察该人群在2009年11月-12月中疟疾的发病情况来探测是否存在疟疾高风险区。该数据集为SPODT程序包自带，因而data函数带入即可。基础分析代码如下:</p>
+
+<pre><code class="r">library(SPODT)  
+data("dataMALARIA") ;coordinates(dataMALARIA) &lt;- c("x", "y") 
+proj4string(dataMALARIA) &lt;- "+proj=longlat +datum=WGS84 +ellps=WGS84"  
+dataMALARIA &lt;- spTransform(dataMALARIA, CRS("+proj=merc +datum=WGS84 +ellps=WGS84"))
+spodt.results &lt;- spodt(z ~ 1, data = dataMALARIA, graft = 0.13,  
+                       level.max = 7, min.parent = 25, min.child = 2, rtwo.min = 0.01)
+spodt.tree(spodt.results)
+</code></pre>
+
+<p><img src="../images/SPODT/haha-1.png" alt="" /></p>
+
+<p>上述即是SPODT分类树结果，设定好grapt参数值后，可得到6个子区域；其中$R_{global}^{2}$ (可通过spodt.results@R2获得)为0.49，表明疟疾发病风险中49%的差异可由空间效应来解释。</p>
+
+<pre><code class="r">SSL.result &lt;- spodtSpatialLines(spodt.results, dataMALARIA) 
+plot(SSL.result) 
+points(dataMALARIA, cex = log(dataMALARIA@data$z *3))
+</code></pre>
+
+<p><img src="../images/SPODT/map-1.png" alt="" /></p>
+
+<p>上述即是SPODT结果以地图的方式呈现，可发现中部地区存在一个疟疾发病的低风险区(发病风险在0.08[0.04-0.11])，而在其下方存在一个发病高风险区(发病风险为0.47[0.39-0.55])</p>
+]]></content:encoded>
+    </item>
     
     <item>
       <title>R中关于heatmap的那些事</title>
@@ -29,9 +98,9 @@
 
 <h2>heatmap综述</h2>
 
-<p>Heatmap主要分为两大类，静态的(static)和交互式(interactive)。R中实现静态heatmap有很多程序包，如<a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/fheatmap/index.html">fheatmap</a>, <a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/gapmap/index.html">gapmap</a>, <a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/heatmap3/index.html">heatmap3</a>, <a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/heatmap.plus/index.html">heatmap.plus</a>, <a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/mcheatmaps/index.html">mcheatmaps</a>, <a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/NeatMap/index.html">NeatMap</a>, <a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/pheatmap/index.html">pheatmap</a>。 当然，利用强大的<strong>ggplot2</strong>也可较好地实现heatmap，如<a href="http://blog.sina.com.cn/s/blog_79f2c16f0102uzyy.html">这个</a>和 <a href="http://www.r-bloggers.com/simplest-possible-heatmap-with-ggplot2/">这个</a>。研究基因的童鞋，对heatmap一定不陌生，见 <a href="http://blog.sina.com.cn/s/blog_6f139e9f0102v4m1.html">此文</a>。当然，对于公共卫生领域的朋友，利用heatmap也可以较好地实现数据可视化，如大疫情系统中的面板数据(<strong>panel data</strong>)，多个城市或区县的逐日数据，用heatmap来呈现是相当perfect的。</p>
+<p>Heatmap主要分为两大类，静态的(static)和交互式(interactive)。R中实现静态heatmap有很多程序包，如<a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/fheatmap/index.html">fheatmap</a>, <a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/gapmap/index.html">gapmap</a>, <a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/heatmap3/index.html">heatmap3</a>, <a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/heatmap.plus/index.html">heatmap.plus</a>, <a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/mcheatmaps/index.html">mcheatmaps</a>, <a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/NeatMap/index.html">NeatMap</a>, <a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/pheatmap/index.html">pheatmap</a>。 利用强大的<strong>ggplot2</strong>也可较好地实现heatmap，如<a href="http://blog.sina.com.cn/s/blog_79f2c16f0102uzyy.html">这个</a>和 <a href="http://www.r-bloggers.com/simplest-possible-heatmap-with-ggplot2/">这个</a>。研究基因的童鞋，对heatmap一定不陌生，见 <a href="http://blog.sina.com.cn/s/blog_6f139e9f0102v4m1.html">此文</a>。当然，对于公共卫生领域的朋友，利用heatmap也可较好地实现数据可视化，如大疫情系统中的面板数据(<strong>panel data</strong>)，多个城市或区县的逐日数据，用heatmap来呈现也是相当perfect的。</p>
 
-<p>鉴于网上关于静态heatmap的文章已经很多(随便百度一下，总能出来那么几篇)。在此我介绍交互式hetmap，主要是利用<strong>d3heatmap</strong>和 <strong>rCharts</strong>程序包。</p>
+<p>鉴于网上关于静态heatmap的文章已经很多(随便百度一下，总能出来那么几篇)。在此，我主要介绍交互式hetmap，主要是利用<strong>d3heatmap</strong>和 <strong>rCharts</strong>程序包。</p>
 
 <hr />
 
@@ -66,11 +135,14 @@ d3heatmap(nba_players, scale = "column",color = "Blues")
 <!--/html_preserve-->
 
 
-<p>短短4行代码，轻松实现交互式heatmap，同时还赠送聚类分析结果，真的很实惠。</p>
+<p>短短4行代码，轻松实现交互式heatmap，同时还赠送聚类分析结果，真的很实惠。
+此处图形没有出现，正在找原因，你可以在这个网页看到，请点击: <a href="http://spatial-r.github.io/Data-visualization-in-public-health/Interactive%20Heatmap/">Here</a></p>
+
+<hr />
 
 <h2><strong>rCharts</strong></h2>
 
-<p>在没有d3heatmap前，<a href="http://rcharts.io/">rCharts</a>是创造交互式heatmap唯一的方式。首先得感谢<a href="http://stefan-wilhelm.net/">Stefan Wilhelm</a>, 在他的<a href="http://stefan-wilhelm.net/interactive-highcharts-heat-maps-in-r-with-rcharts/">博文</a>中介绍了用R实现交互式heatmap的方法并且附上了详细的代码。当然，其功能和d3heatmap相比，要弱(至于弱在什么地方，读者可自行体验)，但终究是一种不错的方式。当数据超过1000行时，需重新定义turboThreshold参数，具体可见其<a href="http://stefan-wilhelm.net/interactive-highcharts-heat-maps-in-r-with-rcharts/">博文</a>。示例如下：</p>
+<p>在没有d3heatmap前，<a href="http://rcharts.io/">rCharts</a>是创造交互式heatmap唯一的方式。首先得感谢<a href="http://stefan-wilhelm.net/">Stefan Wilhelm</a>, 在他的<a href="http://stefan-wilhelm.net/interactive-highcharts-heat-maps-in-r-with-rcharts/">博文</a>中介绍了用R实现交互式heatmap的方法并且附上了详细的代码。其功能和d3heatmap相比，要弱(至于弱在什么地方，读者可自行体验)，但终究是一种不错的方式。当数据超过1000行时，需重新定义turboThreshold参数，具体可见其<a href="http://stefan-wilhelm.net/interactive-highcharts-heat-maps-in-r-with-rcharts/">博文</a>。示例如下：</p>
 
 <pre><code class="r">library(dplyr);library(rCharts);library(rjson)
 #load("country.RData")
