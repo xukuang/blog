@@ -21,7 +21,7 @@ Welocome to the surveillance project again! 这是一篇针对[Surveillance](htt
 时空多成分模型(Spatial-temporal Multicomponent Model)的简约版最初由[Held et al. (2005)](http://www.researchgate.net/profile/Michael_Hoehle/publication/45138457_A_statistical_framework_for_the_analysis_of_multivariate_infectious_disease_surveillance_data/links/0c960520b310bb8378000000.pdf)提出，并应用于麻疹疫情中[PS: 基于浙江省麻疹疫情已写了篇类似的文章，已投中华流行病学杂志]。[Leonhard Held et al.(2006)](http://biostatistics.oxfordjournals.org/content/7/3/422.full)在“A two-componet model for counts of infectious disease”一文中构建了随机双成分(**相互独立**)模型，包括**局部特性成分**(Endemic Component)和**时间流行成分**(Epidemic  Component)，其中局部特性成分控制季节效应的影响，时间流行成分同时考虑了疾病疫情的时间相关性和暴发影响。该模型假设时序数据服从Generalised Branching Process with Immigration，
 并分别对甲肝和乙肝进行了拟合。在surveillance程序包中，基础模型中将时序数据分为三个成分：局部特性成分(Endemic component, end)、时间自相关成分(Autoregressive component，ar)和空间流行成分(Epidemic component, ne)，并在公式中分别用$ν_(i,t)$、$λ_(i,t)$和$ϕ_(i,t)$表示。其中局部特性成分反映疫情的本地风险情况，时间自相关成分反映的是过去时段疫情在时间维度上产生的影响，而空间流行成分反映的是邻近单元对目标单元产生的影响(可根据多种空间权重矩阵来定义**邻近**)。具体的公式如下：
 
-![](https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/MulticomponentModel/mathjax.png)
+![](https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/MulticomponentModel/Mathjax.png)
 
 $γ_0$、$α_0$  和 $β_0$分别代表了三成分的截距，$γ_i$、$α_i$  和 $β_i$ 分别代表三成分的随机效应，都服从均值为0的正态分布；γ、α 和 β分别代表了协变量 $z_(i,t)^T$、$μ_(i,t)^T$  和 $x_(i,t)^T$ 对局部特性成分、时间自相关成分和空间流行成分的作用强度。其中协变量$z_(i,t)^T$在本研究中包含了季节效应${∑_(s=1)^S[κ_s  sina(τ_s t)+δ_s cosa(τ_s t)]}$，其中S代表周期数，$τ_s=2πs/freq$。
 
@@ -66,7 +66,7 @@ measlesWeserEms15 <- measlesWeserEms[, colSums(observed(measlesWeserEms)) > 6]
 plot(measlesWeserEms15, type =observed ~ time | unit, legend.opts = NULL)
 ```
 
-![](https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/MulticomponentModel/visualization-2.png)
+![](https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/MulticomponentModel/visualization-1.png)
 
 你可以调节type参数的值，如“observed ~ time”或“observed ~ unit”等来达到不同的可视化效果，其采用的是spplot和lattice绘图系统，若想调节图形相关参数的可查阅程序包的帮助文档。当然，也可以用ggplot2和gridExtra程序包，分别实现数据可视化和图形组合(推荐之至)。
 
