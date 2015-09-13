@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "surveillance 程序包简介(一):时空多成分模型"
+title: "surveillance 程序包简介(一): 时空多成分模型"
 date: 2015-09-13
 comments: true
 categories: 
@@ -43,7 +43,9 @@ surveillance程序包中的时空多成分模型相关优点主要体现在如�
 
 --------------------------------------------------------
 
-## 具体实例##
+## 具体实例##   
+
+--------------------------------------------------------
 
 ### STS数据###
 
@@ -253,5 +255,5 @@ print(plot(measlesFit_ri, type = "ri", component = comp, xlim = c(6.6,8.8),
 
 ##结语##
 
-本文比较粗糙地介绍了时空多成分模型在R中的实现步骤及相关注意事项，当然，你还可以对模型进行扩展。接下来打算基于[shiny](https://www.rstudio.com/products/shiny/)来开发时空多成分模型的app，也是作为大疫情数据分析平台的一部分。若有什么问题，请及时联系[张兵:Spatial-R](zhangbing4502431@outlook.com)，谢谢！
+本文比较粗糙地介绍了时空多成分模型在R中的实现步骤及相关注意事项，当然，你还可以对模型进行扩展。接下来打算基于[shiny](https://www.rstudio.com/products/shiny/)来开发时空多成分模型的app，也是作为大疫情数据分析平台的一部分。若有什么问题，请及时联系[张兵: Spatial-R](zhangbing4502431@outlook.com)，谢谢！
 
