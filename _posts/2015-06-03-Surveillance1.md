@@ -11,7 +11,7 @@ tags:
 - R
 ---
 
-Welcome to surveillance Project! 这是一篇针对surveillance程序包相关方法的总结，有疑问请联系[张兵:Spatial-R](zhangbing4502431@outlook.com)
+Welcome to surveillance Project! 这是一篇针对surveillance程序包相关方法的总结，有疑问请联系[张兵: Spatial-R](zhangbing4502431@outlook.com)
 
 [Surveillance](http://surveillance.r-forge.r-project.org/) 程序包提供了一系列前瞻性爆发探测和回顾性的时空模型，主要适用的数据类型是时间序列频数、时序百分比和时序分类数据。
 
