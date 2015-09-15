@@ -7,11 +7,11 @@
     <title>Spatial-R</title>
     <atom:link href="http://spatial-r.github.io/cn/feed/" rel="self" type="application/rss+xml" />
     <link>http://chengjun.github.io</link>
-    <lastBuildDate>2015-09-13T01:28:48+08:00</lastBuildDate>
+    <lastBuildDate>2015-09-15T20:51:17+08:00</lastBuildDate>
     <webMaster>wangchj04@gmail.com</webMaster>
     
     <item>
-      <title>surveillance 程序包简介(一):时空多成分模型</title>
+      <title>surveillance 程序包简介(二): 时空多成分模型</title>
       <link>http://spatial-r.github.io/cn/2015/09/Spatial-temporal-Multicomponent-Model/</link>
       <pubDate>2015-09-13T00:00:00+08:00</pubDate>
       <author>Spatial-R</author>
@@ -25,7 +25,7 @@
 <p>时空多成分模型(Spatial-temporal Multicomponent Model)的简约版最初由<a href="http://www.researchgate.net/profile/Michael_Hoehle/publication/45138457_A_statistical_framework_for_the_analysis_of_multivariate_infectious_disease_surveillance_data/links/0c960520b310bb8378000000.pdf">Held et al. (2005)</a>提出，并应用于麻疹疫情中[PS: 基于浙江省麻疹疫情已写了篇类似的文章，已投中华流行病学杂志]。<a href="http://biostatistics.oxfordjournals.org/content/7/3/422.full">Leonhard Held et al.(2006)</a>在“A two-componet model for counts of infectious disease”一文中构建了随机双成分(<strong>相互独立</strong>)模型，包括<strong>局部特性成分</strong>(Endemic Component)和<strong>时间流行成分</strong>(Epidemic  Component)，其中局部特性成分控制季节效应的影响，时间流行成分同时考虑了疾病疫情的时间相关性和暴发影响。该模型假设时序数据服从Generalised Branching Process with Immigration，
 并分别对甲肝和乙肝进行了拟合。在surveillance程序包中，基础模型中将时序数据分为三个成分：局部特性成分(Endemic component, end)、时间自相关成分(Autoregressive component，ar)和空间流行成分(Epidemic component, ne)，并在公式中分别用$ν<em>(i,t)$、$λ</em>(i,t)$和$ϕ_(i,t)$表示。其中局部特性成分反映疫情的本地风险情况，时间自相关成分反映的是过去时段疫情在时间维度上产生的影响，而空间流行成分反映的是邻近单元对目标单元产生的影响(可根据多种空间权重矩阵来定义<strong>邻近</strong>)。具体的公式如下：</p>
 
-<p><img src="https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/MulticomponentModel/mathjax.png" alt="" /></p>
+<p><img src="https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/MulticomponentModel/Mathjax.png" alt="" /></p>
 
 <p>$γ<em>0$、$α</em>0$  和 $β<em>0$分别代表了三成分的截距，$γ</em>i$、$α<em>i$  和 $β</em>i$ 分别代表三成分的随机效应，都服从均值为0的正态分布；γ、α 和 β分别代表了协变量 $z<em>(i,t)<sup>T</sup>$、$μ</em>(i,t)<sup>T</sup>$  和 $x<em>(i,t)<sup>T</sup>$ 对局部特性成分、时间自相关成分和空间流行成分的作用强度。其中协变量$z</em>(i,t)<sup>T</sup>$在本研究中包含了季节效应${∑<em>(s=1)<sup>S</sup>[κ</em>s  sina(τ<em>s t)+δ</em>s cosa(τ<em>s t)]}$，其中S代表周期数，$τ</em>s=2πs/freq$。</p>
 
@@ -50,9 +50,11 @@
 
 <hr />
 
-<h2>具体实例</h2>
+<h2>具体实例##</h2>
 
-<h3>STS格式文件</h3>
+<hr />
+
+<h3>STS数据</h3>
 
 <p>surveillance程序包中提供<strong>hhh4</strong>函数来拟合时空多成分模型，其所需的数据格式为sts(surveillance time series)。sts数据需包括以下几个部分：<strong>疫情数据</strong>，<strong>人口数据</strong>，<strong>空间邻阶数据</strong>,<strong>地图数据</strong>或和<strong>协变量数据</strong>。可借助<strong>new</strong>函数生成sts数据，示例代码如下：</p>
 
@@ -65,7 +67,7 @@
 
 <h3>数据可视化</h3>
 
-<p>此处，利用surveillance自带的measlesWeserEms数据集来实现下面的操作：数据可视化和数据分析。时间序列可视化的部分代码如下：</p>
+<p>对于sts数据，surveillance程序包提供了一系列简约的方式来进行数据可视化(时间和空间)。考虑到数据保密性，此处，仅利用程序包自带的measlesWeserEms数据集来实现数据可视化和模型拟合。时间序列可视化的部分代码如下：</p>
 
 <pre><code class="r">library(surveillance)
 data(measlesWeserEms)
@@ -73,13 +75,13 @@ measlesWeserEms15 &lt;- measlesWeserEms[, colSums(observed(measlesWeserEms)) &gt
 plot(measlesWeserEms15, type =observed ~ time | unit, legend.opts = NULL)
 </code></pre>
 
-<p><img src="https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/MulticomponentModel/visualization-2.png" alt="" /></p>
+<p><img src="https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/MulticomponentModel/visualization-1.png" alt="" /></p>
 
-<p>你可以调节type参数的值，如“observed ~ time”或“observed ~ unit”等来达到不同的可视化效果，其采用的是spplot和lattice绘图系统，若想调节图形相关参数的可查阅程序包的帮助文档。当然，也可以用ggplot2和gridExtra程序包，分别实现数据可视化和图形组合(推荐之至)。</p>
+<p>你可以调节type参数的值，如“observed ~ time”或“observed ~ unit”等来达到不同的可视化效果，需要注意的是其采用spplot和lattice绘图系统，若想调节图形相关参数的可查阅程序包的帮助文档。当然，也可以用ggplot2和gridExtra程序包，分别实现数据可视化和图形组合(推荐之至)。</p>
 
 <h3>模型拟合</h3>
 
-<p>此处先拟合基础模型，其包括三成分，其中各研究单元的人口比例值作为offset结合地域面积来反映人口密度，局部特性成分控制季节效应，时间流行成分和空间流行成分(一阶邻近)都只包括截距项。为控制研究区域疫情的过度离散特性，采用负二项分布(NegBin1)进行拟合，当然也可以选择p泊松分布(Possion)。相关代码如下：</p>
+<p>此处先拟合基础模型，其包括三成分，其中各研究单元的人口比例值作为offset结合地域面积来反映人口密度，局部特性成分控制季节效应，时间流行成分和空间流行成分(一阶邻近)都只包括截距项。为控制研究区域疫情的过度离散特性，采用负二项分布(NegBin1)进行拟合，当然也可以选择泊松分布(Possion)。相关代码如下：</p>
 
 <pre><code class="r">measlesModel_basic &lt;- list( 
 end = list(f = addSeason2formula(~1 + t, period = measlesWeserEms@freq),offset = population(measlesWeserEms)), 
@@ -119,6 +121,137 @@ plot(measlesFit_basic, type = "fitted", units = districts2plot, hide0s = TRUE)
 </code></pre>
 
 <p><img src="https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/MulticomponentModel/visualization-2.png" alt="" /></p>
+
+<p>对于上图的解读可以从如下方面进行：三种颜色条纹分别代表局部特性成分、时间自相关成分和空间流行成分(需注意的是，此图中作者将Epidemic理解成spatiotemporal，似乎也是有一定道理)。总体而言，这六个研究单元的麻疹疫情主要是受先前麻疹疫情的影响，麻疹疫情出现后，没及时发现并及时进行相应处理。区域单元03453在2002年上半年疫情受邻近区域的影响较大。</p>
+
+<h3>纳入协变量</h3>
+
+<p>对于疫苗针对传染病而言，相关疫苗覆盖率对传染病疫情的传播具有重要影响。因此，此处易感人群比例作为协变量纳入基础模型，至于纳入何种成分中，且看AIC值。相关代码如下：</p>
+
+<pre><code class="r">Sprop &lt;- matrix(1 - measlesWeserEms@map@data$vacc1.2004, byrow = TRUE,
+nrow = nrow(measlesWeserEms), ncol = ncol(measlesWeserEms))
+Soptions &lt;- c("unchanged", "Soffset", "Scovar")
+SmodelGrid &lt;- expand.grid(end = Soptions, ar = Soptions)
+row.names(SmodelGrid) &lt;- do.call("paste", c(SmodelGrid, list(sep = "|")))
+measlesFits_vacc &lt;- apply(X = SmodelGrid, MARGIN = 1, FUN = function (options) {
+ updatecomp &lt;- function (comp, option)
+ switch(option, "unchanged" = list(),
+ "Soffset" = list(offset = comp$offset * Sprop),
+ "Scovar" = list(f = update(comp$f, ~. + log(Sprop))))
+ update(measlesFit_basic,
+ end = updatecomp(measlesFit_basic$control$end, options[1]),
+ ar = updatecomp(measlesFit_basic$control$ar, options[2]),
+ data = list(Sprop = Sprop))
+ })
+
+AIC.list &lt;- function (object, ..., k = 2){
+if (is.null(names(object))) stop("the list of models must have names")
+ eval(as.call(c(lapply(c("AIC", names(object)), as.name), list(k = k))),
+ envir = object)
+ }
+aics_vacc &lt;- AIC(measlesFits_vacc);aics_vacc[order(aics_vacc[, "AIC"]), ]
+</code></pre>
+
+<pre><code>##                     df      AIC
+## `Scovar|unchanged`   8 1917.071
+## `Scovar|Scovar`      9 1919.070
+## `Soffset|unchanged`  7 1922.114
+## `Soffset|Scovar`     8 1924.020
+## `Scovar|Soffset`     8 1934.478
+## `Soffset|Soffset`    7 1936.990
+## unchanged|unchanged  7 1957.442
+## `unchanged|Scovar`   8 1958.959
+## `unchanged|Soffset`  7 1966.933
+</code></pre>
+
+<p>由AIC值可知，当易感人群比例这个变量纳入局部特性成分时模拟拟合度最好，这个也很好理解，本地免疫屏障影响着麻疹疫情的本地风险水平。当然，选择模型时候仍需结合专业知识。</p>
+
+<h3>Power-law</h3>
+
+<p>在基础模型中，我们假定麻疹疫情只会在具有共同边际的研究单元间传播，且传播系数都一致。考虑到人群的流动性，基础模型明显具有局限性。结合相关协变量，我们同时考虑研究区域的人口百分比(人越多，远距离传播的可能性就越大)和多阶传播(多阶相邻和Power-law)。相关代码如下：</p>
+
+<pre><code class="r">measlesFit_vacc &lt;- measlesFits_vacc[["Scovar|unchanged"]]
+measlesFit_nepop &lt;- update(measlesFit_vacc,
+    ne = list(f = ~log(pop)), data = list(pop = population(measlesWeserEms)))
+measlesFit_np2 &lt;- update(measlesFit_nepop,
+    ne = list(weights = W_np(maxlag = 2)))
+measlesFit_powerlaw &lt;- update(measlesFit_nepop,
+    ne = list(weights = W_powerlaw(maxlag = 5)))
+summary(measlesFit_powerlaw, idx2Exp = 1:5, amplitudeShift = TRUE, maxEV = TRUE)
+</code></pre>
+
+<pre><code>## 
+## Call: 
+## hhh4(stsObj = object$stsObj, control = control)
+## 
+## Coefficients:
+##                       Estimate   Std. Error
+## exp(ar.1)               0.59314    0.06982 
+## exp(ne.1)              44.52223   55.10724 
+## exp(ne.log(pop))        9.89295    4.96028 
+## exp(end.1)            474.78153  406.32394 
+## exp(end.t)              1.00383    0.00440 
+## end.A(2 * pi * t/52)    1.10678    0.19405 
+## end.s(2 * pi * t/52)   -0.43513    0.15135 
+## end.log(Sprop)          2.32578    0.32256 
+## neweights.d             4.10214    1.05496 
+## overdisp                1.60779    0.23055 
+## 
+## Epidemic dominant eigenvalue:  0.77 
+## 
+## Log-likelihood:   -931.03 
+## AIC:              1882.06 
+## BIC:              1936.74 
+## 
+## Number of units:        17 
+## Number of time points:  103
+</code></pre>
+
+<p>通过定义不同形式的空间权重矩阵，可较好地度量传染病的空间蔓延规律，尤其是在人口流动或是交通数据缺乏的情况下。 当然，如果你有相关数据，直接修改weights参数即可。</p>
+
+<h3>Random effect</h3>
+
+<p>对于政府决策者，不仅要知道整个研究区域内传染病的时空传播特性，还需要知晓其在区域间的传播异质性，以便采取相应措施来防控传染病。另一方面，很多影响传染病传播的因素较难度量，而随机效应则是解决这类不确定问题的利器。我们在power-law模型的基础上构建三个成分的随机效应，具体代码如下：</p>
+
+<pre><code class="r">measlesFit_ri &lt;- update(measlesFit_powerlaw,
+ end = list(f = update(formula(measlesFit_powerlaw)$end, ~ . + ri() - 1)),
+ ar = list(f = update(formula(measlesFit_powerlaw)$ar, ~ . + ri() - 1)),
+ ne = list(f = update(formula(measlesFit_powerlaw)$ne, ~ . + ri() - 1)))
+</code></pre>
+
+<pre><code>## [1] "iteration limit reached without convergence (10)"
+## Update of variance parameters in iteration  5  unreliable
+</code></pre>
+
+<pre><code class="r">head(ranef(measlesFit_ri, tomatrix = TRUE))
+</code></pre>
+
+<pre><code>##       ar.ri(iid)  ne.ri(iid) end.ri(iid)
+## 03401  0.0000000 -0.05673057  -1.0044596
+## 03402  1.2234776  0.04311721   1.5263983
+## 03403 -0.8272548  1.55877779  -0.6198755
+## 03404 -0.3772432 -0.50126451  -1.1188042
+## 03405  0.0000000 -0.09105187  -1.2822860
+## 03451 -0.5241670 -0.11345751   0.4959956
+</code></pre>
+
+<pre><code class="r">for (comp in c("end","ar", "ne")) {
+print(plot(measlesFit_ri, type = "ri", component = comp, xlim = c(6.6,8.8),
+ labels = list(cex = 0.6), at = seq(-1.7, 1.7, length.out = 15)))
+}
+</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/MulticomponentModel/randomeffect1.png" alt="" />
+<img src="https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/MulticomponentModel/randomeffect2.png" alt="" />
+<img src="https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/MulticomponentModel/randomeffect3.png" alt="" /></p>
+
+<p>通过这三图分别代表局部特性成分、时间自相关成分和空间流行成分的随机效应，可知03460和03457区域的局部特性成分较大，03454和03457区域的时间自相关成分较大，0.453和03452的空间流行成分较大，故相应措施应运而生：针对03460和03457区域，需加强本地麻疹免疫屏障建设来降低麻疹的本地风险；针对03454和03457区域，则需加强麻疹疫情的应急处置工作，及时控制疫情发展；针对0.453和03452区域则需控制其周边区域麻疹疫情对目标区域的影响。</p>
+
+<hr />
+
+<h2>结语</h2>
+
+<p>本文比较粗糙地介绍了时空多成分模型在R中的实现步骤及相关注意事项，当然，你还可以对模型进行扩展。接下来打算基于<a href="https://www.rstudio.com/products/shiny/">shiny</a>来开发时空多成分模型的app，也是作为大疫情数据分析平台的一部分。若有什么问题，请及时联系<a href="zhangbing4502431@outlook.com">张兵: Spatial-R</a>，谢谢！</p>
 ]]></content:encoded>
     </item>
     
@@ -279,12 +412,12 @@ dat.f&lt;-dat.f[1:910,];colnames(dat.f) &lt;- c("y","x","value");
     </item>
     
     <item>
-      <title>surveillance 程序包简介(一):暴发探测</title>
-      <link>http://spatial-r.github.io/cn/2015/06/Surveillance/</link>
+      <title>surveillance 程序包简介(一): 暴发探测</title>
+      <link>http://spatial-r.github.io/cn/2015/06/Surveillance1/</link>
       <pubDate>2015-06-03T00:00:00+08:00</pubDate>
       <author>Spatial-R</author>
-      <guid>http://spatial-r.github.io/cn/2015/06/Surveillance</guid>
-      <content:encoded><![CDATA[<p>Welcome to surveillance Project! 这是一篇针对surveillance程序包相关方法的总结，有疑问请联系<a href="zhangbing4502431@outlook.com">张兵:Spatial-R</a></p>
+      <guid>http://spatial-r.github.io/cn/2015/06/Surveillance1</guid>
+      <content:encoded><![CDATA[<p>Welcome to surveillance Project! 这是一篇针对surveillance程序包相关方法的总结，有疑问请联系<a href="zhangbing4502431@outlook.com">张兵: Spatial-R</a></p>
 
 <p><a href="http://surveillance.r-forge.r-project.org/">Surveillance</a> 程序包提供了一系列前瞻性爆发探测和回顾性的时空模型，主要适用的数据类型是时间序列频数、时序百分比和时序分类数据。</p>
 
