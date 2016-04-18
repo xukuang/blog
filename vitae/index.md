@@ -48,7 +48,5 @@ Email：zhangbing4502431@outlook.com；主页：<http://spatial-r.github.io/>
 ----------------------------------------------------------
 
 ## 汇报记录
-
 </br>
-
 - [空气污染与R](https://github.com/Spatial-R/Air-pollution-and-R/blob/master/Air%20pollution.pdf)，第七届中国R语言会议上海会场(2014.12.06): 介绍如何利用R软件获取空气质量数据以及空气质量与健康的生态学研究方法。
