@@ -19,7 +19,6 @@ Email：zhangbing4502431@outlook.com；主页：<http://spatial-r.github.io/>
 ## 教育背景
   
 - 2012.09 ~ 2014.07 华中科技大学，公共卫生硕士
-
 - 2007.09 ~ 2012.07 华中科技大学，预防医学学士
 
 -------------------------------------------------------
@@ -33,9 +32,7 @@ Email：zhangbing4502431@outlook.com；主页：<http://spatial-r.github.io/>
 ## 计算机水平
   
 - 语言：统计语言[R](http://www.r-project.org/)，网页语言HTML有所了解
-
 - 应用程序：专业排版软件LaTeX，小工具如Pandoc
-
 - 计算机等级：计算机二级有用吗??
 
 ------------------------------------------------------------------
@@ -43,11 +40,8 @@ Email：zhangbing4502431@outlook.com；主页：<http://spatial-r.github.io/>
 ## 中文论文
 
 - 张兵，侯建，刘传姚，袁晶，2013，2004-2008难我国110个城市大气污染物空间分布特征，环境与职业医学,30(7): 498-502
-
 - 张兵，沈帆，陈楠，等，2014，偏最小二乘回归法研究气象因素对武汉市空气质量参数的影响，环境与职业医学，31(4): 241-246
-
 - 张兵，胡昱，陈雅萍，等，2016，空间统计学在浙江省预防接种门诊资源配置中的应用，中国疫苗与免疫，22(1): 41-45,51
-
 - 张兵，严睿，何寒青，等，2016，浙江省2013年麻疹疫情时空分布特征，中华流行病学，37(4): 548:552
 
 ----------------------------------------------------------
@@ -61,7 +55,5 @@ Email：zhangbing4502431@outlook.com；主页：<http://spatial-r.github.io/>
 ## 汇报记录
 
 - [空气污染与R](https://github.com/Spatial-R/Air-pollution-and-R/blob/master/Air%20pollution.pdf)，第七届中国R语言会议上海会场(2014.12.06): 介绍如何利用R软件获取空气质量数据以及空气质量与健康的生态学研究方法。
-
 - [基于R软件的传染病数据可视化及统计分析平台](https://github.com/Spatial-R/spatial-r.github.io/raw/master/Resource/InfectiousDiseasePlatform.pdf)，第八届中国R语言会议武汉会场(2015.11.7): 初步构建了基于R语言在传染病或公共卫生领域方面的平台搭建思路。
-
 - [Spatial-temporal Multicomponent Model in Surveillance Package](https://github.com/Spatial-R/spatial-r.github.io/raw/master/Resource/Spatial-temporal%20Model%20IN%20r.pdf)，受邀简单介绍R软件中surveillance程序包来构建时空多成分模型。
