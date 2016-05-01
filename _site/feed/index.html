@@ -5,767 +5,2610 @@
   >
   <channel>
     <title>Spatial-R</title>
-    <atom:link href="http://spatial-r.github.io/cn/feed/" rel="self" type="application/rss+xml" />
+    <atom:link href="http://xukuang.github.io/blog/feed/" rel="self" type="application/rss+xml" />
     <link>http://chengjun.github.io</link>
-    <lastBuildDate>2015-09-15T20:51:17+08:00</lastBuildDate>
+    <lastBuildDate>2016-05-01T17:42:15-06:00</lastBuildDate>
     <webMaster>wangchj04@gmail.com</webMaster>
     
     <item>
-      <title>surveillance 程序包简介(二): 时空多成分模型</title>
-      <link>http://spatial-r.github.io/cn/2015/09/Spatial-temporal-Multicomponent-Model/</link>
-      <pubDate>2015-09-13T00:00:00+08:00</pubDate>
+      <title>Numpy</title>
+      <link>http://xukuang.github.io/blog/2016/04/numpy/</link>
+      <pubDate>2016-04-27T00:00:00-06:00</pubDate>
       <author>Spatial-R</author>
-      <guid>http://spatial-r.github.io/cn/2015/09/Spatial-temporal-Multicomponent-Model</guid>
-      <content:encoded><![CDATA[<p>Welocome to the surveillance project again! 这是一篇针对<a href="http://surveillance.r-forge.r-project.org/">Surveillance</a>程序包中<strong>时空多成分模型</strong>( <strong>Spatial-temporal Multicomponent Model</strong>)的文章。时空多成分模型是surveillance程序包提供的四大分析模块之一(<strong>Outbreaks detection</strong>, <strong>Endemic-epidemic Spatio-temporal Point Process Intensity Model</strong>, <strong>SIR event history of a fixed population</strong> 和 <strong>Spatial-temporal Multicomponent Model</strong>)，自去年10月份开始接触，期间走了很多弯路(学习过程)，故将相关教训在此文中分享，希望对时空流行病学感兴趣的朋友能够尽快熟悉该模型并能应用于自己的数据。英文功底不错的建议阅读该程序包的英文说明<a href="http://arxiv.org/pdf/1411.0416.pdf">文档</a>。如果您发现此文中的错误，也恳请留言指出，在此特表感谢。</p>
+      <guid>http://xukuang.github.io/blog/2016/04/numpy</guid>
+      <content:encoded><![CDATA[<p>title: “Numpy包的学习”
+date: 2016-04-27 13:04:53
+categories: [技术篇]
+tags: [ python, numpy]
+—
+Numpy 是 Numerical python 的简称，是高性能计算和数据分析的基础包。
+* ndarray，快速和节省空间的多维数组，提供数组化的算术运算和高级的广播功能『广播功能是个什么东东啊』
+* 使用标准数学函数对整个数组的数据进行快速运算，而不需要编写循环
+* 读取/写入磁盘上的阵列数据和操作存储器映像文件的工具
+* 线性代数，随机数生成，和傅里叶变换的能力
+* 集成C，C++，Fortran代码的工具</p>
 
-<hr />
+<p>从生态系统的角度看，最后一点是最为重要的。因为Numpy提供了易用的C ApI，它可以很容易的将数据传递到使用低级语言编写的外部库，也可以使外部库返回Numpy数组数据到python。这一特性使得python成为包装传统的C/C++/Fortran代码库，并给它们一个动态的、易于使用的接口的首选语言。『完全不懂啊』
+虽然Numpy本身并没有提供非常高级的数据分析功能，但是了解Numpy的数组和面向数组的计算将会帮助你高效的使用类似于pandas这样的工具。
+对于大多数的数据分析应用来说，我关注的主要功能是。
+* 快速的矢量化数组操作：数据切割和清除，子集和过滤，转化和任何其它类型的计算
+* 通用的数组算法，例如：sorting，unique和set操作
+* 有效的描述性统计和聚集/汇总数据
+* 数据对齐、关系数据的合并操作、异构数据的拼接操作
+* 使用数组表达式来表示条件逻辑，而不是用带有 if-elif-else 分支的循环来表示
+* 组间数据的操作（聚合，转换，功能应用）。</p>
 
-<h2>模型综述</h2>
+<p>虽然Numpy提供了这些操作的计算功能，但你或许希望使用pandas作为大多数数据分析的基础（特别是结构化或表格数据），因为pandas提供了一个丰富的，高级的接口使得常见的数据任务非常简洁和简单。此外，pandas还提供了更多的一些特定领域的功能，如时间数组操作，这是Numpy所没有的。
+###  Numpy ndarray：多维数组对象
+Numpy的一个关键特性是它的N维数组对象(ndarray)，它在python中是一个大型数据集的快速的，灵活的容器。 数组使你能够在整个数据块上进行数学运算，且与对应的纯量元素间操作有相似的语法：
+<code>
+array1 = np.array([[ 0.9526, -0.246 , -0.8856], [ 0.5639, 0.2379, 0.9104]])
+array1
+	## array([[ 0.9526, -0.246 , -0.8856],
+	## 		[ 0.5639,  0.2379,  0.9104]])
+array1 * 10
+	## array([[ 9.526, -2.46 , -8.856],
+	##        [ 5.639,  2.379,  9.104]])
+array1 + array1
+	## array([[ 1.9052, -0.492 , -1.7712],
+	##        [ 1.1278,  0.4758,  1.8208]])
+</code>
+ndarray是一个同种类数据的多维容器，也就是说，它的所有元素都是同类型的。每一个数组都有一个 shape （表示它每一维大小的元组）和 dtype （一个描述数组数据类型的对象）的属性。
+<code>
+array1.shape
+	## (2, 3)
+array1.dtype
+	## dtype('float64')
+</code>
+#### 创建ndarray对象
+最简单的创建数组的方式是使用array函数。它接受任何数组对象（包括其它数组），产生一个包含所传递的数据的新Numpy数组。例如，列表就是一个很好的用于转换的候选。
+<code>
+data1 = [6, 7.5, 8, 0, 1]
+arr1 = np.array(data1)
+arr1
+	## array([ 6. , 7.5, 8. , 0. , 1. ])
+</code>
+嵌套序列，如等长列表的列表，将会转化为一个多维数组。
+<code>
+data2 = [[1, 2, 3, 4], [5, 6, 7, 8]]
+arr2 = np.array(data2)
+arr2
+	## array([[1, 2, 3, 4],
+	##        [5, 6, 7, 8]])
+arr2.ndim
+	## 2
+arr2.shape
+	## (2, 4)
+</code>
+除 np.array 之外，还有许多函数来创建新的数组。例如， zeros 和 ones 使用给定的长度或形状分别的创建0‘s 和 1‘s数组。empty 会创建一个没有使用特定值来初始化的数组。给这些方法传递一个元组作为形状来创建高维数组。
+<code>
+np.zeros(10)
+	## array([ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.])
+np.zeros((3, 6))
+	## array([[ 0., 0., 0., 0., 0., 0.],
+	##        [ 0., 0., 0., 0., 0., 0.],
+	##        [ 0., 0., 0., 0., 0., 0.]])
+np.empty((2, 3, 2))
+	## array([[[ 4.94065646e-324, 4.94065646e-324],
+	##         [ 3.87491056e-297, 2.46845796e-130],
+	##         [ 4.94065646e-324, 4.94065646e-324]],
+	##        [[ 1.90723115e+083, 5.73293533e-053],
+	##         [ -2.33568637e+124, -6.70608105e-012],
+	##         [ 4.42786966e+160, 1.27100354e+025]]])
+</code>
+arange 是python内建 range 函数的数组版本。
+<code>
+np.arange(15)
+	## array([ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
+</code>
+#### 数组和纯量间的操作
+数组非常重要，因为它们使你不使用循环就可以在数据上进行一系列操作。这通常被叫做矢量化。相同大小的数组间的算术运算，其操作作用在对应的元素上。
+<code>
+arr = np.array([[1., 2., 3.], [4., 5., 6.]])
+arr
+	## array([[ 1.,  2.,  3.],
+	##        [ 4.,  5.,  6.]])
+arr * arr                 
+	## array([[  1.,   4.,   9.],       
+	##        [ 16.,  25.,  36.]])
+</code></p>
 
-<p>时空多成分模型(Spatial-temporal Multicomponent Model)的简约版最初由<a href="http://www.researchgate.net/profile/Michael_Hoehle/publication/45138457_A_statistical_framework_for_the_analysis_of_multivariate_infectious_disease_surveillance_data/links/0c960520b310bb8378000000.pdf">Held et al. (2005)</a>提出，并应用于麻疹疫情中[PS: 基于浙江省麻疹疫情已写了篇类似的文章，已投中华流行病学杂志]。<a href="http://biostatistics.oxfordjournals.org/content/7/3/422.full">Leonhard Held et al.(2006)</a>在“A two-componet model for counts of infectious disease”一文中构建了随机双成分(<strong>相互独立</strong>)模型，包括<strong>局部特性成分</strong>(Endemic Component)和<strong>时间流行成分</strong>(Epidemic  Component)，其中局部特性成分控制季节效应的影响，时间流行成分同时考虑了疾病疫情的时间相关性和暴发影响。该模型假设时序数据服从Generalised Branching Process with Immigration，
-并分别对甲肝和乙肝进行了拟合。在surveillance程序包中，基础模型中将时序数据分为三个成分：局部特性成分(Endemic component, end)、时间自相关成分(Autoregressive component，ar)和空间流行成分(Epidemic component, ne)，并在公式中分别用$ν<em>(i,t)$、$λ</em>(i,t)$和$ϕ_(i,t)$表示。其中局部特性成分反映疫情的本地风险情况，时间自相关成分反映的是过去时段疫情在时间维度上产生的影响，而空间流行成分反映的是邻近单元对目标单元产生的影响(可根据多种空间权重矩阵来定义<strong>邻近</strong>)。具体的公式如下：</p>
+<p>纯量的算术操作正如你期望的一样，把操作值作用于每一个元素：</p>
 
-<p><img src="https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/MulticomponentModel/Mathjax.png" alt="" /></p>
-
-<p>$γ<em>0$、$α</em>0$  和 $β<em>0$分别代表了三成分的截距，$γ</em>i$、$α<em>i$  和 $β</em>i$ 分别代表三成分的随机效应，都服从均值为0的正态分布；γ、α 和 β分别代表了协变量 $z<em>(i,t)<sup>T</sup>$、$μ</em>(i,t)<sup>T</sup>$  和 $x<em>(i,t)<sup>T</sup>$ 对局部特性成分、时间自相关成分和空间流行成分的作用强度。其中协变量$z</em>(i,t)<sup>T</sup>$在本研究中包含了季节效应${∑<em>(s=1)<sup>S</sup>[κ</em>s  sina(τ<em>s t)+δ</em>s cosa(τ<em>s t)]}$，其中S代表周期数，$τ</em>s=2πs/freq$。</p>
-
-<hr />
-
-<h2>模型优点</h2>
-
-<p>surveillance程序包中的时空多成分模型相关优点主要体现在如下几个方面：</p>
-
-<ol>
-<li><strong>空间权重</strong>：多种方式定义研究单元的邻近性</li>
-<li><strong>协变量纳入</strong>：自变量反映局部和时序关系</li>
-<li><strong>随机效应</strong>：考虑区域的空间异质性</li>
-</ol>
-
-
-<p>空间权重对空间分析影响较大，其设置方式是空间分析中老生常谈的话题。surveillance程序包除提高基本的空间权重矩阵外(如一阶queen邻近等，具体见<a href="https://cran.r-project.org/web/packages/spdep/index.html">spdep</a>程序包)，还提供<a href="http://www.medscape.com/medline/abstract/24843881"><strong>Power-law</strong></a>算法，能更好模拟传染病远距离传播的特性(在一定距离范围内快速递减)。</p>
-
-<p>协变量纳入不仅可在控制其他效应后准确度量协变量和结局变量之间的关系，也能较高地提高模型拟合度(AIC)。协变量一般纳入局部特性成分或时间自相关成分，借以反映其在局部疫情风险和时序效果上的影响，当然，将协变量得系数恒设为1进而转变成offset。不管何种方式，都可以借助AIC值来选择最优拟合模型，尽管有研究表明将易感人群比例值纳入时间自相关成分效果较佳(见<a href="http://journals.cambridge.org/article_S0950268810001664">此文</a>)。</p>
-
-<p>随机效应在协变量不能完全反映研究单元的空间异质性时，能显著提高模型的预测力。时空多成分模型中纳入随机效应最初由<a href="http://onlinelibrary.wiley.com/doi/10.1002/sim.4177/abstract">M. Paul and Held L(2010)</a>提出，极大提高了模型的适用度。对于传染病大疫情的监测数据，无法观测的空间异质性主要体现在underreporting。针对不同研究单元不同成分随机效应的可视化，可为卫生决策者提供较好的干预措施，若某区域麻疹的局部特性成分较大，则说明麻疹疫情的本地风险较大，进一步巩固本地免疫屏障则显得尤为重要。</p>
-
-<hr />
-
-<h2>具体实例##</h2>
-
-<hr />
-
-<h3>STS数据</h3>
-
-<p>surveillance程序包中提供<strong>hhh4</strong>函数来拟合时空多成分模型，其所需的数据格式为sts(surveillance time series)。sts数据需包括以下几个部分：<strong>疫情数据</strong>，<strong>人口数据</strong>，<strong>空间邻阶数据</strong>,<strong>地图数据</strong>或和<strong>协变量数据</strong>。可借助<strong>new</strong>函数生成sts数据，示例代码如下：</p>
-
-<pre><code>measlesWeserEms &lt;- new("sts", start = c(2013, 1), freq =365, epoch = 1:nrow(dat.final),
-                observed = dat.final, neighbourhood = weserems_nbOrder,
-               map = dat.zj, populationFrac = populationFrac)
+<pre><code>1 / arr                       
+	## array([[ 1. , 0.5 , 0.3333],            
+	##        [ 0.25 , 0.2 , 0.1667]])
 </code></pre>
 
-<p>此处，我的数据是逐日数据，因而freq设置为365，dat,final是疫情数据，dat.zj是地图数据，populationFrac是人口比例数据(研究单元人口占总研究单元人口数的百分比)。此处一定需注意各个数据集之间匹配问题，也就是变量名一定要一致(重要的事情不说三遍!!!)。对于空间邻阶文件，可通过spdep程序包中的<strong>poly2adjmat</strong>和<strong>nbOrder</strong>函数来生成，但需注意孤立区域，如浙江省的洞头县尽管从地图属性是孤立的，但考虑传染病的扩散特性，还是将其设置为与乐清市相邻。</p>
+<h4 id="section">基本的索引和切片</h4>
+<p>Numpy的索引是一个内容丰富的主题，因为有许多方法可以使你在你的数据中选取一个子集或单个元素。一维的数组很简单，表面上它们的行为类似于python的列表。
+<code>
+arr = np.arange(10)
+arr
+	## array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+arr[5]
+	## 5
+arr[5:8]
+	## array([5, 6, 7])
+arr[5:8] = 12
+arr
+	## array([ 0,  1,  2,  3,  4, 12, 12, 12,  8,  9])
+</code>
+如你所见，当你给一个切片赋一纯量值，如 arr[5:8] = 12 所示，该值被传送(或传播)到整个选择区域。与列表的第一个重要的区别是数组的切片在原来的数组上（不生成新的数组）。这意味着数据不会被拷贝，且对切片的任何修改都会影响源数组。
+<code>
+arr_slice = arr[5:8]
+arr_slice[1] = 12345
+arr_slice
+	## array([   12, 12345,    12])
+arr
+	## array([ 0, 1, 2, 3, 4, 12, 12345, 12, 8, 9])
+arr_slice[:] = 64
+arr_slice
+	## array([64, 64, 64])
+arr
+	## array([ 0, 1, 2, 3, 4, 64, 64, 64, 8, 9])
+</code>
+如果你是使用Numpy的新手，这一点会使你感到惊讶『真的惊讶到我了』，尤其当你使用过其它数组编程语言，它们非常热衷于拷贝数据。请记住，Numpy是设计用来处理大数据的情况，你可以想象如果Numpy坚持使用拷贝数据将会出现的性能和内存问题。如果你想有数组切片的一个拷贝，你需要明显的拷贝数组；例如 arr[5:8].copy() 。</p>
 
-<h3>数据可视化</h3>
-
-<p>对于sts数据，surveillance程序包提供了一系列简约的方式来进行数据可视化(时间和空间)。考虑到数据保密性，此处，仅利用程序包自带的measlesWeserEms数据集来实现数据可视化和模型拟合。时间序列可视化的部分代码如下：</p>
-
-<pre><code class="r">library(surveillance)
-data(measlesWeserEms)
-measlesWeserEms15 &lt;- measlesWeserEms[, colSums(observed(measlesWeserEms)) &gt; 6]
-plot(measlesWeserEms15, type =observed ~ time | unit, legend.opts = NULL)
-</code></pre>
-
-<p><img src="https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/MulticomponentModel/visualization-1.png" alt="" /></p>
-
-<p>你可以调节type参数的值，如“observed ~ time”或“observed ~ unit”等来达到不同的可视化效果，需要注意的是其采用spplot和lattice绘图系统，若想调节图形相关参数的可查阅程序包的帮助文档。当然，也可以用ggplot2和gridExtra程序包，分别实现数据可视化和图形组合(推荐之至)。</p>
-
-<h3>模型拟合</h3>
-
-<p>此处先拟合基础模型，其包括三成分，其中各研究单元的人口比例值作为offset结合地域面积来反映人口密度，局部特性成分控制季节效应，时间流行成分和空间流行成分(一阶邻近)都只包括截距项。为控制研究区域疫情的过度离散特性，采用负二项分布(NegBin1)进行拟合，当然也可以选择泊松分布(Possion)。相关代码如下：</p>
-
-<pre><code class="r">measlesModel_basic &lt;- list( 
-end = list(f = addSeason2formula(~1 + t, period = measlesWeserEms@freq),offset = population(measlesWeserEms)), 
-ar = list(f = ~1),ne = list(f = ~1, weights = neighbourhood(measlesWeserEms) == 1), family = "NegBin1")
-measlesFit_basic &lt;- hhh4(stsObj = measlesWeserEms, control = measlesModel_basic)
-summary(measlesFit_basic, idx2Exp = 1:4, amplitudeShift = TRUE, maxEV = TRUE)
-</code></pre>
-
-<pre><code>## 
-## Call: 
-## hhh4(stsObj = measlesWeserEms, control = measlesModel_basic)
-## 
-## Coefficients:
-##                       Estimate   Std. Error
-## exp(ar.1)              0.645403   0.079270 
-## exp(ne.1)              0.015805   0.004200 
-## exp(end.1)             1.080248   0.278839 
-## exp(end.t)             1.001185   0.004264 
-## end.A(2 * pi * t/52)   1.164231   0.192124 
-## end.s(2 * pi * t/52)  -0.634360   0.133500 
-## overdisp               2.013839   0.285441 
-## 
-## Epidemic dominant eigenvalue:  0.72 
-## 
-## Log-likelihood:   -971.72 
-## AIC:              1957.44 
-## BIC:              1995.72 
-## 
-## Number of units:        17 
-## Number of time points:  103
-</code></pre>
-
-<p>summary函数中idx2Exp是一个简单系数转换参数，此处是将系数中的ar.1，ne.1，end.1和end.t转换成其对数值，至于为什么要转换，看看基础模型的公式即可知。Epidemic dominant eigenvalue表示疾病发病率中空间流行成分百分值，更进一步的可视化形式如下:</p>
-
-<pre><code class="r">districts2plot &lt;- names(which(colSums(observed(measlesWeserEms)) &gt; 20))
-plot(measlesFit_basic, type = "fitted", units = districts2plot, hide0s = TRUE)
-</code></pre>
-
-<p><img src="https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/MulticomponentModel/visualization-2.png" alt="" /></p>
-
-<p>对于上图的解读可以从如下方面进行：三种颜色条纹分别代表局部特性成分、时间自相关成分和空间流行成分(需注意的是，此图中作者将Epidemic理解成spatiotemporal，似乎也是有一定道理)。总体而言，这六个研究单元的麻疹疫情主要是受先前麻疹疫情的影响，麻疹疫情出现后，没及时发现并及时进行相应处理。区域单元03453在2002年上半年疫情受邻近区域的影响较大。</p>
-
-<h3>纳入协变量</h3>
-
-<p>对于疫苗针对传染病而言，相关疫苗覆盖率对传染病疫情的传播具有重要影响。因此，此处易感人群比例作为协变量纳入基础模型，至于纳入何种成分中，且看AIC值。相关代码如下：</p>
-
-<pre><code class="r">Sprop &lt;- matrix(1 - measlesWeserEms@map@data$vacc1.2004, byrow = TRUE,
-nrow = nrow(measlesWeserEms), ncol = ncol(measlesWeserEms))
-Soptions &lt;- c("unchanged", "Soffset", "Scovar")
-SmodelGrid &lt;- expand.grid(end = Soptions, ar = Soptions)
-row.names(SmodelGrid) &lt;- do.call("paste", c(SmodelGrid, list(sep = "|")))
-measlesFits_vacc &lt;- apply(X = SmodelGrid, MARGIN = 1, FUN = function (options) {
- updatecomp &lt;- function (comp, option)
- switch(option, "unchanged" = list(),
- "Soffset" = list(offset = comp$offset * Sprop),
- "Scovar" = list(f = update(comp$f, ~. + log(Sprop))))
- update(measlesFit_basic,
- end = updatecomp(measlesFit_basic$control$end, options[1]),
- ar = updatecomp(measlesFit_basic$control$ar, options[2]),
- data = list(Sprop = Sprop))
- })
-
-AIC.list &lt;- function (object, ..., k = 2){
-if (is.null(names(object))) stop("the list of models must have names")
- eval(as.call(c(lapply(c("AIC", names(object)), as.name), list(k = k))),
- envir = object)
- }
-aics_vacc &lt;- AIC(measlesFits_vacc);aics_vacc[order(aics_vacc[, "AIC"]), ]
-</code></pre>
-
-<pre><code>##                     df      AIC
-## `Scovar|unchanged`   8 1917.071
-## `Scovar|Scovar`      9 1919.070
-## `Soffset|unchanged`  7 1922.114
-## `Soffset|Scovar`     8 1924.020
-## `Scovar|Soffset`     8 1934.478
-## `Soffset|Soffset`    7 1936.990
-## unchanged|unchanged  7 1957.442
-## `unchanged|Scovar`   8 1958.959
-## `unchanged|Soffset`  7 1966.933
-</code></pre>
-
-<p>由AIC值可知，当易感人群比例这个变量纳入局部特性成分时模拟拟合度最好，这个也很好理解，本地免疫屏障影响着麻疹疫情的本地风险水平。当然，选择模型时候仍需结合专业知识。</p>
-
-<h3>Power-law</h3>
-
-<p>在基础模型中，我们假定麻疹疫情只会在具有共同边际的研究单元间传播，且传播系数都一致。考虑到人群的流动性，基础模型明显具有局限性。结合相关协变量，我们同时考虑研究区域的人口百分比(人越多，远距离传播的可能性就越大)和多阶传播(多阶相邻和Power-law)。相关代码如下：</p>
-
-<pre><code class="r">measlesFit_vacc &lt;- measlesFits_vacc[["Scovar|unchanged"]]
-measlesFit_nepop &lt;- update(measlesFit_vacc,
-    ne = list(f = ~log(pop)), data = list(pop = population(measlesWeserEms)))
-measlesFit_np2 &lt;- update(measlesFit_nepop,
-    ne = list(weights = W_np(maxlag = 2)))
-measlesFit_powerlaw &lt;- update(measlesFit_nepop,
-    ne = list(weights = W_powerlaw(maxlag = 5)))
-summary(measlesFit_powerlaw, idx2Exp = 1:5, amplitudeShift = TRUE, maxEV = TRUE)
-</code></pre>
-
-<pre><code>## 
-## Call: 
-## hhh4(stsObj = object$stsObj, control = control)
-## 
-## Coefficients:
-##                       Estimate   Std. Error
-## exp(ar.1)               0.59314    0.06982 
-## exp(ne.1)              44.52223   55.10724 
-## exp(ne.log(pop))        9.89295    4.96028 
-## exp(end.1)            474.78153  406.32394 
-## exp(end.t)              1.00383    0.00440 
-## end.A(2 * pi * t/52)    1.10678    0.19405 
-## end.s(2 * pi * t/52)   -0.43513    0.15135 
-## end.log(Sprop)          2.32578    0.32256 
-## neweights.d             4.10214    1.05496 
-## overdisp                1.60779    0.23055 
-## 
-## Epidemic dominant eigenvalue:  0.77 
-## 
-## Log-likelihood:   -931.03 
-## AIC:              1882.06 
-## BIC:              1936.74 
-## 
-## Number of units:        17 
-## Number of time points:  103
-</code></pre>
-
-<p>通过定义不同形式的空间权重矩阵，可较好地度量传染病的空间蔓延规律，尤其是在人口流动或是交通数据缺乏的情况下。 当然，如果你有相关数据，直接修改weights参数即可。</p>
-
-<h3>Random effect</h3>
-
-<p>对于政府决策者，不仅要知道整个研究区域内传染病的时空传播特性，还需要知晓其在区域间的传播异质性，以便采取相应措施来防控传染病。另一方面，很多影响传染病传播的因素较难度量，而随机效应则是解决这类不确定问题的利器。我们在power-law模型的基础上构建三个成分的随机效应，具体代码如下：</p>
-
-<pre><code class="r">measlesFit_ri &lt;- update(measlesFit_powerlaw,
- end = list(f = update(formula(measlesFit_powerlaw)$end, ~ . + ri() - 1)),
- ar = list(f = update(formula(measlesFit_powerlaw)$ar, ~ . + ri() - 1)),
- ne = list(f = update(formula(measlesFit_powerlaw)$ne, ~ . + ri() - 1)))
-</code></pre>
-
-<pre><code>## [1] "iteration limit reached without convergence (10)"
-## Update of variance parameters in iteration  5  unreliable
-</code></pre>
-
-<pre><code class="r">head(ranef(measlesFit_ri, tomatrix = TRUE))
-</code></pre>
-
-<pre><code>##       ar.ri(iid)  ne.ri(iid) end.ri(iid)
-## 03401  0.0000000 -0.05673057  -1.0044596
-## 03402  1.2234776  0.04311721   1.5263983
-## 03403 -0.8272548  1.55877779  -0.6198755
-## 03404 -0.3772432 -0.50126451  -1.1188042
-## 03405  0.0000000 -0.09105187  -1.2822860
-## 03451 -0.5241670 -0.11345751   0.4959956
-</code></pre>
-
-<pre><code class="r">for (comp in c("end","ar", "ne")) {
-print(plot(measlesFit_ri, type = "ri", component = comp, xlim = c(6.6,8.8),
- labels = list(cex = 0.6), at = seq(-1.7, 1.7, length.out = 15)))
-}
-</code></pre>
-
-<p><img src="https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/MulticomponentModel/randomeffect1.png" alt="" />
-<img src="https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/MulticomponentModel/randomeffect2.png" alt="" />
-<img src="https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/MulticomponentModel/randomeffect3.png" alt="" /></p>
-
-<p>通过这三图分别代表局部特性成分、时间自相关成分和空间流行成分的随机效应，可知03460和03457区域的局部特性成分较大，03454和03457区域的时间自相关成分较大，0.453和03452的空间流行成分较大，故相应措施应运而生：针对03460和03457区域，需加强本地麻疹免疫屏障建设来降低麻疹的本地风险；针对03454和03457区域，则需加强麻疹疫情的应急处置工作，及时控制疫情发展；针对0.453和03452区域则需控制其周边区域麻疹疫情对目标区域的影响。</p>
-
-<hr />
-
-<h2>结语</h2>
-
-<p>本文比较粗糙地介绍了时空多成分模型在R中的实现步骤及相关注意事项，当然，你还可以对模型进行扩展。接下来打算基于<a href="https://www.rstudio.com/products/shiny/">shiny</a>来开发时空多成分模型的app，也是作为大疫情数据分析平台的一部分。若有什么问题，请及时联系<a href="zhangbing4502431@outlook.com">张兵: Spatial-R</a>，谢谢！</p>
+<p>对于高维数组，你会有更多选项。在两维的数组，每一个索引的元素将不再是一个纯量，而是一个一维数组。
+<code>
+arr2d = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+arr2d[2]
+	## array([7, 8, 9])
+</code>
+因此，单个元素可以递归的访问，但是这会做多一点的工作。不过，你可以使用一个逗号分隔的索引列表来选择单个元素。因此，下面的操作是等价的。
+<code>
+arr2d[0][2]
+	## 3
+arr2d[0, 2]
+	## 3
+</code>
+在多维数组中，如果你省略了后面的索引，返回的对象将会是一个较低维的ndarray，它包括较高维度的所有数据。因此，在 2*\2*3 的数组 arr3d 中
+<code>
+arr3d = np.array([[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]])
+arr3d
+	## array([[[ 1, 2, 3],
+	##         [ 4, 5, 6]],
+	##        [[ 7, 8, 9],
+	##         [10, 11, 12]]])
+</code>
+arr3d[0] 是一个 2<em>3 的数组。
+<code>
+arr3d[0]
+	## array([[1, 2, 3],
+	##        [4, 5, 6]])
+</code>
+纯量值和数组都可以给 arr3d[0] 赋值。
+<code>
+old_values = arr3d[0].copy()
+arr3d[0] = 42
+arr3d
+	## array([[[42, 42, 42],
+	##         [42, 42, 42]],
+	##        [[ 7, 8, 9],
+	##         [10, 11, 12]]])
+arr3d[0] = old_values
+arr3d
+	## array([[[ 1, 2, 3],
+	##         [ 4, 5, 6]],
+	##        [[ 7, 8, 9],
+	##         [10, 11, 12]]])
+</code>
+类似的， arr3d[1, 0] 给出那些索引以 (1, 0) 开始的值，形成了一个1维数组：
+<code>
+arr3d[1, 0]
+	## array([7, 8, 9])
+</code>
+请注意，在所有的情况下，被选中的子节返回的数组总是数组视窗。
+如同一维对象，ndarrys可以使用熟悉的语法来切片。
+<code>
+arr[1:6]
+	## array([ 1, 2, 3, 4, 64])
+</code>
+较高维的对象给你更多的选择，你可以切割一个或多个坐标坐标轴，并且可以混合整数。对上面的2维数组，arr2d ，对它的切片有些不同。
+<code>
+arr2d
+	## array([[1, 2, 3],          
+	##        [4, 5, 6],                 
+	##        [7, 8, 9]])
+arr2d[:2]
+	## array([[1, 2, 3],
+	##        [4, 5, 6]])
+</code>
+正如你所见，它沿着0坐标坐标轴（第一个坐标坐标轴）切片。因此，一个切片沿着一个坐标坐标轴向选择一个范围的元素。你可以传递多个切片，就像你传递多个索引一样。
+<code>
+arr2d[:2, 1:]
+	## array([[2, 3],
+	##        [5, 6]])
+</code>
+像这样这样切片时，你得到的总是相同维数的数组视窗。通过混合整形索引和切片，你可以得到较低维的切片。
+<code>
+arr2d[1, :2] 
+	## array([4, 5])
+</code>
+注意，一个单一的冒号意味着取整个坐标/坐标轴，因此，你可以只切割更高维的坐标轴，做法如下：
+<code>
+arr2d[:, :1]
+	## array([[1],
+	##        [4],
+	##        [7]])
+</code>
+当然，给一个切片表达式赋值会对整个选择赋值：
+<code>
+arr2d[:2, 1:] = 0
+</code>
+## 布尔索引
+让我们来考虑一个例子，我们有一些数据在一个数组中和一个有重复名字的数组。我将会在这使用 numpy.random 中的 randn 函数来产生一些随机的正态分布的数据。
+<code>
+import numpy.random as np_rd
+names = np.array(['Bob', 'Joe', 'Will', 'Bob', 'Will', 'Joe', 'Joe'])
+data = np_rd.randn(7, 4)
+names
+	## array(['Bob', 'Joe', 'Will', 'Bob', 'Will', 'Joe', 'Joe'],
+	##       dtype='|S4')
+data
+	## array([[-0.048 , 0.5433, -0.2349, 1.2792],
+	##        [-0.268 , 0.5465, 0.0939, -2.0445],
+	##        [-0.047 , -2.026 , 0.7719, 0.3103],
+	##        [ 2.1452, 0.8799, -0.0523, 0.0672],
+	##        [-1.0023, -0.1698, 1.1503, 1.7289],
+	##        [ 0.1913, 0.4544, 0.4519, 0.5535],
+	##        [ 0.5994, 0.8174, -0.9297, -1.2564]])
+</code>
+假设每一个名字都和data数组中的一行对应。如果我们想要选择与‘Bob’名字对应的所有行。象算术运算一样，数组的比较操作（例如 == ）也可以矢量化。因此，names和Bob字符窜的比较会产生一个布尔数组。
+<code>
+names == 'Bob'
+	## array([ True, False, False, True, False, False, False], dtype=bool)
+</code>
+当索引数组时可以传递这一布尔数组。
+<code>
+data[names == 'Bob']
+	## array([[-0.048 , 0.5433, -0.2349, 1.2792],
+	##        [ 2.1452, 0.8799, -0.0523, 0.0672]])
+</code>
+布尔数组必须和它索引的坐标轴的长度相同。你甚至可以把布尔数组和切片或整数（或者整数序列）混合和匹配起来。
+<code>
+data[names == 'Bob', 2:]
+	## array([[-0.2349, 1.2792],
+	##        [-0.0523, 0.0672]])
+</code>
+为了选择除了 ‘Bob’ 之外的所有东西，你可以使用 ！= 或用 - 对条件表达式取反：
+<code>
+names != 'Bob'
+	## array([False, True, True, False, True, True, True], dtype=bool)
+data[-(names == 'Bob')]
+	## array([[-0.268 , 0.5465, 0.0939, -2.0445],
+	##        [-0.047 , -2.026 , 0.7719, 0.3103],
+	##        [-1.0023, -0.1698, 1.1503, 1.7289],
+	##        [ 0.1913, 0.4544, 0.4519, 0.5535],
+	##        [ 0.5994, 0.8174, -0.9297, -1.2564]])
+</code>
+使用布尔算术操作符如 &amp; （and） 和 | （or）来结合多个布尔条件，下面是从三个名字中选取两个的操作。
+<code>
+mask = (names == 'Bob') | (names == 'Will')
+mask
+array([True, False, True, True, True, False, False], dtype=bool)
+data[mask]
+	## array([[-0.048 , 0.5433, -0.2349, 1.2792],
+	##        [-0.047 , -2.026 , 0.7719, 0.3103],
+	##        [ 2.1452, 0.8799, -0.0523, 0.0672],
+	##        [-1.0023, -0.1698, 1.1503, 1.7289]])
+</code>
+通过布尔索引从一个数组中选取数据总是会创建数据的一份拷贝，即使是返回的数组没有改变。
+为了设置 data 中所有的负值为0，我们只需要。
+<code>
+data[data &lt; 0] = 0
+data
+	## array([[ 0. , 0.5433, 0. , 1.2792],
+	##        [ 0. , 0.5465, 0.0939, 0. ],
+	##        [ 0. , 0. , 0.7719, 0.3103],
+	##        [ 2.1452, 0.8799, 0. , 0.0672],
+	##        [ 0. , 0. , 1.1503, 1.7289],
+	##        [ 0.1913, 0.4544, 0.4519, 0.5535],
+	##        [ 0.5994, 0.8174, 0. , 0. ]])
+</code>
+使用一维布尔数组设置整行或列也非常简单：
+<code>
+data[names != 'Joe'] = 7
+data
+array([[ 7. , 7. , 7. , 7. ],
+       [ 0. , 0.5465, 0.0939, 0. ],
+       [ 7. , 7. , 7. , 7. ],
+       [ 7. , 7. , 7. , 7. ],
+       [ 7. , 7. , 7. , 7. ],
+       [ 0.1913, 0.4544, 0.4519, 0.5535],
+       [ 0.5994, 0.8174, 0. , 0. ]])
+</code>
+#### Fancy索引
+Fancy索引是一个术语，被Numpy用来描述使用整形数组索引。假如我们有一个 8</em>4 的数组。
+<code>
+arr = np.empty((8, 4))
+for i in range(8):
+    arr[i] = i
+arr
+	## array([[ 0., 0., 0., 0.],
+	##        [ 1., 1., 1., 1.],
+	##        [ 2., 2., 2., 2.],
+	##        [ 3., 3., 3., 3.],
+	##        [ 4., 4., 4., 4.],
+	##        [ 5., 5., 5., 5.],
+	##        [ 6., 6., 6., 6.],
+	##        [ 7., 7., 7., 7.]])
+</code>
+为了选出一个有特定顺序行的子集，你可以传递一个列表或整形ndarray来指定想要的顺序。
+<code>
+arr[[4, 3, 0, 6]]
+	## array([[ 4., 4., 4., 4.],
+	##        [ 3., 3., 3., 3.],
+	##        [ 0., 0., 0., 0.],
+	##        [ 6., 6., 6., 6.]])
+</code>
+很庆幸这个代码做了你所期望的！使用负的索引从结尾选择行。
+<code>
+arr[[-3, -5, -7]]
+	## array([[ 5., 5., 5., 5.],
+	##        [ 3., 3., 3., 3.],
+	##        [ 1., 1., 1., 1.]])
+</code>
+传递多个索引数组有些微的不同，它选取一个一维数组，元素对应与索引的每一个元组。
+<code>
+arr = np.arange(32).reshape((8, 4))
+arr
+	## array([[ 0, 1, 2, 3],
+	##        [ 4, 5, 6, 7],
+	##        [ 8, 9, 10, 11],
+	##        [12, 13, 14, 15],
+	##        [16, 17, 18, 19],
+	##        [20, 21, 22, 23],
+	##        [24, 25, 26, 27],
+	##        [28, 29, 30, 31]])
+arr[[1, 5, 7, 2], [0, 3, 1, 2]]
+	## array([ 4, 23, 29, 10])
+</code>
+花一点儿时间来看看刚刚发生了什么：元素 (1, 0), (5, 3), (7, 1), 和(2, 2)被选择了。 fancy索引的行为与一些用户可能期望的有所不同，它因该是一个矩形区域，由选取的矩形的行和列组成。这里有一个方法来得到它。
+<code>
+arr[[1, 5, 7, 2]][:, [0, 3, 1, 2]]
+	## array([[ 4, 7, 5, 6],
+	##        [20, 23, 21, 22],
+	##        [28, 31, 29, 30],
+	##        [ 8, 11, 9, 10]])
+</code>
+另一种方法是使用 np.ix_ 函数，将两个以为整形数组转换为位标，来选取一个正方形区域：
+<code>
+arr[np.ix_([1, 5, 7, 2], [0, 3, 1, 2])]
+	## array([[ 4, 7, 5, 6],
+	##        [20, 23, 21, 22],
+	##        [28, 31, 29, 30],
+	##        [ 8, 11, 9, 10]])
+</code>
+注意，fancy索引，不像切片，它总是拷贝数据到一个新的数组。
+### 转置数组和交换坐标轴
+转置是一种特殊形式的变形，类似的它会返回基础数据的一个视窗，而不会拷贝任何东西。数组有 transpose 方法和专门的 T 属性：
+<code>
+arr = np.arange(15).reshape((3, 5))
+arr                  
+	## array([[ 0, 1, 2, 3, 4],               
+	##        [ 5, 6, 7, 8, 9],               
+	##        [10, 11, 12, 13, 14]])          
+arr.T
+	## array([[ 0, 5, 10],
+	##        [ 1, 6, 11],
+	##        [ 2, 7, 12],
+	##        [ 3, 8, 13],
+	##        [ 4, 9, 14]])
+</code>
+当进行矩阵运算时，你常常会这样做，像下面的例子一样，使用 np.dot 计算内部矩阵来产生 XTX<code> 。
+</code><code>
+arr = np.random.randn(6, 3)
+np.dot(arr.T, arr)
+	## array([[ 2.584 , 1.8753, 0.8888],
+	##        [ 1.8753, 6.6636, 0.3884],
+	##        [ 0.8888, 0.3884, 3.9781]])
+</code><code>
+对于更高维的数组， transpose 接受用于转置的坐标轴的号码的一个元组（for extra mind bending）：
+</code><code>
+arr = np.arange(16).reshape((2, 2, 4))
+arr
+	## array([[[ 0, 1, 2, 3],
+	##         [ 4, 5, 6, 7]],
+	##        [[ 8, 9, 10, 11],
+	##         [12, 13, 14, 15]]])
+arr.transpose((1, 0, 2))
+	## array([[[ 0, 1, 2, 3],
+	##         [ 8, 9, 10, 11]],
+	##        [[ 4, 5, 6, 7],
+	##         [12, 13, 14, 15]]])
+</code><code>
+使用 .T 的转置，仅仅是交换坐标轴的一个特殊的情况。
+</code><code>
+arr                            			                   
+	## array([[[ 0, 1, 2, 3],            
+	##         [ 4, 5, 6, 7]],                                     
+	##        [[ 8, 9, 10, 11],          
+	##         [12, 13, 14, 15]]])                                      
+arr.swapaxes(1, 2)          
+    ## array([[[ 0, 4],
+    ##         [ 1, 5],
+    ##         [ 2, 6],
+    ##         [ 3, 7]],
+    ##        [[ 8, 12],
+    ##        [ 9, 13],
+    ##        [10, 14],
+    ##        [11, 15]]])
+</code><code>
+类似的 swapaxes 返回在数据上的一个视窗，而不进行拷贝。
+### 通用函数：快速的基于元素的数组函数
+一个通用的函数，是一个在ndarrays的数据上进行基于元素的操作的函数。你可以认为它们是对简单函数的一个快速矢量化封装，它们接受一个或多个标量值并产生一个或多个标量值。
+许多 ufuncs 都是基于元素的简单变换，像 sqrt 或 exp 。
+</code><code>
+Iarr = np.arange(10)
+Inp.sqrt(arr)
+	## array([ 0. , 1. , 1.4142, 1.7321, 2. , 2.2361, 2.4495,
+	##         2.6458, 2.8284, 3. ])
+np.exp(arr)
+	## array([ 1. , 2.7183, 7.3891, 20.0855, 54.5982,
+	##        148.4132, 403.4288, 1096.6332, 2980.958 , 8103.0839])
+</code><code>
+这些归诸于unary ufuncs。其它的，例如add或maximum ，接受两个数组(因此，叫做binary ufuncs)且返回一个数组：
+</code><code>
+x = randn(8)
+y = randn(8)
+x
+	## array([ 0.0749, 0.0974, 0.2002, -0.2551, 0.4655, 0.9222, 0.446 ,
+	##        -0.9337])
+y
+	## array([ 0.267 , -1.1131, -0.3361, 0.6117, -1.2323, 0.4788, 0.4315,
+	##        -0.7147])
+np.maximum(x, y) # element-wise maximum
+	## array([ 0.267 , 0.0974, 0.2002, 0.6117, 0.4655, 0.9222, 0.446 ,
+	##        -0.7147])
+</code><code>
+虽然不常见，一个ufunc可以返回多个数组。 nodf 就是一个例子，它是python内建 divmod 的矢量化的版本：它返回一个 浮点数数组的分数和整数部分。
+</code><code>
+arr = randn(7) * 5
+np.modf(arr)
+	##(array([-0.6808, 0.0636, -0.386 , 0.1393, -0.8806, 0.9363, -0.883 ]),
+	## array([-2., 4., -3., 5., -3., 3., -6.]))
+</code>`</p>
 ]]></content:encoded>
     </item>
     
     <item>
-      <title>R中SPODT介绍: 基于斜分类树的空间聚集性探测</title>
-      <link>http://spatial-r.github.io/cn/2015/07/SPODT-IN-R/</link>
-      <pubDate>2015-07-01T00:00:00+08:00</pubDate>
+      <title>Spatial Pattern Analysis</title>
+      <link>http://xukuang.github.io/blog/2016/04/spatial-pattern-analysis/</link>
+      <pubDate>2016-04-21T00:00:00-06:00</pubDate>
       <author>Spatial-R</author>
-      <guid>http://spatial-r.github.io/cn/2015/07/SPODT-IN-R</guid>
-      <content:encoded><![CDATA[<h2>空间聚集丛探测常用方法</h2>
-
-<hr />
-
-<p>流行病学中一个较为常见的问题就是探测疾病的空间聚集丛, 包括<strong>热点</strong>(hot spot)或<strong>冷点</strong>(cold spot), 主要分为全局性探测(Globe Detection),局部性(Local detection)探测和焦点探测(Force Decetion)。全局性探测的方法有<strong>样方分析法</strong>(Quadrat analysis), <strong>最近邻分析法</strong>(Nearest neighbor analysis), <strong>Ripley's K 函数法</strong>, <strong>Cuzick-Edwards法</strong>, <strong>全局空间自相关分析法</strong>(Global spatial autocorrelation analysis)和 <strong>Tango最大超额事件检验法</strong>；局部性探测的分析方法有<strong>空间扫描统计量</strong>(Spatial scan statistic), <strong>Besag-Newell法</strong>, <strong>聚集性评价排列组合法</strong>和<strong>局部空间自相关法</strong>;焦点探测的分析方法主要为<strong>Stone检验法</strong>, <strong>Lawson-Waller得分检验法</strong>和<strong>Diggle检验</strong>,各个方法的描述可参考<a href="http://www.cnki.com.cn/Article/CJFDTOTAL-JBJC201005019.htm">Here1</a>, <a href="http://spatial-r.github.io/cn/2015/01/Spatial-and-Spatial-temporal/">Here2</a>。</p>
-
-<hr />
-
-<h2>SPODT 简介</h2>
-
-<p>SPODT的全称是Spatial Oblique Decision Tree, 一种基于斜决策树(Oblique decision tree)的空间分类方法。对于空间流行病数据而言，这种非参回归方法通过递归方式在整个研究区域不断寻找阈值范围或者边界，使得不同区域内的差异尽可能大。相对于分类与回归树方法(Classification and regression tree, CART)而言，斜决策树可以将研究区域进行斜划分，而非局限的矩形(CART划分结果)。与上述局部性探测方法相比较，对该方法对边缘效应的敏感性要低很多。</p>
-
-<hr />
-
-<h3>方法介绍</h3>
-
-<p>总的说来，斜决策树是CART的改版，其函数形式如下:</p>
-
-<p>$$
-z<em>{i}=f(x</em>{i},y<em>{i})+\epsilon</em>{i}  \
-f(x<em>{i},y</em>{i})=\sum\limits<em>{j=1}^{P} mz</em>{j}\prod{\small(x<em>{i},y</em>{i})\in{class_{j}}}
-$$</p>
-
-<p>其中$x<em>{i}$,$y</em>{i}$是位置点$i$的经纬度对于小区域最好采用欧几里德或地理坐标系统(<strong>注意</strong>:若不进行正确投影，可能会得到错误的结果)。$class<em>{j}$是将整个研究区域划分后形成的子区域个数$mz</em>{j}$是所有子区域内样点观测值的均值。所有不同区域间的边界线($s<em>{j}(x</em>{i}+y<em>{i})$)是基于平行坐标系的线性函数($ax</em>{i}+by_{i}+c=0$)这些边界线或是分割方向对每个位置点(也称为结点$\xi$)进行反复迭代，最终将区域划分为若干个子区域。当结点达到如下条件时，该区域不再增加样本点:</p>
-
-<ol>
-<li>新的区域划分不再增加变异性，也就是说该区域内新增样本点时不会产生新变异。</li>
-<li>结点的大小不能低于事先设定好的样本点大小(parent node)。</li>
-<li>当划分子区域时两个子区域的大小不能低于子区域最小值(child node)。</li>
-<li>达到分类树水平的最大值。</li>
-</ol>
-
-
-<p>总的说来SPODT中提供了三个重要函数即<strong>spodt</strong>, <strong>spodt.tree</strong>, <strong>spodtSpatialLines</strong>,和<strong>test.spodt</strong>。spdot是核心函数，其中的weight, graft,level.max, min.parent, min.child和rtwo.min参数可详细控制斜分类树算法；spodt.tree和spodtSpatialLines是spdot后结果的可视化；test.spodt是采用蒙托卡罗模拟来检验分类的有效性。</p>
-
-<hr />
-
-<h3>例子</h3>
-
-<p>此处选择了Bandiagara区域分布在168个地点的300个儿童数据，观察该人群在2009年11月-12月中疟疾的发病情况来探测是否存在疟疾高风险区。该数据集为SPODT程序包自带，因而data函数带入即可。基础分析代码如下:</p>
-
-<pre><code class="r">library(SPODT)  
-data("dataMALARIA") ;coordinates(dataMALARIA) &lt;- c("x", "y") 
-proj4string(dataMALARIA) &lt;- "+proj=longlat +datum=WGS84 +ellps=WGS84"  
-dataMALARIA &lt;- spTransform(dataMALARIA, CRS("+proj=merc +datum=WGS84 +ellps=WGS84"))
-spodt.results &lt;- spodt(z ~ 1, data = dataMALARIA, graft = 0.13,  
-                       level.max = 7, min.parent = 25, min.child = 2, rtwo.min = 0.01)
-spodt.tree(spodt.results)
-</code></pre>
-
-<p><img src="https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/SPODT/haha-1.png" alt="" /></p>
-
-<p>上述即是SPODT分类树结果，设定好grapt参数值后，可得到6个子区域；其中$R_{global}^{2}$ (可通过spodt.results@R2获得)为0.49，表明疟疾发病风险中49%的差异可由空间效应来解释.</p>
-
-<pre><code class="r">SSL.result &lt;- spodtSpatialLines(spodt.results, dataMALARIA) 
-plot(SSL.result) 
-points(dataMALARIA, cex = log(dataMALARIA@data$z *3))
-</code></pre>
-
-<p><img src="https://raw.githubusercontent.com/Spatial-R/cn/gh-pages/images/SPODT/map-1.png" alt="" /></p>
-
-<p>上述即是SPODT结果以地图的方式呈现，可发现中部地区存在一个疟疾发病的低风险区(发病风险在0.08[0.04-0.11])，而在其下方存在一个发病高风险区(发病风险为0.47[0.39-0.55])</p>
+      <guid>http://xukuang.github.io/blog/2016/04/spatial-pattern-analysis</guid>
+      <content:encoded><![CDATA[<p>title: “空间点格局分析”
+date: 2016-04-21 17:27:47
+categories: [学习篇]
+tags: [R, 空间格局分析]
+—
+点格局分析可应用于科学研究的多个领域。在生态学上，研究的兴趣点主要集中一下几个方面：
+1. 探究单一树种在研究区的分布
+2. 两个或以上物种是否均匀分布或者存在竞争关系
+3. 各个物种分布在研究区特定区域分布的驱动因子分析</p>
 ]]></content:encoded>
     </item>
     
     <item>
-      <title>R中关于heatmap的那些事</title>
-      <link>http://spatial-r.github.io/cn/2015/06/Heatmap-in-R/</link>
-      <pubDate>2015-06-26T00:00:00+08:00</pubDate>
+      <title>Dots In R</title>
+      <link>http://xukuang.github.io/blog/2016/04/dots-in-r/</link>
+      <pubDate>2016-04-21T00:00:00-06:00</pubDate>
       <author>Spatial-R</author>
-      <guid>http://spatial-r.github.io/cn/2015/06/Heatmap-in-R</guid>
-      <content:encoded><![CDATA[<p>因为有期待，所以就会有各种偶遇。--- 记<a href="https://github.com/rstudio/d3heatmap"><strong>d3heatmap</strong></a>的出世。</p>
-
-<hr />
-
-<h2>那年故事</h2>
-
-<p>如果没有记错的话，最初接触heatmap是在2010年，当然，故事还得从<a href="http://www.r-bloggers.com/">R-blogger</a>说起，在此，不得不再次强调下R-bloogger的作用，对于R的新手更是如此。
-回归正题，R-blogger上第一篇关于heatmap的介绍在<a href="http://www.r-bloggers.com/how-to-make-a-heat-map-in-r/">此</a>, <a href="http://www.r-bloggers.com/visualizing-likert-items-3/">第二篇</a>, <a href="http://www.r-bloggers.com/revisiting-homicide-rates/">第三篇</a>等等。不容否认，heatmap的出现，为<strong>矩阵</strong>和<strong>数据框</strong>可视化开辟了一个新方向。</p>
-
-<hr />
-
-<h2>heatmap综述</h2>
-
-<p>Heatmap主要分为两大类，静态的(static)和交互式(interactive)。R中实现静态heatmap有很多程序包，如<a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/fheatmap/index.html">fheatmap</a>, <a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/gapmap/index.html">gapmap</a>, <a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/heatmap3/index.html">heatmap3</a>, <a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/heatmap.plus/index.html">heatmap.plus</a>, <a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/mcheatmaps/index.html">mcheatmaps</a>, <a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/NeatMap/index.html">NeatMap</a>, <a href="http://mirrors.ustc.edu.cn/CRAN/web/packages/pheatmap/index.html">pheatmap</a>。 利用强大的<strong>ggplot2</strong>也可较好地实现heatmap，如<a href="http://blog.sina.com.cn/s/blog_79f2c16f0102uzyy.html">这个</a>和 <a href="http://www.r-bloggers.com/simplest-possible-heatmap-with-ggplot2/">这个</a>。研究基因的童鞋，对heatmap一定不陌生，见 <a href="http://blog.sina.com.cn/s/blog_6f139e9f0102v4m1.html">此文</a>。当然，对于公共卫生领域的朋友，利用heatmap也可较好地实现数据可视化，如大疫情系统中的面板数据(<strong>panel data</strong>)，多个城市或区县的逐日数据，用heatmap来呈现也是相当perfect的。</p>
-
-<p>鉴于网上关于静态heatmap的文章已经很多(随便百度一下，总能出来那么几篇)。在此，我主要介绍交互式hetmap，主要是利用<strong>d3heatmap</strong>和 <strong>rCharts</strong>程序包。</p>
-
-<hr />
-
-<h2><strong>d3heatmap</strong></h2>
-
-<p>d3heatmap的介绍可见<a href="https://github.com/rstudio/d3heatmap">此</a>,毕竟是Rstudio出品，质量没得说，其除了实现最基本的heatmap功能外，还能:</p>
-
-<ol>
-<li>点击横坐标或者坐标，进而实现类别高亮(<strong>highlight</strong>)。</li>
-<li>对特定长或者宽的矩形实现放大(<strong>zoom in</strong>)。</li>
-<li>可以在Rstudio中结合<strong>Markdown</strong>和<strong>shiny</strong>使用(<strong>reproduced</strong>)。</li>
-</ol>
-
-
-<p>废话少说，直接上示例，这个例子你同样可以在这篇<a href="http://www.r-bloggers.com/d3heatmap-interactive-heat-maps/">博文</a>中找到:</p>
-
-<pre><code class="r">library(d3heatmap)
-nba_players&lt;-read.csv("ppg2008.csv",header=T,stringsAsFactors = F)
-row.names(nba_players)&lt;-nba_players$Name;nba_players$Name&lt;-NULL
-d3heatmap(nba_players, scale = "column",color = "Blues")
-</code></pre>
-
-<!--html_preserve-->
-
-
-<div id="htmlwidget-6336" style="width:672px;height:480px;" class="d3heatmap"></div>
-
-
-<script type="application/json" data-for="htmlwidget-6336">{"x":{"rows":{"members":50,"height":57.9566457017657,"edgePar":{"col":""},"children":[{"members":48,"height":34.3709298390369,"edgePar":{"col":""},"children":[{"members":40,"height":22.142112094378,"edgePar":{"col":""},"children":[{"members":34,"height":20.9000341148047,"edgePar":{"col":""},"children":[{"members":25,"height":18.5505741420582,"edgePar":{"col":""},"children":[{"members":18,"height":13.6706001697073,"edgePar":{"col":""},"children":[{"members":14,"height":9.2537681514073,"edgePar":{"col":""},"children":[{"members":10,"height":7.85587919968224,"edgePar":{"col":""},"children":[{"members":7,"height":6.2971568981565,"edgePar":{"col":""},"children":[{"members":6,"height":5.74915741652636,"edgePar":{"col":""},"children":[{"members":4,"height":5.09466240294683,"edgePar":{"col":""},"children":[{"members":2,"height":3.05793803076518,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"Paul Pierce ","edgePar":{"col":""}},{"members":1,"height":0,"label":"Richard Jefferson ","edgePar":{"col":""}}]},{"members":2,"height":3.48693074207103,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"Rudy Gay ","edgePar":{"col":""}},{"members":1,"height":0,"label":"John Salmons ","edgePar":{"col":""}}]}]},{"members":2,"height":3.26820898964555,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"Ben Gordon ","edgePar":{"col":""}},{"members":1,"height":0,"label":"O.J. Mayo ","edgePar":{"col":""}}]}]},{"members":1,"height":0,"label":"Andre Iguodala ","edgePar":{"col":""}}]},{"members":3,"height":4.78457333520973,"edgePar":{"col":""},"children":[{"members":2,"height":3.68384391634608,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"Joe Johnson ","edgePar":{"col":""}},{"members":1,"height":0,"label":"Vince Carter ","edgePar":{"col":""}}]},{"members":1,"height":0,"label":"Brandon Roy ","edgePar":{"col":""}}]}]},{"members":4,"height":6.85175094410181,"edgePar":{"col":""},"children":[{"members":3,"height":4.54401595507762,"edgePar":{"col":""},"children":[{"members":2,"height":3.20507379010219,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"Maurice Williams ","edgePar":{"col":""}},{"members":1,"height":0,"label":"Ray Allen ","edgePar":{"col":""}}]},{"members":1,"height":0,"label":"Rashard Lewis ","edgePar":{"col":""}}]},{"members":1,"height":0,"label":"Chauncey Billups ","edgePar":{"col":""}}]}]},{"members":4,"height":9.94129423163805,"edgePar":{"col":""},"children":[{"members":3,"height":7.94316240549065,"edgePar":{"col":""},"children":[{"members":2,"height":5.67132065748358,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"Jason Terry ","edgePar":{"col":""}},{"members":1,"height":0,"label":"Nate Robinson ","edgePar":{"col":""}}]},{"members":1,"height":0,"label":"Al Harrington ","edgePar":{"col":""}}]},{"members":1,"height":0,"label":"Tony Parker ","edgePar":{"col":""}}]}]},{"members":7,"height":12.6439809000172,"edgePar":{"col":""},"children":[{"members":4,"height":8.14351238717054,"edgePar":{"col":""},"children":[{"members":2,"height":6.08705930643032,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"Devin Harris ","edgePar":{"col":""}},{"members":1,"height":0,"label":"Deron Williams ","edgePar":{"col":""}}]},{"members":2,"height":6.39468599698218,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"Jamal Crawford ","edgePar":{"col":""}},{"members":1,"height":0,"label":"Richard Hamilton ","edgePar":{"col":""}}]}]},{"members":3,"height":8.08450814830439,"edgePar":{"col":""},"children":[{"members":2,"height":5.56309679944543,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"Carmelo Anthony ","edgePar":{"col":""}},{"members":1,"height":0,"label":"Caron Butler ","edgePar":{"col":""}}]},{"members":1,"height":0,"label":"Danny Granger ","edgePar":{"col":""}}]}]}]},{"members":9,"height":14.6669850685136,"edgePar":{"col":""},"children":[{"members":5,"height":8.93851139731891,"edgePar":{"col":""},"children":[{"members":3,"height":7.16265076630154,"edgePar":{"col":""},"children":[{"members":2,"height":4.30519906624537,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"Chris Bosh ","edgePar":{"col":""}},{"members":1,"height":0,"label":"David West ","edgePar":{"col":""}}]},{"members":1,"height":0,"label":"Kevin Durant ","edgePar":{"col":""}}]},{"members":2,"height":5.67350694015615,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"Dirk Nowitzki ","edgePar":{"col":""}},{"members":1,"height":0,"label":"Antawn Jamison ","edgePar":{"col":""}}]}]},{"members":4,"height":11.2788723727153,"edgePar":{"col":""},"children":[{"members":3,"height":6.96921896628309,"edgePar":{"col":""},"children":[{"members":2,"height":5.38711035713953,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"LeBron James ","edgePar":{"col":""}},{"members":1,"height":0,"label":"Dwyane Wade ","edgePar":{"col":""}}]},{"members":1,"height":0,"label":"Kobe Bryant ","edgePar":{"col":""}}]},{"members":1,"height":0,"label":"Chris Paul ","edgePar":{"col":""}}]}]}]},{"members":6,"height":12.1702593645329,"edgePar":{"col":""},"children":[{"members":5,"height":10.733253048354,"edgePar":{"col":""},"children":[{"members":3,"height":6.57878666624781,"edgePar":{"col":""},"children":[{"members":2,"height":3.69894741784741,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"Yao Ming ","edgePar":{"col":""}},{"members":1,"height":0,"label":"Tim Duncan ","edgePar":{"col":""}}]},{"members":1,"height":0,"label":"Shaquille O'neal ","edgePar":{"col":""}}]},{"members":2,"height":4.48769305991397,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"Pau Gasol ","edgePar":{"col":""}},{"members":1,"height":0,"label":"LaMarcus Aldridge ","edgePar":{"col":""}}]}]},{"members":1,"height":0,"label":"Dwight Howard ","edgePar":{"col":""}}]}]},{"members":8,"height":15.3950751216095,"edgePar":{"col":""},"children":[{"members":5,"height":13.7172410126818,"edgePar":{"col":""},"children":[{"members":3,"height":8.4133949152527,"edgePar":{"col":""},"children":[{"members":2,"height":4.5792357440953,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"Al Jefferson ","edgePar":{"col":""}},{"members":1,"height":0,"label":"Zachary Randolph ","edgePar":{"col":""}}]},{"members":1,"height":0,"label":"Amare Stoudemire ","edgePar":{"col":""}}]},{"members":2,"height":6.49309848993529,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"Corey Maggette ","edgePar":{"col":""}},{"members":1,"height":0,"label":"Josh Howard ","edgePar":{"col":""}}]}]},{"members":3,"height":12.2345751458725,"edgePar":{"col":""},"children":[{"members":2,"height":7.43337467103603,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"Stephen Jackson ","edgePar":{"col":""}},{"members":1,"height":0,"label":"Allen Iverson ","edgePar":{"col":""}}]},{"members":1,"height":0,"label":"Kevin Martin ","edgePar":{"col":""}}]}]}]},{"members":2,"height":10.2632176241177,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"Michael Redd ","edgePar":{"col":""}},{"members":1,"height":0,"label":"Monta Ellis ","edgePar":{"col":""}}]}]},"cols":{"members":20,"height":506.98585094458,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"G","edgePar":{"col":""}},{"members":19,"height":254.69853996048,"edgePar":{"col":""},"children":[{"members":16,"height":51.0299584361971,"edgePar":{"col":""},"children":[{"members":11,"height":29.2714409963022,"edgePar":{"col":""},"children":[{"members":2,"height":20.1402581909965,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"X3PA","edgePar":{"col":""}},{"members":1,"height":0,"label":"AST","edgePar":{"col":""}}]},{"members":9,"height":15.5543838836516,"edgePar":{"col":""},"children":[{"members":6,"height":9.55719624157629,"edgePar":{"col":""},"children":[{"members":4,"height":4.80579421115803,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"BLK","edgePar":{"col":""}},{"members":3,"height":3.46694736043108,"edgePar":{"col":""},"children":[{"members":2,"height":1.43740843186618,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"X3PP","edgePar":{"col":""}},{"members":1,"height":0,"label":"FGP","edgePar":{"col":""}}]},{"members":1,"height":0,"label":"FTP","edgePar":{"col":""}}]}]},{"members":2,"height":6.10081961706786,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"STL","edgePar":{"col":""}},{"members":1,"height":0,"label":"X3PM","edgePar":{"col":""}}]}]},{"members":3,"height":11.0295058819514,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"ORB","edgePar":{"col":""}},{"members":2,"height":5.24404424085076,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"TO","edgePar":{"col":""}},{"members":1,"height":0,"label":"PF","edgePar":{"col":""}}]}]}]}]},{"members":5,"height":24.030189345904,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"FGM","edgePar":{"col":""}},{"members":4,"height":21.0347331810984,"edgePar":{"col":""},"children":[{"members":2,"height":11.6674761623926,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"DRB","edgePar":{"col":""}},{"members":1,"height":0,"label":"TRB","edgePar":{"col":""}}]},{"members":2,"height":9.27307931595541,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"FTM","edgePar":{"col":""}},{"members":1,"height":0,"label":"FTA","edgePar":{"col":""}}]}]}]}]},{"members":3,"height":144.9688587249,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"MIN","edgePar":{"col":""}},{"members":2,"height":36.6788767548844,"edgePar":{"col":""},"children":[{"members":1,"height":0,"label":"FGA","edgePar":{"col":""}},{"members":1,"height":0,"label":"PTS","edgePar":{"col":""}}]}]}]}]},"matrix":{"data":["81","3.8","3.6","0.3","0.391","0.457","0.83","1","1.5","0.7","2.8","2.7","6.7","5","5.6","5.7","6.8","37.4","14.6","20.5","82","3.6","2.4","0.2","0.397","0.439","0.805","0.8","1.4","0.7","2","3.1","6.5","3.9","4.6","5.1","6.3","35.9","14.9","19.6","79","3.1","1.7","0.7","0.351","0.453","0.767","1.2","1.1","1.4","2.6","2.8","7.2","4.2","5.5","3.3","4.4","37.3","16","18.9","79","3.8","3.2","0.3","0.417","0.472","0.83","1.1","1.6","0.7","2.1","2.3","6.5","3.5","4.2","3.6","4.4","37.5","13.8","18.3","82","5.1","3.4","0.3","0.41","0.455","0.864","0.9","2.1","0.6","2.4","2.2","7.3","2.8","3.5","4","4.7","36.6","16","20.7","82","4.6","3.2","0.2","0.384","0.438","0.879","1.1","1.8","0.7","2.8","2.5","6.9","3.1","3.8","3","3.4","38","15.6","18.5","82","3.2","5.3","0.4","0.307","0.473","0.724","1.6","1","1.1","2.7","1.9","6.6","4.6","5.7","4.6","6.4","39.8","14","18.8","79","5.2","5.8","0.2","0.36","0.437","0.826","1.1","1.9","0.8","2.5","2.2","7.8","3.6","4.4","3.8","4.6","39.5","18","21.4","80","4.9","4.7","0.5","0.385","0.437","0.817","1","1.9","0.9","2.1","2.9","7.4","4.2","5.1","4.2","5.1","36.8","16.8","20.8","78","2.8","5.1","0.3","0.377","0.48","0.824","1.1","1.1","1.3","1.9","1.6","8.1","3.4","4.7","5.3","6.5","37.2","16.9","22.6","81","5.2","4.1","0.1","0.436","0.467","0.912","0.9","2.3","0.6","2.2","2.7","6.5","2.9","3.4","2.6","2.8","35","13.9","17.8","79","6.2","2.8","0.2","0.409","0.48","0.952","0.9","2.5","0.8","1.7","2","6.3","2.7","3.5","3","3.2","36.3","13.2","18.2","79","7","2.6","0.6","0.397","0.439","0.836","1","2.8","1.2","2","2.5","6.1","4.6","5.7","2.8","3.4","36.2","13.8","17.7","79","5","6.4","0.2","0.408","0.418","0.913","1.2","2.1","0.4","2.2","2","5.2","2.6","3","5.3","5.8","35.3","12.4","17.7","74","6.2","3.4","0.3","0.366","0.463","0.88","1.3","2.3","0.5","1.6","1.9","7.3","1.9","2.4","2.7","3","33.6","15.8","19.6","74","5.2","4.1","0.1","0.325","0.437","0.841","1.3","1.7","1.3","1.9","2.8","6.1","2.6","3.9","3.4","4","29.9","13.9","17.2","73","6.4","1.4","0.3","0.364","0.439","0.793","1.2","2.3","1.4","2.2","3.1","7.3","4.9","6.2","3.2","4","34.9","16.6","20.1","72","0.9","6.9","0.1","0.292","0.506","0.782","0.9","0.3","0.4","2.6","1.5","8.9","2.7","3.1","3.9","5","34.1","17.5","22","69","3.2","6.9","0.2","0.291","0.438","0.82","1.7","0.9","0.4","3.1","2.4","6.6","2.9","3.3","7.2","8.8","36.1","15.1","21.3","68","3.3","10.7","0.3","0.31","0.471","0.849","1.1","1","0.4","3.4","2","6.8","2.5","2.9","4.8","5.6","36.9","14.5","19.4","65","6.1","4.4","0.2","0.36","0.41","0.872","0.9","2.2","0.4","2.3","1.4","6.4","2.6","3","4.6","5.3","38.1","15.7","19.7","67","2.8","4.4","0.1","0.368","0.447","0.848","0.6","1","0.7","2","2.6","7","2.4","3.1","3.3","3.9","34","15.6","18.3","66","2.6","3.4","0.4","0.371","0.443","0.793","1.1","1","1.6","3","3","8.1","5.2","6.8","5.6","7.1","34.5","18.3","22.8","67","3.1","4.3","0.3","0.31","0.453","0.858","1.6","1","1.8","3.1","2.5","7.3","4.4","6.2","5.1","6","38.6","16.2","20.8","67","6.7","2.7","1.4","0.404","0.447","0.878","1","2.7","0.7","2.5","3.1","8.5","4.4","5.1","6","6.9","36.2","19.1","25.8","77","0.6","2.5","1","0.245","0.487","0.817","0.9","0.2","2.8","2.3","2.5","8","7.2","10","6.5","8","38.1","16.4","22.7","76","0.3","2.3","0.9","0.24","0.472","0.884","0.6","0.1","2.1","2.1","2.7","8","6.4","8.5","4.8","5.5","39.3","17","21","74","3.1","2.8","0.7","0.422","0.476","0.863","1.3","1.3","1","3","1.8","8.9","5.5","6.5","6.1","7.1","39","18.8","25.3","81","2.1","2.4","0.8","0.359","0.479","0.89","0.8","0.8","1.1","1.9","2.2","9.6","7.3","8.4","6","6.7","37.7","20","25.9","81","3.9","1.9","0.3","0.351","0.468","0.754","1.2","1.4","2.4","1.5","2.7","8.3","6.5","8.9","4.2","5.6","38.2","17.8","22.2","81","4.7","7.2","1.1","0.344","0.489","0.78","1.7","1.6","1.3","3","1.7","9.7","6.3","7.6","7.3","9.4","37.7","19.9","28.4","79","3.5","7.5","1.3","0.317","0.491","0.765","2.2","1.1","1.1","3.4","2.3","10.8","3.9","5","7.5","9.8","38.6","22","30.2","82","4.1","4.9","0.5","0.351","0.467","0.856","1.5","1.4","1.1","2.6","2.3","9.8","4.1","5.2","5.9","6.9","36.2","20.9","26.8","78","2.3","11","0.1","0.364","0.503","0.868","2.8","0.8","0.9","3","2.7","8.1","4.7","5.5","5.8","6.7","38.5","16.1","22.8","77","0","1.8","1.9","1","0.548","0.866","0.4","0","2.6","3","3.3","7.4","7.2","9.9","4.9","5.7","33.6","13.4","19.7","75","0","3.5","1.7","0","0.504","0.692","0.5","0","2.7","2.2","2.3","7.4","8","10.7","4.5","6.4","33.7","14.8","19.3","75","0","1.7","1.4","0","0.609","0.595","0.7","0","2.5","2.2","3.4","6.8","5.9","8.4","4.1","6.9","30.1","11.2","17.8","81","0","3.5","1","0.5","0.567","0.781","0.6","0","3.2","1.9","2.1","7.3","6.4","9.6","4.2","5.4","37.1","12.9","18.9","81","0.3","1.9","1","0.25","0.484","0.781","1","0.1","2.9","1.5","2.6","7.4","4.6","7.5","3.2","4.1","37.1","15.3","18.1","79","0","1.4","2.9","0","0.572","0.594","1","0","4.3","3","3.4","7.1","9.6","13.8","6.4","10.7","35.7","12.4","20.6","50","0.1","1.6","1.7","0","0.497","0.738","0.8","0","3.4","1.8","2.8","9.7","7.5","11","3.7","5","36.6","19.5","23.1","50","1.9","2.1","0.3","0.33","0.475","0.734","0.9","0.6","3.1","2.3","2.7","8.3","6.9","10.1","3.6","4.9","35.1","17.5","20.8","53","0.1","2","1.1","0.429","0.539","0.835","0.9","0.1","2.2","2.8","3.1","7.6","5.9","8.1","6.1","7.3","36.8","14.1","21.4","51","1.9","1.8","0.2","0.253","0.461","0.824","0.9","0.5","1","2.4","3.8","5.7","4.6","5.5","6.7","8.1","31.1","12.4","18.6","52","3.2","1.6","0.6","0.345","0.451","0.782","1.1","1.1","1.1","1.7","2.6","6.8","3.9","5.1","3.3","4.2","31.9","15.1","18","59","5.2","6.5","0.5","0.338","0.414","0.826","1.5","1.7","1.2","3.9","2.6","7","3.9","5.1","5","6","39.7","16.9","20.7","57","1.7","5","0.1","0.283","0.417","0.781","1.5","0.5","0.5","2.6","1.5","6.1","2.5","3","4.8","6.1","36.7","14.6","17.5","51","5.4","2.7","0.2","0.415","0.42","0.867","1.2","2.3","0.6","2.9","2.3","6.7","3","3.6","9","10.3","38.2","15.9","24.6","33","5.8","2.7","0.1","0.366","0.455","0.814","1.1","2.1","0.7","1.6","1.4","7.5","2.5","3.2","4","4.9","36.4","16.6","21.2","25","1","3.7","0.3","0.308","0.451","0.83","1.6","0.3","0.6","2.7","2.7","7.8","3.8","4.3","3.1","3.8","35.6","17.2","19"],"dim":[50,20],"rows":["Paul Pierce ","Richard Jefferson ","Rudy Gay ","John Salmons ","Ben Gordon ","O.J. Mayo ","Andre Iguodala ","Joe Johnson ","Vince Carter ","Brandon Roy ","Maurice Williams ","Ray Allen ","Rashard Lewis ","Chauncey Billups ","Jason Terry ","Nate Robinson ","Al Harrington ","Tony Parker ","Devin Harris ","Deron Williams ","Jamal Crawford ","Richard Hamilton ","Carmelo Anthony ","Caron Butler ","Danny Granger ","Chris Bosh ","David West ","Kevin Durant ","Dirk Nowitzki ","Antawn Jamison ","LeBron James ","Dwyane Wade ","Kobe Bryant ","Chris Paul ","Yao Ming ","Tim Duncan ","Shaquille O'neal ","Pau Gasol ","LaMarcus Aldridge ","Dwight Howard ","Al Jefferson ","Zachary Randolph ","Amare Stoudemire ","Corey Maggette ","Josh Howard ","Stephen Jackson ","Allen Iverson ","Kevin Martin ","Michael Redd ","Monta Ellis "],"cols":["G","X3PA","AST","BLK","X3PP","FGP","FTP","STL","X3PM","ORB","TO","PF","FGM","DRB","TRB","FTM","FTA","MIN","FGA","PTS"]},"image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAUCAYAAADPym6aAAAMA0lEQVRIiS2X6W9c93WGn9/dZ+7cOzuHQw4XkRYlkxJFKdq8JLFdb3ETt64Ru25aNEC6uI3R9kuDBkgKAQX6oUVrFEiKGHU3u2lduw1gw0vsSrIjOZZkWZG1URIpkRSX4ZCc4cxw9jt36QfmH3hxDvCe532P+PV/Oh8kIjrRsEoirHBrvUl/3GC95tAT0ViptNnTF+HsXJmwprC33+LGWgM7pLJcaqIpEkLARJ/FRqPLrUKN3niInakQQgiurNSYGrBYqXbJRTWurtbZnTFRJHjr8zWeOtDLeq2Lpkjc2WwBglhYxdIlAuB6vkZvLMx4JsSF5TqKJOiJqFiGzM31FqYu47g+UszUqLe7qLKg2vJIRjQG4zoTvSaLmy1MQyUIQJYEqiJRbrnsSIVYq7ZJxwzChkLSNriar9Fna9wzmiBlahiqRNcLmOiLIBDkohqfLlQ5MGBhqBInb5QwdZmlioOuStws1MlGDSqNDvGQzMczJeIhhUwsRMpUmCm2OJAzmegNo8gC1wuQBDhugCJJSKVaZ3tQIchYKuVGl5bjc3x6g4SlUyg3EQI8P0BXZUKqhKXLHB6OcnTQ4sG7Yixt1OmNGaiy4MztTWodj9OzZRqOR6npMrPRoieisVZtcafcYaXqYBkqT+7LkLVV8lsOSdug3vGwwxpvn1/ha/syuF7AWqXF2dubzORr1Ds+l1cbWLrMXKmNrsosFetkLRXxB69fDXIxnflSi5FUCEmAIgmEELx1foWYrZONh9msd3C9gGhYI23rbNYd9uUizBbbRHWZK8tVDu2Io0iCc3NlhtIRNFmgyuKXepCvdOh6PlZYpVRtk0uGWSo1mei3WCht20qRBboqIwnwfdjdY9Ab0Xn9YoGpAZu26zO30UQIQRAEBIDT9ZHWq9sba4pE1JC5uLhFfqvLW+dXeHx/lmrdYSJrMtFvY4dUDg5ZjCR1Dg1Z9Fs6j9wVx9QlHp1I02urfL5UpVhpkTIVMpbKYqlJvtrhf0/NM5w0uLGwSb+l8dW9aQZiGg/uSpCJqOzPWXxpNMpDo3E8P2Cqz2RX2uCjmU3+6ifTTOZslqoOcxtNpgYsJEmQi4e4OL1OLhlGvPiz28HMRpsjQxbnFmuossTRAYuAgLOLNXb3hNAVwQfTJdqOR63t8sRkhs+Xtnh8PMWPTs4zPpxgfq3G1w9mWak6pEyF8ZTNwlYDgFOzZaKmRiKssDcTodJxODNf48ZimXvv7sE2ZBbLbWxD5fpKlaSls1Co8ezRHJmITrnlcGOjxdEBm67vIwuBIknUul0uLjeJh2Xk3OO/f2y51GDLCRjPhKm0PVRZ8PO5Ki3H4/ZGk0ZXcHDQYrnS4etfyKIrEklTxQsCpoZjPD2eJRSWiOgy04UmJy6tMtpvsrrlcL3QZE+fie9DodblnYt5fFmh194mYia2TUhZEkz2hRnrjWAZCsgyXiC4vt4kF9N55xd5hnpMFjY7/N90EU2TqXc8RpI6EV1G3vcbzx/73UM53rqY58BQlJ6ISrXlEQ2p7MqEmdto4fkBbS/A0BTevZhnKB2h3HLRFYnptSb/+vEc6ViIsCbz0fV1Do2l0RWBpcv0RXX+/eQ8C+t1dmRtxrIWtbaHLAmipsarr3/GV+7dAQgWKw4zhTqekLBDCiNJgzc/WWRiKMZQOkLCVEiEFRouuH7AarVDWJOptT3EsfdnguOX19g1EGN3JsxsscXDd8X58fk8h3bEOH5tneeO9HO72OaR0SSz5TqaIgFwdbVJSJW4vrLFcE8E25DpegGuH7DZ6LKv3+RKvsFw0mA6X+ex8RRXCw3SpooiwdXVBv0xg5GkQdfz8QKQBXgBzGy02JEwWK91cf1tTU0WrNUcxtIhqm2PmuNjKIJS3UFWj/7WMUOXkYWg1HDx/IArKzWEEIymwyyUWixXOqQsnavrDRbLbWRJkK86WLrMzFqdctNhIBnmTrHJteUKUVMnYsgUmx5+EFBqdAnpKqduFgnpCjXHx/XgzLU1JgajvH52maoTYOoyx6eLGJrKB+eXGR+MsVjucHmxQqXhYIY1YiGF8/MVGh2PsK5wfqbIylod+Z7ffOHYU1MZTF1hodRkasCm1OyStA10RXDfaJyTl9cY7InQ6vo02l3O3dzgTqHGSrVDy/GwQypCkmh1XFK2wcNjCQjg1nqDiWyELcdnYb3GN470M5wwOHurzEg6DIrMRs3B8QNajoeiKmTjIc7c3GDnYJymG+B6AbmkyVjGpNToslZtk7INGu0unh/QnzKZ2hFHWd9qEwTw3qUC2USYmfUWxa0OrY7H9FKZwAcEzBRqHByOsSOho8gShibjeQF3inW+vCvJVtujFdEYjGnMFlv8z6kFQiGFSqODLEmkLIO3r6xz604FIbY1Y6bGkcEo5ZZLvrp98MNxnepAHN/3mclX+dMvj/DGpQLLpQaVpkMQwM5MhIguc6tQY6vZpdF2kSefev7Y7HqT8lYbVZNJWAaSgL05i5mVLXLpCDv7Y+TLTX5lV5IfvD2DpMl4fsC1W0VqWx3aQnD22hpnLizhhXS6AWxUWoQjOvuGEnRdnwODNm+8f5OvfHGEXbkoF66vs380yYuvfMrUeJaQKvH+uSXOTG8gNJlPzi2wMFOgpGoYmowiCXb22kRNDTeA1UoLx/XoiRpkYwby0edeODacMrl0s8h9ezLoiiBfblNudhntszl9YYWF/BYjfTZIgveOX+P5JyeoOQGKJpOMh3j3lXf51nP3c3A8w81CDV2RiVo6uWQEVRZs1DqUGi5WPIQV0ljebJJNmTy0M8HhySwvvXOTD17+D5Jju9l9V4o/vG+Qh/b3s9gFhGB1vcHO/hhnr69RKDVJxULETI2HdsXpj21XG3nq6T8+9sBonFA0xAfnlvjzh8c4PVfiW0cH6LM1HtyT4fJqjYOjCRwvYGK8nzc+mme12ODgrjSBEPzRs0eodTwkAW4geHJPmh5b4/iVAn/2pVG+98MPee1PHsAwBLvTJqdmiuwfivEvJ24zkrVxZZmB/Xt5ZH+WcrPLE7szSEKQ6wlxp9Tm+Qd2kK85+AJ8CT69mOf+PT3EQyphReal92YR//jz+aDe8SjUu1xZrNBsdHloshfH8ylUOzyyO0G+6vDJ7U2e/UKWUrPLhzdLHBqOcaPQYLQnTMvxGe8N8w/v3uL7v3Y3b06vY+oqXd+nVG3zyHiSrhdwbmGLbMxgMKbx0cwmz+zPUnW6vPCdVzj58gs88/c/48RfPsq/XVhiXzbC8397goP37WSz1OSxQzle/u9f4Lkek4dHmJku8Ntfm+BQzuL0QhXxk0urgev7VNpdfvDOLC998yB/d2qOJ/akqLY8+iyd7/3nZb77zDg/vVZkeraEYSi02y7ffHSURscnv9Xh0myRbNrkdw7nmCk2MFSJWsdjo+HS6XrcM2yzXOlgKBKvnpzjscMDrFbaNDouG5UWnbbLc18cou54AFxa3KI3EeLeQRtFEhTq24ke0mTmlqpM7kwxkgoxnDB47Xwe8fQ/fxZs1h3G+mzWyi28YBt5urpNmomsyXShwaO7ktwuNbENmYbj4/oB5aZLte0yENOxdJliw6XSdnnzxCwv/t4hjt8uE1IkPp0poqgSf/2r4+QbLZaqbfosndMLVSazYS6tNgkCyERUhIBi00USYCgSe3vDnJwtM5oK03Q8vACGEjquFzCWiHDqTpn+qIb87e9899hCqUWh3GJiIEYkpPLViTQbTY/VcpO1mkOPbfA3r35GsjeKJEm0uz5tdzu9JUni9LU12oFASBKT2TBTY2lO3Nxkfy6C68NjE2nils5rF5ZJ2zqKLDh1u8yTd/fQ8X2ytkqvrXGr2KLadul6PrmoznBCJ6QqfHhjg8FkGFOXufHLD/On14rMVztcuFVkLGshS4e/cWxyMMZkziZlKqRMhb/44ccsbjTJ9lj0JUw+nyvxX9++nx+fW2Jn73bnWdhsk7F1un5AfzrC/FqdA4M2vZbBsB1mYavDcELH1GRWthwAJEVmpdKh2HT5/sNjXFqrcHm1iecHrFYd4iGVSstlbq3GkR1Rah2fEzdKWCGVatvDUGX64wZhTWJnj0nbDfCBtKXx/6QKieQI6elNAAAAAElFTkSuQmCC","theme":null,"options":{"xaxis_height":80,"yaxis_width":120,"xaxis_font_size":null,"yaxis_font_size":null,"brush_color":"#0000FF","show_grid":true,"anim_duration":500}},"evals":[]}</script>
-
-
-<!--/html_preserve-->
-
-
-<p>短短4行代码，轻松实现交互式heatmap，同时还赠送聚类分析结果，真的很实惠。
-此处图形没有出现，正在找原因，你可以在这个网页看到，请点击: <a href="http://spatial-r.github.io/Data-visualization-in-public-health/Interactive%20Heatmap/">Here</a></p>
-
-<hr />
-
-<h2><strong>rCharts</strong></h2>
-
-<p>在没有d3heatmap前，<a href="http://rcharts.io/">rCharts</a>是创造交互式heatmap唯一的方式。首先得感谢<a href="http://stefan-wilhelm.net/">Stefan Wilhelm</a>, 在他的<a href="http://stefan-wilhelm.net/interactive-highcharts-heat-maps-in-r-with-rcharts/">博文</a>中介绍了用R实现交互式heatmap的方法并且附上了详细的代码。其功能和d3heatmap相比，要弱(至于弱在什么地方，读者可自行体验)，但终究是一种不错的方式。当数据超过1000行时，需重新定义turboThreshold参数，具体可见其<a href="http://stefan-wilhelm.net/interactive-highcharts-heat-maps-in-r-with-rcharts/">博文</a>。示例如下：</p>
-
-<pre><code class="r">library(dplyr);library(rCharts);library(rjson)
-#load("country.RData")
-dat.f&lt;-dat.f[1:910,];colnames(dat.f) &lt;- c("y","x","value"); 
-    map &lt;- Highcharts$new()
-    map$chart(zoomType = "x", type = 'heatmap')
-    map$title(text='Sales per employee per weekday')
-    map$series(name = 'Sales per employee',data = toJSONArray2(dat.f, json=FALSE))
-    map$yAxis(categories = as.character(c(16071:16080)))
-    map$xAxis(categories = as.character(c(1:91)))
-    map$plotOptions(series=list(turboThreshold = 4000))
-    map$addParams(colorAxis = list(min = 0,minColor='#FFFFFF',maxColor='#7cb5ec'))
-    map$legend(align='right',layout='vertical',margin=0,verticalAlign='top',y=35,symbolHeight=320)
-    map$tooltip(formatter = "#! function() { return '&lt;b&gt;' + this.series.xAxis.categories[this.point.x] + '&lt;/b&gt; sold &lt;br&gt;&lt;b&gt;' + this.point.value + '&lt;/b&gt; items on &lt;br&gt;&lt;b&gt;' + this.series.yAxis.categories[this.point.y] + '&lt;/b&gt;'; } !#")
-    map$addParams(height = 900, width=800, dom="heatmap")
-</code></pre>
-
-<p>此处我并没有将country这个数据集公开，但只要读者好好研究StefanWilhelm的那篇博文，实现交互式heatmap并不难，但考虑到d3heatmap程序包的强大，rCharts程序包仅仅只是作为一个辅助方式，所以，你懂的。</p>
+      <guid>http://xukuang.github.io/blog/2016/04/dots-in-r</guid>
+      <content:encoded><![CDATA[<p>title: “实用的R函数”
+date: 2016-04-21 15:46:58
+categories: [技术篇]
+tags: [R]
+—
+这篇文章记录的是在使用R的过程中偶然遇到的非常实用的函数，然而由于这些函数在自己的学习中太常用特别容易忘记，所以这里记下来以便以后使用的时候可以查看。学无止境，长期更新。
+## 场景一
+在查看多个变量之间的两两相关性的时候，可以使用picante包中的cor.table()函数。
+## 场景二
+在R中加载了多个R包时，希望查看当前环境中都加载了哪些R包的find.package()函数，临时卸载某个R包可以使用函数detach(package:包名)。如要卸载dplyr包，则为detach(package:dplyr)。
+## 场景三
+expand.grid()用来建立一些factor相乘出来的矩阵或data.frame。<!--more-->
+<code>
+expand.grid(x = c('A', 'B', 'C', 'D'), y = 1:3)
+	#    x y
+	# 1  A 1
+	# 2  B 1
+	# 3  C 1
+	# 4  D 1
+	# 5  A 2
+	# 6  B 2
+	# 7  C 2
+	# 8  D 2
+	# 9  A 3
+	# 10 B 3
+	# 11 C 3
+	# 12 D 3
+</code>
+## 场景四
+使用with()和within()函数对数据框列引用时，可以不用再输入长长的数据框名了。两者的区别在于，with只是生成了一列数据，而within生成一个包含原始数据的数据框。
+<code>
+with(dat, y + 2)
+	# [1] 4 5 6 7
+within(dat, {z = y + 2; a = x + 3})
+	#   x y a z
+	# 1 1 2 4 4
+	# 2 2 3 5 5
+	# 3 3 4 6 6
+	# 4 4 5 7 7
+</code>
+## 场景五
+cut()函数可以把连续变量离散化，即numeric型的数据转换成factor型，可以与table()函数一起使用。
+<code>
+cut(x, breaks, labels = NULL,
+    include.lowest = FALSE, right = TRUE, dig.lab = 3,
+    ordered_result = FALSE, ...)
+</code>
+<strong>主要参数</strong>
+x: 需要离散化的连续型向量
+breaks: 向量类型，指定分类指标。默认的情况下，左开右闭合，这里可以结合正无穷(+Inf)和负无穷使用
+labels：向量类型，指定分类指标的名称。如果不限定，则默认用分类指标为名称
+inlude.lowest: 逻辑类型，指定边界是否闭合，默认的是边界不闭合
+right: 逻辑类型，指定左开右闭合还是右开左闭合，默认的是TURE，左开右闭合
+dig.lab: 数字，指定分类指标名称的数字位数。默认情况下，当labels为NULL时，指标名称的数字只显示3位
+orederd_result: 逻辑类型，指定分类指标是否有序
+<code>
+cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf))
+	#  [1] &lt;NA&gt;     (2.22,5] (2.22,5] (5,Inf]  (5,Inf]  (1,2.22] (2.22,5] (5,Inf]  (5,Inf]  (2.22,5] &lt;NA&gt;     (5,Inf] 
+	# Levels: (1,2.22] (2.22,5] (5,Inf]
+## 边界闭合，即包含左端的1
+ cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf), include.lowest = T)
+	#  [1] [1,2.22] (2.22,5] (2.22,5] (5,Inf]  (5,Inf]  [1,2.22] (2.22,5] (5,Inf]  (5,Inf]  (2.22,5] [1,2.22] (5,Inf] 
+	# Levels: [1,2.22] (2.22,5] (5,Inf]
+## 左闭合右开
+cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf), right = F)
+	#  [1] [1,2.22) [2.22,5) [5,Inf)  [5,Inf)  [5,Inf)  [1,2.22) [2.22,5) [5,Inf)  [5,Inf)  [2.22,5) [1,2.22) [5,Inf) 
+	# Levels: [1,2.22) [2.22,5) [5,Inf)
+## 指定分类名称
+ cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf), labels = c('small', 'middle', 'big'))
+	#  [1] &lt;NA&gt;   middle middle big    big    small  middle big    big    middle &lt;NA&gt;   big   
+	# Levels: small middle big
+## 分类指标有序
+ cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf), ordered_result = T)
+	#  [1] &lt;NA&gt;     (2.22,5] (2.22,5] (5,Inf]  (5,Inf]  (1,2.22] (2.22,5] (5,Inf]  (5,Inf]  (2.22,5] &lt;NA&gt;     (5,Inf] 
+	# Levels: (1,2.22] &lt; (2.22,5] &lt; (5,Inf]
+</code>
+## 场景六
+求导数的函数。dxy=deriv(f~x^2+y^2,c(‘x’,’y’),func=T) 
+## 场景七
+split()函数能将数据框按某一列分为包含若干个数据框的列表。然后，unsplit()可以将这个列表合并。</p>
 ]]></content:encoded>
     </item>
     
     <item>
-      <title>surveillance 程序包简介(一): 暴发探测</title>
-      <link>http://spatial-r.github.io/cn/2015/06/Surveillance1/</link>
-      <pubDate>2015-06-03T00:00:00+08:00</pubDate>
+      <title>Data Table In R</title>
+      <link>http://xukuang.github.io/blog/2016/04/data-table-in-R/</link>
+      <pubDate>2016-04-13T00:00:00-06:00</pubDate>
       <author>Spatial-R</author>
-      <guid>http://spatial-r.github.io/cn/2015/06/Surveillance1</guid>
-      <content:encoded><![CDATA[<p>Welcome to surveillance Project! 这是一篇针对surveillance程序包相关方法的总结，有疑问请联系<a href="zhangbing4502431@outlook.com">张兵: Spatial-R</a></p>
-
-<p><a href="http://surveillance.r-forge.r-project.org/">Surveillance</a> 程序包提供了一系列前瞻性爆发探测和回顾性的时空模型，主要适用的数据类型是时间序列频数、时序百分比和时序分类数据。</p>
-
-<hr />
-
-<h2>前瞻性暴发探测</h2>
-
-<p>Aberration Detection(Change-point detection, Outbreak Detection)，我将其都翻译为暴发探测，但仔细推敲，各词组间含义差别还是有点大。具体如下：</p>
-
-<ol>
-<li><p><a href="http://baike.baidu.com/view/25914.htm?fromtitle=Aberration&amp;fromid=8102429&amp;type=syn">Aberration</a> 原指光行差，是指同一瞬间运动中观测者所观测的天体视方向与静止观察者所观测到天体的真方向之差，通俗理解就是偏差。</p></li>
-<li><p><a href="http://baike.baidu.com/view/4399435.htm">Change-Point</a> 指在某一位置或时刻点，前后观测值遵循两个不同的模型。<a href="http://CRAN.R-project.org/package=changepoint">changepoint</a> 程序包也提供了一系列变点探测的方法，主要依托于变点前后均值或和方差的差异性。</p></li>
-<li><p><a href="http://baike.baidu.com/link?url=xnLkGt0RfVwftGje17US3jJHmST1IKCoS9qEZnJ9A-5eGQ8ms4GAgTp5mCstsGjYpzkRHpaZiJ6F8Gt7nHqQj_">Disease Outbreak</a> 指在局限的区域范围和短时间内突然出现许多同类病例的现象，对于区域范围、时间范围和案例数目都没有确切定义，因而不同空间尺度下，可能会存在截然不同的疾病分布状态。</p></li>
-</ol>
-
-
-<p>  综上所述，用Aberration或Change-point来归纳surveillance程序包中的方法可能更加确切。同时也需注意，上述两种都是正向改变，也就是说个案数目应增多。</p>
-
-<p><strong>surveillance</strong>程序包以<strong>S4</strong>方式，按照<strong>STS</strong>(surveillance time series)格式编排数据(该数据格式的说明可参考<a href="http://arxiv.org/pdf/1411.1292v1.pdf">此文</a>)。很多文章都对传染病监测方法进行了介绍，包括若干已经成功应用于疾病预防控制中心常规监测系统中的方法，如rki，已成功应用于德国的Robert Koch Institute。总的说来，<a href="http://arxiv.org/abs/1411.1292">Salmon et.al 2014</a>一文系统详细地介绍了目前异常值监测方法，主要分为<strong>单个异常点监测</strong>、<strong>异常时段监测</strong>和 <strong>分类数据异常监测</strong>。</p>
-
-<p>异常点监测较为常规的方式是基于历史数据(<strong>in-control</strong>)来估计某个时刻的病例数，并与阈值想比较，若高于阈值，则将其定义为 <strong>out-control</strong>。通过比较每个时间点的in-control和out-control状态，即可获得相应变点。</p>
-
-<hr />
-
-<h3>单个异常点</h3>
-
-<p>单个异常点监测是监测系统中较为常见的方式，通俗地理解就是一段时序数据中在某个时间点发生了较为重要的改变。</p>
-
-<ol>
-<li><p>Method <strong>EARS</strong>： CDC异常检测系统中的早期方法，surveillance程序包中的 <strong>sarsC</strong> 可实现这个过程，更为详细地说明可参考<a href="http://onlinelibrary.wiley.com/doi/10.1002/sim.3197/abstract">Fricker，Hegler 和 Dunfee</a>。当疾病历史数据较少时且数据较平稳时，此方法较合适，同时该程序包提供了<strong>C1</strong>、<strong>C2</strong>和<strong>C3</strong>方式来实现变点探测。但该方法没有考虑到疾病时序数据如过度离散、周期性、长期趋势和过往疾病暴发对现状的影响等特性，同时也没有对将来数据进行区间预测。</p></li>
-<li><p>Method <strong>Farrington</strong>： 该方法最初由Farrington在<a href="http://www.jstor.org/pss/2983331">Farrington et.al. 1996</a> 提出，<a href="http://www.statistik.lmu.de/~hoehle/pubs/hoehle_mazick2009-preprint.pdf">Hohle和Mazick 2010</a>一文中详细介绍了该方法，其主要基于广义线性或相加模型来探测异常值，而<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3692796/">Noufaily et.al 2012</a>在原方法的基础上，采用因子来校准季节性，同时当Anscombe残差大于2或者3时采用再加权进而有效改善了<strong>"低加权"</strong>现象(Down-weighting)。 FarringtonFlexible函数可实现该过程。</p></li>
-<li><p>Method <strong>Boda</strong>: 在FarringtonFlexible方法的基础上，boda (Bayesian Outbreak Detection Algorithm)采用成熟的贝叶斯广义线性或相加模型，通过惩罚样条函数(Penalized Spline)来校准长期和季节性趋势，并能即时调整以往暴发或以往疾病情况对当前个案数的影响。为了更好地获得参数的后验分布，boda采用<a href="http://www.sciencedirect.com/science/article/pii/S0167947313001552">Integrated Nested Laplace Approximaxion</a>方法来逼近贝叶斯推断。</p></li>
-</ol>
-
-
-<hr />
-
-<h3>异常时段</h3>
-
-<p>时序中的异常时段由单个异常点组成，但其具体实现过程则完全不同于单个异常点监测。控制图(Control Chart)是实现异常时段监测常用方式，其来源于<a href="http://baike.baidu.com/link?url=YzdmviFnqYGO1IDJ-bN0UlPA4KG1em8MixjvW5y45cpmsULww494C3pEFtwvP2mCNVOsjtbLif7h492JVb0II_">统计控制过程</a>(Statistical process control)。然后需要注意的是，控制图并没有考虑到监测数据的过度离散和季节性特性，因而，<a href="http://www.sciencedirect.com/science/article/pii/S0167947308000716">Hohle 和 Paul 2008</a>在传统监测方法上结合统计控制过程，有效地实现异常时段监测。surveillance中的 <strong>glrnb</strong>(负二项分布) 和 <strong>glrPois</strong>(Possion分布) 函数可实现这个过程。该程序包中其他函数如 <strong>cusum</strong> 和 <strong>rogerson</strong> 等也可实现针对异常时段的监测，其效果与glrnb相比可参考<a href="http://www.sciencedirect.com/science/article/pii/S0167947308000716">Hohle 和 Paul 2008</a>。</p>
-
-<p>在控制图中，以广义相加模型结合Possion 或 Negative binomial 分布来定义 in control 状态，而 out control 状态则由 in control 状态来反映。in control 状态的均值可由当前时刻点案例数和参数k获得（参数k可以事先设定或通过模型再估计获得），或是结合当前时刻点案例数和自相关成分综合反映。</p>
-
-<hr />
-
-<h3>分类数据</h3>
-
-<p>在公共卫生监测中，目标变量可能会是分为若干亚组(Categories)的时序数据，如在疫苗接种情况下，不同年龄层传染病的发病情况异常值监测。<a href="http://www.tandfonline.com/doi/abs/10.1080/01621459.1978.10481577">Chen 1978</a>、 <a href="http://link.springer.com/article/10.1023%2FA%3A1007671903559">Reynods和Stoumbos 2000</a>和 <a href="http://www.cdc.gov/mmwr//preview/mmwrhtml/su5301a18.htm">Rogerson和Yamada 2004</a> 等文章强调了针对二分类时序数据异常值探测方法，这些方法都基于常规CUSUM方法，并没有考虑到时序数据过度离散的特性。<a href="http://www.statistik.lmu.de/~hoehle/pubs/hoehle2010-preprint.pdf">Hohle 2010</a>在上述方法的基础上，提出通过采用广义线性模型框架进而有效解决了基础SUSUM方法的缺陷(1,仅适用二分类时序数据；2，无法掌控过度离散特性)，该方法可由surveillance程序包中的<strong>categoricalCUSUM</strong> 函数实现。</p>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>那年夏天</title>
-      <link>http://spatial-r.github.io/cn/2015/05/Summer-In-Hangzhou/</link>
-      <pubDate>2015-05-15T00:00:00+08:00</pubDate>
-      <author>Spatial-R</author>
-      <guid>http://spatial-r.github.io/cn/2015/05/Summer-In-Hangzhou</guid>
-      <content:encoded><![CDATA[<h3>试问闲愁都几许？一川烟草，满城风絮，梅子黄时雨。又是柳絮纷飞的季节，窗外之景，思绪在哪？哦，那年！</h3>
-
-<hr />
-
-<h2>那年夏天，心在躁动</h2>
-
-<p>躁动的心境，其实也是一种享受。</p>
-
-<p>虽然此时的内心并没有完全认同上述语句。</p>
-
-<p>夏天和躁动如果能够划上一个等号，那我只适合生活在北极。</p>
-
-<p>躁动的根本原因是无力扯开生命前那层薄纱---生命的不对等。</p>
-
-<hr />
-
-<h2>那年夏天，心在迷惘</h2>
-
-<p>世界万物，迷惘只是过程，不会是结果。</p>
-
-<p>冒险和迷惘有时候是等同的。</p>
-
-<p>其实自己真正需要的，往往要很多年以后才能明白。</p>
-
-<p>“蓦然回首，那人却在灯火阑珊处”的大彻大悟终究来得晚，但迟与不迟，与个人有关。</p>
-
-<p>如果说生活重在折腾，那么曾经的迷惘和无所适从，应该就是这段路程中最为深刻的记忆。</p>
-
-<hr />
-
-<h2>那年夏天，心在期待</h2>
-
-<p>还年轻，也庆幸自己还有梦。</p>
-
-<p>理性和现实的对照，心中期待不断升华。</p>
-
-<p>如果多年后我能对自己说，你所做的一切都是自己想要的，那时该多庆幸。</p>
-
-<p>真实的人性中存在无尽的可能，所以，该谈恋爱就谈恋爱，该结婚就结婚。</p>
-
-<p>总是在寻找人生的兴奋点，努力让灵魂变得热气腾腾： 窗外有风景吗？</p>
-
-<hr />
-
-<h2>那年夏天，心在成长</h2>
-
-<p>迷惘和期待，终究会推着你成长，不管愿不愿意。</p>
-
-<p>成长的心境比结果更值得回味，若干年后想想总是如此。</p>
-
-<p>因为留恋，所以扭着头慢慢前进，内心又如何？</p>
-
-<p>所有我懂的，不过是对现实妥协，可我还是懂了。</p>
-
-<p>如果下次我迷惘了，请记得为我鼓掌，那才是真正意义的成长。</p>
-
-<hr />
-
-<h3>内心腾开一片空地，等待，下一次躁动；等到，下一个那年！</h3>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>时空统计模型(一)：空间统计</title>
-      <link>http://spatial-r.github.io/cn/2015/01/Spatial-and-Spatial-temporal/</link>
-      <pubDate>2015-01-25T00:00:00+08:00</pubDate>
-      <author>Spatial-R</author>
-      <guid>http://spatial-r.github.io/cn/2015/01/Spatial-and-Spatial-temporal</guid>
-      <content:encoded><![CDATA[<p>接触空间统计学已有近3年了，从毕设开始，得知R在空间统计方面的优势后，毅然扎进"Spatial"和"R"的世界里，Spatial-R的名称应运而生。我从不夸大空间统计学和R软件在我研究生时候的贡献，但自己对于这两样宝贝的热爱，却也不是其他东西能够比拟的。书呆子的生活自是如此，乐此不疲。</p>
-
-<p>还是进入正题，这次主要讨论的主题是空间统计学和时空数据模型等，当然，全部是基于R来实现。因篇幅有限，在此只给大概思路，感兴趣的朋友可以进一步探讨(邮箱：<a href="zhangbing4502431@outlook.com">zhangbing4502431@outlook.com</a>)。</p>
-
-<hr />
-
-<p>国际上已广泛建立了传染病的早期预警平台，但主要是针对症状监测，相比于传统的病例监测，症状监测可以更早期地探测到特定传染病的发生和发展趋势。我国已经建立较为完善的传染病病例监测系统(如传染病疫情信息网络直报系统，俗称“大疫情系统”)，通过病例数据探索传染病传播过程中的异常，并及时采取相应的应对措施，可以有效降低传染病所带来的危害。</p>
-
-<hr />
-
-<h2>空间统计</h2>
-
-<p>空间统计其实是个很宽泛的概念，世间万物都有其空间属性，但并不代表都能用空间统计学去诠释。当然，也有很多原本不存在明显空间熟悉的事物，我们可以将其转换成或者理解成具有空间属性。这里所强调的，也就是不仅仅只有带有经纬度属性的事物才具备空间数据。</p>
-
-<p>目前在公共卫生领域比较常见的两类是：点数据和面数据。点数据比如传染病的发病地点；面数据比如各个区县的发病总人数。针对点数据，主要是来探讨空间点格局分布进而探讨可能的热点区域；而面数据更多是建立空间回归模型，如空间滞后模型，空间杜宾模型等。当然，空间点数据也可以建立空间回归模型，空间权重的选择往往成为头疼的话题(多大的带宽或者阈值距离最合适)。面数据也可以用以探讨热点，但其揭示的热点往往有点泛(如整个区县是热点，公共卫生的意义并不大)。</p>
-
-<hr />
-
-<h3>热点探测</h3>
-
-<p>地方病、传染病及环境污染所致疾病均可表现出空间聚集性，而传染病在传播途径、流行机制等方面的特殊性决定了其病例的分布特征与其他疾病存在较大差异，其空间属性主要体现在<strong>空间自相关</strong>(空间依赖性)和<strong>空间异质性</strong>。空间自相关性表现为目标地区与邻近地区发病水平及特征较强，与距离远的地区差异大，空间异质性表现为不同地区因为其"位置"原因而存在差异。</p>
-
-<p>公共卫生(Public Health)中较为常见的是病例个案(也就是点数据)，记录着病例个案详细的地址信息。因而在热点探测时，需将详细地址信息转换成经纬度信息。因Google地图API被封，我们可以借助百度地图API，具体操作的方式可参考我的博文(<a href="http://spatial-r.github.io/en/2014/06/Two-ways-to-get-coordinate-data/">点点</a>)。</p>
-
-<p>获取经纬度信息后，则可利用R中的DCluster程序包和Spatsta程序包分别进行热点探测(Cluster Dectecting)和点格局分析(Pattern Analysis)。热点探测也叫聚集性分析，主要包括全局检验和局部检验。顾名思义，全局检验是看疾病在整体或者全局水平上是否具有聚集性，而不管聚集点分布在何处；而局部检验则从底层去探讨和发现可能存在的局部热点。全局聚集性探测可采用<strong>Knox</strong>和 <strong>Rogerson</strong> 等方法，局部聚集性探测则可采用<strong>Turnbull</strong>、<strong>Besag-Newell</strong> 和 <strong>时空扫描</strong> 等方法。</p>
-
-<hr />
-
-<h4>全局性热点探测</h4>
-
-<hr />
-
-<h5>Knox</h5>
-
-<p>Knox，最早也最为经典的全局检验方法(1964由统计学家E.G.Knox提出来，用以检验疾病的时空交互作用)，能充分利用病例的时空信息，不需要人口学数据，计算简便。基本原理如下：</p>
-
-<pre><code>    病例两两配对，然后设定时间和空间临界值，以此标准来判断病例对间距离是"近"还是"远"。
-    若时间和空间距离均为"近"的病例对与期望值的差异具有统计意义，则该区域内该病存在时空聚集性。
+      <guid>http://xukuang.github.io/blog/2016/04/data-table-in-R</guid>
+      <content:encoded><![CDATA[<p>title: “data.table的包的简单介绍”
+date: 2016-04-13 13:56:01
+categories: [技术篇]
+tags: [R, data.talbe]
+—
+相比dplyr包，data.table包能够更大程度地提高数据的处理速度，这里就简单介绍一下data.tale包的使用方法。
+## 数据的读取
+data.table包中数据读取的函数是fread()。</p>
+
+<h2 id="datatable-">data.table 的创建</h2>
+<pre><code>library(data.table)
+DT = data.table(x=rep(c("a","b","c"),each=3), y=c(1,3,6), v=1:9)
+DT
+	#    x y v
+	# 1: a 1 1
+	# 2: a 3 2
+	# 3: a 6 3
+	# 4: b 1 4
+	# 5: b 3 5
+	# 6: b 6 6
+	# 7: c 1 7
+	# 8: c 3 8
+	# 9: c 6 9
 </code></pre>
+<!--more-->
+<p>## 基础操作
+### 行提取
+行提取分为单行提取和多行提取。
+#### 单行提取
+<code>
+DT[2]                      # 2nd row
+	#    x y v
+	# 1: a 3 2
+DT[2,]                     # same
+	#    x y v
+	# 1: a 3 2
+</code>
+这里DT[2]和DT[2,]是完全相同的，这里的『,』只是说明还有其他参数可设置，而其他参数按默认值进行计算。下文所有这样的最后一个『,』都不再写出来。
+#### 多行提取
+* 数字提取
+<code>
+DT[1:2]
+	#    x y v
+	# 1: a 1 1
+	# 2: a 3 2
+DT[c(2,5)]
+	#   x y v
+	#1: a 3 2
+	#2: b 3 5
+</code>
+* 逻辑提取
+<code>
+DT[c(FALSE,TRUE)]          # even rows (usual recycling)
+	#    x y v
+	# 1: a 3 2
+	# 2: b 1 4
+	# 3: b 6 6
+	# 4: c 3 8
+</code></p>
 
-<p>   假设n个病例，则可配成N=n*(n-1)/2个病例对子，如果知道了每个个案的发病时间和发病位置，则可计算每个病例对之间的空间距离和时间距离。在定义了时间界值(t)和空间界值(s)后，Nt则为时间距离为近的病例对子总数，Ns则为空间距离较近的病例对子总数，X是时间距离和空间距离均为近的病例对子总数，也就是Knox方法的统计检验量，可得到如下的四格表：</p>
+<p>此时,c(FALSE,TRUE)会自己重复匹配成与DT的行数相同的向量</p>
+
+<h3 id="section">列提取</h3>
+<p>与行提取相同，列的提取也包含单列提取和多列提取。
+#### 单列提取
+* 数字提取
+数字提取时，一定要把wth参数设置为FALSE。
+<code>
+DT[,2,with=FALSE]          # 2nd column
+	#    y
+	# 1: 1
+	# 2: 3
+	# 3: 6
+	# 4: 1
+	# 5: 3
+	# 6: 6
+	# 7: 1
+	# 8: 3
+	# 9: 6
+</code>
+* 列名提取
+```
+DT[,list(v)]               # v column (as data.table
+	#    v
+	# 1: 1
+	# 2: 2
+	# 3: 3
+	# 4: 4
+	# 5: 5
+	# 6: 6
+	# 7: 7
+	# 8: 8
+	# 9: 9</p>
+
+<pre><code>### 列名的修改
+列名的修改可以使用setnames()函数，这个函数好像比对data.frame类型数据名更改的names()和colnames()函数也要快一些。
+</code></pre>
+<p>dt = data.table(a=1:2,b=3:4,c=5:6) # compare to data.table
+try(tracemem(dt))                  # by reference, no deep or shallow copies
+setnames(dt,”b”,”B”)               # by name, no match() needed (warning if “b” is missing)
+setnames(dt,3,”C”)                 # by position with warning if 3 &gt; ncol(dt)
+setnames(dt,2:3,c(“D”,”E”))        # multiple
+setnames(dt,c(“a”,”E”),c(“A”,”F”)) # multiple by name (warning if either “a” or “E” is missing)
+setnames(dt,c(“X”,”Y”,”Z”))        # replace all (length of names must be == ncol(DT))<br />
+<code>
+#### 多列提取
+* 数字提取
+如同上面对按数字对单列的提取，对多列提取也要设置with参数为FALSE。
+</code>
+DT[,2:3,with=FALSE]
+	#    y v
+	# 1: 1 1
+	# 2: 3 2
+	# 3: 6 3
+	# 4: 1 4
+	# 5: 3 5
+	# 6: 6 6
+	# 7: 1 7
+	# 8: 3 8
+	# 9: 6 9
+DT[,c(1,3),with=FALSE] 
+	#    x v
+	# 1: a 1
+	# 2: a 2
+	# 3: a 3
+	# 4: b 4
+	# 5: b 5
+	# 6: b 6
+	# 7: c 7
+	# 8: c 8
+	# 9: c 9    <br />
+<code>
+* 按列名提取
+</code>
+DT[,list(y, v)]
+	#    y v
+	# 1: 1 1
+	# 2: 3 2
+	# 3: 6 3
+	# 4: 1 4
+	# 5: 3 5
+	# 6: 6 6
+	# 7: 1 7
+	# 8: 3 8
+	# 9: 6 9
+<code>
+如果按列名提取时，不使用列表，仍然能对列进行提取，只是结果以向量的形式输出。
+</code>
+DT[,v]                     # v column (as vector)
+	# [1] 1 2 3 4 5 6 7 8 9
+DT[,c(v)]                  # same
+	# [1] 1 2 3 4 5 6 7 8 9 <br />
+DT[, c(y, v)]
+	# [1] 1 3 6 1 3 6 1 3 6 1 2 3 4 5 6 7 8 9
+```
+### 列的添加与删除</p>
+
+<h4 id="section-1">列的添加</h4>
+<ul>
+  <li>单列添加
+<code>
+DT
+  #    x y v
+  # 1: a 1 1
+  # 2: a 3 2
+  # 3: a 6 3
+  # 4: b 1 4
+  # 5: b 3 5
+  # 6: b 6 6
+  # 7: c 1 7
+  # 8: c 3 8
+  # 9: c 6 9
+DT[, a := 'k']
+DT
+  #    x y v a
+  # 1: a 1 1 k
+  # 2: a 3 2 k
+  # 3: a 6 3 k
+  # 4: b 1 4 k
+  # 5: b 3 5 k
+  # 6: b 6 6 k
+  # 7: c 1 7 k
+  # 8: c 3 8 k
+  # 9: c 6 9 k
+DT[,c:=8]        # add a numeric column, 8 for all rows
+DT
+  #    x y v a c
+  # 1: a 1 1 k 8
+  # 2: a 3 2 k 8
+  # 3: a 6 3 k 8
+  # 4: b 1 4 k 8
+  # 5: b 3 5 k 8
+  # 6: b 6 6 k 8
+  # 7: c 1 7 k 8
+  # 8: c 3 8 k 8
+  # 9: c 6 9 k 8 
+DT[,d:=9L]       # add an integer column, 9L for all rows
+DT[2,d:=10L]     # subassign by reference to column d
+DT
+  #    x y v a c  d
+  # 1: a 1 1 k 8  9
+  # 2: a 3 2 k 8 10
+  # 3: a 6 3 k 8  9
+  # 4: b 1 4 k 8  9
+  # 5: b 3 5 k 8  9
+  # 6: b 6 6 k 8  9
+  # 7: c 1 7 k 8  9
+  # 8: c 3 8 k 8  9
+  # 9: c 6 9 k 8  9
+DT[, e := d + 2]
+DT
+  #    x y v a c  d  e
+  # 1: a 1 1 k 8  9 11
+  # 2: a 3 2 k 8 10 12
+  # 3: a 6 3 k 8  9 11
+  # 4: b 1 4 k 8  9 11
+  # 5: b 3 5 k 8  9 11
+  # 6: b 6 6 k 8  9 11
+  # 7: c 1 7 k 8  9 11
+  # 8: c 3 8 k 8  9 11
+  # 9: c 6 9 k 8  9 11
+</code>
+如果添加的列名，数据中已经包含则是对这一列数据的修改。</li>
+  <li>多列的添加
+<code>
+DT[, c('f', 'g') := list( d + 1, c)]
+DT[, ':='( f =  d + 1, g = c)]          # same
+DT
+  #    x y v a c  d  e  f g
+  # 1: a 1 1 k 8  9 11 10 8
+  # 2: a 3 2 k 8 10 12 11 8
+  # 3: a 6 3 k 8  9 11 10 8
+  # 4: b 1 4 k 8  9 11 10 8
+  # 5: b 3 5 k 8  9 11 10 8
+  # 6: b 6 6 k 8  9 11 10 8
+  # 7: c 1 7 k 8  9 11 10 8
+  # 8: c 3 8 k 8  9 11 10 8
+  # 9: c 6 9 k 8  9 11 10 8
+</code>
+此处，需要注意的是新创建的列只能依照原有数据列，而不能依照新创建的列。例如这个例子中，g = c是可以运行，而g = f则会提示错误。
+#### 列的删除
+<code>
+DT[,c:=NULL]     # remove column c
+DT
+  #    x y v a  d  e  f g
+  # 1: a 1 1 k  9 11 10 8
+  # 2: a 3 2 k 10 12 11 8
+  # 3: a 6 3 k  9 11 10 8
+  # 4: b 1 4 k  9 11 10 8
+  # 5: b 3 5 k  9 11 10 8
+  # 6: b 6 6 k  9 11 10 8
+  # 7: c 1 7 k  9 11 10 8
+  # 8: c 3 8 k  9 11 10 8
+  # 9: c 6 9 k  9 11 10 8
+DT[, c('d', 'e', 'f', 'g'):=NULL]     
+DT
+  #    x y v a
+  # 1: a 1 1 k
+  # 2: a 3 2 k
+  # 3: a 6 3 k
+  # 4: b 1 4 k
+  # 5: b 3 5 k
+  # 6: b 6 6 k
+  # 7: c 1 7 k
+  # 8: c 3 8 k
+  # 9: c 6 9 k
+</code></li>
+</ul>
+
+<h2 id="section-2">列指标的简单操作</h2>
+<p>简单操作主要包括求和、平均值、方差和标准差等。
+<code>
+DT[2:3,sum(v)]             # sum(v) over rows 2 and 3
+# [1] 5
+DT[2:3,mean(v)]             # sum(v) over rows 2 and 3
+# [1] 2.5
+</code>
+## 索引key
+### 查看和创建索引
+索引是对列而言的，索引创建后，数据将自动按索引值进行重新排序，所以每个数据最多只能有一个索引，但是索引可以由多列组成，这些列可以是数字、因子、字符串或其他格式。
+#### 单列索引的创建
+<code>
+## methdod first
+key(DT)                    # key
+	# NULL 
+setkey(DT,x)               # set a 1-column key. No quotes, for convenience.
+key(DT)
+[1] "x"
+DT
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: a 3 2 k
+	# 3: a 6 3 k
+	# 4: b 1 4 k
+	# 5: b 3 5 k
+	# 6: b 6 6 k
+	# 7: c 1 7 k
+	# 8: c 3 8 k
+	# 9: c 6 9 k
+## method second
+setkeyv(DT,"y")            # same (v in setkeyv stands for vector)
+key(DT)
+	# [1] "y"
+</code>
+一旦对数据进行新的索引，原有的索引将消失。
+#### 多列索引的创建
+```
+## methdod first                    # key 
+setkey(DT,x,v)               # set a 1-column key. No quotes, for convenience.
+key(DT)
+	# [1] “x” “v”
+DT
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: a 3 2 k
+	# 3: a 6 3 k
+	# 4: b 1 4 k
+	# 5: b 3 5 k
+	# 6: b 6 6 k
+	# 7: c 1 7 k
+	# 8: c 3 8 k
+	# 9: c 6 9 k</p>
+
+<h2 id="method-second">method second</h2>
+<p>setkeyv(DT,c(“x”, “y”))           # same (v in setkeyv stands for vector)
+key(DT)
+	# [1] “x” “v”
+DT
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: a 3 2 k
+	# 3: a 6 3 k
+	# 4: b 1 4 k
+	# 5: b 3 5 k
+	# 6: b 6 6 k
+	# 7: c 1 7 k
+	# 8: c 3 8 k
+	# 9: c 6 9 k
+```</p>
+
+<h3 id="section-3">通过索引进行数据的提取</h3>
+<p>按照索引对数据提取，可以加快提取数据的速度。
+#### 单索引
+正向提取
+<code>
+setkey(DT, x)
+DT["a"]                    # binary search (fast)
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: a 3 2 k
+	# 3: a 6 3 k
+DT[.(x=="a")]                 # same; i.e. binary search (fast)
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: a 3 2 k
+	# 3: a 6 3 k
+DT[x=="a"]                 # same; i.e. binary search (fast)
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: a 3 2 k
+	# 3: a 6 3 k
+</code>
+* 反向提取
+```
+DT[!.(“a”)]                # not join
+	#    x y v a
+	# 1: b 1 4 k
+	# 2: b 3 5 k
+	# 3: b 6 6 k
+	# 4: c 1 7 k
+	# 5: c 3 8 k
+	# 6: c 6 9 k
+DT[!”a”]                   # same
+	#    x y v a
+	# 1: b 1 4 k
+	# 2: b 3 5 k
+	# 3: b 6 6 k
+	# 4: c 1 7 k
+	# 5: c 3 8 k
+	# 6: c 6 9 k
+DT[!2:4]                   # all rows other than 2:4
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: b 3 5 k
+	# 3: b 6 6 k
+	# 4: c 1 7 k
+	# 5: c 3 8 k
+	# 6: c 6 9 k</p>
+
+<pre><code>#### 多索引
+* 正向提取
+</code></pre>
+<p>setkey(DT, x, y)
+# Mehtod First
+DT[“a”]                    # join to 1st column of key
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: a 3 2 k
+	# 3: a 6 3 k
+DT[.(“a”)]                 # same, .() is an alias for list()
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: a 3 2 k
+	# 3: a 6 3 k
+DT[.(“a”,3)]               # join to 2 columns
+    #    x y v a
+	# 1: a 3 2 k
+DT[.(“a”,3:6)]             # join 4 rows (2 missing)
+	#    x y  v  a
+	# 1: a 3  2  k
+	# 2: a 4 NA NA
+	# 3: a 5 NA NA
+	# 4: a 6  3  k
+DT[.(“a”,3:6),nomatch=0]   # remove missing
+	#    x y v a
+	# 1: a 3 2 k
+	# 2: a 6 3 k
+DT[.(“a”,3:6),roll=TRUE]   # rolling join (locf)
+	#    x y v a
+	# 1: a 3 2 k
+	# 2: a 4 2 k
+	# 3: a 5 2 k
+	# 4: a 6 3 k
+## Method Second
+DT[J(‘a’)]
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: a 3 2 k
+	# 3: a 6 3 k
+DT[J(“a”,3)]               # binary search (fast)
+	#    x y v a
+	# 1: a 3 2 k
+DT[J(“a”,3:6)]              # same; i.e. binary search (fast)
+	#    x y  v  a
+	# 1: a 3  2  k
+	# 2: a 4 NA NA
+	# 3: a 5 NA NA
+	# 4: a 6  3  k
+DT[J(“a”,3:6), nomatch = 0]
+	#    x y v a
+	# 1: a 3 2 k
+	# 2: a 6 3 k
+DT[J(“a”,3:6), roll = T]
+	#    x y v a
+	# 1: a 3 2 k
+	# 2: a 4 2 k
+	# 3: a 5 2 k
+	# 4: a 6 3 k</p>
+
+<h2 id="method-third">Method Third</h2>
+<p>DT[list(“a”)]
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: a 3 2 k
+	# 3: a 6 3 k
+DT[list(“a”,3)]
+    #    x y v a
+	# 1: a 3 2 k
+DT[list(“a”, 3:6)]
+	#    x y  v  a
+	# 1: a 3  2  k
+	# 2: a 4 NA NA
+	# 3: a 5 NA NA
+	# 4: a 6  3  k
+DT[list(“a”, 3:6), nomatch = 0]
+	#    x y v a
+	# 1: a 3 2 k
+	# 2: a 6 3 k
+DT[list(“a”, 3:6), roll = T]
+	#    x y v a
+	# 1: a 3 2 k
+	# 2: a 4 2 k
+	# 3: a 5 2 k
+	# 4: a 6 3 k
+<code>
+* 反向提取
+</code>
+DT[x!=”b” | y!=3]          # not yet optimized, currently vector scans
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: a 3 2 k
+	# 3: a 6 3 k
+	# 4: b 1 4 k
+	# 5: b 6 6 k
+	# 6: c 1 7 k
+	# 7: c 3 8 k
+	# 8: c 6 9 k
+DT[!.(“b”,3)]              # same result but much faster
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: a 3 2 k
+	# 3: a 6 3 k
+	# 4: b 1 4 k
+	# 5: b 6 6 k
+	# 6: c 1 7 k
+	# 7: c 3 8 k
+	# 8: c 6 9 k</p>
+
+<pre><code>## 分类汇总
+分类汇总是指按某列的分类指标进行简单操作，这里借助by参数实现。此外，by参数与索引相互没有影响。
+### 单指标的分类汇总
+* 默认汇总名称
+</code></pre>
+<p>DT[,sum(v),by=x]
+	#    x V1
+	# 1: a  6
+	# 2: b 15
+	# 3: c 24         <br />
+DT[,sum(v),by=y] 
+	#    y V1
+	# 1: 1 12
+	# 2: 3 15
+	# 3: 6 18        <br />
+<code>
+* 自定义汇总名称
+</code>
+DT[,list(sum.v.x = sum(v)),by=x]
+	#    x sum.v.x
+	# 1: a       6
+	# 2: b      15
+	# 3: c      24         <br />
+DT[,list(sum.v.y = sum(v)),by=y] 
+	#    y sum.v.y
+	# 1: 1      12
+	# 2: 3      15
+	# 3: 6      18 
+DT[,sum.v.y := sum(v) ,by=y]
+	#    x y v a sum.v.y
+	# 1: a 1 1 k      12
+	# 2: a 3 2 k      15
+	# 3: a 6 3 k      18
+	# 4: b 1 4 k      12
+	# 5: b 3 5 k      15
+	# 6: b 6 6 k      18
+	# 7: c 1 7 k      12
+	# 8: c 3 8 k      15
+	# 9: c 6 9 k      18 	
+<code>
+* 汇总结果与原始数据进行匹配
+</code>
+DT[,sum.v.y := sum(v) ,by=y]
+	#    x y v a sum.v.y
+	# 1: a 1 1 k      12
+	# 2: a 3 2 k      15
+	# 3: a 6 3 k      18
+	# 4: b 1 4 k      12
+	# 5: b 3 5 k      15
+	# 6: b 6 6 k      18
+	# 7: c 1 7 k      12
+	# 8: c 3 8 k      15
+	# 9: c 6 9 k      18</p>
+
+<pre><code>### 多指标的多个分类汇总
+* 默认汇总名称
+</code></pre>
+<p>DT[,list(mean(v),sum(v)),by=list(x,y)]   # keyed by
+	#    x y V1 V2
+	# 1: a 1  1  1
+	# 2: a 3  2  2
+	# 3: a 6  3  3
+	# 4: b 1  4  4
+	# 5: b 3  5  5
+	# 6: b 6  6  6
+	# 7: c 1  7  7
+	# 8: c 3  8  8
+	# 9: c 6  9  9
+<code>
+* 自定义汇总名称
+</code>
+DT[,list(mean.v = mean(v),sum.v = sum(v)),by=list(x,y)]   # keyed by
+	#   x y mean.v sum.v
+	#1: a 1      1     1
+	#2: a 3      2     2
+	#3: a 6      3     3
+	#4: b 1      4     4
+	#5: b 3      5     5
+	#6: b 6      6     6
+	#7: c 1      7     7
+	#8: c 3      8     8
+	#9: c 6      9     9
+<code>
+* 汇总结果与原始数据进行匹配
+</code>
+DT[,c(“mean.v”, “sum.v.y”) := list(mean(v),sum(v)) ,by=list(x,y)]
+	#    x y v a sum.v.y mean.v
+	# 1: a 1 1 k       1      1
+	# 2: a 3 2 k       2      2
+	# 3: a 6 3 k       3      3
+	# 4: b 1 4 k       4      4
+	# 5: b 3 5 k       5      5
+	# 6: b 6 6 k       6      6
+	# 7: c 1 7 k       7      7
+	# 8: c 3 8 k       8      8
+	# 9: c 6 9 k       9      9</p>
+
+<pre><code>
+## data.table与data.frame的转化
+data.table格式加快了处理速度，而data.frame则更为基础。两者的转化可以通过data.table(),setDT()和setDT()来实现，其中data.table()和setDT()函数可以将数据从data.frame转化为data.table，setDF()函数可以将数据从data.table转化为data.frame。注意使用data.table(),setDT()和setDT()时，参数本身的数据类型也会发生变化。
+</code></pre>
+<p>class(DT)
+	# [1] “data.table” “data.frame”<br />
+class(setDF(DT))
+	# [1] “data.frame”
+class(DT)
+	# [1] “data.frame”
+```
+此外，data.table包还可以与基础包中的duplicated()、unique()、subset() 函数结合使用。 不仅如此，data.table包还有一些基础包的替代函数。rbind()升级版的rbindlist()，可以合并列数不同和列位置不同的数据。比dplyr包中arrange()函数更快的setorder()排序函数。</p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>Data Fomrat</title>
+      <link>http://xukuang.github.io/blog/2016/04/data-fomrat/</link>
+      <pubDate>2016-04-10T00:00:00-06:00</pubDate>
+      <author>Spatial-R</author>
+      <guid>http://xukuang.github.io/blog/2016/04/data-fomrat</guid>
+      <content:encoded><![CDATA[<p>title: “长宽数据之间的转化(二)”
+date: 2016-04-10 10:32:19
+categories: 技术篇
+tags: [R, tidyr]
+—
+前面一篇<a href="http://xukuang.github.io/2016/01/18/melt-and-dcast/">文章</a>讲了用reshape2包中的函数实现长宽数据的转化，而tidyr是reshape2的升级版，主要用于数据框。这篇文章将介绍一下如何使用tidyr包中的函数实现长宽数据的转化。
+## 宽数据转化为长数据
+### gather函数
+<code>
+gather(data, key, value, ..., na.rm = FALSE, convert = FALSE)
+</code>
+<strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型	
+<strong>key</strong>  指定转化后数据框的指标列的列名，用于存放原数据中不同的数据指标
+<strong>value</strong>  指定转化后数据框的数据列的列名，用于存放原数据中不同的数据指标对应的值		
+<strong>…</strong> 指定哪些列聚到一列中。按那些列数据作为标准转化，这个参数接不能有那些列
+<strong>na.rm</strong> 确定是否去除数据中的NA，默认情况下为FALSE，不去除NA
+<!--more-->
+### 实例
+* 将所有列排成长数据(默认情况下)
+<code>
+# 加载数据
+library(reshape2)
+head(airquality)
+	# 	Month Day variable value
+	# 1     5   1    Ozone    41
+	# 2     5   2    Ozone    36
+	# 3     5   3    Ozone    12
+	# 4     5   4    Ozone    18
+	# 5     5   5    Ozone    NA
+	# 6     5   6    Ozone    28
+dim(airquality)
+	# [1] 612   4
+library(tidyr)
+dat1 = gather(airquality, time, value)
+head(dat1)
+    #    time value
+    # 1 Ozone    41
+    # 2 Ozone    36
+    # 3 Ozone    12
+    # 4 Ozone    18
+    # 5 Ozone    NA
+    # 6 Ozone    28
+tail(dat1)
+    #         time value
+    # 913  Day    25
+    # 914  Day    26
+    # 915  Day    27
+    # 916  Day    28
+    # 917  Day    29
+    # 918  Day    30
+dim(dat1)	
+	# [1] 918   2
+</code>
+* 按Month将其他指标排成长数据
+<code>
+# 方法一
+dat2 = gather(airquality, time, value, Ozone:Temp, Day)
+# 方法二
+dat2 = gather(airquality, time, value, -Month)
+head(dat2)
+	#    Month Day  time value
+	# 1     5   1 Ozone    41
+	# 2     5   2 Ozone    36
+	# 3     5   3 Ozone    12
+	# 4     5   4 Ozone    18
+	# 5     5   5 Ozone    NA
+	# 6     5   6 Ozone    28
+tail(dat2)
+	#     Month Day time value
+	# 607     9  25 Temp    63
+	# 608     9  26 Temp    70
+	# 609     9  27 Temp    77
+	# 610     9  28 Temp    75
+	# 611     9  29 Temp    76
+	# 612     9  30 Temp    68
+</code>
+* 按Month和Day列将其它列指标排成长数据
+<code>
+dat3 = gather(airquality, type, value.type, Ozone:Temp)
+dat3 = gather(airquality, type, value.type, -Month, -Day)
+head(dat3) 
+	# 	 Month Day  type value.type
+	# 1     5   1 Ozone         41
+	# 2     5   2 Ozone         36
+	# 3     5   3 Ozone         12
+	# 4     5   4 Ozone         18
+	# 5     5   5 Ozone         NA
+	# 6     5   6 Ozone         28
+dim(dat3)
+	# [1] 612   4
+</code>
+* 去除排列后数据中的NA
+<code>
+#　 airquality$Ozone 数的前四列有44 个NA
+table(is.na(airquality$Ozone)) # 37
+	# FALSE  TRUE 
+	#   116    37 
+table(is.na(airquality$Solar.R)) # 4
+	# FALSE  TRUE 
+	#   146     7 
+table(is.na(airquality$Temp)) # 0
+	# FALSE 
+	#   153 
+table(is.na(airquality$Wind)) # 0
+	# FALSE 
+	#   153 
+dat4 = gather(airquality, type, value.type, Ozone:Temp, na.rm = TRUE)
+head(dat4)
+	#   Month Day  type value.type
+	# 1     5   1 Ozone         41
+	# 2     5   2 Ozone         36
+	# 3     5   3 Ozone         12
+	# 4     5   4 Ozone         18
+	# 6     5   6 Ozone         28
+	# 7     5   7 Ozone         23
+dim(dat4)# 比dat3少44行
+	# [1] 568   4	
+</code></p>
+
+<h2 id="section">长数据转化为宽数据</h2>
+<p>### spread函数
+<code>
+spread(data, key, value, fill = NA, convert = FALSE, drop = TRUE)
+</code>
+<strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型
+<strong>key</strong>  指定需要将变量值拓展为字段的变量
+<strong>value</strong>  指定要分散的值
+<strong>fill</strong> 确认不存在的组合值的显示结果。默认的显示为NA。数据类型为数值型向量
+<strong>drop</strong> 确认不存在分分类组合是否显示，默认情况下显示。当然，如果drop = T，那么fill参数的设置将失去意义
+### 实例
+<code>R
+air1 =  spread(dat4, type, value.type)
+dim(air1)
+	# [1] 153   6
+head(air1) # 数据与airquality相同
+	# 	Month Day Ozone Solar.R Wind Temp
+	# 1     5   1    41     190  7.4   67
+	# 2     5   2    36     118  8.0   72
+	# 3     5   3    12     149 12.6   74
+	# 4     5   4    18     313 11.5   62
+	# 5     5   5    NA      NA 14.3   56
+	# 6     5   6    28      NA 14.9   66
+</code>
+不存在的分类是否显示，以及怎么显示
+<code>
+air5 = spread(dat4, type, value.type, drop = F) # 组合上存在的结果都显示
+tail(air5) # 这里的最后一行只是组合上存在，原数据中并不在
+	# 		 Month Day Ozone Solar.R Wind Temp
+	# 150      9  26     1       1    1    1
+	# 151      9  27     1       1    1    1
+	# 152      9  28     1       1    1    1
+	# 153      9  29     1       1    1    1
+	# 154      9  30     1       1    1    1
+	# 155      9  31     0       0    0    0
+tail(spread(dat4, type, value.type, drop = F, fill= -1)) # 更改不存在结果的显示值，最后一行显示为-1
+	# 		Month Day Ozone Solar.R Wind Temp
+	# 150     9  26     1       1    1    1
+	# 151     9  27     1       1    1    1
+	# 152     9  28     1       1    1    1
+	# 153     9  29     1       1    1    1
+	# 154     9  30     1       1    1    1
+	# 155     9  31    -1      -1   -1   -1
+</code>
+## tidyr包中的其它函数
+### seperate函数
+unite()函数可将多列合并为一列。
+<code>
+unite(data, col, ..., sep = "_", remove = TRUE)
+</code>
+<strong>data</strong> 要处理的数据框
+<strong>col</strong> 被组合的新列名称
+<strong>…</strong> 指定哪些列需要被组合
+<strong>sep</strong> 组合列之间的连接符，默认为下划线
+<strong>remove</strong> 是否删除被组合的列，默认删除
+```
+set.seed(10)
+date &lt;- as.Date(‘2016-04-10’) + 0:14
+hour &lt;- sample(1:24, 15)
+min &lt;- sample(1:60, 15)
+second &lt;- sample(1:60, 15)
+event &lt;- sample(letters, 15)
+data &lt;- data.frame(date, hour, min, second, event)
+data
+	# 			date hour min second event
+	# 1  2016-04-10   13  26     33     e
+	# 2  2016-04-11    8   4      6     a
+	# 3  2016-04-12   10  16     10     l
+	# 4  2016-04-13   15  23     52     c
+	# 5  2016-04-14    2  47     24     r
+	# 6  2016-04-15    5  48     42     h
+	# 7  2016-04-16   19  34     45     s
+	# 8  2016-04-17   18  42     51     z
+	# 9  2016-04-18   22  19     36     i
+	# 10 2016-04-19    7  21     26     d
+	# 11 2016-04-20   16  36     14     j
+	# 12 2016-04-21   23  53     12     g
+	# 13 2016-04-22   20  12      1     o
+	# 14 2016-04-23   21  37     35     f
+	# 15 2016-04-24    4  17     49     n</p>
+
+<p>dataNew &lt;- data %&gt;%
+  unite(datehour, date, hour, sep = ‘ ‘) %&gt;%
+  unite(datetime, datehour, min, second, sep = ‘:’)
+	#              datetime event
+	#1  2016-04-10 13:26:33     e
+	#2     2016-04-11 8:4:6     a
+	#3  2016-04-12 10:16:10     l
+	#4  2016-04-13 15:23:52     c
+	#5   2016-04-14 2:47:24     r
+	#6   2016-04-15 5:48:42     h
+	#7  2016-04-16 19:34:45     s
+	#8  2016-04-17 18:42:51     z
+	#9  2016-04-18 22:19:36     i
+	#10  2016-04-19 7:21:26     d
+	#11 2016-04-20 16:36:14     j
+	#12 2016-04-21 23:53:12     g
+	#13  2016-04-22 20:12:1     o
+	#14 2016-04-23 21:37:35     f
+	#15  2016-04-24 4:17:49     n</p>
+
+<pre><code>tidyr包中的函数也可使用管道操作符%&gt;%。
+### seperate函数
+separate()函数可将一列拆分为多列，一般可用于日志数据或日期时间型数据的拆分。
+</code></pre>
+<p>separate(data, col, into, sep = “[^[:alnum:]]+”, remove = TRUE,
+  convert = FALSE, extra = “warn”, fill = “warn”, …)
+<code>
+**data** 要处理的数据框
+**col** 需要被拆分的列
+**into** 新建的列名，为字符串向量
+**sep** 被拆分列的分隔符
+**remove** 是否删除被分割的列，默认删除
+</code>
+dataold &lt;- dataNew %&gt;% 
+  separate(datetime, c(‘date’, ‘time’), sep = ‘ ‘) %&gt;% 
+  separate(time, c(‘hour’, ‘min’, ‘second’), sep = ‘:’)
+dataold
+	# 		date hour min second event
+	# 1  2016-04-10   13  26     33     e
+	# 2  2016-04-11    8   4      6     a
+	# 3  2016-04-12   10  16     10     l
+	# 4  2016-04-13   15  23     52     c
+	# 5  2016-04-14    2  47     24     r
+	# 6  2016-04-15    5  48     42     h
+	# 7  2016-04-16   19  34     45     s
+	# 8  2016-04-17   18  42     51     z
+	# 9  2016-04-18   22  19     36     i
+	# 10 2016-04-19    7  21     26     d
+	# 11 2016-04-20   16  36     14     j
+	# 12 2016-04-21   23  53     12     g
+	# 13 2016-04-22   20  12      1     o
+	# 14 2016-04-23   21  37     35     f
+	# 15 2016-04-24    4  17     49     n
+```</p>
+
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>Simple Linear Regression</title>
+      <link>http://xukuang.github.io/blog/2016/04/simple-linear-regression/</link>
+      <pubDate>2016-04-07T00:00:00-06:00</pubDate>
+      <author>Spatial-R</author>
+      <guid>http://xukuang.github.io/blog/2016/04/simple-linear-regression</guid>
+      <content:encoded><![CDATA[<p>title: “简单线性回归中各指标在R中的计算”
+date: 2016-04-07 14:50:50
+categories: [技术篇]
+tags: [R, 统计]
+—
+## 前话
+简单线性回归用于计算两个连续型变量(如X，Y)之间的线性关系，具体地说就是计算下面公式中的$\alpha和\beta$。
+<script type="math/tex">Y = \alpha + \beta X + \varepsilon</script> <br />
+其中$\varepsilon$称为残差,服从从$N(0,\sigma^2)$的正态分布，自由度为(n-1) - (2-1) = n-2
+为了找到这条直线的位置，我们使用最小二乘法(least squares approach)。最小二乘法确保所有点处的残差的平方和最小时计算$\alpha和\beta$，即下面示意图中$\sum_{i=1}^{4}\varepsilon_i^2 = \varepsilon_1^2 + \varepsilon_2^2 + \varepsilon_3^2 + \varepsilon_4^2$有最小值。
+<img src="/img/y_x_scatter_plot.png" alt="简单线性相关示意图" /><!--more--></p>
+
+<h2 id="section">各指标的计算</h2>
+<p>运用最小二乘法找出的这条最优直线一定经过点$(\overline{x}, \overline{y})$。其中
+### 斜率$\beta$和截距$\alpha$的估计值
+<img src="/img/beta.png" alt="" /></p>
+
+<h3 id="pearsonr">Pearson相关系数r</h3>
+<p><script type="math/tex">r_{xy} = \frac{\overline{xy} - \bar{x}\bar{y} }{ \sqrt{ \left(\overline{x^2} - \bar{x}^2\right)\left(\overline{y^2} - \bar{y}^2\right)}}</script></p>
+
+<h3 id="section-1">方差分析</h3>
+<p>在方差分析(ANOVA)中，总的平方和包含回归平方和残差平方和两部分。
+* 总的平方和
+<script type="math/tex">SS_{tot}=\sum_i (y_i-\bar{y})^2</script>
+其自由度为 n - 1，这里n为观测点的个数。
+* 回归的平方和
+<script type="math/tex">SS_\text{reg}=\sum_i (\hat y_i -\bar{y})^2</script>
+其自由度为 2 - 1 = 1。
+* 残差的平方和
+<script type="math/tex">SS_\text{res}=\sum_i (y_i - \hat y_i)^2=\sum_i e_i^2</script>
+其自由度为 (n -1) - (2 - 1) = n -2。</p>
+
+<h3 id="section-2">决定系数(拟合优势度)</h3>
+<p><img src="/img/error.png" alt="" />
+决定系数是用来表示模型的解释度，理论上与相关系数没有关系，只是在简单线性回归中，决定系数$R^2 $值等于Pearson相关系数r的平方。</p>
+
+<h2 id="r">R中的实现</h2>
+<p>### 线性模拟
+```
+x = c(0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.20, 0.21, 0.23)
+y = c(42.0, 43.5, 45.0, 45.5, 45.0, 47.5, 49.0, 53.0, 50.0, 55.0, 55.0, 60.0)
+fit = lm(y ~ x)
+summary(fit)
+	## Call:
+	## lm(formula = y ~ x)
+	## 
+	## Residuals:
+	##	 #Min      1Q  Median      3Q     Max 
+	## -2.0431 -0.7056  0.1694  0.6633  2.2653 
+	## 
+	## Coefficients:
+	## 				#Estimate Std. Error t value Pr(&gt;|t|)  <br />
+	## (Intercept)   28.493      1.580   18.04 5.88e-09 <strong>*
+	## x            130.835      9.683   13.51 9.50e-08 ***
+	## —
+	## Signif. codes:  0 ‘</strong><em>’ 0.001 ‘<strong>’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+	## 
+	## Residual standard error: 1.319 on 10 degrees of freedom
+	## Multiple R-squared:  0.9481,    Adjusted R-squared:  0.9429 
+	## F-statistic: 182.6 on 1 and 10 DF,  p-value: 9.505e-08
+anova(fit)
+	##Analysis of Variance Table
+	##
+	##Response: y
+	##			#Df Sum Sq Mean Sq F value    Pr(&gt;F)  <br />
+	##x          1 317.82  317.82  182.55 9.505e-08 ***
+	##Residuals 10  17.41    1.74                    <br />
+	##—
+	##Signif. codes:  0 ‘</strong></em>’ 0.001 ‘<em>*’ 0.01 ‘</em>’ 0.05 ‘.’ 0.1 ‘ ’ 1</p>
+
+<pre><code>### 线性模拟各参数的提取
+</code></pre>
+<p># 可以通过names函数查看summary(fit)中个具体参数的提取方法
+names(summary(fit))
+# 提取R square
+summary(fit)$r.squared ## 依照该形式可以提取names(summary(fit))中任意指标
+# 其它常用指标的提取
+# 提取模型lm或glm提取回归系数
+coefficients(fit)
+# 还可简化为
+coef(fit)
+# 提取模型lm或glm的残差
+# 也可简化为
+residuals(fit)
+resid(fit)
+# 提取lm或glm对象中残差的平方和
+deviance(fit)
+# 提取lm或glm对象中的方差分析表
+# 其中p值越小，差异越显著, beita1越不可能为0
+anova(fit)
+# 预测数据
+new &lt;- data.frame(x=c(0.16, 2.3))
+predict(fit, new)
+## 也可以做出预测区间
+predict(fit, new, interval = ‘prediction’, levels = 0.95)
+<code>
+### 线性模拟各参数中各量的算法
+#### 五个和的计算
+</code>
+## 预备统计量(Sums of square and sums of producte)
+Sx = sum(x)
+Sy = sum(y)
+Sxx = sum((x - mean(x))^2)
+Syy = sum((y - mean(y))^2)
+Sxy = sum((x - mean(x)) * (y - mean(y)))
+## 这里仅仅作为补充,具体原因不是很清楚
+Syy = deviance(lm(y~1))
+n = length(x)
+<code>
+#### 回归系数
+</code>
+## 回归系数$\alpha$和$beta$（这样计算，residuals有最小值)
+beta = Sxy/Sxx
+beta
+alpha = mean(y) - beta<em>mean(x)
+alpha
+# 提取lm或glm对象中的回归系数
+coef(fit)
+<code>
+#### 残差及五分位数
+</code>
+residuals = y - (beta + alpha * x)
+residuals
+quantile(residuals)
+# 提取模型lm或glm的残差
+# 也可简化为
+residuals(fit)
+<code>
+#### Pearson相关系数r
+</code>
+r = sqrt(Sxy/(Sxx * Syy))
+r
+<code>
+#### R平方
+决定系数，其值为 回归的平方和/总的平方和。
+</code>
+rsquare = (Syy - sum(residuals^2))/Syy
+rsquare
+<code>
+#### adjust R平方
+</code>
+## 考虑到了自变量的个数, 包括截距在内, 本例子中k = 2
+n = length(x)
+k = 2
+adjustrsquare = 1- (1-rsquare)</em>(n-1)/(n-k)
+adjustrsquare
+```</p>
+
+<h3 id="f">回归方程的F检验</h3>
+<p>在简单线性回归的模型，我们可以在$β = 0$时，对F统计量进行检验。
+在F检验中统计量F
+<script type="math/tex">F = \frac{(回归的平方和/回归的自由度)}{(误差的平方和/误差的自由度}</script>
+对应p值越小，说明此时越小的概率时间发生了，越不能接受原假设。
+### 斜率β的t检验
+在简单线性回归的模型，我们可以检验回归系数(斜率)β是否相等于特定的$β_0$(通常使$β_0 = 0$以检验$x_i$对$y_i$是否有关联)。
+统计量t
+<img src="/img/student_t.png" alt="" />
+在零假设为$β = β_0$的情况下服从自由度为n − 2之t分布，其中
+<img src="/img/student_se.png" alt="" />
+同F检验一样，p值越小，说明此时越小的概率事件发生了，越不能接受原假设。
+## 话外篇
+在R中，lm(y ~ x)和lm(y ~ x + 1)的效果是相同的。此外，lm(y ~ 1)中截距的估计值为y的平均值，残差为每个y与均值的离差。</p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>Moment In_statistics</title>
+      <link>http://xukuang.github.io/blog/2016/04/moment-in_statistics/</link>
+      <pubDate>2016-04-06T00:00:00-06:00</pubDate>
+      <author>Spatial-R</author>
+      <guid>http://xukuang.github.io/blog/2016/04/moment-in_statistics</guid>
+      <content:encoded><![CDATA[<p>title: “离散型随机变量的常用统计指标”
+date: 2016-04-06 22:25:50
+categories: [学习篇]
+tags: [统计]
+—
+## 期望
+<script type="math/tex">E[X] = \sum_{i=1}^n x_i</script>
+期望存在一下特性:
+* $E[aX + bY] = aE[X] + bE(Y)$
+* 一般情况下，$E[X Y] \neq E[X]E(Y)$；当X和Y相互独立时，才有$E[X Y] = E[X]E(Y)$<!--more--></p>
+
+<h2 id="section">方差</h2>
+<p>方差描述的是随机变量的离散程度，也就是该变量离其期望值的距离。
+<script type="math/tex">Var(X) = E[(X -E[X])^2] = E[X^{2} - 2X E[X] + (E[X])^{2}] = E[X^{2}] - (E[X])^{2}</script>
+此外，方差还可以看作是随机变量和自身的协方差$Var(X) = Cov(X, X)$
+## 标准差
+标准差是一组数值自平均值分散开来的程度的一种测量观念。
+总体的标准差$SD = \sqrt{\frac{Var(x)}{N}}$，样本的标准差$SD = \sqrt{\frac{Var(x)}{N - 1}}$
+## 标准误
+标准误差针对样本统计量而言，是某个样本统计量的标准差。当谈及标准误差时，一般须指明对应的样本统计量才有意义。以下以样本均值（样本均值是一种样本统计量）作为例子。于是，假设可以从总体中随机选取无限的大小相同的样本，那每个样本都可以有一个样本均值。依此法可以到一个由无限多样本均值组成的总体，该总体的标准差即为标准误差。
+<script type="math/tex">SE = \frac{SD}{\sqrt{N}}</script>
+## 协方差
+协方差用于衡量两个变量的总体误差。而方差是协方差的一种特殊情况，即当两个变量是相同的情况。
+<script type="math/tex">Cov(X, Y) = E((X - E[X])(Y - E(Y)) = E[XY] - E[X] E[Y]</script>。
+协方差表示的是两个变量的总体的误差，这与只表示一个变量误差的方差不同。 如果两个变量的变化趋势一致，也就是说如果其中一个大于自身的期望值，另外一个也大于自身的期望值，那么两个变量之间的协方差就是正值。如果两个变量的变化趋势相反，即其中一个大于自身的期望值，另外一个却小于自身的期望值，那么两个变量之间的协方差就是负值。如果X与Y是统计独立的，那么二者之间的协方差就是0，但是反过来并不成立，即如果X与Y的协方差为0，二者并不一定是统计独立的。
+## 协方差的相关性η(线性相关)
+ <script type="math/tex">\eta =  \frac{cov(X, Y)}{\sqrt{var(X) \cdot var(Y)}}</script>
+协方差的相关性η更准确地说是线性相关的相关系数r，是一个衡量线性独立的无量纲数，其取值在[－1,+1]之间。相关性η = 1时称为“完全线性相关”(相关性η = -1时称为“完全线性负相关”)，此时将$Y_{i}$对$X_{i}$作Y-X散点图，将得到一组精确排列在直线上的点；相关性数值介于－1到1之间时，其绝对值越接近1表明线性相关性越好，作散点图得到的点的排布越接近一条直线。相关性为0(因而协方差也为0)的两个随机变量又被称为是不相关的，或者更准确地说叫作“线性无关”、“线性不相关”，这仅仅表明X 与Y两随机变量之间没有线性相关性，并非表示它们之间一定没有任何内在的（非线性）函数关系，和前面所说的“X、Y二者并不一定是统计独立的”说法一致。</p>
+
+<p><strong>本篇文章整理自维基百科。</strong></p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>Docement Mangement</title>
+      <link>http://xukuang.github.io/blog/2016/03/docement-mangement/</link>
+      <pubDate>2016-03-01T00:00:00-07:00</pubDate>
+      <author>Spatial-R</author>
+      <guid>http://xukuang.github.io/blog/2016/03/docement-mangement</guid>
+      <content:encoded><![CDATA[<p>title: “用R进行文件系统管理”
+date: 2016-03-01 17:24:47
+categories: 技术篇
+tags: [R, 文件系统管理]
+—
+学习中，已经体会到了R在数据处理方面的厉害，偶然看到张丹的博文<a href="http://blog.fens.me/r-file-folder/">《用R进行文件系统管理》</a>，发现R居然还可以进行文件系统的管理，又一次全新的认识了世界（其实主要是R）。这里基本上是把张丹的文章照搬过来了，只是加了少许自己学习时心得。本文中提到的文件系统管理主要是指文件和目录（即文件夹）的创建、查看、重命名、复制、删除和文件权限处理。
+## 文件操作</p>
+
+<ul>
+  <li>创建文件
+```
+# 创建一个空文件 A.txt
+file.create(“A.txt”)
+# 查看当前目录下的子目录和文件
+list.files()</li>
+</ul>
+
+<h1 id="a1txta2txta3txt">创建多个空文件 A1.txt，A2.txt，A3.txt</h1>
+<p>file.create(“A1.txt”, “A2.txt”, “A3.txt”)
+# 查看当前目录下的子目录和文件
+list.files()</p>
+
+<h1 id="btxt">创建一个有内容的文件 B.txt</h1>
+<p>cat(“文件测试\n”, file = “B.txt”)
+list.files()</p>
+
+<pre><code>* 查看文件
+</code></pre>
+<p># 显示当前目录中的目录和文件
+## 下面两句结果相同
+list.files() # 建议使用该命令，方便记忆
+dir()</p>
+
+<h2 id="fullnames--true">参数full.names = TRUE，确定文件显示全名</h2>
+<p>## 参数recursive = TRUE，递归显示，即把目录下的目录和文件都以文件的形式显示
+list.files(, full.names = TRUE, recursive = TRUE)</p>
+
+<h1 id="section">检查文件是否存在</h1>
+<p>## 存在的文件
+file.exists(“A.txt”)
+## 不存在的文件
+file.exists(“readme.txt”)</p>
+
+<h1 id="section-1">判断是否是文件</h1>
+<p>file_test(“-f”, “A.txt”)
+<code>
+&lt;!--more--&gt;
+* 读取文件
+</code>
+# 文件A.txt读取
+readLines(“A.txt”)</p>
+
+<h1 id="btxt-1">文件B.txt读取</h1>
+<p>readLines(“B.txt”)</p>
+
+<pre><code>* 文件重命名
+</code></pre>
+<p># 给文件A.txt重命名为AA.txt
+file.rename(“A.txt”,”AA.txt”)
+list.files()</p>
+
+<pre><code>* 复制文件
+</code></pre>
+<p>file.copy(“B.txt”, “C.txt”)
+# 查看文件内容
+readLines(“C.txt”)</p>
+
+<pre><code>* 追加文件
+</code></pre>
+<p>file.append(“A.txt”, rep(“B.txt”, 10))
+# 查看文件内容
+readLines(“A.txt”)</p>
+
+<pre><code>* 删除文件
+</code></pre>
+<p># 新建文件
+file.create(“tempa1”, “tempa2”, “tempa3”, “tempa4”)
+list.files()
+# 删除文件
+file.remove(“tempa1”, “tempa2”, “tempa3”, “tempa4”)
+list.files()</p>
+
+<pre><code>* 文件权限
+</code></pre>
+<p># 查看文件完整信息
+file.info(“A.txt”)</p>
+
+<h1 id="section-2">查看文件访问权限</h1>
+<p># 0表示有相关权限
+# 1表示没有相关权限
+## 是否存在
+file.access(“A.txt”,0)</p>
+
+<h2 id="section-3">是否可执行</h2>
+<p>file.access(“A.txt”,1)</p>
+
+<h2 id="section-4">是否可写</h2>
+<p>file.access(“A.txt”,2)</p>
+
+<h2 id="section-5">是否可读</h2>
+<p>file.access(“A.txt”,4)</p>
+
+<h1 id="section-6">文件权限修改</h1>
+<p>## 查看文件信息
+file.info(“A.txt”)</p>
+
+<h2 id="section-7">修改文件权限，创建者可读可写可执行，其他人无权限</h2>
+<p>Sys.chmod(“A.txt”, mode = “0400”, use_umask = TRUE)</p>
+
+<h2 id="section-8">查看文件信息</h2>
+<p>file.info(“A.txt”)</p>
+
+<pre><code>
+## 目录操作
+* 创建目录
+</code></pre>
+<p># 新建一个目录
+dir.create(“test”) # 不能同时创建多个目录
+list.dirs()</p>
+
+<h1 id="section-9">递归创建</h1>
+<p>dir.create(“test/test”,recursive = TRUE)
+list.dirs()</p>
+
+<pre><code>* 查看目录
+</code></pre>
+<p># 查看当前默认目录的一级目录和文件
+list.files() # 同时会显示目录下的文件
+dir()</p>
+
+<h1 id="section-10">查看当前默认目录的子目录</h1>
+<p>## 默认递归显示各级子目录
+list.dirs()
+## 只显示一级子目录
+list.dirs(recursive= FALSE)</p>
+
+<h1 id="section-11">通过系统命令查看目录结构</h1>
+<p>system(“tree”)</p>
+
+<h1 id="section-12">检查目录是否存在</h1>
+<p># 存在的目录
+file.exists(“.”)
+file.exists(“./test”)</p>
+
+<h1 id="section-13">不存在的目录</h1>
+<p>file.exists(“./test1”)</p>
+
+<h1 id="section-14">判断是否是目录</h1>
+<p>## 下面两个语句结果相同
+file_test(“-d”, “./test”)
+file_test(“-d”, “test”)
+<code>
+* 目录重命名
+</code>
+# 查看目录
+dir()</p>
+
+<h1 id="test">对test目录重命名</h1>
+<p>file.rename(“test”, “test1”)</p>
+
+<h1 id="section-15">查看目录</h1>
+<p>dir()</p>
+
+<h1 id="section-16">目录重命名</h1>
+<p>file.rename(“test1”, “test”)
+```</p>
+
+<ul>
+  <li>删除目录
+```
+dir.create(‘temp’)
+dir.create(‘temp1/temp1’, recursive = TRUE)
+dir()</li>
+</ul>
+
+<h1 id="temp">删除temp目录</h1>
+<p>unlink(“temp”, recursive = TRUE) # unlink也可用来删除文件，此时不需要设置参数recursive
+dir()</p>
+
+<p>unlink(“temp1”, recursive = TRUE) # 
+dir()
+<code>
+* 目录的权限
+</code>
+# 查看目录完整信息
+file.info(“.”)</p>
+
+<h1 id="section-17">检查目录的权限</h1>
+<p>df&lt;-dir(full.names = TRUE)</p>
+
+<h1 id="mode0">检查文件或目录是否存在，mode=0</h1>
+<p>file.access(df, 0) == 0</p>
+
+<h1 id="mode1">检查文件或目录是否可执行，mode=1，目录为可以执行</h1>
+<p>file.access(df, 1) == 0</p>
+
+<h1 id="mode2">检查文件或目录是否可写，mode=2</h1>
+<p>file.access(df, 2) == 0</p>
+
+<h1 id="mode4">检查文件或目录是否可读，mode=4</h1>
+<p>file.access(df, 4) == 0</p>
+
+<h1 id="section-18">修改目录权限，所有用户只读</h1>
+<p>Sys.chmod(“./test”, mode = “0555”, use_umask = TRUE)
+file.info(“./test”)
+```</p>
+
+<h2 id="section-19">其他功能函数</h2>
+
+<ul>
+  <li>拼接目录字符串
+<code>
+file.path("p1","p2","p3")
+</code></li>
+  <li>
+    <p>所在目录
+<code>
+dirname("/home/conan/R/fs/readme.txt")
+</code></p>
+  </li>
+  <li>
+    <p>最底层子目录或文件名
+<code>
+basename("/home/conan/R/fs/readme.txt")
+basename("/home/conan/R/fs")
+</code></p>
+  </li>
+  <li>
+    <p>win下标准路径转化
+<code>
+normalizePath(c(R.home(), tempdir()))
+</code></p>
+  </li>
+  <li>短路径，缩减路径的显示长度，只在win中运行
+<code>
+shortPathName(c(R.home(), tempdir()))
+</code></li>
+</ul>
+
+<h2 id="section-20">几个特殊的目录</h2>
+<p>** R.home() ** 查看R软件的相关目录
+** .Library ** 查看R核心包的目录
+** .libPaths() ** 查看R所有包的存放目录
+**  system.file() ** 查看指定包所在的目录
+* R软件的相关目录
+```
+# R.home() 查看R软件的相关目录
+## 打印R软件安装目录
+R.home()</p>
+
+<h2 id="rbin">打印R软件bin的目录</h2>
+<p>R.home(component=”bin”)</p>
+
+<h2 id="r">打印R软件文件的目录</h2>
+<p>R.home(component=”doc”)
+```</p>
+
+<ul>
+  <li>
+    <p>R软件的包目录
+<code>
+# 打印核心包的目录
+.Library
+# 打印所有包的存放目录
+.libPaths()
+</code></p>
+  </li>
+  <li>
+    <p>查看指定包所在的目录
+<code>
+# base包的存放目录
+system.file()
+# dplyr包的存放目录
+system.file(package = "dplyr")
+</code></p>
+  </li>
+</ul>
+
+<h2 id="section-21">小结</h2>
+<p>正如张丹所说，用R语言操作文件系统还是很方便的，但其对于函数命名不太规范,比如文件和目录的操作函数名有时区分，有时又不区分。最后，对文件和目录的操作进行简单的小结以方便自己的记忆。</p>
 
 <table>
-<thead>
-<tr>
-<th> 时间距离       </th>
-<th style="text-align:center;"> &lt;s             </th>
-<th style="text-align:right;"> >s    </th>
-<th style="text-align:center;">  合计  </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> &lt;t            </td>
-<td style="text-align:center;">    X           </td>
-<td style="text-align:right;"> b     </td>
-<td style="text-align:center;">   Nt   </td>
-</tr>
-<tr>
-<td> >t            </td>
-<td style="text-align:center;"> c              </td>
-<td style="text-align:right;">   d   </td>
-<td style="text-align:center;">    Nt1 </td>
-</tr>
-<tr>
-<td> 合计           </td>
-<td style="text-align:center;"> Ns             </td>
-<td style="text-align:right;">  NS1  </td>
-<td style="text-align:center;">    n   </td>
-</tr>
-</tbody>
+  <thead>
+    <tr>
+      <th style="text-align: center">操作名称</th>
+      <th style="text-align: center">文件操作</th>
+      <th style="text-align: right">目录操作</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">创建</td>
+      <td style="text-align: center">file.create()</td>
+      <td style="text-align: right">dir.create()</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">查看</td>
+      <td style="text-align: center">list.files()</td>
+      <td style="text-align: right">list.dirs()</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">读取</td>
+      <td style="text-align: center">readLines()</td>
+      <td style="text-align: right">-</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">重命名</td>
+      <td style="text-align: center">file.rename()</td>
+      <td style="text-align: right">file.rename()</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">复制</td>
+      <td style="text-align: center">file.copy()</td>
+      <td style="text-align: right">-</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">追加</td>
+      <td style="text-align: center">file.append()</td>
+      <td style="text-align: right">-</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">删除</td>
+      <td style="text-align: center">file.remove()</td>
+      <td style="text-align: right">unlink()</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">权限查看</td>
+      <td style="text-align: center">file.info()</td>
+      <td style="text-align: right">file.info()</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">权限查看</td>
+      <td style="text-align: center">file.access()</td>
+      <td style="text-align: right">file.access()</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">权限修改</td>
+      <td style="text-align: center">Sys.chomod()</td>
+      <td style="text-align: right">Sys.chomod()</td>
+      <td> </td>
+    </tr>
+  </tbody>
 </table>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>Char In R</title>
+      <link>http://xukuang.github.io/blog/2016/02/char-in-R/</link>
+      <pubDate>2016-02-27T00:00:00-07:00</pubDate>
+      <author>Spatial-R</author>
+      <guid>http://xukuang.github.io/blog/2016/02/char-in-R</guid>
+      <content:encoded><![CDATA[<p>title: “R中的文本处理”
+date: 2016-02-27 17:14:59
+categories: 技术篇
+tags: [文本, R]
+—
+&gt; 处理文本是每一种计算机语言都应该具备的功能，但不是每一种语言都侧重于处理文本。R语言是统计的语言，处理文本不是它的强项。尽管R语言处理文本的能力不够强，但适当使用可以大幅提高工作效率的，而且有些文本操作还不得不用。高效处理文本少不了正则表达式（regular expression），虽然R在这方面先天不高效，但其中处理文本的绝大多数函数都支持正则表达式。</p>
 
+<h2 id="section">正则表达式</h2>
+<p>正则表达式是用于描述/匹配一个文本集合的表达式。它不是R的专属内容，这里也只简单介绍，更详细的内容请查阅其他文章。<!--more-->
+1.  所有英文字母、数字和很多可显示的字符本身就是正则表达式，用于匹配它们自己。比如 ‘a’ 就是匹配字母 ‘a’ 的正则表达式
+2. 一些特殊的字符在正则表达式中不在用来描述它自身，它们在正则表达式中已经被“转义”，这些字符称为“元字符”。perl类型的正则表达式中被转义的字符有：. \ | ( ) [ ] { } ^ $ * + ?。被转义的字符特殊的意义如下:
+	* \^放在表达式开始处表示匹配文本开始位置，放在方括号内开始处表示非方括号内的任一字符
+	* $ 匹配一个字符串的结尾
+	* 点号. 表示除了换行符以外的任一字符
+	* * 表示将其前的字符进行0个或多个的匹配
+	* .* 可以匹配任意字符
+	* + 匹配1或多个正好在它之前的那个字符
+	* ? 匹配0或1个正好在它之前的那个字符
+	* 大括号{}表示前面的字符或表达式的重复次数
+	* 方括号[]表示选择方括号中的任意一个（如[a-z] 表示任意一个小写字符）
+	* | 表示可选项，即 | 前后的表达式任选一个</p>
 
-<hr />
+<ol>
+  <li>
+    <p>如果要在正则表达式中表示元字符本身，比如我就要在文本中查找问号‘?’， 那么就要使用引用符号（或称换码符号），一般是反斜杠 ‘'。需要注意的是，在R语言中得用两个反斜杠即 ‘\\’，如要匹配括号就要写成 ’\\(\\)‘</p>
+  </li>
+  <li>不同语言或应用程序（事实上很多规则都通用）定义了一些特殊的元字符用于表示某类字符，如 :
+    <ul>
+      <li>\d 表示数字0-9，\D 表示非数字</li>
+      <li>\s 表示空白字符（包括空格、制表符、换行符等），\S 表示非空白字符，</li>
+      <li>\w 表示字（字母和数字），\W 表示非字</li>
+      <li>\&lt; 和 \&gt; 分别表示以空白字符开始和结束的文本
+ 需要注意的是，反斜杠 ‘\‘在R语言中得用两个反斜杠即 ‘\\’，如’\s’就要写成 ’\\s‘。</li>
+    </ul>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>正则表达式符号运算顺序：圆括号括起来的表达式最优先，然后是表示重复次数的操作（即：* + {} ），接下来是连接运算（其实就是几个字符放在一起，如abc），最后是表示可选项的运算（</td>
+          <td>）。所以 ‘foot</td>
+          <td>bar’ 可以匹配’foot‘或者’bar‘，但是 ‘foot</td>
+          <td>ba{2}r’匹配的是’foot‘或者’baar‘。</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>“贪婪”和“懒惰”的匹配规则。默认情况下是匹配尽可能多的字符，是为贪婪匹配，比如 “a.*b”默认匹配最长的a开头b结尾的字串，也就是整个字符串。如果要进行懒惰匹配，也就是匹配最短的字串，只需要在后面加个 ?，比如 “a.*?b”，就会匹配最开始找到的最短的a开头b结尾的字串</li>
+</ol>
 
-<p>   <strong>统计推断方法包括</strong>：</p>
+<h2 id="section-1">文本处理</h2>
+<p>### 字符数统计
+函数nchar，统计向量中每个元素的字符个数，注意这个函数和length函数的差别：length是向量长度（向量元素的个数）。
+<code>
+x &lt;- c("Hellow", "World", "!") 
+nchar(x); length(x)
+	# [1] 6 5 1 
+	# [1] 3
+length(''); nchar('') 
+	# [1] 1 
+	# [1] 0 
+</code>
+### 字符大小写转化
+* 函数tolower，将向量中的元素转化为小写字母
+* 函数toupper，将向量中的元素转化为大写字母
+* 函数casefold，将向量中的元素转化为小或大写字母（upper = F，转化为小写；upper = T，转化为大写）
+* 函数chartr，按指定的规则进行转换
+```
+tolower(x)
+	# [1] “hellow” “world”  “!”<br />
+toupper(x)
+	# [1] “HELLOW” “WORLD”  “!” 
+casefold(x) # 默认upper = F
+	# [1] “hellow” “world”  “!” 
+casefold(x, upper = T)
+	# [1] “HELLOW” “WORLD”  “!”</p>
 
-<ul>
-<li> <strong>卡方检验</strong>：样本量较大时，可采用卡方检验，对Knox方法而言，其本身要求设定的空间临界值足够小，因而X样本量偏小的情况较常见。</li>
-<li> <strong>Possion估计法</strong>：当Nt和Ns相对于N来说较小时，X的方差接近于它的均数，此时可采用Possion估计法。但当Nt和Ns较大时，使用该方法进行推断时会有偏性。</li>
-<li> <strong>基于Possion分布的估计法</strong>：与Possion估计法相似，其以<strong>正态分布</strong>代替Possion分布，一般当u>20时，Possion分布近似正态分布。</li>
-<li> <strong>Barton-David</strong>: 仍假设X服从正态分布，但当Ns和Nt较大时，仍能进行无偏推断。</li>
-<li> <strong>蒙特卡罗法</strong>：一种无偏的估计方法，目前较好地能够进行Knox检验。</li>
-</ul>
+<p>chartr(‘ol’, ‘pm’, x) # o转化为p，l转化为m
+	# “Hemmpw” “Wprmd”  “!”</p>
 
+<p>DNA &lt;- “AtGCtttACC” # DNA为长度为1的字符向量
+tolower(DNA) 
+	# [1] “atgctttacc” 
+toupper(DNA) 
+	# [1] “ATGCTTTACC” 
+chartr(“Tt”, “Uu”, DNA) # T转化为U，t转化为u
+	# [1] “AuGCuuuACC” 
+chartr(“Tt”, “UU”, DNA) 
+	# [1] “AUGCUUUACC”
+<code>
+### 字符串连接
+函数paste应该是R中最常用字符串函数了，也是R字符串处理函数里面非常纯的不使用正则表达式的函数（因为用不着）。
+</code>
+paste(“CK”, 1:6, sep = “”)
+	# [1] “CK1” “CK2” “CK3” “CK4” “CK5” “CK6”
+x &lt;- list(a = “aaa”, b = “bbb”, c = “ccc”)
+y &lt;- list(d = 1, e = 2)
+paste(x, y, sep = “-“)  #较短的向量被循环使用
+	# [1] “aaa-1” “bbb-2” “ccc-1”
+<code>
+paste函数还有一个用法，设置collapse参数，连成一个字符串。
+</code>
+paste(x, y, sep = “-“, collapse = “; “)
+	# [1] “aaa-1; bbb-2; ccc-1”
+paste(x, collapse = “; “)
+	# [1] “aaa; bbb; ccc”
+<code>
+### 字符串拆分
+strsplit函数使用正则表达式，使用格式为:
+</code>
+strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
+<code>
+* 参数x为字串向量，每个元素都将单独进行拆分。
+* 参数split为拆分位置的字串向量，
+* 默认为正则表达式匹配（fixed=FALSE）。如果你没接触过正则表达式，设置fixed=TRUE，表示使用普通文本匹配或正则表达式的精确匹配。普通文本的运算速度快。
+* 参数perl=TRUE/FALSE的设置和perl语言版本有关，如果正则表达式很长，正确设置表达式并且使用perl=TRUE可以提高运算速度。
+* 参数useBytes设置是否逐个字节进行匹配，默认为FALSE，即按字符而不是字节进行匹配。
+</code>
+text &lt;- “Hello Adam!\nHello Ava!”
+strsplit(text, “ “) # R语言的字符串事实上也是正则表达式，文本中的\n在图形输出中是被解释为换行符的。
+	# [[1]]
+	# [1] “Hello”        “Adam!\nHello” “Ava!”
+strsplit(text, “\s”)
+	# [[1]]
+	# [1] “Hello” “Adam!” “Hello” “Ava!”
+<code>
+strsplit得到的结果是列表，后面要怎么处理就得看情况而定了。
+</code>
+class(strsplit(text, “\s”))
+	# [1] “list”
+<code>
+有一种情况很特殊，如果split参数的字符长度为0，得到的结果就是一个个的字符。
+</code>
+strsplit(text, “”)
+	# [[1]]
+	#  [1] “H”  “e”  “l”  “l”  “o”  “ “  “A”  “d”  “a”  “m”  “!”  “\n” “H”  “e” 
+	# [15] “l”  “l”  “o”  “ “  “A”  “v”  “a”  “!”
+```
+从这里也可以看到R把 \n 是当成一个字符来处理的。
+### 字符串查询和替换
+R中字符串的查询函数有：grep、grepl、regexpr、gregexpr和regexpr，字符串的替换函数有sub和gsub。</p>
 
-<hr />
+<pre><code># 字符串查询
+grep(pattern, x, ignore.case = FALSE, perl = FALSE, value = FALSE,
+     fixed = FALSE, useBytes = FALSE, invert = FALSE)
 
-<p>   <strong>时间、空间临界值的确定</strong>：</p>
+grepl(pattern, x, ignore.case = FALSE, perl = FALSE,
+      fixed = FALSE, useBytes = FALSE)
 
-<ul>
-<li> 已知疾病信息，时间界值可按照设为其潜伏期天数，空间界值可设定为相邻农场的距离。</li>
-<li> 未知疾病信息，可设置一系列时间界值和空间界值，分别对各个组合进行检验。需注意时间界值和空间界值的设定不能超过其所有病例对子的平均时间距离或平均空间距离(平均时间距离=所有病例对子的时间间隔之和/病例对子总数，平均空间距离=所有病例对子的空间距离之和/病例对子总和)</li>
-</ul>
+regexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
+        fixed = FALSE, useBytes = FALSE)
 
+gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
+         fixed = FALSE, useBytes = FALSE)
 
-<hr />
-
-<h5>Rogerson</h5>
-
-<p>  <strong>Rogerson</strong>，能对传染病的时空进行动态监测，可利用历史数据和不同传染病的危害程度来调整参数和报警界值，有效降低漏报和误报。基本原理如下：</p>
-
-<pre><code>    在Tango方法的基础上，将样本按n个单位进行分割，使得Zi呈正态或者接近正态。  
+regexec(pattern, text, ignore.case = FALSE,
+        fixed = FALSE, useBytes = FALSE)
+# 字符串替换
+sub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
+    fixed = FALSE, useBytes = FALSE)
+## sub函数会根据pattern的规则对x中各元素进行搜索，遇到符合条件的第一个子字符串的位置，用replacement替换该子字符串，返回替换后的结果，和x的结构相同
+gsub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
+     fixed = FALSE, useBytes = FALSE)
+## gsub函数会根据pattern的规则对x中各元素进行搜索，找出所有符合条件的子字符串的位置，用replacement替换该子字符串，返回替换后的结果，和x的结构相同	 
 </code></pre>
 
-<hr />
+<p>这几个函数有相似的格式，都使用正则表达式的规则进行匹配。默认是egrep的规则，也可以选用Perl语言的规则。
+* pattern为字符串表示正则表达式
+* replacement也是字符串表示替换的内容
+* x为字符型向量表示被替换的字符向量
+* 参数ignore.case = FALSE，表示大小写敏感
+* 参数extended = TRUE，表示使用egrep规则
+* perl = FALSE，表示不使用Perl规则
+* fixed = FALSE，表示不使用精确匹配
+* useBytes = FALSE，表示按字符匹配</p>
 
-<p> 未完待续</p>
+<h4 id="section-2">字符串查询</h4>
+<p>grep和grepl函数这两个函数返回向量水平的匹配结果，不涉及匹配字符串的详细位置信息。此外，尽管这两个函数的参数看起来差不多，但是返回结果的形式并不一样。	
+regexpr、gregexpr和regexpr这三个函数返回的结果包均含了匹配的具体位置和字符串长度信息，只是他们的结果显示方式不同。
+<code>
+text &lt;- c("Hellow, Adam!", "Hi, Paul!", "How are you, Adam.")
+grep("Adam", text)
+	# [1] 1 3
+grepl("Adam", text)
+	# [1]  TRUE FALSE  TRUE
+regexpr("Adam", text)
+	# [1]  9  -1 14
+	# attr(,"match.length")
+	# [1] 4 -1 4
+	# attr(,"useBytes")
+	# [1] TRUE
+gregexpr("Adam", text)
+	# [[1]]
+	# [1] 9
+	# attr(,"match.length")
+	# [1] 4
+	# attr(,"useBytes")
+	# [1] TRUE
+	# 
+	# [[2]]
+	# [1] -1
+	# attr(,"match.length")
+	# [1] -1
+	# attr(,"useBytes")
+	# [1] TRUE
+	# 
+	# [[3]]
+	# [1] 14
+	# attr(,"match.length")
+	# [1] 4
+	# attr(,"useBytes")
+	# [1] TRUE
+regexec("Adam", text)
+	# [[1]]
+	# [1] 9
+	# attr(,"match.length")
+	# [1] 4
+	# 
+	# [[2]]
+	# [1] -1
+	# attr(,"match.length")
+	# [1] -1
+	# 
+	# [[3]]
+	# [1] 14
+	# attr(,"match.length")
+	# [1] 4
+</code>
+#### 字符串替换
+尽管sub和gsub是用于字符串替换的函数，但严格地说R语言没有字符串替换的函数，因为R语言不管什么操作对参数都是传值不传址。
+<code>
+text
+	# [1] "Hellow, Adam!"      "Hi, Paul!"          "How are you, Adam."
+sub(pattern = "Adam", replacement = "world", text)
+	# [1] "Hellow, world!"      "Hi, Paul!"          "How are you, world."
+text
+	# [1] "Hellow, Adam!"      "Hi, Paul!"          "How are you, Adam."
+</code>
+可以看到：虽然说是“替换”，但原字符串并没有改变，要改变原变量我们只能通过再赋值的方式。 sub和gsub的区别是前者只做一次替换（不管有几次匹配），而gsub把满足条件的匹配都做替换。
+<code>
+text1 = c("Hellow, Adam!", "Hi, Paul!", "How are you, Adam, Ava.")
+sub(pattern = "Adam|Ava", replacement = "world", text1)
+	# [1] "Hellow, world!"      "Hi, Paul!"          "How are you, world, Ava."
+gsub(pattern = "Adam|Ava", replacement = "world", text1)
+	# [1] "Hellow, world!"      "Hi, Paul"          "How are you, world, world."
+</code>
+sub和gsub函数可以使用提取表达式（转义字符+数字）让部分变成全部：
+<code>
+sub(pattern = ".*(Adam).*", replacement = "Hi, \\1", text)
+	# [1] "Hi, Adam"  "Hi, Paul!" "Hi, Adam" 
+</code>
+## 字符串提取
+substr和substring函数通过位置进行字符串拆分或提取，它们本身并不使用正则表达式，但是结合正则表达式函数regexpr、gregexpr或regexec使用可以非常方便地从大量文本中提取所需信息。两者的参数设置基本相同，但它们的返回值的长度（个数）有差别：substr返回的字串个数等于第一个参数的长度，而substring返回字串个数等于三个参数中最长向量长度，短向量循环使用。
+<code>
+substr(x, start, stop)
+substring(text, first, last = 1000000L)
+</code>
+* x均为要拆分的字串向量
+* start/first 为截取的起始位置向量
+* stop/last 为截取字串的终止位置向量</p>
+
+<p>先看第1参数（要拆分的字符向量）长度为1例子。
+<code>
+x &lt;- "123456789"
+substr(x, c(2, 4), c(4, 5, 8))
+	# [1] "234"
+substring(x, c(2, 4), c(4, 5, 8))
+	# [1] "234"     "45"      "2345678"
+</code>
+因为x的向量长度为1，所以substr获得的结果只有1个字串，即第2和第3个参数向量只用了第一个组合：起始位置2，终止位置4。 而substring的语句三个参数中最长的向量为c(4,5,8)，执行时按短向量循环使用的规则第一个参数事实上就是c(x,x,x)，第二个参数就成了c(2,4,2)，最终截取的字串起始位置组合为：2-4, 4-5和2-8。
+### 字符串的整理
+* strtrim 函数</p>
+
+<p>该函数用于将字符串修剪到特定的显示宽度，其用法为，
+<code>
+strtrim(x,width)
+</code>
+返回字符串向量的长度等于x的长度。因为是“修剪”，所以只能去掉多余的字符不能增加其他额外的字符：如果字符串本身的长度小于width，得到的是原字符串，别指望它会用空格或其他什么字符补齐。
+<code>
+strtrim(c("abcdef", "abcdef", "abcdef"), c(1, 5, 10))
+	# [1] "a"      "abcde"  "abcdef"
+strtrim(c(1, 123, 1234567), 4)
+	# [1] "1"    "123"  "1234"
+</code></p>
+
+<ul>
+  <li>strwrap函数</li>
+</ul>
+
+<p>该函数把一个字符串当成一个段落的文字（不管字符串中是否有换行符），按照段落的格式（缩进和长度）和断字方式进行分行，每一行是结果中的一个字符串。
+<code>
+str1 &lt;- "Each character string in the input is first split into paragraphs\n(or lines containing whitespace only).  The paragraphs are then\nformatted by breaking lines at word boundaries.  The target\ncolumns for wrapping lines and the indentation of the first and\nall subsequent lines of a paragraph can be controlled\nindependently."
+str2 &lt;- rep(str1, 2)
+strwrap(str2, width = 80, indent = 2)
+	#  [1] "  Each character string in the input is first split into paragraphs (or lines"
+	#  [2] "containing whitespace only).  The paragraphs are then formatted by breaking"  
+	#  [3] "lines at word boundaries.  The target columns for wrapping lines and the"     
+	#  [4] "indentation of the first and all subsequent lines of a paragraph can be"      
+	#  [5] "controlled independently."                                                    
+	#  [6] "  Each character string in the input is first split into paragraphs (or lines"
+	#  [7] "containing whitespace only).  The paragraphs are then formatted by breaking"  
+	#  [8] "lines at word boundaries.  The target columns for wrapping lines and the"     
+	#  [9] "indentation of the first and all subsequent lines of a paragraph can be"      
+	# [10] "controlled independently."
+</code>
+simplify参数用于指定结果的返回样式，默认为TRUE，即结果中所有的字符串都按顺序放在一个字符串向量中（如上）；如果为FALSE，那么结果将是列表。另外一个参数exdent用于指定除第一行以外的行缩进。
+<code>
+strwrap(str1, width = 80, indent = 0, exdent = 2)
+	# [1] "Each character string in the input is first split into paragraphs (or lines"  
+	# [2] "  containing whitespace only).  The paragraphs are then formatted by breaking"
+	# [3] "  lines at word boundaries.  The target columns for wrapping lines and the"   
+	# [4] "  indentation of the first and all subsequent lines of a paragraph can be"    
+	# [5] "  controlled independently."
+</code>
+* match和charmatch函数</p>
+
+<p>这两个函数用于字符的匹配。
+<code>
+match("xx", c("abc", "xx", "xxx", "xx"))
+	# [1] 2
+match(2, c(3, 1, 2, 4))
+	# [1] 3
+charmatch("xx", "xx")
+	# [1] 1
+charmatch("xx", "xxa")
+	# [1] 1
+charmatch("xx", "axx")
+	# [1] NA
+</code>
+match按向量进行运算，返回第一次匹配的元素的位置（如果有），非字符向量也可用。正如原作者说的那样，charmatch函数真太坑爹了，不建议使用。</p>
+
+<p>------
+<strong>参考文章</strong>
+1. R语言进阶之二：文本（字符串）处理与正则表达式（这篇文章在许多网站都有转载，然而原创链接失效了）
+2. <a href="http://jianl.org/2010/02/14/2010-02-14-R%E4%B8%AD%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%AE%80%E4%BB%8B/">R中正则表达式简介</a></p>
 ]]></content:encoded>
     </item>
     
     <item>
-      <title>美人鱼</title>
-      <link>http://spatial-r.github.io/cn/2014/08/mermaid/</link>
-      <pubDate>2014-08-03T00:00:00+08:00</pubDate>
+      <title>Melt And Dcast</title>
+      <link>http://xukuang.github.io/blog/2016/01/melt-and-dcast/</link>
+      <pubDate>2016-01-18T00:00:00-07:00</pubDate>
       <author>Spatial-R</author>
-      <guid>http://spatial-r.github.io/cn/2014/08/mermaid</guid>
-      <content:encoded><![CDATA[<hr />
+      <guid>http://xukuang.github.io/blog/2016/01/melt-and-dcast</guid>
+      <content:encoded><![CDATA[<p>title: “长宽数据之间的转化(一)”
+date: 2016-01-18 10:32:19
+categories: 技术篇
+tags: [R, reshape2]
+—
+这里将数据框分为两种：宽数据和长数据，宽数据便于数据成果的展示，长数据则便于数据在R中进行分析。reshape2包中的melt函数可以实现宽数据向长数据的转换，而dcast可以实现宽数据向长数据的转化。 
+## 宽数据转化为长数据
+### melt函数
+<code>
+melt(data, id.vars, measure.vars,
+  variable.name = "variable", ..., na.rm = FALSE, value.name = "value",
+  factorsAsStrings = TRUE)
+</code>
+<strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型	
+<strong>id.vars</strong> 数据的转化标准：依照那些列进行转化，数据格式为字符型或数字型的向量。如果该参数没有限定，会把所有数据转化为两列，其中指标一列，数据一列。
+<strong>measure.vars</strong>	被转化的数据：将哪些列数据值转化，该参数在没有指定的默认情况下，会将id.vars中以外的所有列数据进行转化，数据格式为字符型或数字型的向量
+<strong>variable.name</strong>	对转化后的数据标准列重新命名，默认情况下，列名为variable
+<strong>na.rm</strong> 是否去除数据中的NA，默认情况下为FALSE，不去除NA
+<strong>value.name</strong> 对转化后的数据列重新命名，默认情况下，列名为value
+<strong>factorsAsStrings</strong>	转化过程中是否将因子类型数据转化为字符型数据，默认情况下为TRUE，将因子类型数据转化为字符型数据
+<!--more-->
+### 实例
+* 按Month和Day列将其他指标排成长数据
+<code>
+# 加载数据
+library(reshape2)
+head(airquality)
+	#   Ozone Solar.R Wind Temp Month Day
+	# 1    41     190  7.4   67     5   1
+	# 2    36     118  8.0   72     5   2
+	# 3    12     149 12.6   74     5   3
+	# 4    18     313 11.5   62     5   4
+	# 5    NA      NA 14.3   56     5   5
+	# 6    28      NA 14.9   66     5   6
+dim(airquality)	
+	# [1] 153   6
+dat1 = melt(airquality, id.vars = c('Month', 'Day'))
+head(dat1)
+	# 	Month Day variable value
+	# 1     5   1    Ozone    41
+	# 2     5   2    Ozone    36
+	# 3     5   3    Ozone    12
+	# 4     5   4    Ozone    18
+	# 5     5   5    Ozone    NA
+	# 6     5   6    Ozone    28
+dim(dat1)
+	# [1] 612   4
+需要注意的是melt函数当中如果id.vars参数不指定值，则会把所有数据转化为两列输出。
+</code>
+* 按Month和Day列将Ozone和Solar.R列指标排成长数据
+<code>
+dat2 = melt(airquality, id.vars = c('Month', 'Day'),
+ measure = c('Ozone', 'Solar.R'))
+head(dat2)
+	# 	Month Day variable value
+	# 1     5   1    Ozone    41
+	# 2     5   2    Ozone    36
+	# 3     5   3    Ozone    12
+	# 4     5   4    Ozone    18
+	# 5     5   5    Ozone    NA
+	# 6     5   6    Ozone    28
+dim(dat2) # 函数是dat1的1/2
+	# [1] 306   4 
+</code>
+* 对排列后的数据进行重命名
+<code>
+dat3 = melt(airquality, id.vars = c('Month', 'Day'),
+variable.name = 'type', value.name = 'value.type')
+head(dat3) # 列名发生变化
+	# 	Month Day  type value.type
+	# 1     5   1 Ozone         41
+	# 2     5   2 Ozone         36
+	# 3     5   3 Ozone         12
+	# 4     5   4 Ozone         18
+	# 5     5   5 Ozone         NA
+	# 6     5   6 Ozone         28
+dim(dat3)
+	# [1] 612   4
+</code>
+* 去除排列后数据中的NA
+<code>
+#　 airquality$Ozone 数的前四列有44 个NA
+table(is.na(airquality$Ozone)) # 37
+	# FALSE  TRUE 
+	#   116    37 
+table(is.na(airquality$Solar.R)) # 4
+	# FALSE  TRUE 
+	#   146     7 
+table(is.na(airquality$Temp)) # 0
+	# FALSE 
+	#   153 
+table(is.na(airquality$Wind)) # 0
+	# FALSE 
+	#   153 
+dat4 = melt(airquality, id.vars = c('Month', 'Day'),
+variable.name = 'type', value.name = 'value.type', na.rm = TRUE)
+head(dat4)
+	#   Month Day  type value.type
+	# 1     5   1 Ozone         41
+	# 2     5   2 Ozone         36
+	# 3     5   3 Ozone         12
+	# 4     5   4 Ozone         18
+	# 6     5   6 Ozone         28
+	# 7     5   7 Ozone         23
+dim(dat4)# 比dat3少44行
+	# [1] 568   4	
+</code>
+此外，还发现melt函数中所有参数名都可以只写’.’前的部分。
+<code>
+dat5 = melt(airquality, id = c('Month', 'Day'),
+variable = 'type', value = 'value.type', na = TRUE)
+head(dat5)
+	# 	Month Day  type value
+	# 1     5   1 Ozone    41
+	# 2     5   2 Ozone    36
+	# 3     5   3 Ozone    12
+	# 4     5   4 Ozone    18
+	# 5     5   5 Ozone    NA
+	# 6     5   6 Ozone    28
+</code>
+## 长数据转化为宽数据
+### dcast函数
+<code>
+dcast(data, formula, fun.aggregate = NULL, ..., margins = NULL,
+  subset = NULL, fill = NULL, drop = TRUE,
+  value.var = guess_value(data))
+</code>
+<strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型	
+<strong>formula</strong> 转化的标准，以公式的形式定义
+<strong>fun.aggregate</strong> 汇总函数。分类后，如果分类结果不唯一，就必须使用汇总函数。常用的汇总函数，包括求个数、和、平均值、标准差、方差，默认的为求个数
+<strong>margins</strong>	确定结果是否显示总的结果，默认不显示
+<strong>subset</strong> 是否只对某些标准内容进行计算，结合plyr包一起使用
+<strong>fill</strong> 不存在的组合值的显示结果。默认的显示为0。数据类型为数值型向量
+<strong>drop</strong> 确认不存在分分类组合是否显示，默认情况下显示
+<strong>value.var</strong> 貌似对对转化后的数据进行命名，使用默认情况即可
+### 实例
+* 每个分类结果有一个数据，此时不需要使用汇总函数
+<code>R
+air1 =  dcast(dat4, Month + Day ~ type)
+dim(air1)
+	# [1] 153   6
+head(air1) # 数据与airquality相同
+	# 	Month Day Ozone Solar.R Wind Temp
+	# 1     5   1    41     190  7.4   67
+	# 2     5   2    36     118  8.0   72
+	# 3     5   3    12     149 12.6   74
+	# 4     5   4    18     313 11.5   62
+	# 5     5   5    NA      NA 14.3   56
+	# 6     5   6    28      NA 14.9   66
+</code>
+* 按Month列排成宽数据，每个分类结果有多个数据，必须有汇总函数
+<code>
+air2 =  dcast(dat4, Month ~ type, sum) # 这里使用sum函数
+dim(air2)
+	# [1] 5 5
+head(air2)
+	# 	Month Ozone Solar.R  Wind Temp
+	# 1     5    NA      NA 360.3 2032
+	# 2     6    NA    5705 308.0 2373
+	# 3     7    NA    6711 277.2 2601
+	# 4     8    NA      NA 272.6 2603
+	# 5     9    NA    5023 305.4 2307
+</code>
+* 是否显示总的分类结果
+<code>
+air3 = dcast(dat4, Month ~ type, sum, margins = T) #列、行的总汇总都显示
+dim(air3)
+	# [1] 6 6
+head(air3)
+	#   Month Ozone Solar.R   Wind  Temp (all)
+	# 1     5    NA      NA  360.3  2032    NA
+	# 2     6    NA    5705  308.0  2373    NA
+	# 3     7    NA    6711  277.2  2601    NA
+	# 4     8    NA      NA  272.6  2603    NA
+	# 5     9    NA    5023  305.4  2307    NA
+	# 6 (all)    NA      NA 1523.5 11916    NA
+dcast(dat4, Month ~ type, sum, margins = c('Month'))# 只显示列的汇总
+	# 	Month Ozone Solar.R   Wind  Temp
+	# 1     5    NA      NA  360.3  2032
+	# 2     6    NA    5705  308.0  2373
+	# 3     7    NA    6711  277.2  2601
+	# 4     8    NA      NA  272.6  2603
+	# 5     9    NA    5023  305.4  2307
+	# 6 (all)    NA      NA 1523.5 11916
+dcast(dat4, Month ~ type, sum, margins = c('type'))# 只显示行的汇总
+	# 	Month Ozone Solar.R  Wind Temp (all)
+	# 1     5    NA      NA 360.3 2032    NA
+	# 2     6    NA    5705 308.0 2373    NA
+	# 3     7    NA    6711 277.2 2601    NA
+	# 4     8    NA      NA 272.6 2603    NA
+	# 5     9    NA    5023 305.4 2307    NA
+</code>
+* 只显示部分的分类内容
+<code>
+library(plyr)
+air4 = dcast(dat4, Month ~ type, sum, subset = .(type == 'Wind' )) # 只显示type中Wind的情况
+dim(air4)
+	# [1] 5 2
+head(air4)
+	# 	Month  Wind
+	# 1     5 360.3
+	# 2     6 308.0
+	# 3     7 277.2
+	# 4     8 272.6
+	# 5     9 305.4
+</code>
+* 不存在的分类是否显示，以及怎么显示
+<code>
+air5 = dcast(dat4, Month + Day ~ type, length, drop = F) # 组合上存在的结果都显示
+tail(air5) # 这里的最后一行只是组合上存在，数据中并不在
+	# 		 Month Day Ozone Solar.R Wind Temp
+	# 150      9  26     1       1    1    1
+	# 151      9  27     1       1    1    1
+	# 152      9  28     1       1    1    1
+	# 153      9  29     1       1    1    1
+	# 154      9  30     1       1    1    1
+	# 155      9  31     0       0    0    0
+tail(dcast(dat4, Month + Day ~ type, length, drop = F, fill= -1)) # 更改不存在结果的显示值，最后一行显示为-1
+	# 		Month Day Ozone Solar.R Wind Temp
+	# 150     9  26     1       1    1    1
+	# 151     9  27     1       1    1    1
+	# 152     9  28     1       1    1    1
+	# 153     9  29     1       1    1    1
+	# 154     9  30     1       1    1    1
+	# 155     9  31    -1      -1   -1   -1
+</code></p>
 
-<p>我是渔夫，          <br/>
-在日暮之时，映着夕阳， <br/>
-渴望再次听一曲她的赞歌。</p>
-
-<hr />
-
-<p>辽阔寂静的海边，有人在贮视， <br/>
-那片他早已熟悉的区域． <br/>
-他的思绪，浸润在海风中， <br/>
-一直飘，一直飘... <br/>
-直至消散在海天相接的地方， <br/>
-他想，那地方，很美吧．</p>
-
-<hr />
-
-<p>那天，天也是这般蓝，<br/>
-蓝得只允许人去陶醉．<br/>
-他，静静地望着夕阳，<br/>
-望着夕阳在海天相接的地方点点消散．<br/>
-蓦然，一丝乐符渗进他的耳际，<br/>
-他的心，猛然地被拉紧．</p>
-
-<hr />
-
-<p>是谁，在夕阳下如此轻柔地歌唱 <br/>
-是谁，在海边为他带来了如此动人的乐章 <br/>
-是谁，又是谁...<br/>
-转身，从容却又那么迫不及待． <br/>
-那是一条融在夕阳里的美人鱼， <br/>
-一条他只能选择远望的美人鱼．</p>
-
-<hr />
-
-<p>她，高贵地立在海面上， <br/>
-忘我般演绎着一首生命的赞歌，<br/>
-这，是他见过的最美的风景， <br/>
-这，是他永生都忘记不了的记忆． <br/>
-她，依旧在醉然地歌唱，  <br/>
-他，依旧在醉然地聆听．</p>
-
-<hr />
-
-<p>多久，他不知道． <br/>
-只是，歌声渐渐地飘渺，变淡， <br/>
-最后，淡的他只能听见海风的呼啸． <br/>
-他才觉悟地猛然抬头， <br/>
-她，游走了，向着海天相交的地方， <br/>
-向着那个他认为最美的地方．</p>
-
-<hr />
-
-<p>天，依旧那么蓝． <br/>
-等待着，伴随间歇有力的涛声． <br/>
-尽管他并不知道，这一次，下一次，<br/>
-她，是否会出现； <br/>
-尽管他已经知道，很多次，很多次， <br/>
-她，都没有出现．</p>
-
-<hr />
-
-<p>夕阳隐没在海天的地方，<br/>
-他，又望望了那片熟悉的区域， <br/>
-默然间扎进了海中...</p>
-
-<hr />
-
-<p>09年写的小诗，无意中想起，过去的岁月，总是这样让人放不下。渔夫是孤独的，但却一如既往地守着自己的梦，有梦的生活，是幸福的。</p>
-
-<p><img src="https://i.imgur.com/a3u3nI4.jpg" alt="Drawing" style="width: 500px;" class="alignleft"/></p>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>印象西湖和大运河</title>
-      <link>http://spatial-r.github.io/cn/2014/08/Riding-in-Hang-zhou/</link>
-      <pubDate>2014-08-01T00:00:00+08:00</pubDate>
-      <author>Spatial-R</author>
-      <guid>http://spatial-r.github.io/cn/2014/08/Riding-in-Hang-zhou</guid>
-      <content:encoded><![CDATA[<p>人们常说，“上有天堂，下有苏杭”。<a href="http://baike.sogou.com/v256673.htm">西湖</a>和<a href="http://baike.sogou.com/v15769.htm?sp=SST%E4%BA%AC%E6%9D%AD%E5%A4%A7%E8%BF%90%E6%B2%B3">京杭大运河</a>则为杭州市两张主打的名片。来杭三次，在此地工作已近一月，都未曾一睹其芳容，只缘时机不适，是羞涩，是忐忑，还是觉得等了千年的那个女子未曾到来，不忍只身过断桥?</p>
-
-<p>恰逢七夕，与好友兼同学兼同事兼室友(头衔有点多)组队看西湖和大运河。骑上车，“七夕”也就抛脑后。由滨江经复兴大桥，然后直驱杭州市区到达京杭大运河的南终点——拱宸桥。</p>
-
-<blockquote><p>碧云天，绿叶地，夏色连片，片上知了醉。清风几许如何，一醉到天明！</p></blockquote>
-
-<p><img src="https://i.imgur.com/I8dRAyP.jpg" alt="Drawing" style="width: 400px;" class="alignleft"/></p>
-
-<hr />
-
-<p><a href="http://baike.baidu.com/view/552989.htm?fromtitle=%E5%A4%8D%E5%85%B4%E5%A4%A7%E6%A1%A5&amp;fromid=8798773&amp;type=syn">复兴大桥</a>相比于<a href="http://baike.baidu.com/view/16154.htm">武汉长江大桥</a>，略显娇小，尽管两者的主桥长度相近(分别为1156米和1145米)，但武汉长江大桥略显霸气的引桥，是复兴大桥无法比拟的；同时，复兴大桥距水面较近，这也使得其气势大减。个人很钟爱武汉长江大桥，感觉就是一种宿命。在武汉七年，不管是同学过来游玩还是带老师参观，都会去武汉长江大桥上走走，看看长江，也感受下武汉敢为人先的魄力(各种怀念啊)。人虽离开武汉，但牵挂依旧在，只等哪天，再次带着闲暇的心境，去走走那“万里长江第一桥”。复兴大桥和钱塘江大桥的人行道都很窄，使得骑车让道变得很有技术含量，个人技术不行，一听到后面的喇叭声，立马停车靠边，心中还有些许忐忑。三座大桥的夜景都很nice，走走看看，都是一种享受！</p>
-
-<hr />
-
-<p>骑车2小时后，到达京杭大运河。作为世界里程最长、工程最大的古代运河，与<a href="http://baike.baidu.com/subview/2203/6173557.htm">长城</a>、<a href="http://baike.baidu.com/view/2942.htm">坎儿井</a>并称为中国古代三项伟大工程沿着大运河。继西湖申遗成功后，2014年6月，中国大运河成功入选世界文化遗产名录，为杭州这座六朝古都，又添上了一抹浓重的文化气息。沿着大运河慢走，绿树，垂柳，行人几许，生活极尽舒坦。这不由地让我想起了著有“天府之国”之称的成都，同样有2处世遗(<a href="http://baike.baidu.com/subview/2240/12000340.htm">都江堰</a>和<a href="http://baike.baidu.com/view/539806.htm">大熊猫栖息地</a>),也是极尽休闲的旅游城市。依然怀念柳絮纷飞的季节，在桥边静坐，喝茶，看云卷云舒，听小巧流水，品人来人往，心静地没有一点瑕疵。不知何时，在杭州也能重现那时的心境，洒脱地连自己都能忽略。</p>
-
-<p><img src="http://i.imgur.com/rBl0yUt.jpg" alt="Drawing" style="width: 370px;" class="alignleft"/></p>
-
-<hr />
-
-<p>终点站，往往是姗姗来迟。拱宸桥对于杭州人的意义不一般，但对于我们这样的“东飘者”，只是一座带有杭州特色的古桥而已。旁边的中国刀剪剑博物馆、中国扇博物馆和中国伞博物馆都因时间太晚，早已打烊。在各种里弄里穿梭，终寻得一宁静之处，吆喝一声，开始晚餐，只可惜，晓甫的减盐项目再次受挑战，看来，口味重的人，要想健康生活，真不容易。</p>
-
-<hr />
-
-<p>往回走，早已夜色弥漫，灯火通明的街道，行人都在往家的方向赶！六年前，也是和晓甫他们在夜色中穿梭，闯红灯，赶速度，看着自行车和小车之间的”亲密接触",各种不文明的行为，在杭州很是收敛。夜逛西湖，繁华热闹的苏堤在九点还是人声鼎沸，上坡，下坡，再上坡，再下坡...淡妆的西子，只能用心去感受，还好有明月相伴，至少不那么落寞。行程匆匆，没有细看，也没有细品，只缘自己知道，还会再来。</p>
 ]]></content:encoded>
     </item>
     

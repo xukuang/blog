@@ -1,6 +1,6 @@
 markdown: kramdown
 permalink: /:year/:month/:title/
-url: http://spatial-r.github.io/cn
+url: http://xukuang.github.io/blog
 author: Spatial-R
 pygments: true
 
