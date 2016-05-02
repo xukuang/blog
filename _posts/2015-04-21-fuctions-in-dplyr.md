@@ -6,7 +6,9 @@ categories: 技术篇
 tags: [R, dplyr]
 ---
 以前在网上看到的关于dplyr包基础函数的文章，放在这儿可以方便自己以后使用的时候随时查询,下文所有程序运行的结果，都使用Tab进行退格(仓皇上传，版面相当粗糙，后面抽时间详细整理一下)。
+
 ## dplyr包的加载
+
 ```
 # dplyr包加载
 library(dplyr)
@@ -32,6 +34,7 @@ class(hflights)
 	[1] "data.frame"
 ```
 <!--more-->
+
 ## 数据转换
 
 ```
@@ -40,6 +43,7 @@ hflights_df <- tbl_df(hflights)
 ```
 
 ## 数据筛选
+
 ```
 # 筛选filter,类似于base::subset()函数
 filter(hflights_df, Month == 1, DayofMonth == 1)
@@ -52,6 +56,7 @@ filter(hflights_df, Month == 1 | Month == 2)
 ```
 
 ## 数据排列
+
 ```
 # 排列: arrange(),按给定的列名依次对行进行排序.
 arrange(hflights_df, DayofMonth, Month, Year)
@@ -62,7 +67,9 @@ arrange(hflights_df, desc(ArrDelay))
 hflights[order(hflights$DayofMonth, hflights$Month, hflights$Year), ]
 hflights[order(desc(hflights$ArrDelay)), ]
 ```
+
 ## 数据选择
+
 ```
 #  选择: select()
 # 用列名作参数来选择子数据集:
@@ -74,6 +81,7 @@ select(hflights_df, -(Year:DayOfWeek))
 ```
 
 ## 数据变形
+
 ```
 # 变形: mutate()
 # 对已有列进行数据运算并添加为新列:
@@ -93,7 +101,9 @@ transform(hflights,
 ```
 
 ## 数据分组
+
 数据分组是指按指定列的内容进行分类统计分析，具体可以参考[这里](http://xukuang.github.io/2014/12/23/group-by-and-ungroup-function-in-R/)
+
 ```
 # 分组动作 group_by()
 planes <- group_by(hflights_df, TailNum)
@@ -110,6 +120,7 @@ delay <- filter(delay, count > 20, dist < 2000)
 ```
 
 ## 连接符
+
 ```
 # 3 连接符 %.%
 # 包里还新引进了一个操作符, 使用时把数据名作为开头, 然后依次对此数据进行多步操作.
@@ -128,8 +139,11 @@ totals[ranks[1:5],]
 # 文章里还表示: 用他的 MacBook Air 跑 %.% 那段代码用了 0.036 秒, 
 # 跑上面这段代码则用了 0.266 秒, 运算速度提升了近7倍. (当然这只是一例, 还有其它更大的数字.)
 ```
+
 ### 对所有列进行相同操作
+
 * summarise_each可以进行求平均值、标准差、方差、最小值和最大值，此时被处理的数据列也不需要必须是数字类型(只是此时会有警告提示)。然而，无论如何要进行求和操作时，所有数据列必须是数字类型(原因是sum函数对字符求和，直接返回错误，而求求平均值、标准差、方差、最小值和最大值只是返回NA，并提示警告)。当然也可以多个指标同时计算。
+
 ```
 # 平均值，字符平均值返回NA
 summarise_each(hflights, funs(mean))
@@ -164,6 +178,7 @@ summarise_each(hflights.dat, funs(sum(., na.rm = T)))
 ```
 
 * mutate_each跟summarise_each最大的不同在于产生于原数据相同行数的结果，所以mutate_each除了可以进行summarise_each函数的操作以外，还可进行简单四则运算，当然进行四则运算时，要保证所有列都是数字型。	
+
 ```
 temp = mutate_each(hflights.dat, funs( . + 1))
 head(hflights)
