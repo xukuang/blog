@@ -44,7 +44,7 @@
                                               </nav>
                                               <article class="content">
                                               <section class="post">
-<p>　　<strong>dplyr</strong>包是<strong>Hadley</strong>即<strong>plyr</strong>包之后又推出的一个新的数据处理包。如果说相对于R中的基础函数，<strong>plyr</strong>包使输出结果更加友好，那么<strong>dplyr</strong>包不仅使输出的结果更加友好，而且大大提高了运算效率。无论如何，今天这篇文章，主要是介绍<strong>dplyr</strong>中极其小的一部分，<strong>group_by</strong>和<strong>ungroup</strong>函数的使用。(下文所有运行结果，都使用<strong>Tab</strong>进行退格，然后以<strong>#</strong>开始。也有部分结果太长没有展示)</p>
+<p>　　<strong>dplyr</strong>包是<strong>Hadley</strong>即<strong>plyr</strong>包之后又推出的一个新的数据处理包。如果说相对于R中的基础函数，<strong>plyr</strong>包使输出结果更加友好，那么<strong>dplyr</strong>包不仅使输出的结果更加友好，而且大大提高了运算效率。无论如何，今天这篇文章，主要是介绍<strong>dplyr</strong>中极其小的一部分，<strong>group_by</strong>和<strong>ungroup</strong>函数的使用。(下文所有运行结果，都使用<strong>Tab</strong>进行退格，然后以<strong>#</strong>开始，也有部分结果太长没有展示)</p>
 
 <h2 id="groupby--ungroup">group_by &amp; ungroup基础</h2>
 <p><strong>group_by</strong>函数对数据进行分组，<strong>ungroup</strong>函数去除已分组数据的分组。此外，函数<strong>groups</strong>则能显示出分组数据的分组依据（对于已使用<strong>ungroup</strong>函数去除分组的数据，<strong>groups</strong>函数则显示为NULL）。</p>
@@ -91,42 +91,46 @@
 </span>    <span class="c1"># Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
 </span></code></pre>
 </div>
-<p>### group_by &amp; ungroup
-<strong>group_by</strong>函数对数据进行分组时，默认情况下对处理的数据的分组情况是忽略掉的，只有把参数add = TRUE才在原始数据的基础上添加新的分类。因此，在默认情况下，在第二次分组时，可以对已分组数据直接进行第二次分组，而不必先用<strong>ungroup</strong>函数拆除已有分组指标。
-<code class="highlighter-rouge">R
-## 对数据mtcars进行分组，分组依据为cyl
-by_cyl &lt;- group_by(mtcars, cyl)
-groups(by_cyl)
-    # [[1]]
-    # cyl
+
+<h3 id="groupby--ungroup-1">group_by &amp; ungroup</h3>
+<p><strong>group_by</strong>函数对数据进行分组时，默认情况下对处理的数据的分组情况是忽略掉的，只有把参数add = TRUE才在原始数据的基础上添加新的分类。因此，在默认情况下，在第二次分组时，可以对已分组数据直接进行第二次分组，而不必先用<strong>ungroup</strong>函数拆除已有分组指标。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">## 对数据mtcars进行分组，分组依据为cyl
+</span><span class="n">by_cyl</span> <span class="o">&lt;-</span> <span class="n">group_by</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="n">cyl</span><span class="p">)</span>
+<span class="n">groups</span><span class="p">(</span><span class="n">by_cyl</span><span class="p">)</span>
+    <span class="c1"># [[1]]
+</span>    <span class="c1"># cyl
 ## 去除数据mtby_cyl分组依据后，分组依据为NULL
-ungroup(by_cyl)
-    # NULL
+</span><span class="n">ungroup</span><span class="p">(</span><span class="n">by_cyl</span><span class="p">)</span>
+    <span class="c1"># NULL
 ## 这里对by_cyl先去除第一次的分组依据不是必须的
-groups(group_by(ungroup(by_cyl), vs, am))
-    # [[1]]
-    # vs
-    # [[2]]
-    # am
+</span><span class="n">groups</span><span class="p">(</span><span class="n">group_by</span><span class="p">(</span><span class="n">ungroup</span><span class="p">(</span><span class="n">by_cyl</span><span class="p">),</span> <span class="n">vs</span><span class="p">,</span> <span class="n">am</span><span class="p">))</span>
+    <span class="c1"># [[1]]
+</span>    <span class="c1"># vs
+</span>    <span class="c1"># [[2]]
+</span>    <span class="c1"># am
 ## 对已分组数据by_cyl进行再次分组，分组依据为vs和am，而没有cyl（参数add默认值为TRUE）
-groups(group_by(by_cyl, vs, am))
-    # [[1]]
-    # vs
-    # [[2]]
-    # am
+</span><span class="n">groups</span><span class="p">(</span><span class="n">group_by</span><span class="p">(</span><span class="n">by_cyl</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">am</span><span class="p">))</span>
+    <span class="c1"># [[1]]
+</span>    <span class="c1"># vs
+</span>    <span class="c1"># [[2]]
+</span>    <span class="c1"># am
 ## 对以分组数据by_cyl进行再次分组，分组依据为cyl、vs和am
-groups(group_by(by_cyl, vs, am, add = TRUE))
-    # [[1]]
-    # cyl
-    # [[2]]
-    # vs
-    # [[3]]
-    # am
-</code>
-## group_by &amp; ungroup延伸
-使用<strong>group_by</strong>函数进行分组的数据，数据本身常常包含着分组依据，所以在未去除分组（<strong>ungroup</strong>）或下一次分组（使用<strong>group_by</strong>）前，分组依据常常保留，这会影响函数的运算结果，包括<strong>filter</strong>，<strong>arrange</strong>，函数和指标函数(<strong>n</strong>，<strong>sum</strong>，<strong>mean</strong>，<strong>sd</strong>，<strong>var</strong>，<strong>min</strong>，<strong>max</strong>函数）</p>
+</span><span class="n">groups</span><span class="p">(</span><span class="n">group_by</span><span class="p">(</span><span class="n">by_cyl</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">am</span><span class="p">,</span> <span class="n">add</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">))</span>
+    <span class="c1"># [[1]]
+</span>    <span class="c1"># cyl
+</span>    <span class="c1"># [[2]]
+</span>    <span class="c1"># vs
+</span>    <span class="c1"># [[3]]
+</span>    <span class="c1"># am
+</span></code></pre>
+</div>
+
+<h2 id="groupby--ungroup-2">group_by &amp; ungroup延伸</h2>
+<p>使用<strong>group_by</strong>函数进行分组的数据，数据本身常常包含着分组依据，所以在未去除分组（<strong>ungroup</strong>）或下一次分组（使用<strong>group_by</strong>）前，分组依据常常保留，这会影响函数的运算结果，包括<strong>filter</strong>，<strong>arrange</strong>，函数和指标函数(<strong>n</strong>，<strong>sum</strong>，<strong>mean</strong>，<strong>sd</strong>，<strong>var</strong>，<strong>min</strong>，<strong>max</strong>函数）</p>
 
 <h3 id="filter">filter函数</h3>
+
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">### 这里按cyl进行分组，所以筛选结果有3条
 </span><span class="n">filter</span><span class="p">(</span><span class="n">by_cyl</span><span class="p">,</span> <span class="n">disp</span> <span class="o">==</span> <span class="n">max</span><span class="p">(</span><span class="n">disp</span><span class="p">))</span>
     <span class="c1"># Source: local data frame [3 x 11]
@@ -137,37 +141,41 @@ groups(group_by(by_cyl, vs, am, add = TRUE))
 </span>    <span class="c1"># 3 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
 </span></code></pre>
 </div>
-<p>### arrange函数
-<code class="highlighter-rouge">
-arrange(by_cyl, disp)
-</code>
-### 各指标函数(以平均值为例)
-```
-## 分组前后结果的差异，即x1与x3、x2与x4的差异
+
+<h3 id="arrange">arrange函数</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>arrange(by_cyl, disp)
+</code></pre>
+</div>
+
+<h3 id="section-1">各指标函数(以平均值为例)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## 分组前后结果的差异，即x1与x3、x2与x4的差异
 ### x1和x求的是整体的平均值，x3和x4求的是按cyl进行分组后的平均值
 temp = mtcars %&gt;% mutate(x1 = mean(disp), x2 = mean(hp)) %&gt;% group_by(cyl) %&gt;% mutate(x3 = mean(disp), x4 = mean(hp))
 groups(temp)
     # [[1]]
     # cyl
-temp</p>
+temp
 
-<h2 id="section-1">两次分组之间的差异</h2>
-<p>## nvs1 等于nvs2，不等于n.vs.am
+## 两次分组之间的差异
+## nvs1 等于nvs2，不等于n.vs.am
 ## 第一次分组, 显示按vs分类，各组的个数
 by_vs &lt;- mtcars %&gt;% arrange(vs, am) %&gt;% group_by(vs) %&gt;% mutate(n.vs1 = n())
 groups(by_vs)
     # [[1]]
     # vs
-by_vs</p>
+by_vs
 
-<h2 id="section-2">第二次分组</h2>
-<p>## 第一次分组在遇到第二次分组后作用就会消失，只显示按am分组，各组的个数
+## 第二次分组
+## 第一次分组在遇到第二次分组后作用就会消失，只显示按am分组，各组的个数
 by_vs_am &lt;- by_vs %&gt;% mutate(n.vs2 = n()) %&gt;% group_by(am) %&gt;% arrange(am)  %&gt;% mutate(n.vs.am = n())
 groups(by_vs_am)
     # [[1]]
     # am
 by_vs_am
-```</p>
+</code></pre>
+</div>
 
 </section>
 <section class="meta">
