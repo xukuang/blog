@@ -118,9 +118,9 @@ arr2.shape
 	## (2, 4)
 </code></pre>
 </div>
-<p>除 np.array 之外，还有许多函数来创建新的数组。例如， zeros 和 ones 使用给定的长度或形状分别的创建0‘s 和 1‘s数组。empty 会创建一个没有使用特定值来初始化的数组。给这些方法传递一个元组作为形状来创建高维数组。
-<code class="highlighter-rouge">
-np.zeros(10)
+<p>除 np.array 之外，还有许多函数来创建新的数组。例如， zeros 和 ones 使用给定的长度或形状分别的创建0‘s 和 1‘s数组。empty 会创建一个没有使用特定值来初始化的数组。给这些方法传递一个元组作为形状来创建高维数组。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>np.zeros(10)
 	## array([ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.])
 np.zeros((3, 6))
 	## array([[ 0., 0., 0., 0., 0., 0.],
@@ -133,8 +133,9 @@ np.empty((2, 3, 2))
 	##        [[ 1.90723115e+083, 5.73293533e-053],
 	##         [ -2.33568637e+124, -6.70608105e-012],
 	##         [ 4.42786966e+160, 1.27100354e+025]]])
-</code>
-arange 是python内建 range 函数的数组版本。
+</code></pre>
+</div>
+<p>arange 是python内建 range 函数的数组版本。
 <code class="highlighter-rouge">
 np.arange(15)
 	## array([ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
