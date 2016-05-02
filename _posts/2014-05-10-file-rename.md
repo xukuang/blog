@@ -1,5 +1,8 @@
+---
+layout: post
 title: 文件名的批量修改
 date: 2014-05-10 22:13:54
+commments: true
 categories: 技术篇 #文章文类
 tags: [重命名]
 ---
