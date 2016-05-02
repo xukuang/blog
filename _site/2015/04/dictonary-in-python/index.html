@@ -62,7 +62,8 @@
 </ul>
 
 <h2 id="section">字典的创建</h2>
-<p>### 空字典的创建</p>
+
+<h3 id="section-1">空字典的创建</h3>
 
 <div class="highlighter-rouge"><pre class="highlight"><code># 空字典的创建
 D = dict()
@@ -70,7 +71,7 @@ D = {} # 两种方法效果相同
 </code></pre>
 </div>
 
-<h3 id="section-1">一般字典创建</h3>
+<h3 id="section-2">一般字典创建</h3>
 
 <div class="highlighter-rouge"><pre class="highlight"><code># 方法一，利用{}
 D = {'Spam': 2, 'eggs': 3, 'food': ['ham', 'egg']}
@@ -87,7 +88,7 @@ D = {x : x for x in 'spam'}
 </code></pre>
 </div>
 
-<h2 id="section-2">字典的引用(通过键而非偏移量)</h2>
+<h2 id="section-3">字典的引用(通过键而非偏移量)</h2>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>D = {'Spam': 2, 'eggs': 3, 'food': {'ham': 1, 'egg': 2}}
 D['Spam']
@@ -95,9 +96,9 @@ D['food']['egg']
 </code></pre>
 </div>
 
-<h2 id="section-3">字典相关属性的查看</h2>
+<h2 id="section-4">字典相关属性的查看</h2>
 
-<h3 id="section-4">字典长度</h3>
+<h3 id="section-5">字典长度</h3>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Spam'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">'food'</span><span class="p">:</span> <span class="p">{</span><span class="s">'ham'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'egg'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}}</span>
 <span class="c"># len字典长度</span>
@@ -105,7 +106,7 @@ D['food']['egg']
 </code></pre>
 </div>
 
-<h3 id="section-5">成员关系判断</h3>
+<h3 id="section-6">成员关系判断</h3>
 
 <div class="highlighter-rouge"><pre class="highlight"><code># in
 D = {'Spam': 2, 'eggs': 3, 'food': {'ham': 1, 'egg': 2}}
@@ -113,7 +114,7 @@ D = {'Spam': 2, 'eggs': 3, 'food': {'ham': 1, 'egg': 2}}
 </code></pre>
 </div>
 
-<h3 id="section-6">查看字典的键、值和项</h3>
+<h3 id="section-7">查看字典的键、值和项</h3>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>D = {'Spam': 2, 'ham':1, 'eggs': 3}
 # dict.keys返回字典的键,返回结果是个迭代器，借助list函数查看
@@ -125,7 +126,7 @@ list(D.items())
 </code></pre>
 </div>
 
-<h3 id="section-7">判断键是否在字典中存在</h3>
+<h3 id="section-8">判断键是否在字典中存在</h3>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="c"># dict.get，键存在与字典则返回键的值，否则什么也不返回</span>
 <span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Spam'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'ham'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
@@ -135,7 +136,7 @@ list(D.items())
 </code></pre>
 </div>
 
-<h3 id="section-8">字典的键可以执行交集和并集运算</h3>
+<h3 id="section-9">字典的键可以执行交集和并集运算</h3>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>D = dict(a = 1, b = 2, c = 3)
 K = D.keys() # K类似于集合，可以执行交集和并集运算
@@ -149,7 +150,7 @@ D.items() | D # {('a', 1), ('b', 2), ('c', 3), 'a', 'b', 'c'}
 </code></pre>
 </div>
 
-<h2 id="section-9">字典的修改</h2>
+<h2 id="section-10">字典的修改</h2>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Spam'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'ham'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
 <span class="c"># 直接改变某个键的值</span>

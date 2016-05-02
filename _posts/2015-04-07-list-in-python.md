@@ -6,13 +6,16 @@ categories: 技术篇
 tags: [python]
 ---
 列表，Python中最灵活的内置数据类型，有如下属性：
+
 * 任意对象的有序集合
 * 通过偏移读取
 * 属于可变序列
 * 长度可变、异构、任意嵌套<!--more-->
 
 ## 列表的创建
+
 ### 空列表的创建
+
 ```python
 # 空列表的创建
 L = list()
@@ -21,7 +24,9 @@ L
 L = [] # 两种方法效果相同
 	## []
 ```
+
 ### 一般列表创建
+
 ```python
 # 方法一，利用[]
 L = ['Spam', 'eggs', ['ham', 'egg']]
@@ -34,26 +39,36 @@ L = [x for x in range(-5, 5)]
 L = [x for x in [1, 2, 3, 4]]
 L = [x * 4 for x in 'spam']
 ```
+
 ## 列表的引用
+
 ### 列表的索引，返回该位置的对象
+
 ```python
 L = ['Spam', 'eggs', ['ham', 'egg']]
 L[2] # 返回一个列表
 L[2][1] # 返回一个字符串
 ```
+
 ### 列表的分片，返回一个列表
+
 ```python
 L = ['Spam', 'eggs', ['ham', 'egg']]
 L[0:2]
 ```
+
 ## 列表相关属性的查看
+
 ###  列表长度
+
 ```python
 L = ['Spam', 'eggs', ['ham', 'egg']]
 # len列表长度
 len(L)
 ```
+
 ### 成员关系判断
+
 ```python
 # in
 L = ['Spam', 'eggs', ['ham', 'egg']]
@@ -61,14 +76,19 @@ L = ['Spam', 'eggs', ['ham', 'egg']]
 # L.index
 L.index('Spam') # 返回参数在列表中的位置
 ```
+
 ### 列表某项出现次数统计
+
 ```python
 # L.count
 L = ['Spam', 'eggs', 'I', 'eggs']
 L.count('eggs')
 ```
+
 ### 列表排序
+
 列表排序时，要求列表的每一项的类型应该相同，且该类型可以比较。对列表排序后，列表本身发生了变化。
+
 ```python
 # L.sort升序排列
 L = ['Spam', 'eggs', 'I'] 
@@ -78,7 +98,9 @@ L.sort()
 L = [4, 3, 9, 2]
 L.sort()
 ```
+
 ### 列表原地翻转
+
 ```python
 # L.reverse
 L = ['Spam', 'eggs', 'I']
@@ -86,12 +108,14 @@ L.reverse()
 ```
 
 ### 列表重复
+
 ```python
 L = ['Spam', 'eggs', ['ham', 'egg']]
 L * 3
 ```
 
 ## 列表的修改
+
 ```python
 L = ['Spam', 'eggs', ['ham', 'egg']]
 # 根据索引和分片改变列表
