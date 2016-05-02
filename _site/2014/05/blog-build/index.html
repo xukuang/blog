@@ -44,53 +44,70 @@
                                               </nav>
                                               <article class="content">
                                               <section class="post">
-<p>　　看了zippera的<a href="http://zipperary.com/categories/hexo/">hexo系列博文</a>，终于搭建了自己的博客，尽管其中有很多地方需要优化、甚至还有很多问题根本就没有搞明白，但是看到自己博客初具模样，还是异常兴奋。在这里，对如何使用hexo发博文进行总结，同时梳理一下hexo的使用流程。
-## 前提
-　　以下各步的前提是你已经做好了关于hexo的前期安装，这里就不在具体详述，具体的方法可参见zippera的<a href="http://zipperary.com/categories/hexo/">hexo系列博文</a>。zippera在博文里对hexo的前期安装，做了详细的介绍。<!--more-->
-## 发表一篇文章
-　　在电脑hexo文件夹的空白处点击鼠标右键，选择Git bash，调出hexo命令窗口，输入以下命令（在这里，以创建本篇博文“如何用hexo发博文”为例）。
-<code class="highlighter-rouge">
-hexo new "blog build" # "blog build" 可以更改为你要写的博文名的简单英文名，该命令可以简写为hexo n "blog build"
-</code>
-　　需要注意的是，这里只是创建了一个“blog build.md”文件,即将生成的博文的一切内容（包括博文的题目）都是根据“blog build.md”这个文件中的内容创建的，而与“blog build.md”这个文件的文件名无关，所以，理论上说，“hexo new “blog build””中的”blog build”可以是任何英文名字(什么，为什么不是任何中文名？hexo不支持文中输入！！！)。这里，建议用所发表博文题目相关的英文名。
-## 编辑博文内容
-　　在电脑的hexo\source_posts中打开文件”blog build.md”（打开方式用“记事本”即可），编辑博文内容。
-<code class="highlighter-rouge">
-title: 如何用hexo发博文 # 即将生成博文的标题。如果这里改“我的博客构建学习之路”，即将生成的博文标题即为“我的博客构建学习之路”
+<p>　　看了zippera的<a href="http://zipperary.com/categories/hexo/">hexo系列博文</a>，终于搭建了自己的博客，尽管其中有很多地方需要优化、甚至还有很多问题根本就没有搞明白，但是看到自己博客初具模样，还是异常兴奋。在这里，对如何使用hexo发博文进行总结，同时梳理一下hexo的使用流程。</p>
+
+<h2 id="section">前提</h2>
+<p>　　以下各步的前提是你已经做好了关于hexo的前期安装，这里就不在具体详述，具体的方法可参见zippera的<a href="http://zipperary.com/categories/hexo/">hexo系列博文</a>。zippera在博文里对hexo的前期安装，做了详细的介绍。<!--more--></p>
+
+<h2 id="section-1">发表一篇文章</h2>
+<p>　　在电脑hexo文件夹的空白处点击鼠标右键，选择Git bash，调出hexo命令窗口，输入以下命令（在这里，以创建本篇博文“如何用hexo发博文”为例）。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>hexo new "blog build" # "blog build" 可以更改为你要写的博文名的简单英文名，该命令可以简写为hexo n "blog build"
+</code></pre>
+</div>
+<p>　　
+需要注意的是，这里只是创建了一个“blog build.md”文件,即将生成的博文的一切内容（包括博文的题目）都是根据“blog build.md”这个文件中的内容创建的，而与“blog build.md”这个文件的文件名无关，所以，理论上说，“hexo new “blog build””中的”blog build”可以是任何英文名字(什么，为什么不是任何中文名？hexo不支持文中输入！！！)。这里，建议用所发表博文题目相关的英文名。</p>
+
+<h2 id="section-2">编辑博文内容</h2>
+<p>　　在电脑的hexo\source_posts中打开文件”blog build.md”（打开方式用“记事本”即可），编辑博文内容。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>title: 如何用hexo发博文 # 即将生成博文的标题。如果这里改“我的博客构建学习之路”，即将生成的博文标题即为“我的博客构建学习之路”
 date: 2014-05-14 18:09:01 # 发表日期，一般不改动
 categories: 技术篇 #文章文类
 tags: [hexo,博客] #文章标签，多于一项时用这种格式，注意[hexo，博客]中的逗号要用英文下的逗号
 ---
-# 这里是本篇博文的正文，要用markdown编写，markdown的具体语法规则可从网上搜索
-</code>
-## 预览博文
-　　在hexo命令窗口，输入以下命令，可以本地预览博客中的所有内容，包括即将推送的本篇文章。
-<code class="highlighter-rouge">
-hexo server # 该命令可以简写为hexo s
-</code>
-　　此时，在浏览器中输入localhost:4000，预览效果。无论如何，“预览博文”这一步是可以直接跳过，进入到下一步“推送博文”。
-## 推送博文
-　　在hexo命令窗口，Ctrl+C退出server（当然，如果没有执行上一步<strong>预览博文</strong>，这个操作不需进行），最后输入以下命令。
-<code class="highlighter-rouge">
-hexo generate # 文件的部署，该命令可以简写为hexo g
-hexo deploy # 博文的推送（上一条命令运行完毕，输入本条命令），该命令可以简写为hexo d
-</code>
-　　同步到github。访问网站看看效果。
-## 博文的修改
-　　当我们要对博文的内容进行修改时，只需再次打开文件“如何用hexo发博文.md”（打开方式用“记事本”即可），进行修改，然后保存。需要注意的是当你对文章分类和文章标签更改时，请先执行下面的一条命令，这条命令的目的是删除以前的分类和标签，否则文章原来的分类和标签仍然存在。尽管这一步在未修改文章分类和标签时显得有点多余，但是建议每次推送博客前都执行该命令。
-<code class="highlighter-rouge">
-hexo clean
-</code>
-　　最后，再次执行上一步的<strong>推送博文</strong>的相关命令即可。
-<code class="highlighter-rouge">
-hexo generate # 文件的部署，该命令可以简写为hexo g
-hexo deploy # 博文的推送（上一条命令运行完毕，输入本条命令），该命令可以简写为hexo d
-</code></p>
 
-<p>- - - - - -
-* 2015年4月5日，第一次修改，修改错别字
-* 2015年4月10日，第二次修改，增加hexo clean相关命令
-* 2015年4月10日，第三次修改，修改了博文标题及相关内容</p>
+# 这里是本篇博文的正文，要用markdown编写，markdown的具体语法规则可从网上搜索
+</code></pre>
+</div>
+
+<h2 id="section-3">预览博文</h2>
+<p>　　在hexo命令窗口，输入以下命令，可以本地预览博客中的所有内容，包括即将推送的本篇文章。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>hexo server # 该命令可以简写为hexo s
+</code></pre>
+</div>
+<p>　　此时，在浏览器中输入localhost:4000，预览效果。无论如何，“预览博文”这一步是可以直接跳过，进入到下一步“推送博文”。</p>
+
+<h2 id="section-4">推送博文</h2>
+<p>　　在hexo命令窗口，Ctrl+C退出server（当然，如果没有执行上一步<strong>预览博文</strong>，这个操作不需进行），最后输入以下命令。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>hexo generate # 文件的部署，该命令可以简写为hexo g
+hexo deploy # 博文的推送（上一条命令运行完毕，输入本条命令），该命令可以简写为hexo d
+</code></pre>
+</div>
+<p>　　同步到github。访问网站看看效果。</p>
+
+<h2 id="section-5">博文的修改</h2>
+<p>　　当我们要对博文的内容进行修改时，只需再次打开文件“如何用hexo发博文.md”（打开方式用“记事本”即可），进行修改，然后保存。需要注意的是当你对文章分类和文章标签更改时，请先执行下面的一条命令，这条命令的目的是删除以前的分类和标签，否则文章原来的分类和标签仍然存在。尽管这一步在未修改文章分类和标签时显得有点多余，但是建议每次推送博客前都执行该命令。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>hexo clean
+</code></pre>
+</div>
+<p>　　最后，再次执行上一步的<strong>推送博文</strong>的相关命令即可。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>hexo generate # 文件的部署，该命令可以简写为hexo g
+hexo deploy # 博文的推送（上一条命令运行完毕，输入本条命令），该命令可以简写为hexo d
+</code></pre>
+</div>
+
+<p>- - - - - -</p>
+
+<ul>
+  <li>2015年4月5日，第一次修改，修改错别字</li>
+  <li>2015年4月10日，第二次修改，增加hexo clean相关命令</li>
+  <li>2015年4月10日，第三次修改，修改了博文标题及相关内容</li>
+</ul>
 
 
 </section>
