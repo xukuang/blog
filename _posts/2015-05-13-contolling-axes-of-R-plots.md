@@ -1,3 +1,5 @@
+---
+layout: post
 title: "精通R画图之坐标轴"
 date: 2015-05-13 09:13:12
 categories: 技术篇

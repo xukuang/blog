@@ -1,3 +1,5 @@
+---
+layout: post
 title: 20世纪最伟大的心理学实验
 date: 2015-04-11 15:25:15
 categories: 读书篇

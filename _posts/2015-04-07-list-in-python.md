@@ -1,3 +1,5 @@
+---
+layout: post
 title: 列表
 date: 2015-04-07 16:24:21
 categories: 技术篇

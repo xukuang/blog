@@ -1,3 +1,5 @@
+---
+layout: post
 title: group和ungroup函数
 date: 2014-12-23 08:11:11
 categories: 技术篇

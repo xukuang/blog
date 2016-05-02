@@ -1,3 +1,5 @@
+---
+layout: post
 title: "数据合并-join函数"
 date: 2016-01-13 20:14:06
 categories: 技术篇

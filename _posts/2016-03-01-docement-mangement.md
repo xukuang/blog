@@ -1,3 +1,5 @@
+---
+layout: post
 title: "用R进行文件系统管理"
 date: 2016-03-01 17:24:47
 categories: 技术篇

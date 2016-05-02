@@ -1,3 +1,5 @@
+---
+layout: post
 title: 旁观者的心态
 date: 2015-05-10 09:38:15
 categories: 心理篇

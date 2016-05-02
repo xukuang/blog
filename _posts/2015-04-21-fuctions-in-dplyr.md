@@ -1,3 +1,5 @@
+---
+layout: post
 title: "dplyr包中的基础操作"
 date: 2015-04-21 10:16:25
 categories: 技术篇

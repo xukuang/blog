@@ -1,3 +1,5 @@
+---
+layout: post
 title: 那些年，我们一起追的女孩
 date: 2015-04-05 08:35:52
 categories: 读书篇

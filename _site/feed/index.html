@@ -7,21 +7,16 @@
     <title>Spatial-R</title>
     <atom:link href="http://xukuang.github.io/blog/feed/" rel="self" type="application/rss+xml" />
     <link>http://chengjun.github.io</link>
-    <lastBuildDate>2016-05-01T18:18:13-06:00</lastBuildDate>
+    <lastBuildDate>2016-05-01T18:26:53-06:00</lastBuildDate>
     <webMaster>wangchj04@gmail.com</webMaster>
     
     <item>
-      <title>Numpy</title>
+      <title>Numpy包的学习</title>
       <link>http://xukuang.github.io/blog/2016/04/numpy/</link>
-      <pubDate>2016-04-27T00:00:00-06:00</pubDate>
+      <pubDate>2016-04-27T07:04:53-06:00</pubDate>
       <author>Spatial-R</author>
       <guid>http://xukuang.github.io/blog/2016/04/numpy</guid>
-      <content:encoded><![CDATA[<p>title: “Numpy包的学习”
-date: 2016-04-27 13:04:53
-categories: [技术篇]
-tags: [ python, numpy]
-—
-Numpy 是 Numerical python 的简称，是高性能计算和数据分析的基础包。
+      <content:encoded><![CDATA[<p>Numpy 是 Numerical python 的简称，是高性能计算和数据分析的基础包。
 * ndarray，快速和节省空间的多维数组，提供数组化的算术运算和高级的广播功能『广播功能是个什么东东啊』
 * 使用标准数学函数对整个数组的数据进行快速运算，而不需要编写循环
 * 读取/写入磁盘上的阵列数据和操作存储器映像文件的工具
@@ -474,35 +469,25 @@ np.modf(arr)
     </item>
     
     <item>
-      <title>Spatial Pattern Analysis</title>
+      <title>空间点格局分析</title>
       <link>http://xukuang.github.io/blog/2016/04/spatial-pattern-analysis/</link>
-      <pubDate>2016-04-21T00:00:00-06:00</pubDate>
+      <pubDate>2016-04-21T11:27:47-06:00</pubDate>
       <author>Spatial-R</author>
       <guid>http://xukuang.github.io/blog/2016/04/spatial-pattern-analysis</guid>
-      <content:encoded><![CDATA[<p>title: “空间点格局分析”
-date: 2016-04-21 17:27:47
-categories: [学习篇]
-tags: [R, 空间格局分析]
-—
-点格局分析可应用于科学研究的多个领域。在生态学上，研究的兴趣点主要集中一下几个方面：
+      <content:encoded><![CDATA[点格局分析可应用于科学研究的多个领域。在生态学上，研究的兴趣点主要集中一下几个方面：
 1. 探究单一树种在研究区的分布
 2. 两个或以上物种是否均匀分布或者存在竞争关系
-3. 各个物种分布在研究区特定区域分布的驱动因子分析</p>
+3. 各个物种分布在研究区特定区域分布的驱动因子分析
 ]]></content:encoded>
     </item>
     
     <item>
-      <title>Dots In R</title>
+      <title>实用的R函数</title>
       <link>http://xukuang.github.io/blog/2016/04/dots-in-r/</link>
-      <pubDate>2016-04-21T00:00:00-06:00</pubDate>
+      <pubDate>2016-04-21T09:46:58-06:00</pubDate>
       <author>Spatial-R</author>
       <guid>http://xukuang.github.io/blog/2016/04/dots-in-r</guid>
-      <content:encoded><![CDATA[<p>title: “实用的R函数”
-date: 2016-04-21 15:46:58
-categories: [技术篇]
-tags: [R]
-—
-这篇文章记录的是在使用R的过程中偶然遇到的非常实用的函数，然而由于这些函数在自己的学习中太常用特别容易忘记，所以这里记下来以便以后使用的时候可以查看。学无止境，长期更新。
+      <content:encoded><![CDATA[<p>这篇文章记录的是在使用R的过程中偶然遇到的非常实用的函数，然而由于这些函数在自己的学习中太常用特别容易忘记，所以这里记下来以便以后使用的时候可以查看。学无止境，长期更新。
 ## 场景一
 在查看多个变量之间的两两相关性的时候，可以使用picante包中的cor.table()函数。
 ## 场景二
@@ -581,17 +566,12 @@ split()函数能将数据框按某一列分为包含若干个数据框的列表�
     </item>
     
     <item>
-      <title>Data Table In R</title>
+      <title>data.table的包的简单介绍</title>
       <link>http://xukuang.github.io/blog/2016/04/data-table-in-R/</link>
-      <pubDate>2016-04-13T00:00:00-06:00</pubDate>
+      <pubDate>2016-04-13T07:56:01-06:00</pubDate>
       <author>Spatial-R</author>
       <guid>http://xukuang.github.io/blog/2016/04/data-table-in-R</guid>
-      <content:encoded><![CDATA[<p>title: “data.table的包的简单介绍”
-date: 2016-04-13 13:56:01
-categories: [技术篇]
-tags: [R, data.talbe]
-—
-相比dplyr包，data.table包能够更大程度地提高数据的处理速度，这里就简单介绍一下data.tale包的使用方法。
+      <content:encoded><![CDATA[<p>相比dplyr包，data.table包能够更大程度地提高数据的处理速度，这里就简单介绍一下data.tale包的使用方法。
 ## 数据的读取
 data.table包中数据读取的函数是fread()。</p>
 
@@ -1197,17 +1177,12 @@ class(DT)
     </item>
     
     <item>
-      <title>Data Fomrat</title>
+      <title>长宽数据之间的转化(二)</title>
       <link>http://xukuang.github.io/blog/2016/04/data-fomrat/</link>
-      <pubDate>2016-04-10T00:00:00-06:00</pubDate>
+      <pubDate>2016-04-10T04:32:19-06:00</pubDate>
       <author>Spatial-R</author>
       <guid>http://xukuang.github.io/blog/2016/04/data-fomrat</guid>
-      <content:encoded><![CDATA[<p>title: “长宽数据之间的转化(二)”
-date: 2016-04-10 10:32:19
-categories: 技术篇
-tags: [R, tidyr]
-—
-前面一篇<a href="http://xukuang.github.io/2016/01/18/melt-and-dcast/">文章</a>讲了用reshape2包中的函数实现长宽数据的转化，而tidyr是reshape2的升级版，主要用于数据框。这篇文章将介绍一下如何使用tidyr包中的函数实现长宽数据的转化。
+      <content:encoded><![CDATA[<p>前面一篇<a href="http://xukuang.github.io/2016/01/18/melt-and-dcast/">文章</a>讲了用reshape2包中的函数实现长宽数据的转化，而tidyr是reshape2的升级版，主要用于数据框。这篇文章将介绍一下如何使用tidyr包中的函数实现长宽数据的转化。
 ## 宽数据转化为长数据
 ### gather函数
 <code>
@@ -1461,24 +1436,19 @@ dataold
     </item>
     
     <item>
-      <title>Simple Linear Regression</title>
+      <title>简单线性回归中各指标在R中的计算</title>
       <link>http://xukuang.github.io/blog/2016/04/simple-linear-regression/</link>
-      <pubDate>2016-04-07T00:00:00-06:00</pubDate>
+      <pubDate>2016-04-07T08:50:50-06:00</pubDate>
       <author>Spatial-R</author>
       <guid>http://xukuang.github.io/blog/2016/04/simple-linear-regression</guid>
-      <content:encoded><![CDATA[<p>title: “简单线性回归中各指标在R中的计算”
-date: 2016-04-07 14:50:50
-categories: [技术篇]
-tags: [R, 统计]
-—
-## 前话
-简单线性回归用于计算两个连续型变量(如X，Y)之间的线性关系，具体地说就是计算下面公式中的$\alpha和\beta$。
+      <content:encoded><![CDATA[<h2 id="section">前话</h2>
+<p>简单线性回归用于计算两个连续型变量(如X，Y)之间的线性关系，具体地说就是计算下面公式中的$\alpha和\beta$。
 <script type="math/tex">Y = \alpha + \beta X + \varepsilon</script> <br />
 其中$\varepsilon$称为残差,服从从$N(0,\sigma^2)$的正态分布，自由度为(n-1) - (2-1) = n-2
 为了找到这条直线的位置，我们使用最小二乘法(least squares approach)。最小二乘法确保所有点处的残差的平方和最小时计算$\alpha和\beta$，即下面示意图中$\sum_{i=1}^{4}\varepsilon_i^2 = \varepsilon_1^2 + \varepsilon_2^2 + \varepsilon_3^2 + \varepsilon_4^2$有最小值。
 <img src="/img/y_x_scatter_plot.png" alt="简单线性相关示意图" /><!--more--></p>
 
-<h2 id="section">各指标的计算</h2>
+<h2 id="section-1">各指标的计算</h2>
 <p>运用最小二乘法找出的这条最优直线一定经过点$(\overline{x}, \overline{y})$。其中
 ### 斜率$\beta$和截距$\alpha$的估计值
 <img src="/img/beta.png" alt="" /></p>
@@ -1486,7 +1456,7 @@ tags: [R, 统计]
 <h3 id="pearsonr">Pearson相关系数r</h3>
 <p><script type="math/tex">r_{xy} = \frac{\overline{xy} - \bar{x}\bar{y} }{ \sqrt{ \left(\overline{x^2} - \bar{x}^2\right)\left(\overline{y^2} - \bar{y}^2\right)}}</script></p>
 
-<h3 id="section-1">方差分析</h3>
+<h3 id="section-2">方差分析</h3>
 <p>在方差分析(ANOVA)中，总的平方和包含回归平方和残差平方和两部分。
 * 总的平方和
 <script type="math/tex">SS_{tot}=\sum_i (y_i-\bar{y})^2</script>
@@ -1498,7 +1468,7 @@ tags: [R, 统计]
 <script type="math/tex">SS_\text{res}=\sum_i (y_i - \hat y_i)^2=\sum_i e_i^2</script>
 其自由度为 (n -1) - (2 - 1) = n -2。</p>
 
-<h3 id="section-2">决定系数(拟合优势度)</h3>
+<h3 id="section-3">决定系数(拟合优势度)</h3>
 <p><img src="/img/error.png" alt="" />
 决定系数是用来表示模型的解释度，理论上与相关系数没有关系，只是在简单线性回归中，决定系数$R^2 $值等于Pearson相关系数r的平方。</p>
 
@@ -1632,23 +1602,18 @@ adjustrsquare
     </item>
     
     <item>
-      <title>Moment In_statistics</title>
+      <title>离散型随机变量的常用统计指标</title>
       <link>http://xukuang.github.io/blog/2016/04/moment-in_statistics/</link>
-      <pubDate>2016-04-06T00:00:00-06:00</pubDate>
+      <pubDate>2016-04-06T16:25:50-06:00</pubDate>
       <author>Spatial-R</author>
       <guid>http://xukuang.github.io/blog/2016/04/moment-in_statistics</guid>
-      <content:encoded><![CDATA[<p>title: “离散型随机变量的常用统计指标”
-date: 2016-04-06 22:25:50
-categories: [学习篇]
-tags: [统计]
-—
-## 期望
-<script type="math/tex">E[X] = \sum_{i=1}^n x_i</script>
+      <content:encoded><![CDATA[<h2 id="section">期望</h2>
+<p><script type="math/tex">E[X] = \sum_{i=1}^n x_i</script>
 期望存在一下特性:
 * $E[aX + bY] = aE[X] + bE(Y)$
 * 一般情况下，$E[X Y] \neq E[X]E(Y)$；当X和Y相互独立时，才有$E[X Y] = E[X]E(Y)$<!--more--></p>
 
-<h2 id="section">方差</h2>
+<h2 id="section-1">方差</h2>
 <p>方差描述的是随机变量的离散程度，也就是该变量离其期望值的距离。
 <script type="math/tex">Var(X) = E[(X -E[X])^2] = E[X^{2} - 2X E[X] + (E[X])^{2}] = E[X^{2}] - (E[X])^{2}</script>
 此外，方差还可以看作是随机变量和自身的协方差$Var(X) = Cov(X, X)$
@@ -1671,17 +1636,12 @@ tags: [统计]
     </item>
     
     <item>
-      <title>Docement Mangement</title>
+      <title>用R进行文件系统管理</title>
       <link>http://xukuang.github.io/blog/2016/03/docement-mangement/</link>
-      <pubDate>2016-03-01T00:00:00-07:00</pubDate>
+      <pubDate>2016-03-01T10:24:47-07:00</pubDate>
       <author>Spatial-R</author>
       <guid>http://xukuang.github.io/blog/2016/03/docement-mangement</guid>
-      <content:encoded><![CDATA[<p>title: “用R进行文件系统管理”
-date: 2016-03-01 17:24:47
-categories: 技术篇
-tags: [R, 文件系统管理]
-—
-学习中，已经体会到了R在数据处理方面的厉害，偶然看到张丹的博文<a href="http://blog.fens.me/r-file-folder/">《用R进行文件系统管理》</a>，发现R居然还可以进行文件系统的管理，又一次全新的认识了世界（其实主要是R）。这里基本上是把张丹的文章照搬过来了，只是加了少许自己学习时心得。本文中提到的文件系统管理主要是指文件和目录（即文件夹）的创建、查看、重命名、复制、删除和文件权限处理。
+      <content:encoded><![CDATA[<p>学习中，已经体会到了R在数据处理方面的厉害，偶然看到张丹的博文<a href="http://blog.fens.me/r-file-folder/">《用R进行文件系统管理》</a>，发现R居然还可以进行文件系统的管理，又一次全新的认识了世界（其实主要是R）。这里基本上是把张丹的文章照搬过来了，只是加了少许自己学习时心得。本文中提到的文件系统管理主要是指文件和目录（即文件夹）的创建、查看、重命名、复制、删除和文件权限处理。
 ## 文件操作</p>
 
 <ul>
@@ -2033,17 +1993,14 @@ system.file(package = "dplyr")
     </item>
     
     <item>
-      <title>Char In R</title>
+      <title>R中的文本处理</title>
       <link>http://xukuang.github.io/blog/2016/02/char-in-R/</link>
-      <pubDate>2016-02-27T00:00:00-07:00</pubDate>
+      <pubDate>2016-02-27T10:14:59-07:00</pubDate>
       <author>Spatial-R</author>
       <guid>http://xukuang.github.io/blog/2016/02/char-in-R</guid>
-      <content:encoded><![CDATA[<p>title: “R中的文本处理”
-date: 2016-02-27 17:14:59
-categories: 技术篇
-tags: [文本, R]
-—
-&gt; 处理文本是每一种计算机语言都应该具备的功能，但不是每一种语言都侧重于处理文本。R语言是统计的语言，处理文本不是它的强项。尽管R语言处理文本的能力不够强，但适当使用可以大幅提高工作效率的，而且有些文本操作还不得不用。高效处理文本少不了正则表达式（regular expression），虽然R在这方面先天不高效，但其中处理文本的绝大多数函数都支持正则表达式。</p>
+      <content:encoded><![CDATA[<blockquote>
+  <p>处理文本是每一种计算机语言都应该具备的功能，但不是每一种语言都侧重于处理文本。R语言是统计的语言，处理文本不是它的强项。尽管R语言处理文本的能力不够强，但适当使用可以大幅提高工作效率的，而且有些文本操作还不得不用。高效处理文本少不了正则表达式（regular expression），虽然R在这方面先天不高效，但其中处理文本的绝大多数函数都支持正则表达式。</p>
+</blockquote>
 
 <h2 id="section">正则表达式</h2>
 <p>正则表达式是用于描述/匹配一个文本集合的表达式。它不是R的专属内容，这里也只简单介绍，更详细的内容请查阅其他文章。<!--more-->
@@ -2377,17 +2334,12 @@ match按向量进行运算，返回第一次匹配的元素的位置（如果有
     </item>
     
     <item>
-      <title>Melt And Dcast</title>
+      <title>长宽数据之间的转化(一)</title>
       <link>http://xukuang.github.io/blog/2016/01/melt-and-dcast/</link>
-      <pubDate>2016-01-18T00:00:00-07:00</pubDate>
+      <pubDate>2016-01-18T03:32:19-07:00</pubDate>
       <author>Spatial-R</author>
       <guid>http://xukuang.github.io/blog/2016/01/melt-and-dcast</guid>
-      <content:encoded><![CDATA[<p>title: “长宽数据之间的转化(一)”
-date: 2016-01-18 10:32:19
-categories: 技术篇
-tags: [R, reshape2]
-—
-这里将数据框分为两种：宽数据和长数据，宽数据便于数据成果的展示，长数据则便于数据在R中进行分析。reshape2包中的melt函数可以实现宽数据向长数据的转换，而dcast可以实现宽数据向长数据的转化。 
+      <content:encoded><![CDATA[<p>这里将数据框分为两种：宽数据和长数据，宽数据便于数据成果的展示，长数据则便于数据在R中进行分析。reshape2包中的melt函数可以实现宽数据向长数据的转换，而dcast可以实现宽数据向长数据的转化。 
 ## 宽数据转化为长数据
 ### melt函数
 <code>

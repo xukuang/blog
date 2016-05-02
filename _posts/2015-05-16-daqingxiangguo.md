@@ -1,3 +1,5 @@
+---
+layout: post
 title: "大清相国"
 date: 2015-05-16 09:28:19
 categories: 读书篇

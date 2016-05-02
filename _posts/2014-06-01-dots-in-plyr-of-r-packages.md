@@ -1,3 +1,5 @@
+---
+layout: post
 title: summarise 和 mulate 函数使用
 date: 2014-06-01 16:16:37
 categories: 技术篇

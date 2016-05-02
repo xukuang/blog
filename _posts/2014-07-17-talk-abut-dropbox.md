@@ -1,3 +1,5 @@
+---
+layout: post
 title: 说说dropbox的好
 date: 2014-07-17 22:55:25
 categories: 生活篇

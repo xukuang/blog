@@ -1,3 +1,5 @@
+---
+layout: post
 title: 字典
 date: 2015-04-06 14:33:39
 categories: 技术篇

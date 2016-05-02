@@ -1,3 +1,5 @@
+---
+layout: post
 title: 小情人
 date: 2014-05-27 19:23:09
 categories: 读书篇

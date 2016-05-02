@@ -1,3 +1,5 @@
+---
+layout: post
 title: 生态所周围的地方
 date: 2015-04-11 19:01:10
 categories: 生活篇

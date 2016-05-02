@@ -1,16 +1,57 @@
-<p>title: “简单线性回归中各指标在R中的计算”
-date: 2016-04-07 14:50:50
-categories: [技术篇]
-tags: [R, 统计]
-—
-## 前话
-简单线性回归用于计算两个连续型变量(如X，Y)之间的线性关系，具体地说就是计算下面公式中的$\alpha和\beta$。
+<!DOCTYPE html>
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+    <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+      <meta name="author" content="Spatial-R" />
+        <title>简单线性回归中各指标在R中的计算 | Spatial-R</title>
+        <link rel="shortcut icon" href="/favicon.ico">
+          <link href="http://xukuang.github.io/blog/feed/" rel="alternate" title="Spatial-R" type="application/atom+xml" />
+            <link rel="stylesheet" href="/media/css/style.css">
+              <link rel="stylesheet" href="/media/css/highlight.css">
+                <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+                  <!--highlight.js Start-->
+                  <link rel="stylesheet" title="Default" href="/media/js/styles/tomorrow-night-blue.css">
+                    <script type="text/javascript" src="/media/js/highlight.pack.js"></script>
+                      <script>
+                      hljs.configure({tabReplace: '    '});
+                    hljs.initHighlightingOnLoad();
+                    </script>
+                      <!--highlight.js End-->
+                      <!--mathjax start-->
+                      <script type="text/javascript"
+                      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+                        </script>
+                        
+                        <!--mathjax end-->
+                        </head>
+                        <body>
+                        <div id="container">
+                          <div id="main" role="main">
+                            <header>
+                            <h1>简单线性回归中各指标在R中的计算</h1>
+                            </header>
+                            <nav>
+                            <!-- Sidebar -->
+                            <h5 id="logo" style="text-align:center;">
+                              <a href="http://spatial-r.github.io/">主页</a></h5>
+                                <span><a title="blog" class="" href="http://xukuang.github.io/blog/">博客</a></span>
+                                  <span><a title="about" class="" href="http://xukuang.github.io/blog/about/">关于</a></span>
+                                    <span><a title="categories" class="" href="http://xukuang.github.io/blog/categories/">分类</a></span>
+                                      <span><a title="vitae" class="" href="http://xukuang.github.io/blog/vitae/">简历</a></span>
+                                        <span><a title="tags" class="" href="http://xukuang.github.io/blog/tags/">标签</a></span>
+                                          <span><a title="links" class="" href="http://xukuang.github.io/blog/links/">链接</a></span>
+                                            <span><a title="subscribe by RSS" class="" href="http://xukuang.github.io/blog/feed/">订阅</a></span>
+                                              </nav>
+                                              <article class="content">
+                                              <section class="post">
+<h2 id="section">前话</h2>
+<p>简单线性回归用于计算两个连续型变量(如X，Y)之间的线性关系，具体地说就是计算下面公式中的$\alpha和\beta$。
 <script type="math/tex">Y = \alpha + \beta X + \varepsilon</script> <br />
 其中$\varepsilon$称为残差,服从从$N(0,\sigma^2)$的正态分布，自由度为(n-1) - (2-1) = n-2
 为了找到这条直线的位置，我们使用最小二乘法(least squares approach)。最小二乘法确保所有点处的残差的平方和最小时计算$\alpha和\beta$，即下面示意图中$\sum_{i=1}^{4}\varepsilon_i^2 = \varepsilon_1^2 + \varepsilon_2^2 + \varepsilon_3^2 + \varepsilon_4^2$有最小值。
 <img src="/img/y_x_scatter_plot.png" alt="简单线性相关示意图" /><!--more--></p>
 
-<h2 id="section">各指标的计算</h2>
+<h2 id="section-1">各指标的计算</h2>
 <p>运用最小二乘法找出的这条最优直线一定经过点$(\overline{x}, \overline{y})$。其中
 ### 斜率$\beta$和截距$\alpha$的估计值
 <img src="/img/beta.png" alt="" /></p>
@@ -18,7 +59,7 @@ tags: [R, 统计]
 <h3 id="pearsonr">Pearson相关系数r</h3>
 <p><script type="math/tex">r_{xy} = \frac{\overline{xy} - \bar{x}\bar{y} }{ \sqrt{ \left(\overline{x^2} - \bar{x}^2\right)\left(\overline{y^2} - \bar{y}^2\right)}}</script></p>
 
-<h3 id="section-1">方差分析</h3>
+<h3 id="section-2">方差分析</h3>
 <p>在方差分析(ANOVA)中，总的平方和包含回归平方和残差平方和两部分。
 * 总的平方和
 <script type="math/tex">SS_{tot}=\sum_i (y_i-\bar{y})^2</script>
@@ -30,7 +71,7 @@ tags: [R, 统计]
 <script type="math/tex">SS_\text{res}=\sum_i (y_i - \hat y_i)^2=\sum_i e_i^2</script>
 其自由度为 (n -1) - (2 - 1) = n -2。</p>
 
-<h3 id="section-2">决定系数(拟合优势度)</h3>
+<h3 id="section-3">决定系数(拟合优势度)</h3>
 <p><img src="/img/error.png" alt="" />
 决定系数是用来表示模型的解释度，理论上与相关系数没有关系，只是在简单线性回归中，决定系数$R^2 $值等于Pearson相关系数r的平方。</p>
 
@@ -160,3 +201,102 @@ adjustrsquare
 同F检验一样，p值越小，说明此时越小的概率事件发生了，越不能接受原假设。
 ## 话外篇
 在R中，lm(y ~ x)和lm(y ~ x + 1)的效果是相同的。此外，lm(y ~ 1)中截距的估计值为y的平均值，残差为每个y与均值的离差。</p>
+
+</section>
+<section class="meta">
+
+
+
+<span>
+	<a  href="http://xukuang.github.io/blog/2016/04/moment-in_statistics/" class="pageNav"  >Previous</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="http://xukuang.github.io/blog/2016/04/data-fomrat/" class="pageNav"  >Next</a>
+</span>
+
+
+<span class="author">
+  <a href="http://spatial-r.github.io/cn">Spatial-R</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2016-04-07">2016-04-07</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://xukuang.github.io/blog/categories/#技术篇" title="技术篇">技术篇</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://xukuang.github.io/blog/tags/#R" title="R">R</a>&nbsp;
+  
+  <a href="http://xukuang.github.io/blog/tags/#统计" title="统计">统计</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname ='httpspatialrgithubio'; // required: replace example with your forum shortname
+    var disqus_url = 'http://xukuang.github.io/blog/2016/04/simple-linear-regression/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    if (e.target.nodeName.toUpperCase() != 'BODY') return;
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://xukuang.github.io/blog/2016/04/moment-in_statistics/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://xukuang.github.io/blog/2016/04/data-fomrat/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+                                              </article>
+                                                </div>
+                                                </div>
+                                                <script type="text/javascript">
+                                                  var _gaq = _gaq || [];
+                                                  _gaq.push(['_setAccount', '']);
+                                                  _gaq.push(['_trackPageview']);
+                                                  (function() {
+                                                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                                                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                                                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                                                  })();
+                                                  </script>
+                                                    </body>
+                                                    </html>
+                                                    

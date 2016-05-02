@@ -1,3 +1,5 @@
+---
+layout: post
 title: "离散型随机变量的常用统计指标"
 date: 2016-04-06 22:25:50
 categories: [学习篇]

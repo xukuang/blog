@@ -1,9 +1,50 @@
-<p>title: “数据框基本操作的常见方法”
-date: 2015-05-16 15:23:57
-categories: 技术篇
-tags: [R, dplyr]
-—
-本文所说的数据框基本操作，主要包括添加新列、数据排列、数据筛选、数据选择和对所有列进行相同操作，针对每一种操作在基础包和dplyr包中使用方法进行了对比介绍。相对基础包的处理方法，dplyr包中的方法除了更加灵活外，处理速度也会大幅度提升。
+<!DOCTYPE html>
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+    <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+      <meta name="author" content="Spatial-R" />
+        <title>数据框基本操作的常见方法 | Spatial-R</title>
+        <link rel="shortcut icon" href="/favicon.ico">
+          <link href="http://xukuang.github.io/blog/feed/" rel="alternate" title="Spatial-R" type="application/atom+xml" />
+            <link rel="stylesheet" href="/media/css/style.css">
+              <link rel="stylesheet" href="/media/css/highlight.css">
+                <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+                  <!--highlight.js Start-->
+                  <link rel="stylesheet" title="Default" href="/media/js/styles/tomorrow-night-blue.css">
+                    <script type="text/javascript" src="/media/js/highlight.pack.js"></script>
+                      <script>
+                      hljs.configure({tabReplace: '    '});
+                    hljs.initHighlightingOnLoad();
+                    </script>
+                      <!--highlight.js End-->
+                      <!--mathjax start-->
+                      <script type="text/javascript"
+                      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+                        </script>
+                        
+                        <!--mathjax end-->
+                        </head>
+                        <body>
+                        <div id="container">
+                          <div id="main" role="main">
+                            <header>
+                            <h1>数据框基本操作的常见方法</h1>
+                            </header>
+                            <nav>
+                            <!-- Sidebar -->
+                            <h5 id="logo" style="text-align:center;">
+                              <a href="http://spatial-r.github.io/">主页</a></h5>
+                                <span><a title="blog" class="" href="http://xukuang.github.io/blog/">博客</a></span>
+                                  <span><a title="about" class="" href="http://xukuang.github.io/blog/about/">关于</a></span>
+                                    <span><a title="categories" class="" href="http://xukuang.github.io/blog/categories/">分类</a></span>
+                                      <span><a title="vitae" class="" href="http://xukuang.github.io/blog/vitae/">简历</a></span>
+                                        <span><a title="tags" class="" href="http://xukuang.github.io/blog/tags/">标签</a></span>
+                                          <span><a title="links" class="" href="http://xukuang.github.io/blog/links/">链接</a></span>
+                                            <span><a title="subscribe by RSS" class="" href="http://xukuang.github.io/blog/feed/">订阅</a></span>
+                                              </nav>
+                                              <article class="content">
+                                              <section class="post">
+<p>本文所说的数据框基本操作，主要包括添加新列、数据排列、数据筛选、数据选择和对所有列进行相同操作，针对每一种操作在基础包和dplyr包中使用方法进行了对比介绍。相对基础包的处理方法，dplyr包中的方法除了更加灵活外，处理速度也会大幅度提升。
 ## 添加新列
 使用的数据companiesData来自于网络，它是苹果、谷歌以及微软等三家公司在2010到2013年3年间的营收与利润数额，其中fy为年份，company为公司名称，revenue为公司营收，profit为公司利润。创建两列：公司所属国家(country)，其值为America；利润列（margin），其值等于利润(profit)除以营收(revenue)再乘以100。
 <code>R
@@ -461,3 +502,102 @@ head(temp3)
 # 事实上四则运算根本不需要借助函数来实现
 temp2 = hflights.dat + 1
 ```</p>
+
+</section>
+<section class="meta">
+
+
+
+<span>
+	<a  href="http://xukuang.github.io/blog/2015/05/daqingxiangguo/" class="pageNav"  >Previous</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="http://xukuang.github.io/blog/2015/05/merge-function-in-R/" class="pageNav"  >Next</a>
+</span>
+
+
+<span class="author">
+  <a href="http://spatial-r.github.io/cn">Spatial-R</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2015-05-16">2015-05-16</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://xukuang.github.io/blog/categories/#技术篇" title="技术篇">技术篇</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://xukuang.github.io/blog/tags/#R" title="R">R</a>&nbsp;
+  
+  <a href="http://xukuang.github.io/blog/tags/#dplyr" title="dplyr">dplyr</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname ='httpspatialrgithubio'; // required: replace example with your forum shortname
+    var disqus_url = 'http://xukuang.github.io/blog/2015/05/common-methods-of-dealing-with-data-frame/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    if (e.target.nodeName.toUpperCase() != 'BODY') return;
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://xukuang.github.io/blog/2015/05/daqingxiangguo/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://xukuang.github.io/blog/2015/05/merge-function-in-R/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+                                              </article>
+                                                </div>
+                                                </div>
+                                                <script type="text/javascript">
+                                                  var _gaq = _gaq || [];
+                                                  _gaq.push(['_setAccount', '']);
+                                                  _gaq.push(['_trackPageview']);
+                                                  (function() {
+                                                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                                                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                                                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                                                  })();
+                                                  </script>
+                                                    </body>
+                                                    </html>
+                                                    

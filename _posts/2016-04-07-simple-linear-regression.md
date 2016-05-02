@@ -1,3 +1,5 @@
+---
+layout: post
 title: "简单线性回归中各指标在R中的计算"
 date: 2016-04-07 14:50:50
 categories: [技术篇]

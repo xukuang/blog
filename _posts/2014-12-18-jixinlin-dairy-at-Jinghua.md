@@ -1,3 +1,5 @@
+---
+layout: post
 title: "清华园日记"
 date: 2014-12-17 20:50:03
 categories: 读书篇

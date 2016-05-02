@@ -1,3 +1,5 @@
+---
+layout: post
 title: 赋值语句
 date: 2015-04-09 19:01:27
 categories: 技术篇

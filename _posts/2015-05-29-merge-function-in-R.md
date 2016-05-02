@@ -1,3 +1,5 @@
+---
+layout: post
 title: "数据合并-merge函数"
 date: 2015-05-29 10:35:12
 categories: 技术篇

@@ -1,3 +1,5 @@
+---
+layout: post
 title: "长宽数据之间的转化(一)"
 date: 2016-01-18 10:32:19
 categories: 技术篇

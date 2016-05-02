@@ -1,3 +1,5 @@
+---
+layout: post
 title: "数据框基本操作的常见方法"
 date: 2015-05-16 15:23:57
 categories: 技术篇

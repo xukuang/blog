@@ -1,3 +1,5 @@
+---
+layout: post
 title: 写在硕士的尾巴、博士的开端上
 date: 2014-05-16 16:34:40
 categories: 学习篇

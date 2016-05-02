@@ -1,15 +1,56 @@
-<p>title: “离散型随机变量的常用统计指标”
-date: 2016-04-06 22:25:50
-categories: [学习篇]
-tags: [统计]
-—
-## 期望
-<script type="math/tex">E[X] = \sum_{i=1}^n x_i</script>
+<!DOCTYPE html>
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+    <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+      <meta name="author" content="Spatial-R" />
+        <title>离散型随机变量的常用统计指标 | Spatial-R</title>
+        <link rel="shortcut icon" href="/favicon.ico">
+          <link href="http://xukuang.github.io/blog/feed/" rel="alternate" title="Spatial-R" type="application/atom+xml" />
+            <link rel="stylesheet" href="/media/css/style.css">
+              <link rel="stylesheet" href="/media/css/highlight.css">
+                <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+                  <!--highlight.js Start-->
+                  <link rel="stylesheet" title="Default" href="/media/js/styles/tomorrow-night-blue.css">
+                    <script type="text/javascript" src="/media/js/highlight.pack.js"></script>
+                      <script>
+                      hljs.configure({tabReplace: '    '});
+                    hljs.initHighlightingOnLoad();
+                    </script>
+                      <!--highlight.js End-->
+                      <!--mathjax start-->
+                      <script type="text/javascript"
+                      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+                        </script>
+                        
+                        <!--mathjax end-->
+                        </head>
+                        <body>
+                        <div id="container">
+                          <div id="main" role="main">
+                            <header>
+                            <h1>离散型随机变量的常用统计指标</h1>
+                            </header>
+                            <nav>
+                            <!-- Sidebar -->
+                            <h5 id="logo" style="text-align:center;">
+                              <a href="http://spatial-r.github.io/">主页</a></h5>
+                                <span><a title="blog" class="" href="http://xukuang.github.io/blog/">博客</a></span>
+                                  <span><a title="about" class="" href="http://xukuang.github.io/blog/about/">关于</a></span>
+                                    <span><a title="categories" class="" href="http://xukuang.github.io/blog/categories/">分类</a></span>
+                                      <span><a title="vitae" class="" href="http://xukuang.github.io/blog/vitae/">简历</a></span>
+                                        <span><a title="tags" class="" href="http://xukuang.github.io/blog/tags/">标签</a></span>
+                                          <span><a title="links" class="" href="http://xukuang.github.io/blog/links/">链接</a></span>
+                                            <span><a title="subscribe by RSS" class="" href="http://xukuang.github.io/blog/feed/">订阅</a></span>
+                                              </nav>
+                                              <article class="content">
+                                              <section class="post">
+<h2 id="section">期望</h2>
+<p><script type="math/tex">E[X] = \sum_{i=1}^n x_i</script>
 期望存在一下特性:
 * $E[aX + bY] = aE[X] + bE(Y)$
 * 一般情况下，$E[X Y] \neq E[X]E(Y)$；当X和Y相互独立时，才有$E[X Y] = E[X]E(Y)$<!--more--></p>
 
-<h2 id="section">方差</h2>
+<h2 id="section-1">方差</h2>
 <p>方差描述的是随机变量的离散程度，也就是该变量离其期望值的距离。
 <script type="math/tex">Var(X) = E[(X -E[X])^2] = E[X^{2} - 2X E[X] + (E[X])^{2}] = E[X^{2}] - (E[X])^{2}</script>
 此外，方差还可以看作是随机变量和自身的协方差$Var(X) = Cov(X, X)$
@@ -28,3 +69,100 @@ tags: [统计]
 协方差的相关性η更准确地说是线性相关的相关系数r，是一个衡量线性独立的无量纲数，其取值在[－1,+1]之间。相关性η = 1时称为“完全线性相关”(相关性η = -1时称为“完全线性负相关”)，此时将$Y_{i}$对$X_{i}$作Y-X散点图，将得到一组精确排列在直线上的点；相关性数值介于－1到1之间时，其绝对值越接近1表明线性相关性越好，作散点图得到的点的排布越接近一条直线。相关性为0(因而协方差也为0)的两个随机变量又被称为是不相关的，或者更准确地说叫作“线性无关”、“线性不相关”，这仅仅表明X 与Y两随机变量之间没有线性相关性，并非表示它们之间一定没有任何内在的（非线性）函数关系，和前面所说的“X、Y二者并不一定是统计独立的”说法一致。</p>
 
 <p><strong>本篇文章整理自维基百科。</strong></p>
+
+</section>
+<section class="meta">
+
+
+
+<span>
+	<a  href="http://xukuang.github.io/blog/2016/03/docement-mangement/" class="pageNav"  >Previous</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="http://xukuang.github.io/blog/2016/04/simple-linear-regression/" class="pageNav"  >Next</a>
+</span>
+
+
+<span class="author">
+  <a href="http://spatial-r.github.io/cn">Spatial-R</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2016-04-06">2016-04-06</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://xukuang.github.io/blog/categories/#学习篇" title="学习篇">学习篇</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://xukuang.github.io/blog/tags/#统计" title="统计">统计</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname ='httpspatialrgithubio'; // required: replace example with your forum shortname
+    var disqus_url = 'http://xukuang.github.io/blog/2016/04/moment-in_statistics/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    if (e.target.nodeName.toUpperCase() != 'BODY') return;
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://xukuang.github.io/blog/2016/03/docement-mangement/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://xukuang.github.io/blog/2016/04/simple-linear-regression/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+                                              </article>
+                                                </div>
+                                                </div>
+                                                <script type="text/javascript">
+                                                  var _gaq = _gaq || [];
+                                                  _gaq.push(['_setAccount', '']);
+                                                  _gaq.push(['_trackPageview']);
+                                                  (function() {
+                                                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                                                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                                                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                                                  })();
+                                                  </script>
+                                                    </body>
+                                                    </html>
+                                                    

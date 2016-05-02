@@ -1,10 +1,51 @@
-<p>title: “三维图在R中的几种画法”
-date: 2016-01-10 12:48:36
-categories: 技术篇
-tags: [三维图, R]
-—
-## 基础函数persp
-### persp函数
+<!DOCTYPE html>
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+    <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+      <meta name="author" content="Spatial-R" />
+        <title>三维图在R中的几种画法 | Spatial-R</title>
+        <link rel="shortcut icon" href="/favicon.ico">
+          <link href="http://xukuang.github.io/blog/feed/" rel="alternate" title="Spatial-R" type="application/atom+xml" />
+            <link rel="stylesheet" href="/media/css/style.css">
+              <link rel="stylesheet" href="/media/css/highlight.css">
+                <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+                  <!--highlight.js Start-->
+                  <link rel="stylesheet" title="Default" href="/media/js/styles/tomorrow-night-blue.css">
+                    <script type="text/javascript" src="/media/js/highlight.pack.js"></script>
+                      <script>
+                      hljs.configure({tabReplace: '    '});
+                    hljs.initHighlightingOnLoad();
+                    </script>
+                      <!--highlight.js End-->
+                      <!--mathjax start-->
+                      <script type="text/javascript"
+                      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+                        </script>
+                        
+                        <!--mathjax end-->
+                        </head>
+                        <body>
+                        <div id="container">
+                          <div id="main" role="main">
+                            <header>
+                            <h1>三维图在R中的几种画法</h1>
+                            </header>
+                            <nav>
+                            <!-- Sidebar -->
+                            <h5 id="logo" style="text-align:center;">
+                              <a href="http://spatial-r.github.io/">主页</a></h5>
+                                <span><a title="blog" class="" href="http://xukuang.github.io/blog/">博客</a></span>
+                                  <span><a title="about" class="" href="http://xukuang.github.io/blog/about/">关于</a></span>
+                                    <span><a title="categories" class="" href="http://xukuang.github.io/blog/categories/">分类</a></span>
+                                      <span><a title="vitae" class="" href="http://xukuang.github.io/blog/vitae/">简历</a></span>
+                                        <span><a title="tags" class="" href="http://xukuang.github.io/blog/tags/">标签</a></span>
+                                          <span><a title="links" class="" href="http://xukuang.github.io/blog/links/">链接</a></span>
+                                            <span><a title="subscribe by RSS" class="" href="http://xukuang.github.io/blog/feed/">订阅</a></span>
+                                              </nav>
+                                              <article class="content">
+                                              <section class="post">
+<h2 id="persp">基础函数persp</h2>
+<p>### persp函数
 persp(x = seq(0, 1, length.out = nrow(z)),
       y = seq(0, 1, length.out = ncol(z)),
       z, xlim = range(x), ylim = range(y),
@@ -142,3 +183,102 @@ rgl.postscript("plot2.pdf", "pdf", drawText = TRUE)
 <script type="math/tex; mode=display">\frac{\partial u}{\partial t} = h^2 \left( \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} + \frac{\partial^2 u}{\partial z^2}\right)</script>
 
 <script type="math/tex; mode=display">i\hbar\frac{\partial \psi}{\partial t} = \frac{-\hbar^2}{2m} \left( \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2} \right) \psi + V \psi.</script>
+
+</section>
+<section class="meta">
+
+
+
+<span>
+	<a  href="http://xukuang.github.io/blog/2015/05/push-ups/" class="pageNav"  >Previous</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="http://xukuang.github.io/blog/2016/01/join-function/" class="pageNav"  >Next</a>
+</span>
+
+
+<span class="author">
+  <a href="http://spatial-r.github.io/cn">Spatial-R</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2016-01-10">2016-01-10</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://xukuang.github.io/blog/categories/#技术篇" title="技术篇">技术篇</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://xukuang.github.io/blog/tags/#三维图" title="三维图">三维图</a>&nbsp;
+  
+  <a href="http://xukuang.github.io/blog/tags/#R" title="R">R</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname ='httpspatialrgithubio'; // required: replace example with your forum shortname
+    var disqus_url = 'http://xukuang.github.io/blog/2016/01/3dplot/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    if (e.target.nodeName.toUpperCase() != 'BODY') return;
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://xukuang.github.io/blog/2015/05/push-ups/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://xukuang.github.io/blog/2016/01/join-function/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+                                              </article>
+                                                </div>
+                                                </div>
+                                                <script type="text/javascript">
+                                                  var _gaq = _gaq || [];
+                                                  _gaq.push(['_setAccount', '']);
+                                                  _gaq.push(['_trackPageview']);
+                                                  (function() {
+                                                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                                                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                                                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                                                  })();
+                                                  </script>
+                                                    </body>
+                                                    </html>
+                                                    

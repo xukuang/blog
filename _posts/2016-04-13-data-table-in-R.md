@@ -1,3 +1,5 @@
+---
+layout: post
 title: "data.table的包的简单介绍"
 date: 2016-04-13 13:56:01
 categories: [技术篇]

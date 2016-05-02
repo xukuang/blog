@@ -1,3 +1,5 @@
+---
+layout: post
 title: 如何用hexo发博文
 date: 2014-05-14 18:09:01
 categories: 技术篇

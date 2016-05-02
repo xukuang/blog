@@ -1,3 +1,5 @@
+---
+layout: post
 title: 经典的英语日常对话
 date: 2014-05-20 19:00:24
 categories: 学习篇

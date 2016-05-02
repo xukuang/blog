@@ -1,3 +1,5 @@
+---
+layout: post
 title: 平凡的世界
 date: 2015-04-05 8:25:16
 categories: 读书篇

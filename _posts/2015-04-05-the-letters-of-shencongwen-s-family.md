@@ -1,3 +1,5 @@
+---
+layout: post
 title: "沈从文家书"
 date: 2015-04-05 7:54:55
 categories: 读书篇

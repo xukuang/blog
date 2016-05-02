@@ -1,9 +1,52 @@
-<p>title: “R中的文本处理”
-date: 2016-02-27 17:14:59
-categories: 技术篇
-tags: [文本, R]
-—
-&gt; 处理文本是每一种计算机语言都应该具备的功能，但不是每一种语言都侧重于处理文本。R语言是统计的语言，处理文本不是它的强项。尽管R语言处理文本的能力不够强，但适当使用可以大幅提高工作效率的，而且有些文本操作还不得不用。高效处理文本少不了正则表达式（regular expression），虽然R在这方面先天不高效，但其中处理文本的绝大多数函数都支持正则表达式。</p>
+<!DOCTYPE html>
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+    <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+      <meta name="author" content="Spatial-R" />
+        <title>R中的文本处理 | Spatial-R</title>
+        <link rel="shortcut icon" href="/favicon.ico">
+          <link href="http://xukuang.github.io/blog/feed/" rel="alternate" title="Spatial-R" type="application/atom+xml" />
+            <link rel="stylesheet" href="/media/css/style.css">
+              <link rel="stylesheet" href="/media/css/highlight.css">
+                <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+                  <!--highlight.js Start-->
+                  <link rel="stylesheet" title="Default" href="/media/js/styles/tomorrow-night-blue.css">
+                    <script type="text/javascript" src="/media/js/highlight.pack.js"></script>
+                      <script>
+                      hljs.configure({tabReplace: '    '});
+                    hljs.initHighlightingOnLoad();
+                    </script>
+                      <!--highlight.js End-->
+                      <!--mathjax start-->
+                      <script type="text/javascript"
+                      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+                        </script>
+                        
+                        <!--mathjax end-->
+                        </head>
+                        <body>
+                        <div id="container">
+                          <div id="main" role="main">
+                            <header>
+                            <h1>R中的文本处理</h1>
+                            </header>
+                            <nav>
+                            <!-- Sidebar -->
+                            <h5 id="logo" style="text-align:center;">
+                              <a href="http://spatial-r.github.io/">主页</a></h5>
+                                <span><a title="blog" class="" href="http://xukuang.github.io/blog/">博客</a></span>
+                                  <span><a title="about" class="" href="http://xukuang.github.io/blog/about/">关于</a></span>
+                                    <span><a title="categories" class="" href="http://xukuang.github.io/blog/categories/">分类</a></span>
+                                      <span><a title="vitae" class="" href="http://xukuang.github.io/blog/vitae/">简历</a></span>
+                                        <span><a title="tags" class="" href="http://xukuang.github.io/blog/tags/">标签</a></span>
+                                          <span><a title="links" class="" href="http://xukuang.github.io/blog/links/">链接</a></span>
+                                            <span><a title="subscribe by RSS" class="" href="http://xukuang.github.io/blog/feed/">订阅</a></span>
+                                              </nav>
+                                              <article class="content">
+                                              <section class="post">
+<blockquote>
+  <p>处理文本是每一种计算机语言都应该具备的功能，但不是每一种语言都侧重于处理文本。R语言是统计的语言，处理文本不是它的强项。尽管R语言处理文本的能力不够强，但适当使用可以大幅提高工作效率的，而且有些文本操作还不得不用。高效处理文本少不了正则表达式（regular expression），虽然R在这方面先天不高效，但其中处理文本的绝大多数函数都支持正则表达式。</p>
+</blockquote>
 
 <h2 id="section">正则表达式</h2>
 <p>正则表达式是用于描述/匹配一个文本集合的表达式。它不是R的专属内容，这里也只简单介绍，更详细的内容请查阅其他文章。<!--more-->
@@ -333,3 +376,102 @@ match按向量进行运算，返回第一次匹配的元素的位置（如果有
 <strong>参考文章</strong>
 1. R语言进阶之二：文本（字符串）处理与正则表达式（这篇文章在许多网站都有转载，然而原创链接失效了）
 2. <a href="http://jianl.org/2010/02/14/2010-02-14-R%E4%B8%AD%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%AE%80%E4%BB%8B/">R中正则表达式简介</a></p>
+
+</section>
+<section class="meta">
+
+
+
+<span>
+	<a  href="http://xukuang.github.io/blog/2016/01/melt-and-dcast/" class="pageNav"  >Previous</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="http://xukuang.github.io/blog/2016/03/docement-mangement/" class="pageNav"  >Next</a>
+</span>
+
+
+<span class="author">
+  <a href="http://spatial-r.github.io/cn">Spatial-R</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2016-02-27">2016-02-27</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://xukuang.github.io/blog/categories/#技术篇" title="技术篇">技术篇</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://xukuang.github.io/blog/tags/#文本" title="文本">文本</a>&nbsp;
+  
+  <a href="http://xukuang.github.io/blog/tags/#R" title="R">R</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname ='httpspatialrgithubio'; // required: replace example with your forum shortname
+    var disqus_url = 'http://xukuang.github.io/blog/2016/02/char-in-R/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    if (e.target.nodeName.toUpperCase() != 'BODY') return;
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://xukuang.github.io/blog/2016/01/melt-and-dcast/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://xukuang.github.io/blog/2016/03/docement-mangement/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+                                              </article>
+                                                </div>
+                                                </div>
+                                                <script type="text/javascript">
+                                                  var _gaq = _gaq || [];
+                                                  _gaq.push(['_setAccount', '']);
+                                                  _gaq.push(['_trackPageview']);
+                                                  (function() {
+                                                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                                                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                                                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                                                  })();
+                                                  </script>
+                                                    </body>
+                                                    </html>
+                                                    
