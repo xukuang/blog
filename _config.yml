@@ -2,5 +2,5 @@ markdown: kramdown
 permalink: /:year/:month/:title/
 url: http://xukuang.github.io/blog
 author: Xu Kuang
-pygments: true
+
 

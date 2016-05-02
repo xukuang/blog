@@ -94,7 +94,7 @@
 <h2 id="section-1">文本处理</h2>
 <p>### 字符数统计
 函数nchar，统计向量中每个元素的字符个数，注意这个函数和length函数的差别：length是向量长度（向量元素的个数）。
-<code>
+<code class="highlighter-rouge">
 x &lt;- c("Hellow", "World", "!") 
 nchar(x); length(x)
 	# [1] 6 5 1 
@@ -130,7 +130,7 @@ chartr(“Tt”, “Uu”, DNA) # T转化为U，t转化为u
 	# [1] “AuGCuuuACC” 
 chartr(“Tt”, “UU”, DNA) 
 	# [1] “AUGCUUUACC”
-<code>
+<code class="highlighter-rouge">
 ### 字符串连接
 函数paste应该是R中最常用字符串函数了，也是R字符串处理函数里面非常纯的不使用正则表达式的函数（因为用不着）。
 </code>
@@ -140,19 +140,19 @@ x &lt;- list(a = “aaa”, b = “bbb”, c = “ccc”)
 y &lt;- list(d = 1, e = 2)
 paste(x, y, sep = “-“)  #较短的向量被循环使用
 	# [1] “aaa-1” “bbb-2” “ccc-1”
-<code>
+<code class="highlighter-rouge">
 paste函数还有一个用法，设置collapse参数，连成一个字符串。
 </code>
 paste(x, y, sep = “-“, collapse = “; “)
 	# [1] “aaa-1; bbb-2; ccc-1”
 paste(x, collapse = “; “)
 	# [1] “aaa; bbb; ccc”
-<code>
+<code class="highlighter-rouge">
 ### 字符串拆分
 strsplit函数使用正则表达式，使用格式为:
 </code>
 strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
-<code>
+<code class="highlighter-rouge">
 * 参数x为字串向量，每个元素都将单独进行拆分。
 * 参数split为拆分位置的字串向量，
 * 默认为正则表达式匹配（fixed=FALSE）。如果你没接触过正则表达式，设置fixed=TRUE，表示使用普通文本匹配或正则表达式的精确匹配。普通文本的运算速度快。
@@ -166,12 +166,12 @@ strsplit(text, “ “) # R语言的字符串事实上也是正则表达式，�
 strsplit(text, “\s”)
 	# [[1]]
 	# [1] “Hello” “Adam!” “Hello” “Ava!”
-<code>
+<code class="highlighter-rouge">
 strsplit得到的结果是列表，后面要怎么处理就得看情况而定了。
 </code>
 class(strsplit(text, “\s”))
 	# [1] “list”
-<code>
+<code class="highlighter-rouge">
 有一种情况很特殊，如果split参数的字符长度为0，得到的结果就是一个个的字符。
 </code>
 strsplit(text, “”)
@@ -183,7 +183,7 @@ strsplit(text, “”)
 ### 字符串查询和替换
 R中字符串的查询函数有：grep、grepl、regexpr、gregexpr和regexpr，字符串的替换函数有sub和gsub。</p>
 
-<pre><code># 字符串查询
+<div class="highlighter-rouge"><pre class="highlight"><code># 字符串查询
 grep(pattern, x, ignore.case = FALSE, perl = FALSE, value = FALSE,
      fixed = FALSE, useBytes = FALSE, invert = FALSE)
 
@@ -206,6 +206,7 @@ gsub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
      fixed = FALSE, useBytes = FALSE)
 ## gsub函数会根据pattern的规则对x中各元素进行搜索，找出所有符合条件的子字符串的位置，用replacement替换该子字符串，返回替换后的结果，和x的结构相同	 
 </code></pre>
+</div>
 
 <p>这几个函数有相似的格式，都使用正则表达式的规则进行匹配。默认是egrep的规则，也可以选用Perl语言的规则。
 * pattern为字符串表示正则表达式
@@ -220,7 +221,7 @@ gsub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
 <h4 id="section-2">字符串查询</h4>
 <p>grep和grepl函数这两个函数返回向量水平的匹配结果，不涉及匹配字符串的详细位置信息。此外，尽管这两个函数的参数看起来差不多，但是返回结果的形式并不一样。	
 regexpr、gregexpr和regexpr这三个函数返回的结果包均含了匹配的具体位置和字符串长度信息，只是他们的结果显示方式不同。
-<code>
+<code class="highlighter-rouge">
 text &lt;- c("Hellow, Adam!", "Hi, Paul!", "How are you, Adam.")
 grep("Adam", text)
 	# [1] 1 3
@@ -271,7 +272,7 @@ regexec("Adam", text)
 </code>
 #### 字符串替换
 尽管sub和gsub是用于字符串替换的函数，但严格地说R语言没有字符串替换的函数，因为R语言不管什么操作对参数都是传值不传址。
-<code>
+<code class="highlighter-rouge">
 text
 	# [1] "Hellow, Adam!"      "Hi, Paul!"          "How are you, Adam."
 sub(pattern = "Adam", replacement = "world", text)
@@ -280,7 +281,7 @@ text
 	# [1] "Hellow, Adam!"      "Hi, Paul!"          "How are you, Adam."
 </code>
 可以看到：虽然说是“替换”，但原字符串并没有改变，要改变原变量我们只能通过再赋值的方式。 sub和gsub的区别是前者只做一次替换（不管有几次匹配），而gsub把满足条件的匹配都做替换。
-<code>
+<code class="highlighter-rouge">
 text1 = c("Hellow, Adam!", "Hi, Paul!", "How are you, Adam, Ava.")
 sub(pattern = "Adam|Ava", replacement = "world", text1)
 	# [1] "Hellow, world!"      "Hi, Paul!"          "How are you, world, Ava."
@@ -288,13 +289,13 @@ gsub(pattern = "Adam|Ava", replacement = "world", text1)
 	# [1] "Hellow, world!"      "Hi, Paul"          "How are you, world, world."
 </code>
 sub和gsub函数可以使用提取表达式（转义字符+数字）让部分变成全部：
-<code>
+<code class="highlighter-rouge">
 sub(pattern = ".*(Adam).*", replacement = "Hi, \\1", text)
 	# [1] "Hi, Adam"  "Hi, Paul!" "Hi, Adam" 
 </code>
 ## 字符串提取
 substr和substring函数通过位置进行字符串拆分或提取，它们本身并不使用正则表达式，但是结合正则表达式函数regexpr、gregexpr或regexec使用可以非常方便地从大量文本中提取所需信息。两者的参数设置基本相同，但它们的返回值的长度（个数）有差别：substr返回的字串个数等于第一个参数的长度，而substring返回字串个数等于三个参数中最长向量长度，短向量循环使用。
-<code>
+<code class="highlighter-rouge">
 substr(x, start, stop)
 substring(text, first, last = 1000000L)
 </code>
@@ -303,7 +304,7 @@ substring(text, first, last = 1000000L)
 * stop/last 为截取字串的终止位置向量</p>
 
 <p>先看第1参数（要拆分的字符向量）长度为1例子。
-<code>
+<code class="highlighter-rouge">
 x &lt;- "123456789"
 substr(x, c(2, 4), c(4, 5, 8))
 	# [1] "234"
@@ -315,11 +316,11 @@ substring(x, c(2, 4), c(4, 5, 8))
 * strtrim 函数</p>
 
 <p>该函数用于将字符串修剪到特定的显示宽度，其用法为，
-<code>
+<code class="highlighter-rouge">
 strtrim(x,width)
 </code>
 返回字符串向量的长度等于x的长度。因为是“修剪”，所以只能去掉多余的字符不能增加其他额外的字符：如果字符串本身的长度小于width，得到的是原字符串，别指望它会用空格或其他什么字符补齐。
-<code>
+<code class="highlighter-rouge">
 strtrim(c("abcdef", "abcdef", "abcdef"), c(1, 5, 10))
 	# [1] "a"      "abcde"  "abcdef"
 strtrim(c(1, 123, 1234567), 4)
@@ -331,7 +332,7 @@ strtrim(c(1, 123, 1234567), 4)
 </ul>
 
 <p>该函数把一个字符串当成一个段落的文字（不管字符串中是否有换行符），按照段落的格式（缩进和长度）和断字方式进行分行，每一行是结果中的一个字符串。
-<code>
+<code class="highlighter-rouge">
 str1 &lt;- "Each character string in the input is first split into paragraphs\n(or lines containing whitespace only).  The paragraphs are then\nformatted by breaking lines at word boundaries.  The target\ncolumns for wrapping lines and the indentation of the first and\nall subsequent lines of a paragraph can be controlled\nindependently."
 str2 &lt;- rep(str1, 2)
 strwrap(str2, width = 80, indent = 2)
@@ -347,7 +348,7 @@ strwrap(str2, width = 80, indent = 2)
 	# [10] "controlled independently."
 </code>
 simplify参数用于指定结果的返回样式，默认为TRUE，即结果中所有的字符串都按顺序放在一个字符串向量中（如上）；如果为FALSE，那么结果将是列表。另外一个参数exdent用于指定除第一行以外的行缩进。
-<code>
+<code class="highlighter-rouge">
 strwrap(str1, width = 80, indent = 0, exdent = 2)
 	# [1] "Each character string in the input is first split into paragraphs (or lines"  
 	# [2] "  containing whitespace only).  The paragraphs are then formatted by breaking"
@@ -358,7 +359,7 @@ strwrap(str1, width = 80, indent = 0, exdent = 2)
 * match和charmatch函数</p>
 
 <p>这两个函数用于字符的匹配。
-<code>
+<code class="highlighter-rouge">
 match("xx", c("abc", "xx", "xxx", "xx"))
 	# [1] 2
 match(2, c(3, 1, 2, 4))
@@ -423,7 +424,7 @@ match按向量进行运算，返回第一次匹配的元素的位置（如果有
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname ='httpxukuanggithubio'; // required: replace example with your forum shortname
+    var disqus_shortname ='Xu_Kuang'; // required: replace example with your forum shortname
     var disqus_url = 'http://xukuang.github.io/blog/2016/02/char-in-R/';
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

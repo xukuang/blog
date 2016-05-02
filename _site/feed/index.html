@@ -7,7 +7,7 @@
     <title>Xu Kuang</title>
     <atom:link href="http://xukuang.github.io/blog/feed/" rel="self" type="application/rss+xml" />
     <link>http://xukuang.github.io</link>
-    <lastBuildDate>2016-05-01T22:44:54-06:00</lastBuildDate>
+    <lastBuildDate>2016-05-01T23:39:40-06:00</lastBuildDate>
     <webMaster>kuang_xu@126.com</webMaster>
     
     <item>
@@ -36,7 +36,7 @@
 <p>虽然Numpy提供了这些操作的计算功能，但你或许希望使用pandas作为大多数数据分析的基础（特别是结构化或表格数据），因为pandas提供了一个丰富的，高级的接口使得常见的数据任务非常简洁和简单。此外，pandas还提供了更多的一些特定领域的功能，如时间数组操作，这是Numpy所没有的。
 ###  Numpy ndarray：多维数组对象
 Numpy的一个关键特性是它的N维数组对象(ndarray)，它在python中是一个大型数据集的快速的，灵活的容器。 数组使你能够在整个数据块上进行数学运算，且与对应的纯量元素间操作有相似的语法：
-<code>
+<code class="highlighter-rouge">
 array1 = np.array([[ 0.9526, -0.246 , -0.8856], [ 0.5639, 0.2379, 0.9104]])
 array1
 	## array([[ 0.9526, -0.246 , -0.8856],
@@ -49,7 +49,7 @@ array1 + array1
 	##        [ 1.1278,  0.4758,  1.8208]])
 </code>
 ndarray是一个同种类数据的多维容器，也就是说，它的所有元素都是同类型的。每一个数组都有一个 shape （表示它每一维大小的元组）和 dtype （一个描述数组数据类型的对象）的属性。
-<code>
+<code class="highlighter-rouge">
 array1.shape
 	## (2, 3)
 array1.dtype
@@ -57,14 +57,14 @@ array1.dtype
 </code>
 #### 创建ndarray对象
 最简单的创建数组的方式是使用array函数。它接受任何数组对象（包括其它数组），产生一个包含所传递的数据的新Numpy数组。例如，列表就是一个很好的用于转换的候选。
-<code>
+<code class="highlighter-rouge">
 data1 = [6, 7.5, 8, 0, 1]
 arr1 = np.array(data1)
 arr1
 	## array([ 6. , 7.5, 8. , 0. , 1. ])
 </code>
 嵌套序列，如等长列表的列表，将会转化为一个多维数组。
-<code>
+<code class="highlighter-rouge">
 data2 = [[1, 2, 3, 4], [5, 6, 7, 8]]
 arr2 = np.array(data2)
 arr2
@@ -76,7 +76,7 @@ arr2.shape
 	## (2, 4)
 </code>
 除 np.array 之外，还有许多函数来创建新的数组。例如， zeros 和 ones 使用给定的长度或形状分别的创建0‘s 和 1‘s数组。empty 会创建一个没有使用特定值来初始化的数组。给这些方法传递一个元组作为形状来创建高维数组。
-<code>
+<code class="highlighter-rouge">
 np.zeros(10)
 	## array([ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.])
 np.zeros((3, 6))
@@ -92,13 +92,13 @@ np.empty((2, 3, 2))
 	##         [ 4.42786966e+160, 1.27100354e+025]]])
 </code>
 arange 是python内建 range 函数的数组版本。
-<code>
+<code class="highlighter-rouge">
 np.arange(15)
 	## array([ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
 </code>
 #### 数组和纯量间的操作
 数组非常重要，因为它们使你不使用循环就可以在数据上进行一系列操作。这通常被叫做矢量化。相同大小的数组间的算术运算，其操作作用在对应的元素上。
-<code>
+<code class="highlighter-rouge">
 arr = np.array([[1., 2., 3.], [4., 5., 6.]])
 arr
 	## array([[ 1.,  2.,  3.],
@@ -110,14 +110,15 @@ arr * arr
 
 <p>纯量的算术操作正如你期望的一样，把操作值作用于每一个元素：</p>
 
-<pre><code>1 / arr                       
+<div class="highlighter-rouge"><pre class="highlight"><code>1 / arr                       
 	## array([[ 1. , 0.5 , 0.3333],            
 	##        [ 0.25 , 0.2 , 0.1667]])
 </code></pre>
+</div>
 
 <h4 id="section">基本的索引和切片</h4>
 <p>Numpy的索引是一个内容丰富的主题，因为有许多方法可以使你在你的数据中选取一个子集或单个元素。一维的数组很简单，表面上它们的行为类似于python的列表。
-<code>
+<code class="highlighter-rouge">
 arr = np.arange(10)
 arr
 	## array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
@@ -130,7 +131,7 @@ arr
 	## array([ 0,  1,  2,  3,  4, 12, 12, 12,  8,  9])
 </code>
 如你所见，当你给一个切片赋一纯量值，如 arr[5:8] = 12 所示，该值被传送(或传播)到整个选择区域。与列表的第一个重要的区别是数组的切片在原来的数组上（不生成新的数组）。这意味着数据不会被拷贝，且对切片的任何修改都会影响源数组。
-<code>
+<code class="highlighter-rouge">
 arr_slice = arr[5:8]
 arr_slice[1] = 12345
 arr_slice
@@ -146,20 +147,20 @@ arr
 如果你是使用Numpy的新手，这一点会使你感到惊讶『真的惊讶到我了』，尤其当你使用过其它数组编程语言，它们非常热衷于拷贝数据。请记住，Numpy是设计用来处理大数据的情况，你可以想象如果Numpy坚持使用拷贝数据将会出现的性能和内存问题。如果你想有数组切片的一个拷贝，你需要明显的拷贝数组；例如 arr[5:8].copy() 。</p>
 
 <p>对于高维数组，你会有更多选项。在两维的数组，每一个索引的元素将不再是一个纯量，而是一个一维数组。
-<code>
+<code class="highlighter-rouge">
 arr2d = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 arr2d[2]
 	## array([7, 8, 9])
 </code>
 因此，单个元素可以递归的访问，但是这会做多一点的工作。不过，你可以使用一个逗号分隔的索引列表来选择单个元素。因此，下面的操作是等价的。
-<code>
+<code class="highlighter-rouge">
 arr2d[0][2]
 	## 3
 arr2d[0, 2]
 	## 3
 </code>
 在多维数组中，如果你省略了后面的索引，返回的对象将会是一个较低维的ndarray，它包括较高维度的所有数据。因此，在 2*\2*3 的数组 arr3d 中
-<code>
+<code class="highlighter-rouge">
 arr3d = np.array([[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]])
 arr3d
 	## array([[[ 1, 2, 3],
@@ -168,13 +169,13 @@ arr3d
 	##         [10, 11, 12]]])
 </code>
 arr3d[0] 是一个 2<em>3 的数组。
-<code>
+<code class="highlighter-rouge">
 arr3d[0]
 	## array([[1, 2, 3],
 	##        [4, 5, 6]])
 </code>
 纯量值和数组都可以给 arr3d[0] 赋值。
-<code>
+<code class="highlighter-rouge">
 old_values = arr3d[0].copy()
 arr3d[0] = 42
 arr3d
@@ -190,18 +191,18 @@ arr3d
 	##         [10, 11, 12]]])
 </code>
 类似的， arr3d[1, 0] 给出那些索引以 (1, 0) 开始的值，形成了一个1维数组：
-<code>
+<code class="highlighter-rouge">
 arr3d[1, 0]
 	## array([7, 8, 9])
 </code>
 请注意，在所有的情况下，被选中的子节返回的数组总是数组视窗。
 如同一维对象，ndarrys可以使用熟悉的语法来切片。
-<code>
+<code class="highlighter-rouge">
 arr[1:6]
 	## array([ 1, 2, 3, 4, 64])
 </code>
 较高维的对象给你更多的选择，你可以切割一个或多个坐标坐标轴，并且可以混合整数。对上面的2维数组，arr2d ，对它的切片有些不同。
-<code>
+<code class="highlighter-rouge">
 arr2d
 	## array([[1, 2, 3],          
 	##        [4, 5, 6],                 
@@ -211,30 +212,30 @@ arr2d[:2]
 	##        [4, 5, 6]])
 </code>
 正如你所见，它沿着0坐标坐标轴（第一个坐标坐标轴）切片。因此，一个切片沿着一个坐标坐标轴向选择一个范围的元素。你可以传递多个切片，就像你传递多个索引一样。
-<code>
+<code class="highlighter-rouge">
 arr2d[:2, 1:]
 	## array([[2, 3],
 	##        [5, 6]])
 </code>
 像这样这样切片时，你得到的总是相同维数的数组视窗。通过混合整形索引和切片，你可以得到较低维的切片。
-<code>
+<code class="highlighter-rouge">
 arr2d[1, :2] 
 	## array([4, 5])
 </code>
 注意，一个单一的冒号意味着取整个坐标/坐标轴，因此，你可以只切割更高维的坐标轴，做法如下：
-<code>
+<code class="highlighter-rouge">
 arr2d[:, :1]
 	## array([[1],
 	##        [4],
 	##        [7]])
 </code>
 当然，给一个切片表达式赋值会对整个选择赋值：
-<code>
+<code class="highlighter-rouge">
 arr2d[:2, 1:] = 0
 </code>
 ## 布尔索引
 让我们来考虑一个例子，我们有一些数据在一个数组中和一个有重复名字的数组。我将会在这使用 numpy.random 中的 randn 函数来产生一些随机的正态分布的数据。
-<code>
+<code class="highlighter-rouge">
 import numpy.random as np_rd
 names = np.array(['Bob', 'Joe', 'Will', 'Bob', 'Will', 'Joe', 'Joe'])
 data = np_rd.randn(7, 4)
@@ -251,24 +252,24 @@ data
 	##        [ 0.5994, 0.8174, -0.9297, -1.2564]])
 </code>
 假设每一个名字都和data数组中的一行对应。如果我们想要选择与‘Bob’名字对应的所有行。象算术运算一样，数组的比较操作（例如 == ）也可以矢量化。因此，names和Bob字符窜的比较会产生一个布尔数组。
-<code>
+<code class="highlighter-rouge">
 names == 'Bob'
 	## array([ True, False, False, True, False, False, False], dtype=bool)
 </code>
 当索引数组时可以传递这一布尔数组。
-<code>
+<code class="highlighter-rouge">
 data[names == 'Bob']
 	## array([[-0.048 , 0.5433, -0.2349, 1.2792],
 	##        [ 2.1452, 0.8799, -0.0523, 0.0672]])
 </code>
 布尔数组必须和它索引的坐标轴的长度相同。你甚至可以把布尔数组和切片或整数（或者整数序列）混合和匹配起来。
-<code>
+<code class="highlighter-rouge">
 data[names == 'Bob', 2:]
 	## array([[-0.2349, 1.2792],
 	##        [-0.0523, 0.0672]])
 </code>
 为了选择除了 ‘Bob’ 之外的所有东西，你可以使用 ！= 或用 - 对条件表达式取反：
-<code>
+<code class="highlighter-rouge">
 names != 'Bob'
 	## array([False, True, True, False, True, True, True], dtype=bool)
 data[-(names == 'Bob')]
@@ -279,7 +280,7 @@ data[-(names == 'Bob')]
 	##        [ 0.5994, 0.8174, -0.9297, -1.2564]])
 </code>
 使用布尔算术操作符如 &amp; （and） 和 | （or）来结合多个布尔条件，下面是从三个名字中选取两个的操作。
-<code>
+<code class="highlighter-rouge">
 mask = (names == 'Bob') | (names == 'Will')
 mask
 array([True, False, True, True, True, False, False], dtype=bool)
@@ -291,7 +292,7 @@ data[mask]
 </code>
 通过布尔索引从一个数组中选取数据总是会创建数据的一份拷贝，即使是返回的数组没有改变。
 为了设置 data 中所有的负值为0，我们只需要。
-<code>
+<code class="highlighter-rouge">
 data[data &lt; 0] = 0
 data
 	## array([[ 0. , 0.5433, 0. , 1.2792],
@@ -303,7 +304,7 @@ data
 	##        [ 0.5994, 0.8174, 0. , 0. ]])
 </code>
 使用一维布尔数组设置整行或列也非常简单：
-<code>
+<code class="highlighter-rouge">
 data[names != 'Joe'] = 7
 data
 array([[ 7. , 7. , 7. , 7. ],
@@ -316,7 +317,7 @@ array([[ 7. , 7. , 7. , 7. ],
 </code>
 #### Fancy索引
 Fancy索引是一个术语，被Numpy用来描述使用整形数组索引。假如我们有一个 8</em>4 的数组。
-<code>
+<code class="highlighter-rouge">
 arr = np.empty((8, 4))
 for i in range(8):
     arr[i] = i
@@ -331,7 +332,7 @@ arr
 	##        [ 7., 7., 7., 7.]])
 </code>
 为了选出一个有特定顺序行的子集，你可以传递一个列表或整形ndarray来指定想要的顺序。
-<code>
+<code class="highlighter-rouge">
 arr[[4, 3, 0, 6]]
 	## array([[ 4., 4., 4., 4.],
 	##        [ 3., 3., 3., 3.],
@@ -339,14 +340,14 @@ arr[[4, 3, 0, 6]]
 	##        [ 6., 6., 6., 6.]])
 </code>
 很庆幸这个代码做了你所期望的！使用负的索引从结尾选择行。
-<code>
+<code class="highlighter-rouge">
 arr[[-3, -5, -7]]
 	## array([[ 5., 5., 5., 5.],
 	##        [ 3., 3., 3., 3.],
 	##        [ 1., 1., 1., 1.]])
 </code>
 传递多个索引数组有些微的不同，它选取一个一维数组，元素对应与索引的每一个元组。
-<code>
+<code class="highlighter-rouge">
 arr = np.arange(32).reshape((8, 4))
 arr
 	## array([[ 0, 1, 2, 3],
@@ -361,7 +362,7 @@ arr[[1, 5, 7, 2], [0, 3, 1, 2]]
 	## array([ 4, 23, 29, 10])
 </code>
 花一点儿时间来看看刚刚发生了什么：元素 (1, 0), (5, 3), (7, 1), 和(2, 2)被选择了。 fancy索引的行为与一些用户可能期望的有所不同，它因该是一个矩形区域，由选取的矩形的行和列组成。这里有一个方法来得到它。
-<code>
+<code class="highlighter-rouge">
 arr[[1, 5, 7, 2]][:, [0, 3, 1, 2]]
 	## array([[ 4, 7, 5, 6],
 	##        [20, 23, 21, 22],
@@ -369,7 +370,7 @@ arr[[1, 5, 7, 2]][:, [0, 3, 1, 2]]
 	##        [ 8, 11, 9, 10]])
 </code>
 另一种方法是使用 np.ix_ 函数，将两个以为整形数组转换为位标，来选取一个正方形区域：
-<code>
+<code class="highlighter-rouge">
 arr[np.ix_([1, 5, 7, 2], [0, 3, 1, 2])]
 	## array([[ 4, 7, 5, 6],
 	##        [20, 23, 21, 22],
@@ -379,7 +380,7 @@ arr[np.ix_([1, 5, 7, 2], [0, 3, 1, 2])]
 注意，fancy索引，不像切片，它总是拷贝数据到一个新的数组。
 ### 转置数组和交换坐标轴
 转置是一种特殊形式的变形，类似的它会返回基础数据的一个视窗，而不会拷贝任何东西。数组有 transpose 方法和专门的 T 属性：
-<code>
+<code class="highlighter-rouge">
 arr = np.arange(15).reshape((3, 5))
 arr                  
 	## array([[ 0, 1, 2, 3, 4],               
@@ -392,16 +393,16 @@ arr.T
 	##        [ 3, 8, 13],
 	##        [ 4, 9, 14]])
 </code>
-当进行矩阵运算时，你常常会这样做，像下面的例子一样，使用 np.dot 计算内部矩阵来产生 XTX<code> 。
-</code><code>
+当进行矩阵运算时，你常常会这样做，像下面的例子一样，使用 np.dot 计算内部矩阵来产生 XTX<code class="highlighter-rouge"> 。
+</code><code class="highlighter-rouge">
 arr = np.random.randn(6, 3)
 np.dot(arr.T, arr)
 	## array([[ 2.584 , 1.8753, 0.8888],
 	##        [ 1.8753, 6.6636, 0.3884],
 	##        [ 0.8888, 0.3884, 3.9781]])
-</code><code>
+</code><code class="highlighter-rouge">
 对于更高维的数组， transpose 接受用于转置的坐标轴的号码的一个元组（for extra mind bending）：
-</code><code>
+</code><code class="highlighter-rouge">
 arr = np.arange(16).reshape((2, 2, 4))
 arr
 	## array([[[ 0, 1, 2, 3],
@@ -413,9 +414,9 @@ arr.transpose((1, 0, 2))
 	##         [ 8, 9, 10, 11]],
 	##        [[ 4, 5, 6, 7],
 	##         [12, 13, 14, 15]]])
-</code><code>
+</code><code class="highlighter-rouge">
 使用 .T 的转置，仅仅是交换坐标轴的一个特殊的情况。
-</code><code>
+</code><code class="highlighter-rouge">
 arr                            			                   
 	## array([[[ 0, 1, 2, 3],            
 	##         [ 4, 5, 6, 7]],                                     
@@ -430,12 +431,12 @@ arr.swapaxes(1, 2)
     ##        [ 9, 13],
     ##        [10, 14],
     ##        [11, 15]]])
-</code><code>
+</code><code class="highlighter-rouge">
 类似的 swapaxes 返回在数据上的一个视窗，而不进行拷贝。
 ### 通用函数：快速的基于元素的数组函数
 一个通用的函数，是一个在ndarrays的数据上进行基于元素的操作的函数。你可以认为它们是对简单函数的一个快速矢量化封装，它们接受一个或多个标量值并产生一个或多个标量值。
 许多 ufuncs 都是基于元素的简单变换，像 sqrt 或 exp 。
-</code><code>
+</code><code class="highlighter-rouge">
 Iarr = np.arange(10)
 Inp.sqrt(arr)
 	## array([ 0. , 1. , 1.4142, 1.7321, 2. , 2.2361, 2.4495,
@@ -443,9 +444,9 @@ Inp.sqrt(arr)
 np.exp(arr)
 	## array([ 1. , 2.7183, 7.3891, 20.0855, 54.5982,
 	##        148.4132, 403.4288, 1096.6332, 2980.958 , 8103.0839])
-</code><code>
+</code><code class="highlighter-rouge">
 这些归诸于unary ufuncs。其它的，例如add或maximum ，接受两个数组(因此，叫做binary ufuncs)且返回一个数组：
-</code><code>
+</code><code class="highlighter-rouge">
 x = randn(8)
 y = randn(8)
 x
@@ -457,9 +458,9 @@ y
 np.maximum(x, y) # element-wise maximum
 	## array([ 0.267 , 0.0974, 0.2002, 0.6117, 0.4655, 0.9222, 0.446 ,
 	##        -0.7147])
-</code><code>
+</code><code class="highlighter-rouge">
 虽然不常见，一个ufunc可以返回多个数组。 nodf 就是一个例子，它是python内建 divmod 的矢量化的版本：它返回一个 浮点数数组的分数和整数部分。
-</code><code>
+</code><code class="highlighter-rouge">
 arr = randn(7) * 5
 np.modf(arr)
 	##(array([-0.6808, 0.0636, -0.386 , 0.1393, -0.8806, 0.9363, -0.883 ]),
@@ -494,7 +495,7 @@ np.modf(arr)
 在R中加载了多个R包时，希望查看当前环境中都加载了哪些R包的find.package()函数，临时卸载某个R包可以使用函数detach(package:包名)。如要卸载dplyr包，则为detach(package:dplyr)。
 ## 场景三
 expand.grid()用来建立一些factor相乘出来的矩阵或data.frame。<!--more-->
-<code>
+<code class="highlighter-rouge">
 expand.grid(x = c('A', 'B', 'C', 'D'), y = 1:3)
 	#    x y
 	# 1  A 1
@@ -512,7 +513,7 @@ expand.grid(x = c('A', 'B', 'C', 'D'), y = 1:3)
 </code>
 ## 场景四
 使用with()和within()函数对数据框列引用时，可以不用再输入长长的数据框名了。两者的区别在于，with只是生成了一列数据，而within生成一个包含原始数据的数据框。
-<code>
+<code class="highlighter-rouge">
 with(dat, y + 2)
 	# [1] 4 5 6 7
 within(dat, {z = y + 2; a = x + 3})
@@ -524,7 +525,7 @@ within(dat, {z = y + 2; a = x + 3})
 </code>
 ## 场景五
 cut()函数可以把连续变量离散化，即numeric型的数据转换成factor型，可以与table()函数一起使用。
-<code>
+<code class="highlighter-rouge">
 cut(x, breaks, labels = NULL,
     include.lowest = FALSE, right = TRUE, dig.lab = 3,
     ordered_result = FALSE, ...)
@@ -537,7 +538,7 @@ inlude.lowest: 逻辑类型，指定边界是否闭合，默认的是边界不�
 right: 逻辑类型，指定左开右闭合还是右开左闭合，默认的是TURE，左开右闭合
 dig.lab: 数字，指定分类指标名称的数字位数。默认情况下，当labels为NULL时，指标名称的数字只显示3位
 orederd_result: 逻辑类型，指定分类指标是否有序
-<code>
+<code class="highlighter-rouge">
 cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf))
 	#  [1] &lt;NA&gt;     (2.22,5] (2.22,5] (5,Inf]  (5,Inf]  (1,2.22] (2.22,5] (5,Inf]  (5,Inf]  (2.22,5] &lt;NA&gt;     (5,Inf] 
 	# Levels: (1,2.22] (2.22,5] (5,Inf]
@@ -576,7 +577,7 @@ split()函数能将数据框按某一列分为包含若干个数据框的列表�
 data.table包中数据读取的函数是fread()。</p>
 
 <h2 id="datatable-">data.table 的创建</h2>
-<pre><code>library(data.table)
+<div class="highlighter-rouge"><pre class="highlight"><code>library(data.table)
 DT = data.table(x=rep(c("a","b","c"),each=3), y=c(1,3,6), v=1:9)
 DT
 	#    x y v
@@ -590,12 +591,13 @@ DT
 	# 8: c 3 8
 	# 9: c 6 9
 </code></pre>
+</div>
 <!--more-->
 <p>## 基础操作
 ### 行提取
 行提取分为单行提取和多行提取。
 #### 单行提取
-<code>
+<code class="highlighter-rouge">
 DT[2]                      # 2nd row
 	#    x y v
 	# 1: a 3 2
@@ -606,7 +608,7 @@ DT[2,]                     # same
 这里DT[2]和DT[2,]是完全相同的，这里的『,』只是说明还有其他参数可设置，而其他参数按默认值进行计算。下文所有这样的最后一个『,』都不再写出来。
 #### 多行提取
 * 数字提取
-<code>
+<code class="highlighter-rouge">
 DT[1:2]
 	#    x y v
 	# 1: a 1 1
@@ -617,7 +619,7 @@ DT[c(2,5)]
 	#2: b 3 5
 </code>
 * 逻辑提取
-<code>
+<code class="highlighter-rouge">
 DT[c(FALSE,TRUE)]          # even rows (usual recycling)
 	#    x y v
 	# 1: a 3 2
@@ -633,7 +635,7 @@ DT[c(FALSE,TRUE)]          # even rows (usual recycling)
 #### 单列提取
 * 数字提取
 数字提取时，一定要把wth参数设置为FALSE。
-<code>
+<code class="highlighter-rouge">
 DT[,2,with=FALSE]          # 2nd column
 	#    y
 	# 1: 1
@@ -660,9 +662,10 @@ DT[,list(v)]               # v column (as data.table
 	# 8: 8
 	# 9: 9</p>
 
-<pre><code>### 列名的修改
+<div class="highlighter-rouge"><pre class="highlight"><code>### 列名的修改
 列名的修改可以使用setnames()函数，这个函数好像比对data.frame类型数据名更改的names()和colnames()函数也要快一些。
 </code></pre>
+</div>
 <p>dt = data.table(a=1:2,b=3:4,c=5:6) # compare to data.table
 try(tracemem(dt))                  # by reference, no deep or shallow copies
 setnames(dt,”b”,”B”)               # by name, no match() needed (warning if “b” is missing)
@@ -670,7 +673,7 @@ setnames(dt,3,”C”)                 # by position with warning if 3 &gt; ncol
 setnames(dt,2:3,c(“D”,”E”))        # multiple
 setnames(dt,c(“a”,”E”),c(“A”,”F”)) # multiple by name (warning if either “a” or “E” is missing)
 setnames(dt,c(“X”,”Y”,”Z”))        # replace all (length of names must be == ncol(DT))<br />
-<code>
+<code class="highlighter-rouge">
 #### 多列提取
 * 数字提取
 如同上面对按数字对单列的提取，对多列提取也要设置with参数为FALSE。
@@ -697,7 +700,7 @@ DT[,c(1,3),with=FALSE]
 	# 7: c 7
 	# 8: c 8
 	# 9: c 9    <br />
-<code>
+<code class="highlighter-rouge">
 * 按列名提取
 </code>
 DT[,list(y, v)]
@@ -711,7 +714,7 @@ DT[,list(y, v)]
 	# 7: 1 7
 	# 8: 3 8
 	# 9: 6 9
-<code>
+<code class="highlighter-rouge">
 如果按列名提取时，不使用列表，仍然能对列进行提取，只是结果以向量的形式输出。
 </code>
 DT[,v]                     # v column (as vector)
@@ -726,7 +729,7 @@ DT[, c(y, v)]
 <h4 id="section-1">列的添加</h4>
 <ul>
   <li>单列添加
-<code>
+<code class="highlighter-rouge">
 DT
   #    x y v
   # 1: a 1 1
@@ -790,7 +793,7 @@ DT
 </code>
 如果添加的列名，数据中已经包含则是对这一列数据的修改。</li>
   <li>多列的添加
-<code>
+<code class="highlighter-rouge">
 DT[, c('f', 'g') := list( d + 1, c)]
 DT[, ':='( f =  d + 1, g = c)]          # same
 DT
@@ -807,7 +810,7 @@ DT
 </code>
 此处，需要注意的是新创建的列只能依照原有数据列，而不能依照新创建的列。例如这个例子中，g = c是可以运行，而g = f则会提示错误。
 #### 列的删除
-<code>
+<code class="highlighter-rouge">
 DT[,c:=NULL]     # remove column c
 DT
   #    x y v a  d  e  f g
@@ -837,7 +840,7 @@ DT
 
 <h2 id="section-2">列指标的简单操作</h2>
 <p>简单操作主要包括求和、平均值、方差和标准差等。
-<code>
+<code class="highlighter-rouge">
 DT[2:3,sum(v)]             # sum(v) over rows 2 and 3
 # [1] 5
 DT[2:3,mean(v)]             # sum(v) over rows 2 and 3
@@ -847,7 +850,7 @@ DT[2:3,mean(v)]             # sum(v) over rows 2 and 3
 ### 查看和创建索引
 索引是对列而言的，索引创建后，数据将自动按索引值进行重新排序，所以每个数据最多只能有一个索引，但是索引可以由多列组成，这些列可以是数字、因子、字符串或其他格式。
 #### 单列索引的创建
-<code>
+<code class="highlighter-rouge">
 ## methdod first
 key(DT)                    # key
 	# NULL 
@@ -910,7 +913,7 @@ DT
 <p>按照索引对数据提取，可以加快提取数据的速度。
 #### 单索引
 正向提取
-<code>
+<code class="highlighter-rouge">
 setkey(DT, x)
 DT["a"]                    # binary search (fast)
 	#    x y v a
@@ -955,9 +958,10 @@ DT[!2:4]                   # all rows other than 2:4
 	# 5: c 3 8 k
 	# 6: c 6 9 k</p>
 
-<pre><code>#### 多索引
+<div class="highlighter-rouge"><pre class="highlight"><code>#### 多索引
 * 正向提取
 </code></pre>
+</div>
 <p>setkey(DT, x, y)
 # Mehtod First
 DT[“a”]                    # join to 1st column of key
@@ -1040,7 +1044,7 @@ DT[list(“a”, 3:6), roll = T]
 	# 2: a 4 2 k
 	# 3: a 5 2 k
 	# 4: a 6 3 k
-<code>
+<code class="highlighter-rouge">
 * 反向提取
 </code>
 DT[x!=”b” | y!=3]          # not yet optimized, currently vector scans
@@ -1064,11 +1068,12 @@ DT[!.(“b”,3)]              # same result but much faster
 	# 7: c 3 8 k
 	# 8: c 6 9 k</p>
 
-<pre><code>## 分类汇总
+<div class="highlighter-rouge"><pre class="highlight"><code>## 分类汇总
 分类汇总是指按某列的分类指标进行简单操作，这里借助by参数实现。此外，by参数与索引相互没有影响。
 ### 单指标的分类汇总
 * 默认汇总名称
 </code></pre>
+</div>
 <p>DT[,sum(v),by=x]
 	#    x V1
 	# 1: a  6
@@ -1079,7 +1084,7 @@ DT[,sum(v),by=y]
 	# 1: 1 12
 	# 2: 3 15
 	# 3: 6 18        <br />
-<code>
+<code class="highlighter-rouge">
 * 自定义汇总名称
 </code>
 DT[,list(sum.v.x = sum(v)),by=x]
@@ -1103,7 +1108,7 @@ DT[,sum.v.y := sum(v) ,by=y]
 	# 7: c 1 7 k      12
 	# 8: c 3 8 k      15
 	# 9: c 6 9 k      18 	
-<code>
+<code class="highlighter-rouge">
 * 汇总结果与原始数据进行匹配
 </code>
 DT[,sum.v.y := sum(v) ,by=y]
@@ -1118,9 +1123,10 @@ DT[,sum.v.y := sum(v) ,by=y]
 	# 8: c 3 8 k      15
 	# 9: c 6 9 k      18</p>
 
-<pre><code>### 多指标的多个分类汇总
+<div class="highlighter-rouge"><pre class="highlight"><code>### 多指标的多个分类汇总
 * 默认汇总名称
 </code></pre>
+</div>
 <p>DT[,list(mean(v),sum(v)),by=list(x,y)]   # keyed by
 	#    x y V1 V2
 	# 1: a 1  1  1
@@ -1132,7 +1138,7 @@ DT[,sum.v.y := sum(v) ,by=y]
 	# 7: c 1  7  7
 	# 8: c 3  8  8
 	# 9: c 6  9  9
-<code>
+<code class="highlighter-rouge">
 * 自定义汇总名称
 </code>
 DT[,list(mean.v = mean(v),sum.v = sum(v)),by=list(x,y)]   # keyed by
@@ -1146,7 +1152,7 @@ DT[,list(mean.v = mean(v),sum.v = sum(v)),by=list(x,y)]   # keyed by
 	#7: c 1      7     7
 	#8: c 3      8     8
 	#9: c 6      9     9
-<code>
+<code class="highlighter-rouge">
 * 汇总结果与原始数据进行匹配
 </code>
 DT[,c(“mean.v”, “sum.v.y”) := list(mean(v),sum(v)) ,by=list(x,y)]
@@ -1161,10 +1167,11 @@ DT[,c(“mean.v”, “sum.v.y”) := list(mean(v),sum(v)) ,by=list(x,y)]
 	# 8: c 3 8 k       8      8
 	# 9: c 6 9 k       9      9</p>
 
-<pre><code>
+<div class="highlighter-rouge"><pre class="highlight"><code>
 ## data.table与data.frame的转化
 data.table格式加快了处理速度，而data.frame则更为基础。两者的转化可以通过data.table(),setDT()和setDT()来实现，其中data.table()和setDT()函数可以将数据从data.frame转化为data.table，setDF()函数可以将数据从data.table转化为data.frame。注意使用data.table(),setDT()和setDT()时，参数本身的数据类型也会发生变化。
 </code></pre>
+</div>
 <p>class(DT)
 	# [1] “data.table” “data.frame”<br />
 class(setDF(DT))
@@ -1185,7 +1192,7 @@ class(DT)
       <content:encoded><![CDATA[<p>前面一篇<a href="http://xukuang.github.io/2016/01/18/melt-and-dcast/">文章</a>讲了用reshape2包中的函数实现长宽数据的转化，而tidyr是reshape2的升级版，主要用于数据框。这篇文章将介绍一下如何使用tidyr包中的函数实现长宽数据的转化。
 ## 宽数据转化为长数据
 ### gather函数
-<code>
+<code class="highlighter-rouge">
 gather(data, key, value, ..., na.rm = FALSE, convert = FALSE)
 </code>
 <strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型	
@@ -1196,7 +1203,7 @@ gather(data, key, value, ..., na.rm = FALSE, convert = FALSE)
 <!--more-->
 ### 实例
 * 将所有列排成长数据(默认情况下)
-<code>
+<code class="highlighter-rouge">
 # 加载数据
 library(reshape2)
 head(airquality)
@@ -1231,7 +1238,7 @@ dim(dat1)
 	# [1] 918   2
 </code>
 * 按Month将其他指标排成长数据
-<code>
+<code class="highlighter-rouge">
 # 方法一
 dat2 = gather(airquality, time, value, Ozone:Temp, Day)
 # 方法二
@@ -1254,7 +1261,7 @@ tail(dat2)
 	# 612     9  30 Temp    68
 </code>
 * 按Month和Day列将其它列指标排成长数据
-<code>
+<code class="highlighter-rouge">
 dat3 = gather(airquality, type, value.type, Ozone:Temp)
 dat3 = gather(airquality, type, value.type, -Month, -Day)
 head(dat3) 
@@ -1269,7 +1276,7 @@ dim(dat3)
 	# [1] 612   4
 </code>
 * 去除排列后数据中的NA
-<code>
+<code class="highlighter-rouge">
 #　 airquality$Ozone 数的前四列有44 个NA
 table(is.na(airquality$Ozone)) # 37
 	# FALSE  TRUE 
@@ -1298,7 +1305,7 @@ dim(dat4)# 比dat3少44行
 
 <h2 id="section">长数据转化为宽数据</h2>
 <p>### spread函数
-<code>
+<code class="highlighter-rouge">
 spread(data, key, value, fill = NA, convert = FALSE, drop = TRUE)
 </code>
 <strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型
@@ -1307,7 +1314,7 @@ spread(data, key, value, fill = NA, convert = FALSE, drop = TRUE)
 <strong>fill</strong> 确认不存在的组合值的显示结果。默认的显示为NA。数据类型为数值型向量
 <strong>drop</strong> 确认不存在分分类组合是否显示，默认情况下显示。当然，如果drop = T，那么fill参数的设置将失去意义
 ### 实例
-<code>R
+<code class="highlighter-rouge">R
 air1 =  spread(dat4, type, value.type)
 dim(air1)
 	# [1] 153   6
@@ -1321,7 +1328,7 @@ head(air1) # 数据与airquality相同
 	# 6     5   6    28      NA 14.9   66
 </code>
 不存在的分类是否显示，以及怎么显示
-<code>
+<code class="highlighter-rouge">
 air5 = spread(dat4, type, value.type, drop = F) # 组合上存在的结果都显示
 tail(air5) # 这里的最后一行只是组合上存在，原数据中并不在
 	# 		 Month Day Ozone Solar.R Wind Temp
@@ -1343,7 +1350,7 @@ tail(spread(dat4, type, value.type, drop = F, fill= -1)) # 更改不存在结果
 ## tidyr包中的其它函数
 ### seperate函数
 unite()函数可将多列合并为一列。
-<code>
+<code class="highlighter-rouge">
 unite(data, col, ..., sep = "_", remove = TRUE)
 </code>
 <strong>data</strong> 要处理的数据框
@@ -1397,13 +1404,14 @@ data
 	#14 2016-04-23 21:37:35     f
 	#15  2016-04-24 4:17:49     n</p>
 
-<pre><code>tidyr包中的函数也可使用管道操作符%&gt;%。
+<div class="highlighter-rouge"><pre class="highlight"><code>tidyr包中的函数也可使用管道操作符%&gt;%。
 ### seperate函数
 separate()函数可将一列拆分为多列，一般可用于日志数据或日期时间型数据的拆分。
 </code></pre>
+</div>
 <p>separate(data, col, into, sep = “[^[:alnum:]]+”, remove = TRUE,
   convert = FALSE, extra = “warn”, fill = “warn”, …)
-<code>
+<code class="highlighter-rouge">
 **data** 要处理的数据框
 **col** 需要被拆分的列
 **into** 新建的列名，为字符串向量
@@ -1506,8 +1514,9 @@ anova(fit)
 	##—
 	##Signif. codes:  0 ‘</strong></em>’ 0.001 ‘<em>*’ 0.01 ‘</em>’ 0.05 ‘.’ 0.1 ‘ ’ 1</p>
 
-<pre><code>### 线性模拟各参数的提取
+<div class="highlighter-rouge"><pre class="highlight"><code>### 线性模拟各参数的提取
 </code></pre>
+</div>
 <p># 可以通过names函数查看summary(fit)中个具体参数的提取方法
 names(summary(fit))
 # 提取R square
@@ -1531,7 +1540,7 @@ new &lt;- data.frame(x=c(0.16, 2.3))
 predict(fit, new)
 ## 也可以做出预测区间
 predict(fit, new, interval = ‘prediction’, levels = 0.95)
-<code>
+<code class="highlighter-rouge">
 ### 线性模拟各参数中各量的算法
 #### 五个和的计算
 </code>
@@ -1544,7 +1553,7 @@ Sxy = sum((x - mean(x)) * (y - mean(y)))
 ## 这里仅仅作为补充,具体原因不是很清楚
 Syy = deviance(lm(y~1))
 n = length(x)
-<code>
+<code class="highlighter-rouge">
 #### 回归系数
 </code>
 ## 回归系数$\alpha$和$beta$（这样计算，residuals有最小值)
@@ -1554,7 +1563,7 @@ alpha = mean(y) - beta<em>mean(x)
 alpha
 # 提取lm或glm对象中的回归系数
 coef(fit)
-<code>
+<code class="highlighter-rouge">
 #### 残差及五分位数
 </code>
 residuals = y - (beta + alpha * x)
@@ -1563,18 +1572,18 @@ quantile(residuals)
 # 提取模型lm或glm的残差
 # 也可简化为
 residuals(fit)
-<code>
+<code class="highlighter-rouge">
 #### Pearson相关系数r
 </code>
 r = sqrt(Sxy/(Sxx * Syy))
 r
-<code>
+<code class="highlighter-rouge">
 #### R平方
 决定系数，其值为 回归的平方和/总的平方和。
 </code>
 rsquare = (Syy - sum(residuals^2))/Syy
 rsquare
-<code>
+<code class="highlighter-rouge">
 #### adjust R平方
 </code>
 ## 考虑到了自变量的个数, 包括截距在内, 本例子中k = 2
@@ -1662,8 +1671,9 @@ list.files()</p>
 <p>cat(“文件测试\n”, file = “B.txt”)
 list.files()</p>
 
-<pre><code>* 查看文件
+<div class="highlighter-rouge"><pre class="highlight"><code>* 查看文件
 </code></pre>
+</div>
 <p># 显示当前目录中的目录和文件
 ## 下面两句结果相同
 list.files() # 建议使用该命令，方便记忆
@@ -1681,7 +1691,7 @@ file.exists(“readme.txt”)</p>
 
 <h1 id="section-1">判断是否是文件</h1>
 <p>file_test(“-f”, “A.txt”)
-<code>
+<code class="highlighter-rouge">
 &lt;!--more--&gt;
 * 读取文件
 </code>
@@ -1691,26 +1701,30 @@ readLines(“A.txt”)</p>
 <h1 id="btxt-1">文件B.txt读取</h1>
 <p>readLines(“B.txt”)</p>
 
-<pre><code>* 文件重命名
+<div class="highlighter-rouge"><pre class="highlight"><code>* 文件重命名
 </code></pre>
+</div>
 <p># 给文件A.txt重命名为AA.txt
 file.rename(“A.txt”,”AA.txt”)
 list.files()</p>
 
-<pre><code>* 复制文件
+<div class="highlighter-rouge"><pre class="highlight"><code>* 复制文件
 </code></pre>
+</div>
 <p>file.copy(“B.txt”, “C.txt”)
 # 查看文件内容
 readLines(“C.txt”)</p>
 
-<pre><code>* 追加文件
+<div class="highlighter-rouge"><pre class="highlight"><code>* 追加文件
 </code></pre>
+</div>
 <p>file.append(“A.txt”, rep(“B.txt”, 10))
 # 查看文件内容
 readLines(“A.txt”)</p>
 
-<pre><code>* 删除文件
+<div class="highlighter-rouge"><pre class="highlight"><code>* 删除文件
 </code></pre>
+</div>
 <p># 新建文件
 file.create(“tempa1”, “tempa2”, “tempa3”, “tempa4”)
 list.files()
@@ -1718,8 +1732,9 @@ list.files()
 file.remove(“tempa1”, “tempa2”, “tempa3”, “tempa4”)
 list.files()</p>
 
-<pre><code>* 文件权限
+<div class="highlighter-rouge"><pre class="highlight"><code>* 文件权限
 </code></pre>
+</div>
 <p># 查看文件完整信息
 file.info(“A.txt”)</p>
 
@@ -1748,10 +1763,11 @@ file.info(“A.txt”)</p>
 <h2 id="section-8">查看文件信息</h2>
 <p>file.info(“A.txt”)</p>
 
-<pre><code>
+<div class="highlighter-rouge"><pre class="highlight"><code>
 ## 目录操作
 * 创建目录
 </code></pre>
+</div>
 <p># 新建一个目录
 dir.create(“test”) # 不能同时创建多个目录
 list.dirs()</p>
@@ -1760,8 +1776,9 @@ list.dirs()</p>
 <p>dir.create(“test/test”,recursive = TRUE)
 list.dirs()</p>
 
-<pre><code>* 查看目录
+<div class="highlighter-rouge"><pre class="highlight"><code>* 查看目录
 </code></pre>
+</div>
 <p># 查看当前默认目录的一级目录和文件
 list.files() # 同时会显示目录下的文件
 dir()</p>
@@ -1787,7 +1804,7 @@ file.exists(“./test”)</p>
 <p>## 下面两个语句结果相同
 file_test(“-d”, “./test”)
 file_test(“-d”, “test”)
-<code>
+<code class="highlighter-rouge">
 * 目录重命名
 </code>
 # 查看目录
@@ -1817,7 +1834,7 @@ dir()</p>
 
 <p>unlink(“temp1”, recursive = TRUE) # 
 dir()
-<code>
+<code class="highlighter-rouge">
 * 目录的权限
 </code>
 # 查看目录完整信息
@@ -1847,30 +1864,30 @@ file.info(“./test”)
 
 <ul>
   <li>拼接目录字符串
-<code>
+<code class="highlighter-rouge">
 file.path("p1","p2","p3")
 </code></li>
   <li>
     <p>所在目录
-<code>
+<code class="highlighter-rouge">
 dirname("/home/conan/R/fs/readme.txt")
 </code></p>
   </li>
   <li>
     <p>最底层子目录或文件名
-<code>
+<code class="highlighter-rouge">
 basename("/home/conan/R/fs/readme.txt")
 basename("/home/conan/R/fs")
 </code></p>
   </li>
   <li>
     <p>win下标准路径转化
-<code>
+<code class="highlighter-rouge">
 normalizePath(c(R.home(), tempdir()))
 </code></p>
   </li>
   <li>短路径，缩减路径的显示长度，只在win中运行
-<code>
+<code class="highlighter-rouge">
 shortPathName(c(R.home(), tempdir()))
 </code></li>
 </ul>
@@ -1896,7 +1913,7 @@ R.home()</p>
 <ul>
   <li>
     <p>R软件的包目录
-<code>
+<code class="highlighter-rouge">
 # 打印核心包的目录
 .Library
 # 打印所有包的存放目录
@@ -1905,7 +1922,7 @@ R.home()</p>
   </li>
   <li>
     <p>查看指定包所在的目录
-<code>
+<code class="highlighter-rouge">
 # base包的存放目录
 system.file()
 # dplyr包的存放目录
@@ -2048,7 +2065,7 @@ system.file(package = "dplyr")
 <h2 id="section-1">文本处理</h2>
 <p>### 字符数统计
 函数nchar，统计向量中每个元素的字符个数，注意这个函数和length函数的差别：length是向量长度（向量元素的个数）。
-<code>
+<code class="highlighter-rouge">
 x &lt;- c("Hellow", "World", "!") 
 nchar(x); length(x)
 	# [1] 6 5 1 
@@ -2084,7 +2101,7 @@ chartr(“Tt”, “Uu”, DNA) # T转化为U，t转化为u
 	# [1] “AuGCuuuACC” 
 chartr(“Tt”, “UU”, DNA) 
 	# [1] “AUGCUUUACC”
-<code>
+<code class="highlighter-rouge">
 ### 字符串连接
 函数paste应该是R中最常用字符串函数了，也是R字符串处理函数里面非常纯的不使用正则表达式的函数（因为用不着）。
 </code>
@@ -2094,19 +2111,19 @@ x &lt;- list(a = “aaa”, b = “bbb”, c = “ccc”)
 y &lt;- list(d = 1, e = 2)
 paste(x, y, sep = “-“)  #较短的向量被循环使用
 	# [1] “aaa-1” “bbb-2” “ccc-1”
-<code>
+<code class="highlighter-rouge">
 paste函数还有一个用法，设置collapse参数，连成一个字符串。
 </code>
 paste(x, y, sep = “-“, collapse = “; “)
 	# [1] “aaa-1; bbb-2; ccc-1”
 paste(x, collapse = “; “)
 	# [1] “aaa; bbb; ccc”
-<code>
+<code class="highlighter-rouge">
 ### 字符串拆分
 strsplit函数使用正则表达式，使用格式为:
 </code>
 strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
-<code>
+<code class="highlighter-rouge">
 * 参数x为字串向量，每个元素都将单独进行拆分。
 * 参数split为拆分位置的字串向量，
 * 默认为正则表达式匹配（fixed=FALSE）。如果你没接触过正则表达式，设置fixed=TRUE，表示使用普通文本匹配或正则表达式的精确匹配。普通文本的运算速度快。
@@ -2120,12 +2137,12 @@ strsplit(text, “ “) # R语言的字符串事实上也是正则表达式，�
 strsplit(text, “\s”)
 	# [[1]]
 	# [1] “Hello” “Adam!” “Hello” “Ava!”
-<code>
+<code class="highlighter-rouge">
 strsplit得到的结果是列表，后面要怎么处理就得看情况而定了。
 </code>
 class(strsplit(text, “\s”))
 	# [1] “list”
-<code>
+<code class="highlighter-rouge">
 有一种情况很特殊，如果split参数的字符长度为0，得到的结果就是一个个的字符。
 </code>
 strsplit(text, “”)
@@ -2137,7 +2154,7 @@ strsplit(text, “”)
 ### 字符串查询和替换
 R中字符串的查询函数有：grep、grepl、regexpr、gregexpr和regexpr，字符串的替换函数有sub和gsub。</p>
 
-<pre><code># 字符串查询
+<div class="highlighter-rouge"><pre class="highlight"><code># 字符串查询
 grep(pattern, x, ignore.case = FALSE, perl = FALSE, value = FALSE,
      fixed = FALSE, useBytes = FALSE, invert = FALSE)
 
@@ -2160,6 +2177,7 @@ gsub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
      fixed = FALSE, useBytes = FALSE)
 ## gsub函数会根据pattern的规则对x中各元素进行搜索，找出所有符合条件的子字符串的位置，用replacement替换该子字符串，返回替换后的结果，和x的结构相同	 
 </code></pre>
+</div>
 
 <p>这几个函数有相似的格式，都使用正则表达式的规则进行匹配。默认是egrep的规则，也可以选用Perl语言的规则。
 * pattern为字符串表示正则表达式
@@ -2174,7 +2192,7 @@ gsub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
 <h4 id="section-2">字符串查询</h4>
 <p>grep和grepl函数这两个函数返回向量水平的匹配结果，不涉及匹配字符串的详细位置信息。此外，尽管这两个函数的参数看起来差不多，但是返回结果的形式并不一样。	
 regexpr、gregexpr和regexpr这三个函数返回的结果包均含了匹配的具体位置和字符串长度信息，只是他们的结果显示方式不同。
-<code>
+<code class="highlighter-rouge">
 text &lt;- c("Hellow, Adam!", "Hi, Paul!", "How are you, Adam.")
 grep("Adam", text)
 	# [1] 1 3
@@ -2225,7 +2243,7 @@ regexec("Adam", text)
 </code>
 #### 字符串替换
 尽管sub和gsub是用于字符串替换的函数，但严格地说R语言没有字符串替换的函数，因为R语言不管什么操作对参数都是传值不传址。
-<code>
+<code class="highlighter-rouge">
 text
 	# [1] "Hellow, Adam!"      "Hi, Paul!"          "How are you, Adam."
 sub(pattern = "Adam", replacement = "world", text)
@@ -2234,7 +2252,7 @@ text
 	# [1] "Hellow, Adam!"      "Hi, Paul!"          "How are you, Adam."
 </code>
 可以看到：虽然说是“替换”，但原字符串并没有改变，要改变原变量我们只能通过再赋值的方式。 sub和gsub的区别是前者只做一次替换（不管有几次匹配），而gsub把满足条件的匹配都做替换。
-<code>
+<code class="highlighter-rouge">
 text1 = c("Hellow, Adam!", "Hi, Paul!", "How are you, Adam, Ava.")
 sub(pattern = "Adam|Ava", replacement = "world", text1)
 	# [1] "Hellow, world!"      "Hi, Paul!"          "How are you, world, Ava."
@@ -2242,13 +2260,13 @@ gsub(pattern = "Adam|Ava", replacement = "world", text1)
 	# [1] "Hellow, world!"      "Hi, Paul"          "How are you, world, world."
 </code>
 sub和gsub函数可以使用提取表达式（转义字符+数字）让部分变成全部：
-<code>
+<code class="highlighter-rouge">
 sub(pattern = ".*(Adam).*", replacement = "Hi, \\1", text)
 	# [1] "Hi, Adam"  "Hi, Paul!" "Hi, Adam" 
 </code>
 ## 字符串提取
 substr和substring函数通过位置进行字符串拆分或提取，它们本身并不使用正则表达式，但是结合正则表达式函数regexpr、gregexpr或regexec使用可以非常方便地从大量文本中提取所需信息。两者的参数设置基本相同，但它们的返回值的长度（个数）有差别：substr返回的字串个数等于第一个参数的长度，而substring返回字串个数等于三个参数中最长向量长度，短向量循环使用。
-<code>
+<code class="highlighter-rouge">
 substr(x, start, stop)
 substring(text, first, last = 1000000L)
 </code>
@@ -2257,7 +2275,7 @@ substring(text, first, last = 1000000L)
 * stop/last 为截取字串的终止位置向量</p>
 
 <p>先看第1参数（要拆分的字符向量）长度为1例子。
-<code>
+<code class="highlighter-rouge">
 x &lt;- "123456789"
 substr(x, c(2, 4), c(4, 5, 8))
 	# [1] "234"
@@ -2269,11 +2287,11 @@ substring(x, c(2, 4), c(4, 5, 8))
 * strtrim 函数</p>
 
 <p>该函数用于将字符串修剪到特定的显示宽度，其用法为，
-<code>
+<code class="highlighter-rouge">
 strtrim(x,width)
 </code>
 返回字符串向量的长度等于x的长度。因为是“修剪”，所以只能去掉多余的字符不能增加其他额外的字符：如果字符串本身的长度小于width，得到的是原字符串，别指望它会用空格或其他什么字符补齐。
-<code>
+<code class="highlighter-rouge">
 strtrim(c("abcdef", "abcdef", "abcdef"), c(1, 5, 10))
 	# [1] "a"      "abcde"  "abcdef"
 strtrim(c(1, 123, 1234567), 4)
@@ -2285,7 +2303,7 @@ strtrim(c(1, 123, 1234567), 4)
 </ul>
 
 <p>该函数把一个字符串当成一个段落的文字（不管字符串中是否有换行符），按照段落的格式（缩进和长度）和断字方式进行分行，每一行是结果中的一个字符串。
-<code>
+<code class="highlighter-rouge">
 str1 &lt;- "Each character string in the input is first split into paragraphs\n(or lines containing whitespace only).  The paragraphs are then\nformatted by breaking lines at word boundaries.  The target\ncolumns for wrapping lines and the indentation of the first and\nall subsequent lines of a paragraph can be controlled\nindependently."
 str2 &lt;- rep(str1, 2)
 strwrap(str2, width = 80, indent = 2)
@@ -2301,7 +2319,7 @@ strwrap(str2, width = 80, indent = 2)
 	# [10] "controlled independently."
 </code>
 simplify参数用于指定结果的返回样式，默认为TRUE，即结果中所有的字符串都按顺序放在一个字符串向量中（如上）；如果为FALSE，那么结果将是列表。另外一个参数exdent用于指定除第一行以外的行缩进。
-<code>
+<code class="highlighter-rouge">
 strwrap(str1, width = 80, indent = 0, exdent = 2)
 	# [1] "Each character string in the input is first split into paragraphs (or lines"  
 	# [2] "  containing whitespace only).  The paragraphs are then formatted by breaking"
@@ -2312,7 +2330,7 @@ strwrap(str1, width = 80, indent = 0, exdent = 2)
 * match和charmatch函数</p>
 
 <p>这两个函数用于字符的匹配。
-<code>
+<code class="highlighter-rouge">
 match("xx", c("abc", "xx", "xxx", "xx"))
 	# [1] 2
 match(2, c(3, 1, 2, 4))
@@ -2342,7 +2360,7 @@ match按向量进行运算，返回第一次匹配的元素的位置（如果有
       <content:encoded><![CDATA[<p>这里将数据框分为两种：宽数据和长数据，宽数据便于数据成果的展示，长数据则便于数据在R中进行分析。reshape2包中的melt函数可以实现宽数据向长数据的转换，而dcast可以实现宽数据向长数据的转化。 
 ## 宽数据转化为长数据
 ### melt函数
-<code>
+<code class="highlighter-rouge">
 melt(data, id.vars, measure.vars,
   variable.name = "variable", ..., na.rm = FALSE, value.name = "value",
   factorsAsStrings = TRUE)
@@ -2357,7 +2375,7 @@ melt(data, id.vars, measure.vars,
 <!--more-->
 ### 实例
 * 按Month和Day列将其他指标排成长数据
-<code>
+<code class="highlighter-rouge">
 # 加载数据
 library(reshape2)
 head(airquality)
@@ -2384,7 +2402,7 @@ dim(dat1)
 需要注意的是melt函数当中如果id.vars参数不指定值，则会把所有数据转化为两列输出。
 </code>
 * 按Month和Day列将Ozone和Solar.R列指标排成长数据
-<code>
+<code class="highlighter-rouge">
 dat2 = melt(airquality, id.vars = c('Month', 'Day'),
  measure = c('Ozone', 'Solar.R'))
 head(dat2)
@@ -2399,7 +2417,7 @@ dim(dat2) # 函数是dat1的1/2
 	# [1] 306   4 
 </code>
 * 对排列后的数据进行重命名
-<code>
+<code class="highlighter-rouge">
 dat3 = melt(airquality, id.vars = c('Month', 'Day'),
 variable.name = 'type', value.name = 'value.type')
 head(dat3) # 列名发生变化
@@ -2414,7 +2432,7 @@ dim(dat3)
 	# [1] 612   4
 </code>
 * 去除排列后数据中的NA
-<code>
+<code class="highlighter-rouge">
 #　 airquality$Ozone 数的前四列有44 个NA
 table(is.na(airquality$Ozone)) # 37
 	# FALSE  TRUE 
@@ -2442,7 +2460,7 @@ dim(dat4)# 比dat3少44行
 	# [1] 568   4	
 </code>
 此外，还发现melt函数中所有参数名都可以只写’.’前的部分。
-<code>
+<code class="highlighter-rouge">
 dat5 = melt(airquality, id = c('Month', 'Day'),
 variable = 'type', value = 'value.type', na = TRUE)
 head(dat5)
@@ -2456,7 +2474,7 @@ head(dat5)
 </code>
 ## 长数据转化为宽数据
 ### dcast函数
-<code>
+<code class="highlighter-rouge">
 dcast(data, formula, fun.aggregate = NULL, ..., margins = NULL,
   subset = NULL, fill = NULL, drop = TRUE,
   value.var = guess_value(data))
@@ -2471,7 +2489,7 @@ dcast(data, formula, fun.aggregate = NULL, ..., margins = NULL,
 <strong>value.var</strong> 貌似对对转化后的数据进行命名，使用默认情况即可
 ### 实例
 * 每个分类结果有一个数据，此时不需要使用汇总函数
-<code>R
+<code class="highlighter-rouge">R
 air1 =  dcast(dat4, Month + Day ~ type)
 dim(air1)
 	# [1] 153   6
@@ -2485,7 +2503,7 @@ head(air1) # 数据与airquality相同
 	# 6     5   6    28      NA 14.9   66
 </code>
 * 按Month列排成宽数据，每个分类结果有多个数据，必须有汇总函数
-<code>
+<code class="highlighter-rouge">
 air2 =  dcast(dat4, Month ~ type, sum) # 这里使用sum函数
 dim(air2)
 	# [1] 5 5
@@ -2498,7 +2516,7 @@ head(air2)
 	# 5     9    NA    5023 305.4 2307
 </code>
 * 是否显示总的分类结果
-<code>
+<code class="highlighter-rouge">
 air3 = dcast(dat4, Month ~ type, sum, margins = T) #列、行的总汇总都显示
 dim(air3)
 	# [1] 6 6
@@ -2527,7 +2545,7 @@ dcast(dat4, Month ~ type, sum, margins = c('type'))# 只显示行的汇总
 	# 5     9    NA    5023 305.4 2307    NA
 </code>
 * 只显示部分的分类内容
-<code>
+<code class="highlighter-rouge">
 library(plyr)
 air4 = dcast(dat4, Month ~ type, sum, subset = .(type == 'Wind' )) # 只显示type中Wind的情况
 dim(air4)
@@ -2541,7 +2559,7 @@ head(air4)
 	# 5     9 305.4
 </code>
 * 不存在的分类是否显示，以及怎么显示
-<code>
+<code class="highlighter-rouge">
 air5 = dcast(dat4, Month + Day ~ type, length, drop = F) # 组合上存在的结果都显示
 tail(air5) # 这里的最后一行只是组合上存在，数据中并不在
 	# 		 Month Day Ozone Solar.R Wind Temp

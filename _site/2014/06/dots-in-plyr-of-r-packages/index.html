@@ -47,7 +47,7 @@
 <p>　　<strong>summarise</strong>和<strong>mutate</strong>是<strong>R</strong>中<strong>plyr</strong>包的两个函数。<strong>plyr</strong>是<strong>R</strong>中用来数据汇总的超强R包，肖凯对<strong>plyr</strong>的使用在网易云课堂(该链接已经失效)有较为详细的讲述。本文只对其中的<strong>summarise</strong>和<strong>mutate</strong>函数进行简单介绍，并讲述一下它和<strong>ddply</strong>函数的搭配使用。(注意，这两个函数在plyr包升级后的dplyr包中依然适用)
 ## summarise 和 mutate 函数
 　　<strong>summarise</strong>和<strong>mutate</strong>函数都可以对一个数据框的某一列<strong>(而不是整个数据框)</strong>进行修改和汇总，两者的主要区别在于返回结果的方式不同，其中<strong>summarise</strong>函数返回一个只包含修改或汇总后数据的数据框，而<strong>mutate</strong>函数则返回一个由原始数据和修改或汇总后数据两部分构成的数据框。具体内容加下面代码：<!--more-->
-<code>R
+<code class="highlighter-rouge">R
 	require(plyr)
 	set.seed(1) # 保证每次产生的数据框的唯一性
 	dfx &lt;- data.frame(
@@ -65,7 +65,7 @@
 </code>
 ## ddply函数
 　　<strong>ddply</strong>函数按数据框的某列对数据进行汇总，其形式如下：
-<code>
+<code class="highlighter-rouge">
 ddply(.data, .variables, .fun = NULL, ..., .progress = "none",.inform = FALSE, .drop = TRUE, .parallel = FALSE, .paropts = NULL)
 </code>
 这里对其中常用参数进行说明：
@@ -81,7 +81,7 @@ ddply(.data, .variables, .fun = NULL, ..., .progress = "none",.inform = FALSE, .
 <h3 id="nrowncol">整个数据框的汇总（统计数据框的行数和列数，即nrow和ncol）</h3>
 
  	```R
-<pre><code>## 数据框的汇总，只有函数，但其中没有参数
+<div class="highlighter-rouge"><pre class="highlight"><code>## 数据框的汇总，只有函数，但其中没有参数
 ddply(dfx, .(sex), nrow) #这里不能对汇总结果进行命名，即 numrow = nrow 是错误的
 ddply(dfx, .(sex), ncol) #这里不能对汇总结果进行命名，即 numrow = nrow 是错误的
 ddply(dfx, .(sex), c("nrow","ncol"))
@@ -104,6 +104,7 @@ ddply(dfx, .(sex), mutate, sd(worktime))
 ddply(dfx, .(sex), mutate, median(worktime))
 ```
 </code></pre>
+</div>
 
 <p>　　注意：三种汇总方式中，只有这种方式可以选择性对汇总结果进行命名，即下面的使用方式也是对的。
 	```R
@@ -120,19 +121,20 @@ ddply(dfx, .(sex), mutate, median(worktime))
 	ddply(dfx, .(sex), mutate, worktime.sd = sd(worktime))
 	ddply(dfx, .(sex), mutate, worktime.sd = median(worktime))</p>
 
-<pre><code>``` 　　注意：这种方式下，summarise或者mutate参数至少要选择其中的一个，否则不能得到想要的结果
+<div class="highlighter-rouge"><pre class="highlight"><code>``` 　　注意：这种方式下，summarise或者mutate参数至少要选择其中的一个，否则不能得到想要的结果
 </code></pre>
+</div>
 
 <h3 id="section-1">通用汇总方式（编写函数）</h3>
 
 <p>　　这种汇总方式是最通用的汇总方式，其中的函数参数为数据框。事实上，1,2的汇总方式都可以通过3的汇总方式调用函数实现。
 * 1对应的函数调用方式
-	<code>R
+	<code class="highlighter-rouge">R
 	ddply(dfx, .(sex), function(x){nrow(x)}) # 不能对汇总结果进行重新命名，即numrow = nrow(x)是错误的
 	ddply(dfx, .(sex), function(x){ncol(x)}) # 不能对汇总结果进行重新命名，即numcol = ncol(x)是错误的
 	</code>
 * 2对应的函数调用方式
-	<code>R
+	<code class="highlighter-rouge">R
 	## 这里其实对应2中summarise参数的形式
 	ddply(dfx, .(sex), function(x){max(x$worktime)})
 	ddply(dfx, .(sex), function(x){min(x$worktime)})
@@ -143,19 +145,19 @@ ddply(dfx, .(sex), mutate, median(worktime))
 * colwise函数
 　　colwise函数是plyr包的内置函数，可以对数据框中所有的数据列进行相同的操作，省去每一例的大量重复操作。(类似的功能在dplyr包中可以通过summarise_each或mutate_each来实现)
 * 直接对数据列进行相同操作
-<code>
+<code class="highlighter-rouge">
 dfx.data = dfx[, c('age', 'worktime')]
 dfx.data
 colwise(mean)(dfx.data)
 colwise(mean)(dfx.data)
 </code>
 　　这里对所有列求平均值时，如果某些列是字符无法进行相应操作，则为返回NA，只是有“warning messages:”的提示，但是并不影响最终的结果，因此，也可以直接求平均值。
-<code>
+<code class="highlighter-rouge">
 colwise(mean)(dfx)
 colwise(mean)(dfx)
 </code>
 * 按指定类分类后进行相同操作
-<code>
+<code class="highlighter-rouge">
 ddply(dfx, .(group), colwise(mean))
 </code>
 　　事实上，通用汇总方式的用途比我们的例子强大的多，这里有点就事论事的味道，反而限制了该方式的灵活运用。
@@ -216,7 +218,7 @@ ddply(dfx, .(sex, age), function(x){mean(x$worktime)})</p>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname ='httpxukuanggithubio'; // required: replace example with your forum shortname
+    var disqus_shortname ='Xu_Kuang'; // required: replace example with your forum shortname
     var disqus_url = 'http://xukuang.github.io/blog/2014/06/dots-in-plyr-of-r-packages/';
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

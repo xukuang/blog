@@ -46,7 +46,7 @@
                                               <section class="post">
 <p>以前在网上看到的关于dplyr包基础函数的文章，放在这儿可以方便自己以后使用的时候随时查询,下文所有程序运行的结果，都使用Tab进行退格(仓皇上传，版面相当粗糙，后面抽时间详细整理一下)。
 ## dplyr包的加载
-<code>
+<code class="highlighter-rouge">
 # dplyr包加载
 library(dplyr)
 # 加载使用到其中数据的这些包
@@ -73,12 +73,13 @@ class(hflights)
 <!--more-->
 ## 数据转换</p>
 
-<pre><code>## 将过长过大的数据集转换为显示更友好的 tbl_df 类型
+<div class="highlighter-rouge"><pre class="highlight"><code>## 将过长过大的数据集转换为显示更友好的 tbl_df 类型
 hflights_df &lt;- tbl_df(hflights)
 </code></pre>
+</div>
 
 <h2 id="section">数据筛选</h2>
-<pre><code># 筛选filter,类似于base::subset()函数
+<div class="highlighter-rouge"><pre class="highlight"><code># 筛选filter,类似于base::subset()函数
 filter(hflights_df, Month == 1, DayofMonth == 1)
 filter(hflights, Month == 1, DayofMonth == 1)
 # 用R自带函数实现:
@@ -87,9 +88,10 @@ hflights[hflights$Month == 1 &amp; hflights$DayofMonth == 1, ]
 filter(hflights_df, Month == 1 | Month == 2)
 # 注意: 表示 AND 时要使用 &amp; 而避免 &amp;&amp;
 </code></pre>
+</div>
 
 <h2 id="section-1">数据排列</h2>
-<pre><code># 排列: arrange(),按给定的列名依次对行进行排序.
+<div class="highlighter-rouge"><pre class="highlight"><code># 排列: arrange(),按给定的列名依次对行进行排序.
 arrange(hflights_df, DayofMonth, Month, Year)
 # 对列名加 desc() 进行倒序
 arrange(hflights_df, desc(ArrDelay))
@@ -98,8 +100,9 @@ arrange(hflights_df, desc(ArrDelay))
 hflights[order(hflights$DayofMonth, hflights$Month, hflights$Year), ]
 hflights[order(desc(hflights$ArrDelay)), ]
 </code></pre>
+</div>
 <p>## 数据选择
-<code>
+<code class="highlighter-rouge">
 #  选择: select()
 # 用列名作参数来选择子数据集:
 select(hflights_df, Year, Month, DayOfWeek)
@@ -110,7 +113,7 @@ select(hflights_df, -(Year:DayOfWeek))
 </code></p>
 
 <h2 id="section-2">数据变形</h2>
-<pre><code># 变形: mutate()
+<div class="highlighter-rouge"><pre class="highlight"><code># 变形: mutate()
 # 对已有列进行数据运算并添加为新列:
 mutate(hflights_df, 
   gain = ArrDelay - DepDelay, 
@@ -126,6 +129,7 @@ transform(hflights,
   gain_per_hour = gain / (AirTime / 60)
 )
 </code></pre>
+</div>
 
 <h2 id="section-3">数据分组</h2>
 <p>数据分组是指按指定列的内容进行分类统计分析，具体可以参考<a href="http://xukuang.github.io/2014/12/23/group-by-and-ungroup-function-in-R/">这里</a>
@@ -145,7 +149,7 @@ delay &lt;- filter(delay, count &gt; 20, dist &lt; 2000)</p>
 ```</p>
 
 <h2 id="section-5">连接符</h2>
-<pre><code># 3 连接符 %.%
+<div class="highlighter-rouge"><pre class="highlight"><code># 3 连接符 %.%
 # 包里还新引进了一个操作符, 使用时把数据名作为开头, 然后依次对此数据进行多步操作.
 Batting %.%
     group_by(playerID) %.%
@@ -162,6 +166,7 @@ totals[ranks[1:5],]
 # 文章里还表示: 用他的 MacBook Air 跑 %.% 那段代码用了 0.036 秒, 
 # 跑上面这段代码则用了 0.266 秒, 运算速度提升了近7倍. (当然这只是一例, 还有其它更大的数字.)
 </code></pre>
+</div>
 <p>### 对所有列进行相同操作
 * summarise_each可以进行求平均值、标准差、方差、最小值和最大值，此时被处理的数据列也不需要必须是数字类型(只是此时会有警告提示)。然而，无论如何要进行求和操作时，所有数据列必须是数字类型(原因是sum函数对字符求和，直接返回错误，而求求平均值、标准差、方差、最小值和最大值只是返回NA，并提示警告)。当然也可以多个指标同时计算。
 ```
@@ -199,7 +204,7 @@ summarise_each(hflights.dat, funs(sum(., na.rm = T)))
 
 <ul>
   <li>mutate_each跟summarise_each最大的不同在于产生于原数据相同行数的结果，所以mutate_each除了可以进行summarise_each函数的操作以外，还可进行简单四则运算，当然进行四则运算时，要保证所有列都是数字型。	
-<code>
+<code class="highlighter-rouge">
 temp = mutate_each(hflights.dat, funs( . + 1))
 head(hflights)
 head(temp)
@@ -252,7 +257,7 @@ head(temp)
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname ='httpxukuanggithubio'; // required: replace example with your forum shortname
+    var disqus_shortname ='Xu_Kuang'; // required: replace example with your forum shortname
     var disqus_url = 'http://xukuang.github.io/blog/2015/04/fuctions-in-dplyr/';
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

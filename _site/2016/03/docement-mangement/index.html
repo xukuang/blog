@@ -65,8 +65,9 @@ list.files()</p>
 <p>cat(“文件测试\n”, file = “B.txt”)
 list.files()</p>
 
-<pre><code>* 查看文件
+<div class="highlighter-rouge"><pre class="highlight"><code>* 查看文件
 </code></pre>
+</div>
 <p># 显示当前目录中的目录和文件
 ## 下面两句结果相同
 list.files() # 建议使用该命令，方便记忆
@@ -84,7 +85,7 @@ file.exists(“readme.txt”)</p>
 
 <h1 id="section-1">判断是否是文件</h1>
 <p>file_test(“-f”, “A.txt”)
-<code>
+<code class="highlighter-rouge">
 &lt;!--more--&gt;
 * 读取文件
 </code>
@@ -94,26 +95,30 @@ readLines(“A.txt”)</p>
 <h1 id="btxt-1">文件B.txt读取</h1>
 <p>readLines(“B.txt”)</p>
 
-<pre><code>* 文件重命名
+<div class="highlighter-rouge"><pre class="highlight"><code>* 文件重命名
 </code></pre>
+</div>
 <p># 给文件A.txt重命名为AA.txt
 file.rename(“A.txt”,”AA.txt”)
 list.files()</p>
 
-<pre><code>* 复制文件
+<div class="highlighter-rouge"><pre class="highlight"><code>* 复制文件
 </code></pre>
+</div>
 <p>file.copy(“B.txt”, “C.txt”)
 # 查看文件内容
 readLines(“C.txt”)</p>
 
-<pre><code>* 追加文件
+<div class="highlighter-rouge"><pre class="highlight"><code>* 追加文件
 </code></pre>
+</div>
 <p>file.append(“A.txt”, rep(“B.txt”, 10))
 # 查看文件内容
 readLines(“A.txt”)</p>
 
-<pre><code>* 删除文件
+<div class="highlighter-rouge"><pre class="highlight"><code>* 删除文件
 </code></pre>
+</div>
 <p># 新建文件
 file.create(“tempa1”, “tempa2”, “tempa3”, “tempa4”)
 list.files()
@@ -121,8 +126,9 @@ list.files()
 file.remove(“tempa1”, “tempa2”, “tempa3”, “tempa4”)
 list.files()</p>
 
-<pre><code>* 文件权限
+<div class="highlighter-rouge"><pre class="highlight"><code>* 文件权限
 </code></pre>
+</div>
 <p># 查看文件完整信息
 file.info(“A.txt”)</p>
 
@@ -151,10 +157,11 @@ file.info(“A.txt”)</p>
 <h2 id="section-8">查看文件信息</h2>
 <p>file.info(“A.txt”)</p>
 
-<pre><code>
+<div class="highlighter-rouge"><pre class="highlight"><code>
 ## 目录操作
 * 创建目录
 </code></pre>
+</div>
 <p># 新建一个目录
 dir.create(“test”) # 不能同时创建多个目录
 list.dirs()</p>
@@ -163,8 +170,9 @@ list.dirs()</p>
 <p>dir.create(“test/test”,recursive = TRUE)
 list.dirs()</p>
 
-<pre><code>* 查看目录
+<div class="highlighter-rouge"><pre class="highlight"><code>* 查看目录
 </code></pre>
+</div>
 <p># 查看当前默认目录的一级目录和文件
 list.files() # 同时会显示目录下的文件
 dir()</p>
@@ -190,7 +198,7 @@ file.exists(“./test”)</p>
 <p>## 下面两个语句结果相同
 file_test(“-d”, “./test”)
 file_test(“-d”, “test”)
-<code>
+<code class="highlighter-rouge">
 * 目录重命名
 </code>
 # 查看目录
@@ -220,7 +228,7 @@ dir()</p>
 
 <p>unlink(“temp1”, recursive = TRUE) # 
 dir()
-<code>
+<code class="highlighter-rouge">
 * 目录的权限
 </code>
 # 查看目录完整信息
@@ -250,30 +258,30 @@ file.info(“./test”)
 
 <ul>
   <li>拼接目录字符串
-<code>
+<code class="highlighter-rouge">
 file.path("p1","p2","p3")
 </code></li>
   <li>
     <p>所在目录
-<code>
+<code class="highlighter-rouge">
 dirname("/home/conan/R/fs/readme.txt")
 </code></p>
   </li>
   <li>
     <p>最底层子目录或文件名
-<code>
+<code class="highlighter-rouge">
 basename("/home/conan/R/fs/readme.txt")
 basename("/home/conan/R/fs")
 </code></p>
   </li>
   <li>
     <p>win下标准路径转化
-<code>
+<code class="highlighter-rouge">
 normalizePath(c(R.home(), tempdir()))
 </code></p>
   </li>
   <li>短路径，缩减路径的显示长度，只在win中运行
-<code>
+<code class="highlighter-rouge">
 shortPathName(c(R.home(), tempdir()))
 </code></li>
 </ul>
@@ -299,7 +307,7 @@ R.home()</p>
 <ul>
   <li>
     <p>R软件的包目录
-<code>
+<code class="highlighter-rouge">
 # 打印核心包的目录
 .Library
 # 打印所有包的存放目录
@@ -308,7 +316,7 @@ R.home()</p>
   </li>
   <li>
     <p>查看指定包所在的目录
-<code>
+<code class="highlighter-rouge">
 # base包的存放目录
 system.file()
 # dplyr包的存放目录
@@ -439,7 +447,7 @@ system.file(package = "dplyr")
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname ='httpxukuanggithubio'; // required: replace example with your forum shortname
+    var disqus_shortname ='Xu_Kuang'; // required: replace example with your forum shortname
     var disqus_url = 'http://xukuang.github.io/blog/2016/03/docement-mangement/';
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

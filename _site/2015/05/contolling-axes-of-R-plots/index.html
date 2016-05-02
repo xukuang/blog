@@ -45,18 +45,19 @@
                                               <article class="content">
                                               <section class="post">
 <h2 id="section">使用到的数据</h2>
-<pre><code>set.seed(1)
+<div class="highlighter-rouge"><pre class="highlight"><code>set.seed(1)
 n = 100
 x = rnorm(n)
 y = rnorm(n, x)
 </code></pre>
+</div>
 <p>## 相关函数介绍
 ### plot函数
 plot函数非常常用，这里不再详述，主要提醒一下其中的几个参数axes，xaxt和yaxt。
 * axes决定是否画坐标轴(包括坐标轴，刻度线和刻度线标签)。axes = F时，不画坐标轴。
 * xaxt和yaxt决定是否画坐标轴的刻度线和刻度线标签。xaxt = ‘n’时，不画坐标轴x的刻度线和刻度线标签；yaxt = ‘n’时，不画坐标轴y的刻度线和刻度线标签。
 具体的区别可以参见下面的程序和图形：
-<code>
+<code class="highlighter-rouge">
 par(mfrow = c(2,2))
 plot(x, y)
 plot(x, y, xaxt = 'n')
@@ -154,7 +155,7 @@ box()
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname ='httpxukuanggithubio'; // required: replace example with your forum shortname
+    var disqus_shortname ='Xu_Kuang'; // required: replace example with your forum shortname
     var disqus_url = 'http://xukuang.github.io/blog/2015/05/contolling-axes-of-R-plots/';
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
