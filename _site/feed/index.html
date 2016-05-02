@@ -7,7 +7,7 @@
     <title>Xu Kuang</title>
     <atom:link href="http://xukuang.github.io/blog/feed/" rel="self" type="application/rss+xml" />
     <link>http://xukuang.github.io</link>
-    <lastBuildDate>2016-05-02T00:10:27-06:00</lastBuildDate>
+    <lastBuildDate>2016-05-02T00:15:26-06:00</lastBuildDate>
     <webMaster>kuang_xu@126.com</webMaster>
     
     <item>
@@ -26,13 +26,16 @@
 <p>从生态系统的角度看，最后一点是最为重要的。因为Numpy提供了易用的CApI，它可以很容易的将数据传递到使用低级语言编写的外部库，也可以使外部库返回Numpy数组数据到python。这一特性使得python成为包装传统的C/C++/Fortran代码库，并给它们一个动态的、易于使用的接口的首选语言。『完全不懂啊』</p>
 
 <p>虽然Numpy本身并没有提供非常高级的数据分析功能，但是了解Numpy的数组和面向数组的计算将会帮助你高效的使用类似于pandas这样的工具。
-对于大多数的数据分析应用来说，我关注的主要功能是。
-- 快速的矢量化数组操作：数据切割和清除，子集和过滤，转化和任何其它类型的计算
-- 通用的数组算法，例如：sorting，unique和set操作
-- 有效的描述性统计和聚集/汇总数据
-- 数据对齐、关系数据的合并操作、异构数据的拼接操作
-- 使用数组表达式来表示条件逻辑，而不是用带有 if-elif-else 分支的循环来表示
-- 组间数据的操作（聚合，转换，功能应用）。</p>
+对于大多数的数据分析应用来说，我关注的主要功能是:</p>
+
+<ul>
+  <li>快速的矢量化数组操作：数据切割和清除，子集和过滤，转化和任何其它类型的计算</li>
+  <li>通用的数组算法，例如：sorting，unique和set操作</li>
+  <li>有效的描述性统计和聚集/汇总数据</li>
+  <li>数据对齐、关系数据的合并操作、异构数据的拼接操作</li>
+  <li>使用数组表达式来表示条件逻辑，而不是用带有 if-elif-else 分支的循环来表示</li>
+  <li>组间数据的操作（聚合，转换，功能应用）。</li>
+</ul>
 
 <p>虽然Numpy提供了这些操作的计算功能，但你或许希望使用pandas作为大多数数据分析的基础（特别是结构化或表格数据），因为pandas提供了一个丰富的，高级的接口使得常见的数据任务非常简洁和简单。此外，pandas还提供了更多的一些特定领域的功能，如时间数组操作，这是Numpy所没有的。
 ###  Numpy ndarray：多维数组对象
