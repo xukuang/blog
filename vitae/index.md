@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 简历
+title: Vitae
 ---
 
 ## 联系方式
