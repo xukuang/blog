@@ -94,17 +94,20 @@ array1.dtype
 	## dtype('float64')
 </code></pre>
 </div>
-<p>#### 创建ndarray对象
-最简单的创建数组的方式是使用array函数。它接受任何数组对象（包括其它数组），产生一个包含所传递的数据的新Numpy数组。例如，列表就是一个很好的用于转换的候选。
-<code class="highlighter-rouge">
-data1 = [6, 7.5, 8, 0, 1]
+
+<h4 id="ndarray">创建ndarray对象</h4>
+<p>最简单的创建数组的方式是使用array函数。它接受任何数组对象（包括其它数组），产生一个包含所传递的数据的新Numpy数组。例如，列表就是一个很好的用于转换的候选。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>data1 = [6, 7.5, 8, 0, 1]
 arr1 = np.array(data1)
 arr1
 	## array([ 6. , 7.5, 8. , 0. , 1. ])
-</code>
-嵌套序列，如等长列表的列表，将会转化为一个多维数组。
-<code class="highlighter-rouge">
-data2 = [[1, 2, 3, 4], [5, 6, 7, 8]]
+</code></pre>
+</div>
+
+<p>嵌套序列，如等长列表的列表，将会转化为一个多维数组。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>data2 = [[1, 2, 3, 4], [5, 6, 7, 8]]
 arr2 = np.array(data2)
 arr2
 	## array([[1, 2, 3, 4],
@@ -113,8 +116,9 @@ arr2.ndim
 	## 2
 arr2.shape
 	## (2, 4)
-</code>
-除 np.array 之外，还有许多函数来创建新的数组。例如， zeros 和 ones 使用给定的长度或形状分别的创建0‘s 和 1‘s数组。empty 会创建一个没有使用特定值来初始化的数组。给这些方法传递一个元组作为形状来创建高维数组。
+</code></pre>
+</div>
+<p>除 np.array 之外，还有许多函数来创建新的数组。例如， zeros 和 ones 使用给定的长度或形状分别的创建0‘s 和 1‘s数组。empty 会创建一个没有使用特定值来初始化的数组。给这些方法传递一个元组作为形状来创建高维数组。
 <code class="highlighter-rouge">
 np.zeros(10)
 	## array([ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.])
