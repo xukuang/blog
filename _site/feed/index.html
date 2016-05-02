@@ -7,7 +7,7 @@
     <title>Xu Kuang</title>
     <atom:link href="http://xukuang.github.io/blog/feed/" rel="self" type="application/rss+xml" />
     <link>http://xukuang.github.io</link>
-    <lastBuildDate>2016-05-02T00:19:35-06:00</lastBuildDate>
+    <lastBuildDate>2016-05-02T00:22:06-06:00</lastBuildDate>
     <webMaster>kuang_xu@126.com</webMaster>
     
     <item>
@@ -40,11 +40,12 @@
   <li>组间数据的操作（聚合，转换，功能应用）。</li>
 </ul>
 
-<p>虽然Numpy提供了这些操作的计算功能，但你或许希望使用pandas作为大多数数据分析的基础（特别是结构化或表格数据），因为pandas提供了一个丰富的，高级的接口使得常见的数据任务非常简洁和简单。此外，pandas还提供了更多的一些特定领域的功能，如时间数组操作，这是Numpy所没有的。
-###  Numpy ndarray：多维数组对象
-Numpy的一个关键特性是它的N维数组对象(ndarray)，它在python中是一个大型数据集的快速的，灵活的容器。 数组使你能够在整个数据块上进行数学运算，且与对应的纯量元素间操作有相似的语法：
-<code class="highlighter-rouge">
-array1 = np.array([[ 0.9526, -0.246 , -0.8856], [ 0.5639, 0.2379, 0.9104]])
+<p>虽然Numpy提供了这些操作的计算功能，但你或许希望使用pandas作为大多数数据分析的基础（特别是结构化或表格数据），因为pandas提供了一个丰富的，高级的接口使得常见的数据任务非常简洁和简单。此外，pandas还提供了更多的一些特定领域的功能，如时间数组操作，这是Numpy所没有的。</p>
+
+<h3 id="numpy-ndarray">Numpy ndarray：多维数组对象</h3>
+<p>Numpy的一个关键特性是它的N维数组对象(ndarray)，它在python中是一个大型数据集的快速的，灵活的容器。 数组使你能够在整个数据块上进行数学运算，且与对应的纯量元素间操作有相似的语法。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>array1 = np.array([[ 0.9526, -0.246 , -0.8856], [ 0.5639, 0.2379, 0.9104]])
 array1
 	## array([[ 0.9526, -0.246 , -0.8856],
 	## 		[ 0.5639,  0.2379,  0.9104]])
@@ -54,15 +55,18 @@ array1 * 10
 array1 + array1
 	## array([[ 1.9052, -0.492 , -1.7712],
 	##        [ 1.1278,  0.4758,  1.8208]])
-</code>
-ndarray是一个同种类数据的多维容器，也就是说，它的所有元素都是同类型的。每一个数组都有一个 shape （表示它每一维大小的元组）和 dtype （一个描述数组数据类型的对象）的属性。
-<code class="highlighter-rouge">
-array1.shape
+</code></pre>
+</div>
+
+<p>ndarray是一个同种类数据的多维容器，也就是说，它的所有元素都是同类型的。每一个数组都有一个 shape （表示它每一维大小的元组）和 dtype （一个描述数组数据类型的对象）的属性。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>array1.shape
 	## (2, 3)
 array1.dtype
 	## dtype('float64')
-</code>
-#### 创建ndarray对象
+</code></pre>
+</div>
+<p>#### 创建ndarray对象
 最简单的创建数组的方式是使用array函数。它接受任何数组对象（包括其它数组），产生一个包含所传递的数据的新Numpy数组。例如，列表就是一个很好的用于转换的候选。
 <code class="highlighter-rouge">
 data1 = [6, 7.5, 8, 0, 1]
