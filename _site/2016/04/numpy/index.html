@@ -302,8 +302,9 @@ arr2d[:2]
 
 </code></pre>
 </div>
-<p>## 布尔索引
-让我们来考虑一个例子，我们有一些数据在一个数组中和一个有重复名字的数组。我将会在这使用 numpy.random 中的 randn 函数来产生一些随机的正态分布的数据。</p>
+
+<h2 id="section-2">布尔索引</h2>
+<p>让我们来考虑一个例子，我们有一些数据在一个数组中和一个有重复名字的数组。我将会在这使用 numpy.random 中的 randn 函数来产生一些随机的正态分布的数据。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>import numpy.random as np_rd
 names = np.array(['Bob', 'Joe', 'Will', 'Bob', 'Will', 'Joe', 'Joe'])
@@ -400,8 +401,9 @@ array([[ 7. , 7. , 7. , 7. ],
 
 </code></pre>
 </div>
-<p>#### Fancy索引
-Fancy索引是一个术语，被Numpy用来描述使用整形数组索引。假如我们有一个 8*4 的数组。</p>
+
+<h4 id="fancy">Fancy索引</h4>
+<p>Fancy索引是一个术语，被Numpy用来描述使用整形数组索引。假如我们有一个 8*4 的数组。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>arr = np.empty((8, 4))
 for i in range(8):
