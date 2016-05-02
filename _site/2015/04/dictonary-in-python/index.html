@@ -61,7 +61,7 @@
   <li>键不一定是字符串，原则上任何不可改变对象(如整数，元组)都可以作为键<!--more--></li>
 </ul>
 
-<h2 id="section">字典的创建</h2>
+<h2 id="section">1. 字典的创建</h2>
 
 <h3 id="section-1">空字典的创建</h3>
 
@@ -88,7 +88,7 @@ D = {x : x for x in 'spam'}
 </code></pre>
 </div>
 
-<h2 id="section-3">字典的引用(通过键而非偏移量)</h2>
+<h2 id="section-3">2. 字典的引用(通过键而非偏移量)</h2>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>D = {'Spam': 2, 'eggs': 3, 'food': {'ham': 1, 'egg': 2}}
 D['Spam']
@@ -96,7 +96,7 @@ D['food']['egg']
 </code></pre>
 </div>
 
-<h2 id="section-4">字典相关属性的查看</h2>
+<h2 id="section-4">3. 字典相关属性的查看</h2>
 
 <h3 id="section-5">字典长度</h3>
 
@@ -150,7 +150,7 @@ D.items() | D # {('a', 1), ('b', 2), ('c', 3), 'a', 'b', 'c'}
 </code></pre>
 </div>
 
-<h2 id="section-10">字典的修改</h2>
+<h2 id="section-10">4. 字典的修改</h2>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Spam'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'ham'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
 <span class="c"># 直接改变某个键的值</span>
