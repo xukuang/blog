@@ -1,3 +1,5 @@
+---
+layout: post
 title: Hello World
 date: 2014-05-10 21:55:27
 categories: 技术篇 #文章文类
