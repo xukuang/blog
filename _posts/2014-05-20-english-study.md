@@ -6,6 +6,7 @@ categories: 学习篇
 tags: [英语]
 ---
 来自[英语口语控](http://weibo.com/p/1005051836384951/home?from=page_100505&mod=TAB#place)的一个微博，英语口语控一个不错的关于英语学习的个人微博。话不多说，内容奉上：
+
 1. I was't born yesterday. 我又不是三岁小孩
 2. How do I address you? 我怎么称呼你？
 3. She turns me off. 她使我厌烦。
