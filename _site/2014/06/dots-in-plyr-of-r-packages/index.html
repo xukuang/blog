@@ -44,9 +44,10 @@
                                               </nav>
                                               <article class="content">
                                               <section class="post">
-<p>　　<strong>summarise</strong>和<strong>mutate</strong>是<strong>R</strong>中<strong>plyr</strong>包的两个函数。<strong>plyr</strong>是<strong>R</strong>中用来数据汇总的超强R包，肖凯对<strong>plyr</strong>的使用在网易云课堂(该链接已经失效)有较为详细的讲述。本文只对其中的<strong>summarise</strong>和<strong>mutate</strong>函数进行简单介绍，并讲述一下它和<strong>ddply</strong>函数的搭配使用。(注意，这两个函数在plyr包升级后的dplyr包中依然适用)
-## summarise 和 mutate 函数
-　　<strong>summarise</strong>和<strong>mutate</strong>函数都可以对一个数据框的某一列<strong>(而不是整个数据框)</strong>进行修改和汇总，两者的主要区别在于返回结果的方式不同，其中<strong>summarise</strong>函数返回一个只包含修改或汇总后数据的数据框，而<strong>mutate</strong>函数则返回一个由原始数据和修改或汇总后数据两部分构成的数据框。具体内容加下面代码：<!--more-->
+<p>　　<strong>summarise</strong>和<strong>mutate</strong>是<strong>R</strong>中<strong>plyr</strong>包的两个函数。<strong>plyr</strong>是<strong>R</strong>中用来数据汇总的超强R包，肖凯对<strong>plyr</strong>的使用在网易云课堂(该链接已经失效)有较为详细的讲述。本文只对其中的<strong>summarise</strong>和<strong>mutate</strong>函数进行简单介绍，并讲述一下它和<strong>ddply</strong>函数的搭配使用。(注意，这两个函数在plyr包升级后的dplyr包中依然适用)</p>
+
+<h2 id="summarise--mutate-">summarise 和 mutate 函数</h2>
+<p>　　<strong>summarise</strong>和<strong>mutate</strong>函数都可以对一个数据框的某一列<strong>(而不是整个数据框)</strong>进行修改和汇总，两者的主要区别在于返回结果的方式不同，其中<strong>summarise</strong>函数返回一个只包含修改或汇总后数据的数据框，而<strong>mutate</strong>函数则返回一个由原始数据和修改或汇总后数据两部分构成的数据框。具体内容加下面代码：<!--more-->
 <code class="highlighter-rouge">R
 	require(plyr)
 	set.seed(1) # 保证每次产生的数据框的唯一性
@@ -185,7 +186,7 @@ ddply(dfx, .(sex, age), function(x){mean(x$worktime)})</p>
 
 
 <span class="author">
-  <a href="http://xukuang.github.io/cn">Xu Kuang</a>
+  <a href="http://xukuang.github.io/blog">Xu Kuang</a>
 </span>
 <span class="time">
   /
