@@ -15,6 +15,7 @@ y = rnorm(n, x)
 
 ## 相关函数介绍
 <br>
+
 ### plot函数
 
 plot函数非常常用，这里不再详述，主要提醒一下其中的几个参数axes，xaxt和yaxt。
