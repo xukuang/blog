@@ -63,7 +63,6 @@ readLines("A.txt")
 
 # 文件B.txt读取
 readLines("B.txt")
-
 ```
 
 * 文件重命名
@@ -72,7 +71,6 @@ readLines("B.txt")
 # 给文件A.txt重命名为AA.txt
 file.rename("A.txt","AA.txt")
 list.files()
-
 ```
 
 * 复制文件
@@ -81,7 +79,6 @@ list.files()
 file.copy("B.txt", "C.txt")
 # 查看文件内容
 readLines("C.txt")
-
 ```
 
 * 追加文件
@@ -150,7 +147,6 @@ list.dirs()
 # 递归创建
 dir.create("test/test",recursive = TRUE)
 list.dirs()
-
 ```
 
 * 查看目录
@@ -232,10 +228,8 @@ file.access(df, 0) == 0
 # 检查文件或目录是否可执行，mode=1，目录为可以执行
 file.access(df, 1) == 0
 
-
 # 检查文件或目录是否可写，mode=2
 file.access(df, 2) == 0
-
 
 # 检查文件或目录是否可读，mode=4
 file.access(df, 4) == 0
@@ -281,13 +275,13 @@ shortPathName(c(R.home(), tempdir()))
 
 ## 几个特殊的目录
 
-** R.home() ** 查看R软件的相关目录
+**R.home()** 查看R软件的相关目录
 
-** .Library ** 查看R核心包的目录
+**.Library** 查看R核心包的目录
 
-** .libPaths() ** 查看R所有包的存放目录
+**.libPaths() ** 查看R所有包的存放目录
 
-**  system.file() ** 查看指定包所在的目录
+**ystem.file()** 查看指定包所在的目录
 
 * R软件的相关目录
 

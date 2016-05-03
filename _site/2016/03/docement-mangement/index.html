@@ -107,7 +107,6 @@ readLines("A.txt")
 
 # 文件B.txt读取
 readLines("B.txt")
-
 </code></pre>
 </div>
 
@@ -118,7 +117,6 @@ readLines("B.txt")
 <div class="highlighter-rouge"><pre class="highlight"><code># 给文件A.txt重命名为AA.txt
 file.rename("A.txt","AA.txt")
 list.files()
-
 </code></pre>
 </div>
 
@@ -129,7 +127,6 @@ list.files()
 <div class="highlighter-rouge"><pre class="highlight"><code>file.copy("B.txt", "C.txt")
 # 查看文件内容
 readLines("C.txt")
-
 </code></pre>
 </div>
 
@@ -205,7 +202,6 @@ list.dirs()
 # 递归创建
 dir.create("test/test",recursive = TRUE)
 list.dirs()
-
 </code></pre>
 </div>
 
@@ -295,10 +291,8 @@ file.access(df, 0) == 0
 # 检查文件或目录是否可执行，mode=1，目录为可以执行
 file.access(df, 1) == 0
 
-
 # 检查文件或目录是否可写，mode=2
 file.access(df, 2) == 0
-
 
 # 检查文件或目录是否可读，mode=4
 file.access(df, 4) == 0
@@ -354,13 +348,13 @@ basename("/home/conan/R/fs")
 
 <h2 id="section-3">几个特殊的目录</h2>
 
-<p>** R.home() ** 查看R软件的相关目录</p>
+<p><strong>R.home()</strong> 查看R软件的相关目录</p>
 
-<p>** .Library ** 查看R核心包的目录</p>
+<p><strong>.Library</strong> 查看R核心包的目录</p>
 
-<p>** .libPaths() ** 查看R所有包的存放目录</p>
+<p>**.libPaths() ** 查看R所有包的存放目录</p>
 
-<p>**  system.file() ** 查看指定包所在的目录</p>
+<p><strong>ystem.file()</strong> 查看指定包所在的目录</p>
 
 <ul>
   <li>R软件的相关目录</li>

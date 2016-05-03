@@ -7,7 +7,7 @@
     <title>Xu Kuang</title>
     <atom:link href="http://xukuang.github.io/blog/feed/" rel="self" type="application/rss+xml" />
     <link>http://xukuang.github.io</link>
-    <lastBuildDate>2016-05-03T01:51:01-06:00</lastBuildDate>
+    <lastBuildDate>2016-05-03T02:01:38-06:00</lastBuildDate>
     <webMaster>kuang_xu@126.com</webMaster>
     
     <item>
@@ -1888,8 +1888,9 @@ adjustrsquare
 
 <p>期望存在一下特性:</p>
 
-<p>1.<script type="math/tex">E[aX + bY] = aE[X] + bE(Y)</script>
-2. 一般情况下，<script type="math/tex">E[X Y] \neq E[X]E(Y)</script>；当X和Y相互独立时，才有<script type="math/tex">E[X Y] = E[X]E(Y)</script><!--more--></p>
+<p>1.<script type="math/tex">E[aX + bY] = aE[X] + bE(Y)</script></p>
+
+<p>2.一般情况下，<script type="math/tex">E[X Y] \neq E[X]E(Y)</script>；当X和Y相互独立时，才有<script type="math/tex">E[X Y] = E[X]E(Y)</script><!--more--></p>
 
 <h2 id="section-1">方差</h2>
 <p>方差描述的是随机变量的离散程度，也就是该变量离其期望值的距离。</p>
@@ -1917,8 +1918,9 @@ adjustrsquare
 
 <script type="math/tex; mode=display">\eta =  \frac{cov(X, Y)}{\sqrt{var(X) \cdot var(Y)}}</script>
 
-<p>协方差的相关性η更准确地说是线性相关的相关系数r，是一个衡量线性独立的无量纲数，其取值在[－1,+1]之间。相关性η = 1时称为“完全线性相关”(相关性η = -1时称为“完全线性负相关”)，此时将$Y_{i}$对$X_{i}$作Y-X散点图，将得到一组精确排列在直线上的点；相关性数值介于－1到1之间时，其绝对值越接近1表明线性相关性越好，作散点图得到的点的排布越接近一条直线。相关性为0(因而协方差也为0)的两个随机变量又被称为是不相关的，或者更准确地说叫作“线性无关”、“线性不相关”，这仅仅表明X 与Y两随机变量之间没有线性相关性，并非表示它们之间一定没有任何内在的（非线性）函数关系，和前面所说的“X、Y二者并不一定是统计独立的”说法一致。
--—–</p>
+<p>协方差的相关性η更准确地说是线性相关的相关系数r，是一个衡量线性独立的无量纲数，其取值在[－1,+1]之间。相关性η = 1时称为“完全线性相关”(相关性η = -1时称为“完全线性负相关”)，此时将$Y_{i}$对$X_{i}$作Y-X散点图，将得到一组精确排列在直线上的点；相关性数值介于－1到1之间时，其绝对值越接近1表明线性相关性越好，作散点图得到的点的排布越接近一条直线。相关性为0(因而协方差也为0)的两个随机变量又被称为是不相关的，或者更准确地说叫作“线性无关”、“线性不相关”，这仅仅表明X 与Y两随机变量之间没有线性相关性，并非表示它们之间一定没有任何内在的（非线性）函数关系，和前面所说的“X、Y二者并不一定是统计独立的”说法一致。</p>
+
+<p>-—–</p>
 
 <p><strong>本篇文章整理自维基百科。</strong></p>
 ]]></content:encoded>
@@ -1993,7 +1995,6 @@ readLines("A.txt")
 
 # 文件B.txt读取
 readLines("B.txt")
-
 </code></pre>
 </div>
 
@@ -2004,7 +2005,6 @@ readLines("B.txt")
 <div class="highlighter-rouge"><pre class="highlight"><code># 给文件A.txt重命名为AA.txt
 file.rename("A.txt","AA.txt")
 list.files()
-
 </code></pre>
 </div>
 
@@ -2015,7 +2015,6 @@ list.files()
 <div class="highlighter-rouge"><pre class="highlight"><code>file.copy("B.txt", "C.txt")
 # 查看文件内容
 readLines("C.txt")
-
 </code></pre>
 </div>
 
@@ -2091,7 +2090,6 @@ list.dirs()
 # 递归创建
 dir.create("test/test",recursive = TRUE)
 list.dirs()
-
 </code></pre>
 </div>
 
@@ -2181,10 +2179,8 @@ file.access(df, 0) == 0
 # 检查文件或目录是否可执行，mode=1，目录为可以执行
 file.access(df, 1) == 0
 
-
 # 检查文件或目录是否可写，mode=2
 file.access(df, 2) == 0
-
 
 # 检查文件或目录是否可读，mode=4
 file.access(df, 4) == 0
@@ -2240,13 +2236,13 @@ basename("/home/conan/R/fs")
 
 <h2 id="section-3">几个特殊的目录</h2>
 
-<p>** R.home() ** 查看R软件的相关目录</p>
+<p><strong>R.home()</strong> 查看R软件的相关目录</p>
 
-<p>** .Library ** 查看R核心包的目录</p>
+<p><strong>.Library</strong> 查看R核心包的目录</p>
 
-<p>** .libPaths() ** 查看R所有包的存放目录</p>
+<p>**.libPaths() ** 查看R所有包的存放目录</p>
 
-<p>**  system.file() ** 查看指定包所在的目录</p>
+<p><strong>ystem.file()</strong> 查看指定包所在的目录</p>
 
 <ul>
   <li>R软件的相关目录</li>
@@ -2412,20 +2408,12 @@ system.file(package = "dplyr")
       <li>\s 表示空白字符（包括空格、制表符、换行符等），\S 表示非空白字符，</li>
       <li>\w 表示字（字母和数字），\W 表示非字</li>
       <li>\&lt; 和 \&gt; 分别表示以空白字符开始和结束的文本
- 需要注意的是，反斜杠 ‘\‘在R语言中得用两个反斜杠即 ‘\\’，如’\s’就要写成 ’\\s‘。</li>
+ 需要注意的是，反斜杠 ‘\‘在R语言中得用两个反斜杠即 ‘\\’，如’\s’就要写成 ’\\s‘。
+        <ol>
+          <li>正则表达式符号运算顺序：圆括号括起来的表达式最优先，然后是表示重复次数的操作(即：* + {} )，接下来是连接运算（其实就是几个字符放在一起，如abc），最后是表示可选项的运算(|)。所以’foot|bar’ 可以匹配’foot‘或者’bar‘，但是 ‘foot|ba{2}r’匹配的是’foot‘或者’baar‘。</li>
+        </ol>
+      </li>
     </ul>
-  </li>
-  <li>
-    <table>
-      <tbody>
-        <tr>
-          <td>正则表达式符号运算顺序：圆括号括起来的表达式最优先，然后是表示重复次数的操作（即：* + {} ），接下来是连接运算（其实就是几个字符放在一起，如abc），最后是表示可选项的运算（</td>
-          <td>）。所以 ‘foot</td>
-          <td>bar’ 可以匹配’foot‘或者’bar‘，但是 ‘foot</td>
-          <td>ba{2}r’匹配的是’foot‘或者’baar‘。</td>
-        </tr>
-      </tbody>
-    </table>
   </li>
   <li>“贪婪”和“懒惰”的匹配规则。默认情况下是匹配尽可能多的字符，是为贪婪匹配，比如 “a.*b”默认匹配最长的a开头b结尾的字串，也就是整个字符串。如果要进行懒惰匹配，也就是匹配最短的字串，只需要在后面加个 ?，比如 “a.*?b”，就会匹配最开始找到的最短的a开头b结尾的字串</li>
 </ol>
