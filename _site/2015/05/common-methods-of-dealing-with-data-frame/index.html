@@ -169,14 +169,10 @@ hf = arrange(hflights, desc(ArrDelay))
 </div>
 
 <ul>
-  <li>
-    <p>直接选取数据框中满足条件的数据行</p>
-
-    <ul>
-      <li>满足一个条件</li>
-    </ul>
-  </li>
+  <li>直接选取数据框中满足条件的数据行</li>
 </ul>
+
+<p>满足一个条件</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">## 满足数据框hflights中Month列等于1
 </span><span class="n">hf1</span> <span class="o">=</span> <span class="n">hflights</span><span class="p">[</span><span class="n">hflights</span><span class="o">$</span><span class="n">Month</span> <span class="o">==</span> <span class="m">1</span><span class="p">]</span>
@@ -185,9 +181,7 @@ hf = arrange(hflights, desc(ArrDelay))
 </code></pre>
 </div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>* 两个以上的条件：同时满足(相当于逻辑“且”)
-</code></pre>
-</div>
+<p>两个以上的条件：同时满足(相当于逻辑“且”)</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="c1"># 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1和2
