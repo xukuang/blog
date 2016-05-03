@@ -44,15 +44,18 @@
                                               </nav>
                                               <article class="content">
                                               <section class="post">
-<p>这篇文章记录的是在使用R的过程中偶然遇到的非常实用的函数，然而由于这些函数在自己的学习中太常用特别容易忘记，所以这里记下来以便以后使用的时候可以查看。学无止境，长期更新。
-## 场景一
-在查看多个变量之间的两两相关性的时候，可以使用picante包中的cor.table()函数。
-## 场景二
-在R中加载了多个R包时，希望查看当前环境中都加载了哪些R包的find.package()函数，临时卸载某个R包可以使用函数detach(package:包名)。如要卸载dplyr包，则为detach(package:dplyr)。
-## 场景三
-expand.grid()用来建立一些factor相乘出来的矩阵或data.frame。<!--more-->
-<code class="highlighter-rouge">
-expand.grid(x = c('A', 'B', 'C', 'D'), y = 1:3)
+<p>这篇文章记录的是在使用R的过程中偶然遇到的非常实用的函数，然而由于这些函数在自己的学习中太常用特别容易忘记，所以这里记下来以便以后使用的时候可以查看。学无止境，长期更新。</p>
+
+<h2 id="section">场景一</h2>
+<p>在查看多个变量之间的两两相关性的时候，可以使用picante包中的cor.table()函数。</p>
+
+<h2 id="section-1">场景二</h2>
+<p>在R中加载了多个R包时，希望查看当前环境中都加载了哪些R包的find.package()函数，临时卸载某个R包可以使用函数detach(package:包名)。如要卸载dplyr包，则为detach(package:dplyr)。</p>
+
+<h2 id="section-2">场景三</h2>
+<p>expand.grid()用来建立一些factor相乘出来的矩阵或data.frame。<!--more--></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>expand.grid(x = c('A', 'B', 'C', 'D'), y = 1:3)
 	#    x y
 	# 1  A 1
 	# 2  B 1
@@ -66,11 +69,13 @@ expand.grid(x = c('A', 'B', 'C', 'D'), y = 1:3)
 	# 10 B 3
 	# 11 C 3
 	# 12 D 3
-</code>
-## 场景四
-使用with()和within()函数对数据框列引用时，可以不用再输入长长的数据框名了。两者的区别在于，with只是生成了一列数据，而within生成一个包含原始数据的数据框。
-<code class="highlighter-rouge">
-with(dat, y + 2)
+</code></pre>
+</div>
+
+<h2 id="section-3">场景四</h2>
+<p>使用with()和within()函数对数据框列引用时，可以不用再输入长长的数据框名了。两者的区别在于，with只是生成了一列数据，而within生成一个包含原始数据的数据框。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>with(dat, y + 2)
 	# [1] 4 5 6 7
 within(dat, {z = y + 2; a = x + 3})
 	#   x y a z
@@ -78,47 +83,65 @@ within(dat, {z = y + 2; a = x + 3})
 	# 2 2 3 5 5
 	# 3 3 4 6 6
 	# 4 4 5 7 7
-</code>
-## 场景五
-cut()函数可以把连续变量离散化，即numeric型的数据转换成factor型，可以与table()函数一起使用。
-<code class="highlighter-rouge">
-cut(x, breaks, labels = NULL,
+</code></pre>
+</div>
+
+<h2 id="section-4">场景五</h2>
+<p>cut()函数可以把连续变量离散化，即numeric型的数据转换成factor型，可以与table()函数一起使用。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cut(x, breaks, labels = NULL,
     include.lowest = FALSE, right = TRUE, dig.lab = 3,
     ordered_result = FALSE, ...)
-</code>
-<strong>主要参数</strong>
-x: 需要离散化的连续型向量
-breaks: 向量类型，指定分类指标。默认的情况下，左开右闭合，这里可以结合正无穷(+Inf)和负无穷使用
-labels：向量类型，指定分类指标的名称。如果不限定，则默认用分类指标为名称
-inlude.lowest: 逻辑类型，指定边界是否闭合，默认的是边界不闭合
-right: 逻辑类型，指定左开右闭合还是右开左闭合，默认的是TURE，左开右闭合
-dig.lab: 数字，指定分类指标名称的数字位数。默认情况下，当labels为NULL时，指标名称的数字只显示3位
-orederd_result: 逻辑类型，指定分类指标是否有序
-<code class="highlighter-rouge">
-cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf))
+</code></pre>
+</div>
+
+<p><strong>主要参数</strong></p>
+
+<p>x: 需要离散化的连续型向量</p>
+
+<p>breaks: 向量类型，指定分类指标。默认的情况下，左开右闭合，这里可以结合正无穷(+Inf)和负无穷使用</p>
+
+<p>labels：向量类型，指定分类指标的名称。如果不限定，则默认用分类指标为名称</p>
+
+<p>inlude.lowest: 逻辑类型，指定边界是否闭合，默认的是边界不闭合</p>
+
+<p>right: 逻辑类型，指定左开右闭合还是右开左闭合，默认的是TURE，左开右闭合</p>
+
+<p>dig.lab: 数字，指定分类指标名称的数字位数。默认情况下，当labels为NULL时，指标名称的数字只显示3位</p>
+
+<p>orederd_result: 逻辑类型，指定分类指标是否有序</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf))
 	#  [1] &lt;NA&gt;     (2.22,5] (2.22,5] (5,Inf]  (5,Inf]  (1,2.22] (2.22,5] (5,Inf]  (5,Inf]  (2.22,5] &lt;NA&gt;     (5,Inf] 
 	# Levels: (1,2.22] (2.22,5] (5,Inf]
+
 ## 边界闭合，即包含左端的1
  cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf), include.lowest = T)
 	#  [1] [1,2.22] (2.22,5] (2.22,5] (5,Inf]  (5,Inf]  [1,2.22] (2.22,5] (5,Inf]  (5,Inf]  (2.22,5] [1,2.22] (5,Inf] 
 	# Levels: [1,2.22] (2.22,5] (5,Inf]
+
 ## 左闭合右开
 cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf), right = F)
 	#  [1] [1,2.22) [2.22,5) [5,Inf)  [5,Inf)  [5,Inf)  [1,2.22) [2.22,5) [5,Inf)  [5,Inf)  [2.22,5) [1,2.22) [5,Inf) 
 	# Levels: [1,2.22) [2.22,5) [5,Inf)
+
 ## 指定分类名称
  cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf), labels = c('small', 'middle', 'big'))
 	#  [1] &lt;NA&gt;   middle middle big    big    small  middle big    big    middle &lt;NA&gt;   big   
 	# Levels: small middle big
+
 ## 分类指标有序
  cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf), ordered_result = T)
 	#  [1] &lt;NA&gt;     (2.22,5] (2.22,5] (5,Inf]  (5,Inf]  (1,2.22] (2.22,5] (5,Inf]  (5,Inf]  (2.22,5] &lt;NA&gt;     (5,Inf] 
 	# Levels: (1,2.22] &lt; (2.22,5] &lt; (5,Inf]
-</code>
-## 场景六
-求导数的函数。dxy=deriv(f~x^2+y^2,c(‘x’,’y’),func=T) 
-## 场景七
-split()函数能将数据框按某一列分为包含若干个数据框的列表。然后，unsplit()可以将这个列表合并。</p>
+</code></pre>
+</div>
+
+<h2 id="section-5">场景六</h2>
+<p>求导数的函数。dxy=deriv(f~x^2+y^2,c(‘x’,’y’),func=T)</p>
+
+<h2 id="section-6">场景七</h2>
+<p>split()函数能将数据框按某一列分为包含若干个数据框的列表。然后，unsplit()可以将这个列表合并。</p>
 
 </section>
 <section class="meta">
@@ -128,7 +151,7 @@ split()函数能将数据框按某一列分为包含若干个数据框的列表�
 <span>
 	<a  href="http://xukuang.github.io/blog/2016/04/data-table-in-R/" class="pageNav"  >Previous</a>
 	&nbsp;&nbsp;&nbsp;
-	<a  href="http://xukuang.github.io/blog/2016/04/spatial-pattern-analysis/" class="pageNav"  >Next</a>
+	<a  href="http://xukuang.github.io/blog/2016/04/numpy/" class="pageNav"  >Next</a>
 </span>
 
 
@@ -195,7 +218,7 @@ $(function(){
         }
         else if (e.which == 39 || e.which == 75) {  // Right arrow and K
             
-        url = 'http://xukuang.github.io/blog/2016/04/spatial-pattern-analysis/';
+        url = 'http://xukuang.github.io/blog/2016/04/numpy/';
         
         }
         if (url) {
