@@ -45,8 +45,10 @@
                                               <article class="content">
                                               <section class="post">
 <h2 id="persp">基础函数persp</h2>
-<p>### persp函数
-persp(x = seq(0, 1, length.out = nrow(z)),
+
+<h3 id="persp-1">persp函数</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>persp(x = seq(0, 1, length.out = nrow(z)),
       y = seq(0, 1, length.out = ncol(z)),
       z, xlim = range(x), ylim = range(y),
       zlim = range(z, na.rm = TRUE),
@@ -54,23 +56,28 @@ persp(x = seq(0, 1, length.out = nrow(z)),
       main = NULL, sub = NULL,
       theta = 0, phi = 15, r = sqrt(3), d = 1,
       scale = TRUE, expand = 1,
-      col = “white”, border = NULL, ltheta = -135, lphi = 0,
+      col = "white", border = NULL, ltheta = -135, lphi = 0,
       shade = NA, box = TRUE, axes = TRUE, nticks = 5,
-      ticktype = “simple”, …)
+      ticktype = "simple", ...)
+</code></pre>
+</div>
 <!--more-->
-1. 参数x和y分别是两个数值向量，z是一个与前两个参数对应的矩阵
-2. xlim、ylim和zlim分别设定三个坐标轴的范围
-3. xlab、ylab和zlab分别设定三个坐标轴的标题
-4. theta和phi分别设定立体图形左右方向和上下方向旋转的角度
-5. r设定眼睛离透视图中心的距离，这个距离的远近会给我们一种从远近看物体的感觉
-6. d设定立体效果的程度，大于1的值会减弱立体程度，反之会增强立体程度
-7. scale为逻辑值，决定是否对三个坐标进行缩放，若为TRUE，则x、y和z都会被缩放到[0, 1]范围内，若为FALSE，那么所有坐标轴都按照数据的原始量纲处理，这样可以得到数据的真实比例
-8. expand为z轴的缩放因子，它决定了z轴的长短
-9. col为组成曲面的所有小方块的颜色；border为组成曲面的小方块的边框样式，设置为NA可以去掉边
-框
-10. ltheta和lphi设置透视图的光源位置
-11. shade决定的阴影效果；box为逻辑值，设定透视图是否需要画外框
-12. axes决定是否画坐标轴；nticks为坐标轴刻度线的数目；ticktype设定坐标轴刻度类型，取值’simple’则简单画箭头表示坐标轴，’detailed’则将详细的刻度标记在坐标轴上</p>
+
+<ol>
+  <li>参数x和y分别是两个数值向量，z是一个与前两个参数对应的矩阵</li>
+  <li>xlim、ylim和zlim分别设定三个坐标轴的范围</li>
+  <li>xlab、ylab和zlab分别设定三个坐标轴的标题</li>
+  <li>theta和phi分别设定立体图形左右方向和上下方向旋转的角度</li>
+  <li>r设定眼睛离透视图中心的距离，这个距离的远近会给我们一种从远近看物体的感觉</li>
+  <li>d设定立体效果的程度，大于1的值会减弱立体程度，反之会增强立体程度</li>
+  <li>scale为逻辑值，决定是否对三个坐标进行缩放，若为TRUE，则x、y和z都会被缩放到[0, 1]范围内，若为FALSE，那么所有坐标轴都按照数据的原始量纲处理，这样可以得到数据的真实比例</li>
+  <li>expand为z轴的缩放因子，它决定了z轴的长短</li>
+  <li>col为组成曲面的所有小方块的颜色；border为组成曲面的小方块的边框样式，设置为NA可以去掉边
+框</li>
+  <li>ltheta和lphi设置透视图的光源位置</li>
+  <li>shade决定的阴影效果；box为逻辑值，设定透视图是否需要画外框</li>
+  <li>axes决定是否画坐标轴；nticks为坐标轴刻度线的数目；ticktype设定坐标轴刻度类型，取值’simple’则简单画箭头表示坐标轴，’detailed’则将详细的刻度标记在坐标轴上</li>
+</ol>
 
 <h3 id="section">实例</h3>
 <p>这里我们使用persp函数来展示一下二维正态分布密度函数图。
@@ -122,9 +129,10 @@ mtext(expression(list(mu[1]==0,mu[2]==0,sigma[11]==10,sigma[22]==10,sigma[12
 ]==15,rho==0.5)), side=3) # adding a text line to the graph
 </code></pre>
 </div>
-<p><img src="/img/二维正态分布图.png" alt="二维正态分布图" /></p>
+<p><img src="http://xukuang.github.io/images/二维正态分布图.png" alt="二维正态分布图" /></p>
 
 <h2 id="lattice">lattice包的函数</h2>
+
 <div class="highlighter-rouge"><pre class="highlight"><code>library(lattice)
 data(iris)
 cloud(Sepal.Length ~ Petal.Length * Petal.Width, data = iris,
@@ -135,15 +143,18 @@ points = Rows(trellis.par.get("superpose.symbol"), 1:3),
 text = list(levels(iris$Species))))
 </code></pre>
 </div>
-<p><img src="/img/示例图.png" alt="示例图" /></p>
+<p><img src="http://xukuang.github.io/images/示例图.png" alt="示例图" /></p>
 
 <h2 id="scatterplot3d">scatterplot3d包的函数</h2>
-<p>scatterplot3d包主要包含三个函数，其中：
-* scatterplotplot3d函数为包scatterplot3d的基础函数，能够打开画图，画出点或线
-* points3d向用函数scatterplotplot3d画好的图上添加点或线
-* plane3d向用函数scatterplotplot3d画好的图上添加趋势面
-<code class="highlighter-rouge">
-library(scatterplot3d)
+<p>scatterplot3d包主要包含三个函数，其中：</p>
+
+<ul>
+  <li>scatterplotplot3d函数为包scatterplot3d的基础函数，能够打开画图，画出点或线</li>
+  <li>points3d向用函数scatterplotplot3d画好的图上添加点或线</li>
+  <li>plane3d向用函数scatterplotplot3d画好的图上添加趋势面</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>library(scatterplot3d)
 data(trees)
 s3d &lt;- scatterplot3d(trees, type="h", highlight.3d=TRUE,
 angle=55, scale.y=0.7, pch=16, main="Volume ~ Grith + Height")
@@ -154,13 +165,14 @@ col="blue", type="h", pch=16)
 attach(trees)
 my.lm &lt;- lm(Volume ~ Girth + Height)
 s3d$plane3d(my.lm)
-</code>
-<img src="/img/趋势面.png" alt="树木体积与胸径和高度关系图" /></p>
+</code></pre>
+</div>
+<p><img src="http://xukuang.github.io/images/趋势面.png" alt="树木体积与胸径和高度关系图" /></p>
 
 <h2 id="rgl">rgl包的函数</h2>
-<p>利用rgl包作出的三维图像，可以通过鼠标调整不同的角度。
-<code class="highlighter-rouge">
-library(rgl)
+<p>利用rgl包作出的三维图像，可以通过鼠标调整不同的角度。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>library(rgl)
 plot3d(1:5,1:5, z = c(10, 20, 30, 40, 70), col="red", size=5)
 # save image
 rgl.snapshot('plot1.png')
@@ -175,7 +187,8 @@ rgl.postscript("plot2.pdf", "pdf", drawText = TRUE)
     par3d("userMatrix")    
     par3d(save)
     par3d("userMatrix")
-</code></p>
+</code></pre>
+</div>
 
 <h3 id="section-1">画外篇</h3>
 <p>下面的部分与文章主题没有关系，只是记述一下<strong>hexo</strong>中数学公式的表示方式。</p>
