@@ -6,13 +6,17 @@ categories: 技术篇
 tags: [R, reshape2]
 ---
 这里将数据框分为两种：宽数据和长数据，宽数据便于数据成果的展示，长数据则便于数据在R中进行分析。reshape2包中的melt函数可以实现宽数据向长数据的转换，而dcast可以实现宽数据向长数据的转化。 
+
 ## 宽数据转化为长数据
+
 ### melt函数
+
 ```
 melt(data, id.vars, measure.vars,
   variable.name = "variable", ..., na.rm = FALSE, value.name = "value",
   factorsAsStrings = TRUE)
 ```
+
 **data** 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型	
 **id.vars** 数据的转化标准：依照那些列进行转化，数据格式为字符型或数字型的向量。如果该参数没有限定，会把所有数据转化为两列，其中指标一列，数据一列。
 **measure.vars**	被转化的数据：将哪些列数据值转化，该参数在没有指定的默认情况下，会将id.vars中以外的所有列数据进行转化，数据格式为字符型或数字型的向量
@@ -21,8 +25,11 @@ melt(data, id.vars, measure.vars,
 **value.name** 对转化后的数据列重新命名，默认情况下，列名为value
 **factorsAsStrings**	转化过程中是否将因子类型数据转化为字符型数据，默认情况下为TRUE，将因子类型数据转化为字符型数据
 <!--more-->
+
 ### 实例
+
 * 按Month和Day列将其他指标排成长数据
+
 ```
 # 加载数据
 library(reshape2)
@@ -47,9 +54,11 @@ head(dat1)
 	# 6     5   6    Ozone    28
 dim(dat1)
 	# [1] 612   4
-需要注意的是melt函数当中如果id.vars参数不指定值，则会把所有数据转化为两列输出。
 ```
+需要注意的是melt函数当中如果id.vars参数不指定值，则会把所有数据转化为两列输出。
+
 * 按Month和Day列将Ozone和Solar.R列指标排成长数据
+
 ```
 dat2 = melt(airquality, id.vars = c('Month', 'Day'),
  measure = c('Ozone', 'Solar.R'))
@@ -64,7 +73,9 @@ head(dat2)
 dim(dat2) # 函数是dat1的1/2
 	# [1] 306   4 
 ```
+
 * 对排列后的数据进行重命名
+
 ```
 dat3 = melt(airquality, id.vars = c('Month', 'Day'),
 variable.name = 'type', value.name = 'value.type')
@@ -79,7 +90,9 @@ head(dat3) # 列名发生变化
 dim(dat3)
 	# [1] 612   4
 ```
+
 * 去除排列后数据中的NA
+
 ```
 #　 airquality$Ozone 数的前四列有44 个NA
 table(is.na(airquality$Ozone)) # 37
@@ -108,6 +121,7 @@ dim(dat4)# 比dat3少44行
 	# [1] 568   4	
 ```
 此外，还发现melt函数中所有参数名都可以只写'.'前的部分。
+
 ```
 dat5 = melt(airquality, id = c('Month', 'Day'),
 variable = 'type', value = 'value.type', na = TRUE)
@@ -120,8 +134,11 @@ head(dat5)
 	# 5     5   5 Ozone    NA
 	# 6     5   6 Ozone    28
 ```
+
 ## 长数据转化为宽数据
+
 ### dcast函数
+
 ```
 dcast(data, formula, fun.aggregate = NULL, ..., margins = NULL,
   subset = NULL, fill = NULL, drop = TRUE,
@@ -135,8 +152,11 @@ dcast(data, formula, fun.aggregate = NULL, ..., margins = NULL,
 **fill** 不存在的组合值的显示结果。默认的显示为0。数据类型为数值型向量
 **drop** 确认不存在分分类组合是否显示，默认情况下显示
 **value.var** 貌似对对转化后的数据进行命名，使用默认情况即可
+
 ### 实例
+
 * 每个分类结果有一个数据，此时不需要使用汇总函数
+
 ```R
 air1 =  dcast(dat4, Month + Day ~ type)
 dim(air1)
@@ -150,7 +170,9 @@ head(air1) # 数据与airquality相同
 	# 5     5   5    NA      NA 14.3   56
 	# 6     5   6    28      NA 14.9   66
 ```
+
 * 按Month列排成宽数据，每个分类结果有多个数据，必须有汇总函数
+
 ```
 air2 =  dcast(dat4, Month ~ type, sum) # 这里使用sum函数
 dim(air2)
@@ -163,7 +185,9 @@ head(air2)
 	# 4     8    NA      NA 272.6 2603
 	# 5     9    NA    5023 305.4 2307
 ```
+
 * 是否显示总的分类结果
+
 ```
 air3 = dcast(dat4, Month ~ type, sum, margins = T) #列、行的总汇总都显示
 dim(air3)
@@ -192,7 +216,9 @@ dcast(dat4, Month ~ type, sum, margins = c('type'))# 只显示行的汇总
 	# 4     8    NA      NA 272.6 2603    NA
 	# 5     9    NA    5023 305.4 2307    NA
 ```
+
 * 只显示部分的分类内容
+
 ```
 library(plyr)
 air4 = dcast(dat4, Month ~ type, sum, subset = .(type == 'Wind' )) # 只显示type中Wind的情况
@@ -206,7 +232,9 @@ head(air4)
 	# 4     8 272.6
 	# 5     9 305.4
 ```
+
 * 不存在的分类是否显示，以及怎么显示
+
 ```
 air5 = dcast(dat4, Month + Day ~ type, length, drop = F) # 组合上存在的结果都显示
 tail(air5) # 这里的最后一行只是组合上存在，数据中并不在
