@@ -58,9 +58,8 @@
   <li>基本形式</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>spam = 'spam'
+<pre><code>spam = 'spam'
 </code></pre>
-</div>
 
 <ul>
   <li>序列赋值语句</li>
@@ -68,7 +67,7 @@
 
 <p>任何变量名的序列都可以赋值给任何值的序列，而Python会按位置一次赋值一个元素。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code># 元组和列表的分解赋值
+<pre><code># 元组和列表的分解赋值
 # 同时建立了两个对象spam和ham
 ## 元组
 spam, ham = 'yum', 'YUM'
@@ -89,13 +88,12 @@ a, b, c, d = 'spam' # a = 's'  b= 'p' c = 'a' d = 'm'
 # 整数
 a, b, c = range(3) 
 </code></pre>
-</div>
 
 <ul>
   <li>扩展序列解包</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code># 对字符串
+<pre><code># 对字符串
 a, *b = 'spam' # a = 's' b = ['p', 'a', 'm']
 *a, b = 'spam' # a = ['s', 'p', 'a'] b = 'm'
 # 对列表
@@ -107,7 +105,6 @@ a, b, *c, d, e = [1, 2, 3, 4] # a = 1, b= 2, c = [], d = 3, e = 4
 *a, = [1, 2, 3, 4] # a = [1, 2, 3, 4]
 # * a = [1, 2, 3, 4] 在python中是错误的
 </code></pre>
-</div>
 
 <ul>
   <li>多重目标赋值</li>
@@ -115,7 +112,7 @@ a, b, *c, d, e = [1, 2, 3, 4] # a = 1, b= 2, c = [], d = 3, e = 4
 
 <p>这里只建立了一个对象。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>a = b = 1
+<pre><code>a = b = 1
 a +=1
 a, b # a = 2, b = 1
 # 数字不支持原地修改，修改b只会对b发生变化 
@@ -123,16 +120,14 @@ a = b = [1, 2, 3]
 b.append(4)
 a, b # a = [1, 2, 3, 4], b = [1, 2, 3, 4]
 </code></pre>
-</div>
 
 <ul>
   <li>增强赋值运算</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>a += 1 # a = a + 1
+<pre><code>a += 1 # a = a + 1
 ## 增强赋值运算对原对象进行修改，而没有产生新的对象
 </code></pre>
-</div>
 
 </section>
 <section class="meta">

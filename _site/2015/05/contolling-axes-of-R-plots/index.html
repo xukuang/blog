@@ -45,12 +45,11 @@
                                               <article class="content">
                                               <section class="post">
 <h2 id="section">1. 使用到的数据</h2>
-<div class="highlighter-rouge"><pre class="highlight"><code>set.seed(1)
+<pre><code>set.seed(1)
 n = 100
 x = rnorm(n)
 y = rnorm(n, x)
 </code></pre>
-</div>
 
 <h2 id="section-1">2. 相关函数介绍</h2>
 
@@ -64,13 +63,12 @@ y = rnorm(n, x)
 具体的区别可以参见下面的程序和图形：</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>par(mfrow = c(2,2))
+<pre><code>par(mfrow = c(2,2))
 plot(x, y)
 plot(x, y, xaxt = 'n')
 plot(x, y, xaxt = 'n', yaxt = 'n')
 plot(x, y, axes = F)
 </code></pre>
-</div>
 <!--more-->
 <p><img src="http://7xize0.com1.z0.glb.clouddn.com/plot.png" alt="plot不同参数设置图" /></p>
 
@@ -102,7 +100,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA, pos = NA, outer = F
 <h2 id="section-2">3. 一个例子</h2>
 <p>这个例子解决了R的绘图坐标轴刻度线与刻度线标签距离太大的问题。解决方法是两次画坐标轴，第一次只显示坐标轴的坐标轴和刻度线，第二次只显示坐标刻度线的标签。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>set.seed(1)
+<pre><code>set.seed(1)
 n = 100
 x = rnorm(n)
 y = rnorm(n, x)
@@ -120,7 +118,6 @@ mtext(side = 1, "Explanatory Variable", line = 2) # 添加x轴坐标轴名称
 mtext(side = 2, "Outcome Variable", line = 3) # 添加x轴坐标轴名称
 box()
 </code></pre>
-</div>
 <p><img src="http://7xize0.com1.z0.glb.clouddn.com/plot2.png" alt="效果图" /></p>
 
 </section>

@@ -51,7 +51,7 @@
 
 <h2 id="datatable-">data.table 的创建</h2>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>library(data.table)
+<pre><code>library(data.table)
 DT = data.table(x=rep(c("a","b","c"),each=3), y=c(1,3,6), v=1:9)
 DT
 	#    x y v
@@ -65,7 +65,6 @@ DT
 	# 8: c 3 8
 	# 9: c 6 9
 </code></pre>
-</div>
 <!--more-->
 
 <h2 id="section-1">基础操作</h2>
@@ -75,14 +74,13 @@ DT
 
 <h4 id="section-3">单行提取</h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[2]                      # 2nd row
+<pre><code>DT[2]                      # 2nd row
 	#    x y v
 	# 1: a 3 2
 DT[2,]                     # same
 	#    x y v
 	# 1: a 3 2
 </code></pre>
-</div>
 <p>这里DT[2]和DT[2,]是完全相同的，这里的『,』只是说明还有其他参数可设置，而其他参数按默认值进行计算。下文所有这样的最后一个『,』都不再写出来。</p>
 
 <h4 id="section-4">多行提取</h4>
@@ -91,7 +89,7 @@ DT[2,]                     # same
   <li>数字提取</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[1:2]
+<pre><code>DT[1:2]
 	#    x y v
 	# 1: a 1 1
 	# 2: a 3 2
@@ -100,20 +98,18 @@ DT[c(2,5)]
 	#1: a 3 2
 	#2: b 3 5
 </code></pre>
-</div>
 
 <ul>
   <li>逻辑提取</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[c(FALSE,TRUE)]          # even rows (usual recycling)
+<pre><code>DT[c(FALSE,TRUE)]          # even rows (usual recycling)
 	#    x y v
 	# 1: a 3 2
 	# 2: b 1 4
 	# 3: b 6 6
 	# 4: c 3 8
 </code></pre>
-</div>
 
 <p>此时,c(FALSE,TRUE)会自己重复匹配成与DT的行数相同的向量</p>
 
@@ -128,7 +124,7 @@ DT[c(2,5)]
 
 <p>数字提取时，一定要把wth参数设置为FALSE。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,2,with=FALSE]          # 2nd column
+<pre><code>DT[,2,with=FALSE]          # 2nd column
 	#    y
 	# 1: 1
 	# 2: 3
@@ -140,13 +136,12 @@ DT[c(2,5)]
 	# 8: 3
 	# 9: 6
 </code></pre>
-</div>
 
 <ul>
   <li>列名提取</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,list(v)]               # v column (as data.table
+<pre><code>DT[,list(v)]               # v column (as data.table
 	#    v
 	# 1: 1
 	# 2: 2
@@ -158,12 +153,11 @@ DT[c(2,5)]
 	# 8: 8
 	# 9: 9
 </code></pre>
-</div>
 
 <h3 id="section-7">列名的修改</h3>
 <p>列名的修改可以使用setnames()函数，这个函数好像比对data.frame类型数据名更改的names()和colnames()函数也要快一些。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>dt = data.table(a=1:2,b=3:4,c=5:6) # compare to data.table
+<pre><code>dt = data.table(a=1:2,b=3:4,c=5:6) # compare to data.table
 try(tracemem(dt))                  # by reference, no deep or shallow copies
 setnames(dt,"b","B")               # by name, no match() needed (warning if "b" is missing)
 setnames(dt,3,"C")                 # by position with warning if 3 &gt; ncol(dt)
@@ -171,7 +165,6 @@ setnames(dt,2:3,c("D","E"))        # multiple
 setnames(dt,c("a","E"),c("A","F")) # multiple by name (warning if either "a" or "E" is missing)
 setnames(dt,c("X","Y","Z"))        # replace all (length of names must be == ncol(DT))  
 </code></pre>
-</div>
 
 <h4 id="section-8">多列提取</h4>
 
@@ -181,7 +174,7 @@ setnames(dt,c("X","Y","Z"))        # replace all (length of names must be == nco
 
 <p>如同上面对按数字对单列的提取，对多列提取也要设置with参数为FALSE。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,2:3,with=FALSE]
+<pre><code>DT[,2:3,with=FALSE]
 	#    y v
 	# 1: 1 1
 	# 2: 3 2
@@ -204,13 +197,12 @@ DT[,c(1,3),with=FALSE]
 	# 8: c 8
 	# 9: c 9      
 </code></pre>
-</div>
 
 <ul>
   <li>按列名提取</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,list(y, v)]
+<pre><code>DT[,list(y, v)]
 	#    y v
 	# 1: 1 1
 	# 2: 3 2
@@ -222,18 +214,16 @@ DT[,c(1,3),with=FALSE]
 	# 8: 3 8
 	# 9: 6 9
 </code></pre>
-</div>
 
 <p>如果按列名提取时，不使用列表，仍然能对列进行提取，只是结果以向量的形式输出。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,v]                     # v column (as vector)
+<pre><code>DT[,v]                     # v column (as vector)
 	# [1] 1 2 3 4 5 6 7 8 9
 DT[,c(v)]                  # same
 	# [1] 1 2 3 4 5 6 7 8 9   
 DT[, c(y, v)]
 	# [1] 1 3 6 1 3 6 1 3 6 1 2 3 4 5 6 7 8 9
 </code></pre>
-</div>
 
 <h3 id="section-9">列的添加与删除</h3>
 
@@ -243,7 +233,7 @@ DT[, c(y, v)]
   <li>单列添加</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT
+<pre><code>DT
 	#    x y v
 	# 1: a 1 1
 	# 2: a 3 2
@@ -304,14 +294,13 @@ DT
 	# 8: c 3 8 k 8  9 11
 	# 9: c 6 9 k 8  9 11
 </code></pre>
-</div>
 <p>如果添加的列名，数据中已经包含则是对这一列数据的修改。</p>
 
 <ul>
   <li>多列的添加</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[, c('f', 'g') := list( d + 1, c)]
+<pre><code>DT[, c('f', 'g') := list( d + 1, c)]
 DT[, ':='( f =  d + 1, g = c)]          # same
 DT
 	#    x y v a c  d  e  f g
@@ -325,12 +314,11 @@ DT
 	# 8: c 3 8 k 8  9 11 10 8
 	# 9: c 6 9 k 8  9 11 10 8
 </code></pre>
-</div>
 <p>此处，需要注意的是新创建的列只能依照原有数据列，而不能依照新创建的列。例如这个例子中，g = c是可以运行，而g = f则会提示错误。</p>
 
 <h4 id="section-11">列的删除</h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,c:=NULL]     # remove column c
+<pre><code>DT[,c:=NULL]     # remove column c
 DT
 	#    x y v a  d  e  f g
 	# 1: a 1 1 k  9 11 10 8
@@ -355,17 +343,15 @@ DT
 	# 8: c 3 8 k
 	# 9: c 6 9 k
 </code></pre>
-</div>
 
 <h2 id="section-12">列指标的简单操作</h2>
 <p>简单操作主要包括求和、平均值、方差和标准差等。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[2:3,sum(v)]             # sum(v) over rows 2 and 3
+<pre><code>DT[2:3,sum(v)]             # sum(v) over rows 2 and 3
 # [1] 5
 DT[2:3,mean(v)]             # sum(v) over rows 2 and 3
 # [1] 2.5
 </code></pre>
-</div>
 
 <h2 id="key">索引key</h2>
 
@@ -374,7 +360,7 @@ DT[2:3,mean(v)]             # sum(v) over rows 2 and 3
 
 <h4 id="section-14">单列索引的创建</h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
+<pre><code>
 ## methdod first
 key(DT)                    # key
 	# NULL 
@@ -398,12 +384,11 @@ setkeyv(DT,"y")            # same (v in setkeyv stands for vector)
 key(DT)
 	# [1] "y"
 </code></pre>
-</div>
 <p>一旦对数据进行新的索引，原有的索引将消失。</p>
 
 <h4 id="section-15">多列索引的创建</h4>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>## methdod first                    # key 
+<pre><code>## methdod first                    # key 
 setkey(DT,x,v)               # set a 1-column key. No quotes, for convenience.
 key(DT)
 	# [1] "x" "v"
@@ -436,7 +421,6 @@ DT
 	# 8: c 3 8 k
 	# 9: c 6 9 k
 </code></pre>
-</div>
 
 <h3 id="section-16">通过索引进行数据的提取</h3>
 <p>按照索引对数据提取，可以加快提取数据的速度。</p>
@@ -444,7 +428,7 @@ DT
 <h4 id="section-17">单索引</h4>
 <p>正向提取</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>setkey(DT, x)
+<pre><code>setkey(DT, x)
 DT["a"]                    # binary search (fast)
 	#    x y v a
 	# 1: a 1 1 k
@@ -461,13 +445,12 @@ DT[x=="a"]                 # same; i.e. binary search (fast)
 	# 2: a 3 2 k
 	# 3: a 6 3 k
 </code></pre>
-</div>
 
 <ul>
   <li>反向提取</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[!.("a")]                # not join
+<pre><code>DT[!.("a")]                # not join
 	#    x y v a
 	# 1: b 1 4 k
 	# 2: b 3 5 k
@@ -493,7 +476,6 @@ DT[!2:4]                   # all rows other than 2:4
 	# 6: c 6 9 k
 
 </code></pre>
-</div>
 
 <h4 id="section-18">多索引</h4>
 
@@ -501,7 +483,7 @@ DT[!2:4]                   # all rows other than 2:4
   <li>正向提取</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>setkey(DT, x, y)
+<pre><code>setkey(DT, x, y)
 # Mehtod First
 DT["a"]                    # join to 1st column of key
 	#    x y v a
@@ -586,13 +568,12 @@ DT[list("a", 3:6), roll = T]
 	# 3: a 5 2 k
 	# 4: a 6 3 k
 </code></pre>
-</div>
 
 <ul>
   <li>反向提取</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[x!="b" | y!=3]          # not yet optimized, currently vector scans
+<pre><code>DT[x!="b" | y!=3]          # not yet optimized, currently vector scans
 	#    x y v a
 	# 1: a 1 1 k
 	# 2: a 3 2 k
@@ -614,7 +595,6 @@ DT[!.("b",3)]              # same result but much faster
 	# 8: c 6 9 k
 
 </code></pre>
-</div>
 
 <h2 id="section-19">分类汇总</h2>
 <p>分类汇总是指按某列的分类指标进行简单操作，这里借助by参数实现。此外，by参数与索引相互没有影响。</p>
@@ -625,7 +605,7 @@ DT[!.("b",3)]              # same result but much faster
   <li>默认汇总名称</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,sum(v),by=x]
+<pre><code>DT[,sum(v),by=x]
 	#    x V1
 	# 1: a  6
 	# 2: b 15
@@ -636,11 +616,10 @@ DT[,sum(v),by=y]
 	# 2: 3 15
 	# 3: 6 18          
 </code></pre>
-</div>
 <ul>
   <li>
     <p>自定义汇总名称
-<code class="highlighter-rouge">
+<code>
 DT[,list(sum.v.x = sum(v)),by=x]
   #    x sum.v.x
   # 1: a       6
@@ -669,7 +648,7 @@ DT[,sum.v.y := sum(v) ,by=y]
   </li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,sum.v.y := sum(v) ,by=y]
+<pre><code>DT[,sum.v.y := sum(v) ,by=y]
 	#    x y v a sum.v.y
 	# 1: a 1 1 k      12
 	# 2: a 3 2 k      15
@@ -681,7 +660,6 @@ DT[,sum.v.y := sum(v) ,by=y]
 	# 8: c 3 8 k      15
 	# 9: c 6 9 k      18
 </code></pre>
-</div>
 
 <h3 id="section-21">多指标的多个分类汇总</h3>
 
@@ -689,7 +667,7 @@ DT[,sum.v.y := sum(v) ,by=y]
   <li>默认汇总名称</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,list(mean(v),sum(v)),by=list(x,y)]   # keyed by
+<pre><code>DT[,list(mean(v),sum(v)),by=list(x,y)]   # keyed by
 	#    x y V1 V2
 	# 1: a 1  1  1
 	# 2: a 3  2  2
@@ -701,13 +679,12 @@ DT[,sum.v.y := sum(v) ,by=y]
 	# 8: c 3  8  8
 	# 9: c 6  9  9
 </code></pre>
-</div>
 
 <ul>
   <li>自定义汇总名称</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,list(mean.v = mean(v),sum.v = sum(v)),by=list(x,y)]   # keyed by
+<pre><code>DT[,list(mean.v = mean(v),sum.v = sum(v)),by=list(x,y)]   # keyed by
 	#   x y mean.v sum.v
 	#1: a 1      1     1
 	#2: a 3      2     2
@@ -719,13 +696,12 @@ DT[,sum.v.y := sum(v) ,by=y]
 	#8: c 3      8     8
 	#9: c 6      9     9
 </code></pre>
-</div>
 
 <ul>
   <li>汇总结果与原始数据进行匹配</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,c("mean.v", "sum.v.y") := list(mean(v),sum(v)) ,by=list(x,y)]
+<pre><code>DT[,c("mean.v", "sum.v.y") := list(mean(v),sum(v)) ,by=list(x,y)]
 	#    x y v a sum.v.y mean.v
 	# 1: a 1 1 k       1      1
 	# 2: a 3 2 k       2      2
@@ -738,19 +714,17 @@ DT[,sum.v.y := sum(v) ,by=y]
 	# 9: c 6 9 k       9      9
 
 </code></pre>
-</div>
 
 <h2 id="datatabledataframe">data.table与data.frame的转化</h2>
 <p>data.table格式加快了处理速度，而data.frame则更为基础。两者的转化可以通过data.table(),setDT()和setDT()来实现，其中data.table()和setDT()函数可以将数据从data.frame转化为data.table，setDF()函数可以将数据从data.table转化为data.frame。注意使用data.table(),setDT()和setDT()时，参数本身的数据类型也会发生变化。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>class(DT)
+<pre><code>class(DT)
 	# [1] "data.table" "data.frame"  
 class(setDF(DT))
 	# [1] "data.frame"
 class(DT)
 	# [1] "data.frame"
 </code></pre>
-</div>
 <p>此外，data.table包还可以与基础包中的duplicated()、unique()、subset() 函数结合使用。 不仅如此，data.table包还有一些基础包的替代函数。rbind()升级版的rbindlist()，可以合并列数不同和列位置不同的数据。比dplyr包中arrange()函数更快的setorder()排序函数。</p>
 
 </section>

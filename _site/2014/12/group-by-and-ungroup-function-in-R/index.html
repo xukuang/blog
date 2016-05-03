@@ -52,105 +52,101 @@
 <h3 id="section">原始数据</h3>
 <p>原始数据的概况。<!--more--></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
-<span class="c1">## 原始数据
+<pre><code class="language-R">library(dplyr)
+## 原始数据
 ### 这是一个32X12的数据框
-</span><span class="n">mtcars</span>
-    <span class="c1">#                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-</span>    <span class="c1"># Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-</span>    <span class="c1"># Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-</span>    <span class="c1"># Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-</span>    <span class="c1"># Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-</span>    <span class="c1"># Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-</span>    <span class="c1"># Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-</span>    <span class="c1"># Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-</span>    <span class="c1"># Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-</span>    <span class="c1"># Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-</span>    <span class="c1"># Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-</span>    <span class="c1"># Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-</span>    <span class="c1"># Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
-</span>    <span class="c1"># Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
-</span>    <span class="c1"># Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
-</span>    <span class="c1"># Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-</span>    <span class="c1"># Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-</span>    <span class="c1"># Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-</span>    <span class="c1"># Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-</span>    <span class="c1"># Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-</span>    <span class="c1"># Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-</span>    <span class="c1"># Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
-</span>    <span class="c1"># Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
-</span>    <span class="c1"># AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
-</span>    <span class="c1"># Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
-</span>    <span class="c1"># Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
-</span>    <span class="c1"># Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
-</span>    <span class="c1"># Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
-</span>    <span class="c1"># Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-</span>    <span class="c1"># Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
-</span>    <span class="c1"># Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
-</span>    <span class="c1"># Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
-</span>    <span class="c1"># Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
-</span></code></pre>
-</div>
+mtcars
+    #                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+    # Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+    # Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+    # Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+    # Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+    # Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+    # Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+    # Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+    # Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+    # Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+    # Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+    # Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+    # Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+    # Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+    # Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+    # Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+    # Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+    # Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+    # Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+    # Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+    # Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+    # Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+    # Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+    # AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+    # Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+    # Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+    # Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+    # Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+    # Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+    # Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+    # Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+    # Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+    # Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
+</code></pre>
 
 <h3 id="groupby--ungroup-1">group_by &amp; ungroup</h3>
 <p><strong>group_by</strong>函数对数据进行分组时，默认情况下对处理的数据的分组情况是忽略掉的，只有把参数add = TRUE才在原始数据的基础上添加新的分类。因此，在默认情况下，在第二次分组时，可以对已分组数据直接进行第二次分组，而不必先用<strong>ungroup</strong>函数拆除已有分组指标。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">## 对数据mtcars进行分组，分组依据为cyl
-</span><span class="n">by_cyl</span> <span class="o">&lt;-</span> <span class="n">group_by</span><span class="p">(</span><span class="n">mtcars</span><span class="p">,</span> <span class="n">cyl</span><span class="p">)</span>
-<span class="n">groups</span><span class="p">(</span><span class="n">by_cyl</span><span class="p">)</span>
-    <span class="c1"># [[1]]
-</span>    <span class="c1"># cyl
+<pre><code class="language-R">## 对数据mtcars进行分组，分组依据为cyl
+by_cyl &lt;- group_by(mtcars, cyl)
+groups(by_cyl)
+    # [[1]]
+    # cyl
 ## 去除数据mtby_cyl分组依据后，分组依据为NULL
-</span><span class="n">ungroup</span><span class="p">(</span><span class="n">by_cyl</span><span class="p">)</span>
-    <span class="c1"># NULL
+ungroup(by_cyl)
+    # NULL
 ## 这里对by_cyl先去除第一次的分组依据不是必须的
-</span><span class="n">groups</span><span class="p">(</span><span class="n">group_by</span><span class="p">(</span><span class="n">ungroup</span><span class="p">(</span><span class="n">by_cyl</span><span class="p">),</span> <span class="n">vs</span><span class="p">,</span> <span class="n">am</span><span class="p">))</span>
-    <span class="c1"># [[1]]
-</span>    <span class="c1"># vs
-</span>    <span class="c1"># [[2]]
-</span>    <span class="c1"># am
+groups(group_by(ungroup(by_cyl), vs, am))
+    # [[1]]
+    # vs
+    # [[2]]
+    # am
 ## 对已分组数据by_cyl进行再次分组，分组依据为vs和am，而没有cyl（参数add默认值为TRUE）
-</span><span class="n">groups</span><span class="p">(</span><span class="n">group_by</span><span class="p">(</span><span class="n">by_cyl</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">am</span><span class="p">))</span>
-    <span class="c1"># [[1]]
-</span>    <span class="c1"># vs
-</span>    <span class="c1"># [[2]]
-</span>    <span class="c1"># am
+groups(group_by(by_cyl, vs, am))
+    # [[1]]
+    # vs
+    # [[2]]
+    # am
 ## 对以分组数据by_cyl进行再次分组，分组依据为cyl、vs和am
-</span><span class="n">groups</span><span class="p">(</span><span class="n">group_by</span><span class="p">(</span><span class="n">by_cyl</span><span class="p">,</span> <span class="n">vs</span><span class="p">,</span> <span class="n">am</span><span class="p">,</span> <span class="n">add</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">))</span>
-    <span class="c1"># [[1]]
-</span>    <span class="c1"># cyl
-</span>    <span class="c1"># [[2]]
-</span>    <span class="c1"># vs
-</span>    <span class="c1"># [[3]]
-</span>    <span class="c1"># am
-</span></code></pre>
-</div>
+groups(group_by(by_cyl, vs, am, add = TRUE))
+    # [[1]]
+    # cyl
+    # [[2]]
+    # vs
+    # [[3]]
+    # am
+</code></pre>
 
 <h2 id="groupby--ungroup-2">group_by &amp; ungroup延伸</h2>
 <p>使用<strong>group_by</strong>函数进行分组的数据，数据本身常常包含着分组依据，所以在未去除分组（<strong>ungroup</strong>）或下一次分组（使用<strong>group_by</strong>）前，分组依据常常保留，这会影响函数的运算结果，包括<strong>filter</strong>，<strong>arrange</strong>，函数和指标函数(<strong>n</strong>，<strong>sum</strong>，<strong>mean</strong>，<strong>sd</strong>，<strong>var</strong>，<strong>min</strong>，<strong>max</strong>函数）</p>
 
 <h3 id="filter">filter函数</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">### 这里按cyl进行分组，所以筛选结果有3条
-</span><span class="n">filter</span><span class="p">(</span><span class="n">by_cyl</span><span class="p">,</span> <span class="n">disp</span> <span class="o">==</span> <span class="n">max</span><span class="p">(</span><span class="n">disp</span><span class="p">))</span>
-    <span class="c1"># Source: local data frame [3 x 11]
-</span>    <span class="c1"># Groups: cyl
-</span>    <span class="c1">#    mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-</span>    <span class="c1"># 1 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-</span>    <span class="c1"># 2 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-</span>    <span class="c1"># 3 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-</span></code></pre>
-</div>
+<pre><code class="language-R">### 这里按cyl进行分组，所以筛选结果有3条
+filter(by_cyl, disp == max(disp))
+    # Source: local data frame [3 x 11]
+    # Groups: cyl
+    #    mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+    # 1 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+    # 2 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+    # 3 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+</code></pre>
 
 <h3 id="arrange">arrange函数</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arrange(by_cyl, disp)
+<pre><code>arrange(by_cyl, disp)
 </code></pre>
-</div>
 
 <h3 id="section-1">各指标函数(以平均值为例)</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>## 分组前后结果的差异，即x1与x3、x2与x4的差异
+<pre><code>## 分组前后结果的差异，即x1与x3、x2与x4的差异
 ### x1和x求的是整体的平均值，x3和x4求的是按cyl进行分组后的平均值
 temp = mtcars %&gt;% mutate(x1 = mean(disp), x2 = mean(hp)) %&gt;% group_by(cyl) %&gt;% mutate(x3 = mean(disp), x4 = mean(hp))
 groups(temp)
@@ -175,7 +171,6 @@ groups(by_vs_am)
     # am
 by_vs_am
 </code></pre>
-</div>
 
 </section>
 <section class="meta">

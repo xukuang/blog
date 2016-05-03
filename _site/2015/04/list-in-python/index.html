@@ -57,128 +57,117 @@
 
 <h3 id="section-1">空列表的创建</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c"># 空列表的创建</span>
-<span class="n">L</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-<span class="n">L</span>
-	<span class="c">## []</span>
-<span class="n">L</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># 两种方法效果相同</span>
-	<span class="c">## []</span>
+<pre><code class="language-python"># 空列表的创建
+L = list()
+L
+	## []
+L = [] # 两种方法效果相同
+	## []
 </code></pre>
-</div>
 
 <h3 id="section-2">一般列表创建</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c"># 方法一，利用[]</span>
-<span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Spam'</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">,</span> <span class="p">[</span><span class="s">'ham'</span><span class="p">,</span> <span class="s">'egg'</span><span class="p">]]</span>
-<span class="c"># 方法二，list()</span>
-<span class="n">L</span> <span class="o">=</span> <span class="nb">list</span><span class="p">([</span><span class="s">'Spam'</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">,</span> <span class="p">[</span><span class="s">'ham'</span><span class="p">,</span> <span class="s">'egg'</span><span class="p">]])</span> <span class="c"># list函数只有一个参数，所以要把所有对象放到一个列表(或元组)中</span>
-<span class="n">L</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span> <span class="c"># 可迭代对象产生的列表</span>
-<span class="n">L</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s">'spam'</span><span class="p">)</span> <span class="c"># 可迭代对象产生的列表</span>
-<span class="c"># 方法三，利用列表解析</span>
-<span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)]</span>
-<span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span>
-<span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="s">'spam'</span><span class="p">]</span>
+<pre><code class="language-python"># 方法一，利用[]
+L = ['Spam', 'eggs', ['ham', 'egg']]
+# 方法二，list()
+L = list(['Spam', 'eggs', ['ham', 'egg']]) # list函数只有一个参数，所以要把所有对象放到一个列表(或元组)中
+L = list(range(-5,5)) # 可迭代对象产生的列表
+L = list('spam') # 可迭代对象产生的列表
+# 方法三，利用列表解析
+L = [x for x in range(-5, 5)]
+L = [x for x in [1, 2, 3, 4]]
+L = [x * 4 for x in 'spam']
 </code></pre>
-</div>
 
 <h2 id="section-3">2. 列表的引用</h2>
 
 <h3 id="section-4">列表的索引，返回该位置的对象</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Spam'</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">,</span> <span class="p">[</span><span class="s">'ham'</span><span class="p">,</span> <span class="s">'egg'</span><span class="p">]]</span>
-<span class="n">L</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="c"># 返回一个列表</span>
-<span class="n">L</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="c"># 返回一个字符串</span>
+<pre><code class="language-python">L = ['Spam', 'eggs', ['ham', 'egg']]
+L[2] # 返回一个列表
+L[2][1] # 返回一个字符串
 </code></pre>
-</div>
 
 <h3 id="section-5">列表的分片，返回一个列表</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Spam'</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">,</span> <span class="p">[</span><span class="s">'ham'</span><span class="p">,</span> <span class="s">'egg'</span><span class="p">]]</span>
-<span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<pre><code class="language-python">L = ['Spam', 'eggs', ['ham', 'egg']]
+L[0:2]
 </code></pre>
-</div>
 
 <h2 id="section-6">3. 列表相关属性的查看</h2>
 
 <h3 id="section-7">列表长度</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Spam'</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">,</span> <span class="p">[</span><span class="s">'ham'</span><span class="p">,</span> <span class="s">'egg'</span><span class="p">]]</span>
-<span class="c"># len列表长度</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<pre><code class="language-python">L = ['Spam', 'eggs', ['ham', 'egg']]
+# len列表长度
+len(L)
 </code></pre>
-</div>
 
 <h3 id="section-8">成员关系判断</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c"># in</span>
-<span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Spam'</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">,</span> <span class="p">[</span><span class="s">'ham'</span><span class="p">,</span> <span class="s">'egg'</span><span class="p">]]</span>
-<span class="s">'Spam'</span> <span class="ow">in</span> <span class="n">L</span>
-<span class="c"># L.index</span>
-<span class="n">L</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">'Spam'</span><span class="p">)</span> <span class="c"># 返回参数在列表中的位置</span>
+<pre><code class="language-python"># in
+L = ['Spam', 'eggs', ['ham', 'egg']]
+'Spam' in L
+# L.index
+L.index('Spam') # 返回参数在列表中的位置
 </code></pre>
-</div>
 
 <h3 id="section-9">列表某项出现次数统计</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c"># L.count</span>
-<span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Spam'</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">,</span> <span class="s">'I'</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">]</span>
-<span class="n">L</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s">'eggs'</span><span class="p">)</span>
+<pre><code class="language-python"># L.count
+L = ['Spam', 'eggs', 'I', 'eggs']
+L.count('eggs')
 </code></pre>
-</div>
 
 <h3 id="section-10">列表排序</h3>
 
 <p>列表排序时，要求列表的每一项的类型应该相同，且该类型可以比较。对列表排序后，列表本身发生了变化。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c"># L.sort升序排列</span>
-<span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Spam'</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">,</span> <span class="s">'I'</span><span class="p">]</span> 
-<span class="n">L</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span> <span class="c"># 字符串只比较首字符</span>
-<span class="n">L</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">]]</span>
-<span class="n">L</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-<span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-<span class="n">L</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<pre><code class="language-python"># L.sort升序排列
+L = ['Spam', 'eggs', 'I'] 
+L.sort() # 字符串只比较首字符
+L = [[1,2],[3,4],[1,5]]
+L.sort()
+L = [4, 3, 9, 2]
+L.sort()
 </code></pre>
-</div>
 
 <h3 id="section-11">列表原地翻转</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c"># L.reverse</span>
-<span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Spam'</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">,</span> <span class="s">'I'</span><span class="p">]</span>
-<span class="n">L</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+<pre><code class="language-python"># L.reverse
+L = ['Spam', 'eggs', 'I']
+L.reverse()
 </code></pre>
-</div>
 
 <h3 id="section-12">列表重复</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Spam'</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">,</span> <span class="p">[</span><span class="s">'ham'</span><span class="p">,</span> <span class="s">'egg'</span><span class="p">]]</span>
-<span class="n">L</span> <span class="o">*</span> <span class="mi">3</span>
+<pre><code class="language-python">L = ['Spam', 'eggs', ['ham', 'egg']]
+L * 3
 </code></pre>
-</div>
 
 <h2 id="section-13">4. 列表的修改</h2>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Spam'</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">,</span> <span class="p">[</span><span class="s">'ham'</span><span class="p">,</span> <span class="s">'egg'</span><span class="p">]]</span>
-<span class="c"># 根据索引和分片改变列表</span>
-<span class="n">L</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">'apples'</span>
-<span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">'eat'</span><span class="p">,</span> <span class="s">'more'</span><span class="p">]</span>
-<span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">'I'</span><span class="p">,</span> <span class="s">'eat'</span><span class="p">,</span> <span class="s">'more'</span><span class="p">]</span> <span class="c"># 注意分片，长度不一样时的结果</span>
-<span class="c"># 在末尾在添加新的一项</span>
-<span class="n">L</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="s">'please'</span> 
-<span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">"please"</span><span class="p">)</span>
-<span class="c"># 列表某个位置添加一项</span>
-<span class="n">L</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">'kuangxu'</span><span class="p">)</span> <span class="c"># 原来的项往后推移</span>
-<span class="c"># 删除列表某一项</span>
-<span class="n">L</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="c"># 删除最后一项并返回最后一项的值</span>
-<span class="n">L</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c"># 删除列表的第一项并返回第一项的值，这里参数是项的位置</span>
-<span class="k">del</span> <span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">L</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">"Spam"</span><span class="p">)</span> <span class="c"># 删除列表的"Spam"这一项</span>
-<span class="c"># 在末尾在添加多项</span>
-<span class="c"># list1.extend(list2)</span>
-<span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<span class="n">L</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<pre><code class="language-python">L = ['Spam', 'eggs', ['ham', 'egg']]
+# 根据索引和分片改变列表
+L[2] = 'apples'
+L[0:2] = ['eat', 'more']
+L[0:2] = ['I', 'eat', 'more'] # 注意分片，长度不一样时的结果
+# 在末尾在添加新的一项
+L[4] = 'please' 
+L.append("please")
+# 列表某个位置添加一项
+L.insert(1, 'kuangxu') # 原来的项往后推移
+# 删除列表某一项
+L.pop() # 删除最后一项并返回最后一项的值
+L.pop(0) # 删除列表的第一项并返回第一项的值，这里参数是项的位置
+del L[0]
+L.remove("Spam") # 删除列表的"Spam"这一项
+# 在末尾在添加多项
+# list1.extend(list2)
+L = [1, 2, 3]
+L.extend([1, 2, 3])
+[1, 2, 3] + [1, 2, 3]
 </code></pre>
-</div>
 
 </section>
 <section class="meta">

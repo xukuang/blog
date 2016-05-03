@@ -48,7 +48,7 @@
 
 <h3 id="persp-1">persp函数</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>persp(x = seq(0, 1, length.out = nrow(z)),
+<pre><code>persp(x = seq(0, 1, length.out = nrow(z)),
       y = seq(0, 1, length.out = ncol(z)),
       z, xlim = range(x), ylim = range(y),
       zlim = range(z, na.rm = TRUE),
@@ -60,7 +60,6 @@
       shade = NA, box = TRUE, axes = TRUE, nticks = 5,
       ticktype = "simple", ...)
 </code></pre>
-</div>
 <!--more-->
 
 <ol>
@@ -86,7 +85,7 @@
 <script type="math/tex; mode=display">f(x1, x2) = \frac{ 1 }{2\pi \sigma1\sigma2\sqrt{1-r^2}}e^{-\frac{1}{2(1-r^2)} 
 [\frac{(x1-\mu\_{x1})^2}{\sigma\_{x1}^2} - \frac{2r(x1-\mu\_{x1})(x2-\mu\_{x2})}{\sigma\_{x1} \sigma\_{x2}} + \frac{(x2-\mu\_{x2})^2}{\sigma\_{x2}^2}]}</script>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>mu1&lt;-0 # setting the expected value of x1
+<pre><code>mu1&lt;-0 # setting the expected value of x1
 mu2&lt;-0 # setting the expected value of x2
 s11&lt;-10 # setting the variance of x1
 s12&lt;-15 # setting the covariance between x1 and x2
@@ -129,13 +128,12 @@ nticks=5) # produces the 3-D plot
 mtext(expression(list(mu[1]==0,mu[2]==0,sigma[11]==10,sigma[22]==10,sigma[12
 ]==15,rho==0.5)), side=3) # adding a text line to the graph
 </code></pre>
-</div>
 
 <p><img src="http://xukuang.github.io/blog/images/二维正态分布图.png" alt="二维正态分布图" /></p>
 
 <h2 id="lattice">lattice包的函数</h2>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>library(lattice)
+<pre><code>library(lattice)
 data(iris)
 cloud(Sepal.Length ~ Petal.Length * Petal.Width, data = iris,
 groups = Species,
@@ -144,7 +142,6 @@ key = list(title = "Iris Data", x = .05, y=.95, border = TRUE,
 points = Rows(trellis.par.get("superpose.symbol"), 1:3),
 text = list(levels(iris$Species))))
 </code></pre>
-</div>
 
 <p><img src="http://xukuang.github.io/blog/images/示例图.png" alt="示例图" /></p>
 
@@ -157,7 +154,7 @@ text = list(levels(iris$Species))))
   <li>plane3d向用函数scatterplotplot3d画好的图上添加趋势面</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>library(scatterplot3d)
+<pre><code>library(scatterplot3d)
 data(trees)
 s3d &lt;- scatterplot3d(trees, type="h", highlight.3d=TRUE,
 angle=55, scale.y=0.7, pch=16, main="Volume ~ Grith + Height")
@@ -169,14 +166,13 @@ attach(trees)
 my.lm &lt;- lm(Volume ~ Girth + Height)
 s3d$plane3d(my.lm)
 </code></pre>
-</div>
 
 <p><img src="http://xukuang.github.io/blog/images/趋势面.png" alt="树木体积与胸径和高度关系图" /></p>
 
 <h2 id="rgl">rgl包的函数</h2>
 <p>利用rgl包作出的三维图像，可以通过鼠标调整不同的角度。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>library(rgl)
+<pre><code>library(rgl)
 plot3d(1:5,1:5, z = c(10, 20, 30, 40, 70), col="red", size=5)
 # save image
 rgl.snapshot('plot1.png')
@@ -192,7 +188,6 @@ rgl.postscript("plot2.pdf", "pdf", drawText = TRUE)
     par3d(save)
     par3d("userMatrix")
 </code></pre>
-</div>
 
 <h3 id="section-1">画外篇</h3>
 <p>下面的部分与文章主题没有关系，只是记述一下<strong>hexo</strong>中数学公式的表示方式。</p>

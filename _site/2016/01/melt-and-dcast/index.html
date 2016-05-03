@@ -50,11 +50,10 @@
 
 <h3 id="melt">melt函数</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>melt(data, id.vars, measure.vars,
+<pre><code>melt(data, id.vars, measure.vars,
   variable.name = "variable", ..., na.rm = FALSE, value.name = "value",
   factorsAsStrings = TRUE)
 </code></pre>
-</div>
 
 <p><strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型</p>
 
@@ -77,7 +76,7 @@
   <li>按Month和Day列将其他指标排成长数据</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code># 加载数据
+<pre><code># 加载数据
 library(reshape2)
 head(airquality)
 	#   Ozone Solar.R Wind Temp Month Day
@@ -101,14 +100,13 @@ head(dat1)
 dim(dat1)
 	# [1] 612   4
 </code></pre>
-</div>
 <p>需要注意的是melt函数当中如果id.vars参数不指定值，则会把所有数据转化为两列输出。</p>
 
 <ul>
   <li>按Month和Day列将Ozone和Solar.R列指标排成长数据</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>dat2 = melt(airquality, id.vars = c('Month', 'Day'),
+<pre><code>dat2 = melt(airquality, id.vars = c('Month', 'Day'),
  measure = c('Ozone', 'Solar.R'))
 head(dat2)
 	# 	Month Day variable value
@@ -121,13 +119,12 @@ head(dat2)
 dim(dat2) # 函数是dat1的1/2
 	# [1] 306   4 
 </code></pre>
-</div>
 
 <ul>
   <li>对排列后的数据进行重命名</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>dat3 = melt(airquality, id.vars = c('Month', 'Day'),
+<pre><code>dat3 = melt(airquality, id.vars = c('Month', 'Day'),
 variable.name = 'type', value.name = 'value.type')
 head(dat3) # 列名发生变化
 	# 	Month Day  type value.type
@@ -140,13 +137,12 @@ head(dat3) # 列名发生变化
 dim(dat3)
 	# [1] 612   4
 </code></pre>
-</div>
 
 <ul>
   <li>去除排列后数据中的NA</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>#　 airquality$Ozone 数的前四列有44 个NA
+<pre><code>#　 airquality$Ozone 数的前四列有44 个NA
 table(is.na(airquality$Ozone)) # 37
 	# FALSE  TRUE 
 	#   116    37 
@@ -172,10 +168,9 @@ head(dat4)
 dim(dat4)# 比dat3少44行
 	# [1] 568   4	
 </code></pre>
-</div>
 <p>此外，还发现melt函数中所有参数名都可以只写’.’前的部分。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>dat5 = melt(airquality, id = c('Month', 'Day'),
+<pre><code>dat5 = melt(airquality, id = c('Month', 'Day'),
 variable = 'type', value = 'value.type', na = TRUE)
 head(dat5)
 	# 	Month Day  type value
@@ -186,17 +181,15 @@ head(dat5)
 	# 5     5   5 Ozone    NA
 	# 6     5   6 Ozone    28
 </code></pre>
-</div>
 
 <h2 id="section-2">长数据转化为宽数据</h2>
 
 <h3 id="dcast">dcast函数</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>dcast(data, formula, fun.aggregate = NULL, ..., margins = NULL,
+<pre><code>dcast(data, formula, fun.aggregate = NULL, ..., margins = NULL,
   subset = NULL, fill = NULL, drop = TRUE,
   value.var = guess_value(data))
 </code></pre>
-</div>
 
 <p><strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型</p>
 
@@ -220,25 +213,24 @@ head(dat5)
   <li>每个分类结果有一个数据，此时不需要使用汇总函数</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">air1</span> <span class="o">=</span>  <span class="n">dcast</span><span class="p">(</span><span class="n">dat4</span><span class="p">,</span> <span class="n">Month</span> <span class="o">+</span> <span class="n">Day</span> <span class="o">~</span> <span class="n">type</span><span class="p">)</span>
-<span class="n">dim</span><span class="p">(</span><span class="n">air1</span><span class="p">)</span>
-	<span class="c1"># [1] 153   6
-</span><span class="n">head</span><span class="p">(</span><span class="n">air1</span><span class="p">)</span> <span class="c1"># 数据与airquality相同
-</span>	<span class="c1"># 	Month Day Ozone Solar.R Wind Temp
-</span>	<span class="c1"># 1     5   1    41     190  7.4   67
-</span>	<span class="c1"># 2     5   2    36     118  8.0   72
-</span>	<span class="c1"># 3     5   3    12     149 12.6   74
-</span>	<span class="c1"># 4     5   4    18     313 11.5   62
-</span>	<span class="c1"># 5     5   5    NA      NA 14.3   56
-</span>	<span class="c1"># 6     5   6    28      NA 14.9   66
-</span></code></pre>
-</div>
+<pre><code class="language-R">air1 =  dcast(dat4, Month + Day ~ type)
+dim(air1)
+	# [1] 153   6
+head(air1) # 数据与airquality相同
+	# 	Month Day Ozone Solar.R Wind Temp
+	# 1     5   1    41     190  7.4   67
+	# 2     5   2    36     118  8.0   72
+	# 3     5   3    12     149 12.6   74
+	# 4     5   4    18     313 11.5   62
+	# 5     5   5    NA      NA 14.3   56
+	# 6     5   6    28      NA 14.9   66
+</code></pre>
 
 <ul>
   <li>按Month列排成宽数据，每个分类结果有多个数据，必须有汇总函数</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>air2 =  dcast(dat4, Month ~ type, sum) # 这里使用sum函数
+<pre><code>air2 =  dcast(dat4, Month ~ type, sum) # 这里使用sum函数
 dim(air2)
 	# [1] 5 5
 head(air2)
@@ -249,13 +241,12 @@ head(air2)
 	# 4     8    NA      NA 272.6 2603
 	# 5     9    NA    5023 305.4 2307
 </code></pre>
-</div>
 
 <ul>
   <li>是否显示总的分类结果</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>air3 = dcast(dat4, Month ~ type, sum, margins = T) #列、行的总汇总都显示
+<pre><code>air3 = dcast(dat4, Month ~ type, sum, margins = T) #列、行的总汇总都显示
 dim(air3)
 	# [1] 6 6
 head(air3)
@@ -282,13 +273,12 @@ dcast(dat4, Month ~ type, sum, margins = c('type'))# 只显示行的汇总
 	# 4     8    NA      NA 272.6 2603    NA
 	# 5     9    NA    5023 305.4 2307    NA
 </code></pre>
-</div>
 
 <ul>
   <li>只显示部分的分类内容</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>library(plyr)
+<pre><code>library(plyr)
 air4 = dcast(dat4, Month ~ type, sum, subset = .(type == 'Wind' )) # 只显示type中Wind的情况
 dim(air4)
 	# [1] 5 2
@@ -300,13 +290,12 @@ head(air4)
 	# 4     8 272.6
 	# 5     9 305.4
 </code></pre>
-</div>
 
 <ul>
   <li>不存在的分类是否显示，以及怎么显示</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>air5 = dcast(dat4, Month + Day ~ type, length, drop = F) # 组合上存在的结果都显示
+<pre><code>air5 = dcast(dat4, Month + Day ~ type, length, drop = F) # 组合上存在的结果都显示
 tail(air5) # 这里的最后一行只是组合上存在，数据中并不在
 	# 		 Month Day Ozone Solar.R Wind Temp
 	# 150      9  26     1       1    1    1
@@ -324,7 +313,6 @@ tail(dcast(dat4, Month + Day ~ type, length, drop = F, fill= -1)) # 更改不存
 	# 154     9  30     1       1    1    1
 	# 155     9  31    -1      -1   -1   -1
 </code></pre>
-</div>
 
 
 </section>
