@@ -7,28 +7,8 @@
     <title>Xu Kuang</title>
     <atom:link href="http://xukuang.github.io/blog/feed/" rel="self" type="application/rss+xml" />
     <link>http://xukuang.github.io</link>
-    <lastBuildDate>2016-05-03T11:27:17-06:00</lastBuildDate>
+    <lastBuildDate>2016-05-03T11:47:05-06:00</lastBuildDate>
     <webMaster>kuang_xu@126.com</webMaster>
-    
-    <item>
-      <title>Kuang Xu</title>
-      <link>http://xukuang.github.io/blog/2016/05/kuang-xu/</link>
-      <pubDate>2016-05-03T05:25:28-06:00</pubDate>
-      <author>Xu Kuang</author>
-      <guid>http://xukuang.github.io/blog/2016/05/kuang-xu</guid>
-      <content:encoded><![CDATA[
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>k123</title>
-      <link>http://xukuang.github.io/blog/2016/05/k123/</link>
-      <pubDate>2016-05-03T05:18:56-06:00</pubDate>
-      <author>Xu Kuang</author>
-      <guid>http://xukuang.github.io/blog/2016/05/k123</guid>
-      <content:encoded><![CDATA[
-]]></content:encoded>
-    </item>
     
     <item>
       <title>Numpy包的学习</title>
@@ -2395,7 +2375,9 @@ system.file(package = "dplyr")
       <pubDate>2016-02-27T10:14:59-07:00</pubDate>
       <author>Xu Kuang</author>
       <guid>http://xukuang.github.io/blog/2016/02/char-in-R</guid>
-      <content:encoded><![CDATA[<ul id="markdown-toc">
+      <content:encoded><![CDATA[<p class="no_toc">###目录</p>
+
+<ul id="markdown-toc">
   <li><a href="#section" id="markdown-toc-section">正则表达式</a></li>
   <li><a href="#section-1" id="markdown-toc-section-1">文本处理</a>    <ul>
       <li><a href="#section-2" id="markdown-toc-section-2">字符数统计</a></li>
@@ -2794,6 +2776,449 @@ charmatch("xx", "axx")
   <li>R语言进阶之二：文本（字符串）处理与正则表达式（这篇文章在许多网站都有转载，然而原创链接失效了）</li>
   <li><a href="http://jianl.org/2010/02/14/2010-02-14-R%E4%B8%AD%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%AE%80%E4%BB%8B/">R中正则表达式简介</a></li>
 </ol>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>长宽数据之间的转化(一)</title>
+      <link>http://xukuang.github.io/blog/2016/01/melt-and-dcast/</link>
+      <pubDate>2016-01-18T03:32:19-07:00</pubDate>
+      <author>Xu Kuang</author>
+      <guid>http://xukuang.github.io/blog/2016/01/melt-and-dcast</guid>
+      <content:encoded><![CDATA[<p>这里将数据框分为两种：宽数据和长数据，宽数据便于数据成果的展示，长数据则便于数据在R中进行分析。reshape2包中的melt函数可以实现宽数据向长数据的转换，而dcast可以实现宽数据向长数据的转化。</p>
+
+<h2 id="section">宽数据转化为长数据</h2>
+
+<h3 id="melt">melt函数</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>melt(data, id.vars, measure.vars,
+  variable.name = "variable", ..., na.rm = FALSE, value.name = "value",
+  factorsAsStrings = TRUE)
+</code></pre>
+</div>
+
+<p><strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型</p>
+
+<p><strong>id.vars</strong> 数据的转化标准：依照那些列进行转化，数据格式为字符型或数字型的向量。如果该参数没有限定，会把所有数据转化为两列，其中指标一列，数据一列。</p>
+
+<p><strong>measure.vars</strong>	被转化的数据：将哪些列数据值转化，该参数在没有指定的默认情况下，会将id.vars中以外的所有列数据进行转化，数据格式为字符型或数字型的向量</p>
+
+<p><strong>variable.name</strong>	对转化后的数据标准列重新命名，默认情况下，列名为variable</p>
+
+<p><strong>na.rm</strong> 是否去除数据中的NA，默认情况下为FALSE，不去除NA</p>
+
+<p><strong>value.name</strong> 对转化后的数据列重新命名，默认情况下，列名为value</p>
+
+<p><strong>factorsAsStrings</strong>	转化过程中是否将因子类型数据转化为字符型数据，默认情况下为TRUE，将因子类型数据转化为字符型数据
+<!--more--></p>
+
+<h3 id="section-1">实例</h3>
+
+<ul>
+  <li>按Month和Day列将其他指标排成长数据</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 加载数据
+library(reshape2)
+head(airquality)
+	#   Ozone Solar.R Wind Temp Month Day
+	# 1    41     190  7.4   67     5   1
+	# 2    36     118  8.0   72     5   2
+	# 3    12     149 12.6   74     5   3
+	# 4    18     313 11.5   62     5   4
+	# 5    NA      NA 14.3   56     5   5
+	# 6    28      NA 14.9   66     5   6
+dim(airquality)	
+	# [1] 153   6
+dat1 = melt(airquality, id.vars = c('Month', 'Day'))
+head(dat1)
+	# 	Month Day variable value
+	# 1     5   1    Ozone    41
+	# 2     5   2    Ozone    36
+	# 3     5   3    Ozone    12
+	# 4     5   4    Ozone    18
+	# 5     5   5    Ozone    NA
+	# 6     5   6    Ozone    28
+dim(dat1)
+	# [1] 612   4
+</code></pre>
+</div>
+<p>需要注意的是melt函数当中如果id.vars参数不指定值，则会把所有数据转化为两列输出。</p>
+
+<ul>
+  <li>按Month和Day列将Ozone和Solar.R列指标排成长数据</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dat2 = melt(airquality, id.vars = c('Month', 'Day'),
+ measure = c('Ozone', 'Solar.R'))
+head(dat2)
+	# 	Month Day variable value
+	# 1     5   1    Ozone    41
+	# 2     5   2    Ozone    36
+	# 3     5   3    Ozone    12
+	# 4     5   4    Ozone    18
+	# 5     5   5    Ozone    NA
+	# 6     5   6    Ozone    28
+dim(dat2) # 函数是dat1的1/2
+	# [1] 306   4 
+</code></pre>
+</div>
+
+<ul>
+  <li>对排列后的数据进行重命名</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dat3 = melt(airquality, id.vars = c('Month', 'Day'),
+variable.name = 'type', value.name = 'value.type')
+head(dat3) # 列名发生变化
+	# 	Month Day  type value.type
+	# 1     5   1 Ozone         41
+	# 2     5   2 Ozone         36
+	# 3     5   3 Ozone         12
+	# 4     5   4 Ozone         18
+	# 5     5   5 Ozone         NA
+	# 6     5   6 Ozone         28
+dim(dat3)
+	# [1] 612   4
+</code></pre>
+</div>
+
+<ul>
+  <li>去除排列后数据中的NA</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#　 airquality$Ozone 数的前四列有44 个NA
+table(is.na(airquality$Ozone)) # 37
+	# FALSE  TRUE 
+	#   116    37 
+table(is.na(airquality$Solar.R)) # 4
+	# FALSE  TRUE 
+	#   146     7 
+table(is.na(airquality$Temp)) # 0
+	# FALSE 
+	#   153 
+table(is.na(airquality$Wind)) # 0
+	# FALSE 
+	#   153 
+dat4 = melt(airquality, id.vars = c('Month', 'Day'),
+variable.name = 'type', value.name = 'value.type', na.rm = TRUE)
+head(dat4)
+	#   Month Day  type value.type
+	# 1     5   1 Ozone         41
+	# 2     5   2 Ozone         36
+	# 3     5   3 Ozone         12
+	# 4     5   4 Ozone         18
+	# 6     5   6 Ozone         28
+	# 7     5   7 Ozone         23
+dim(dat4)# 比dat3少44行
+	# [1] 568   4	
+</code></pre>
+</div>
+<p>此外，还发现melt函数中所有参数名都可以只写’.’前的部分。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dat5 = melt(airquality, id = c('Month', 'Day'),
+variable = 'type', value = 'value.type', na = TRUE)
+head(dat5)
+	# 	Month Day  type value
+	# 1     5   1 Ozone    41
+	# 2     5   2 Ozone    36
+	# 3     5   3 Ozone    12
+	# 4     5   4 Ozone    18
+	# 5     5   5 Ozone    NA
+	# 6     5   6 Ozone    28
+</code></pre>
+</div>
+
+<h2 id="section-2">长数据转化为宽数据</h2>
+
+<h3 id="dcast">dcast函数</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dcast(data, formula, fun.aggregate = NULL, ..., margins = NULL,
+  subset = NULL, fill = NULL, drop = TRUE,
+  value.var = guess_value(data))
+</code></pre>
+</div>
+
+<p><strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型</p>
+
+<p><strong>formula</strong> 转化的标准，以公式的形式定义</p>
+
+<p><strong>fun.aggregate</strong> 汇总函数。分类后，如果分类结果不唯一，就必须使用汇总函数。常用的汇总函数，包括求个数、和、平均值、标准差、方差，默认的为求个数</p>
+
+<p><strong>margins</strong>	确定结果是否显示总的结果，默认不显示</p>
+
+<p><strong>subset</strong> 是否只对某些标准内容进行计算，结合plyr包一起使用</p>
+
+<p><strong>fill</strong> 不存在的组合值的显示结果。默认的显示为0。数据类型为数值型向量</p>
+
+<p><strong>drop</strong> 确认不存在分分类组合是否显示，默认情况下显示</p>
+
+<p><strong>value.var</strong> 貌似对对转化后的数据进行命名，使用默认情况即可</p>
+
+<h3 id="section-3">实例</h3>
+
+<ul>
+  <li>每个分类结果有一个数据，此时不需要使用汇总函数</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">air1</span> <span class="o">=</span>  <span class="n">dcast</span><span class="p">(</span><span class="n">dat4</span><span class="p">,</span> <span class="n">Month</span> <span class="o">+</span> <span class="n">Day</span> <span class="o">~</span> <span class="n">type</span><span class="p">)</span>
+<span class="n">dim</span><span class="p">(</span><span class="n">air1</span><span class="p">)</span>
+	<span class="c1"># [1] 153   6
+</span><span class="n">head</span><span class="p">(</span><span class="n">air1</span><span class="p">)</span> <span class="c1"># 数据与airquality相同
+</span>	<span class="c1"># 	Month Day Ozone Solar.R Wind Temp
+</span>	<span class="c1"># 1     5   1    41     190  7.4   67
+</span>	<span class="c1"># 2     5   2    36     118  8.0   72
+</span>	<span class="c1"># 3     5   3    12     149 12.6   74
+</span>	<span class="c1"># 4     5   4    18     313 11.5   62
+</span>	<span class="c1"># 5     5   5    NA      NA 14.3   56
+</span>	<span class="c1"># 6     5   6    28      NA 14.9   66
+</span></code></pre>
+</div>
+
+<ul>
+  <li>按Month列排成宽数据，每个分类结果有多个数据，必须有汇总函数</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>air2 =  dcast(dat4, Month ~ type, sum) # 这里使用sum函数
+dim(air2)
+	# [1] 5 5
+head(air2)
+	# 	Month Ozone Solar.R  Wind Temp
+	# 1     5    NA      NA 360.3 2032
+	# 2     6    NA    5705 308.0 2373
+	# 3     7    NA    6711 277.2 2601
+	# 4     8    NA      NA 272.6 2603
+	# 5     9    NA    5023 305.4 2307
+</code></pre>
+</div>
+
+<ul>
+  <li>是否显示总的分类结果</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>air3 = dcast(dat4, Month ~ type, sum, margins = T) #列、行的总汇总都显示
+dim(air3)
+	# [1] 6 6
+head(air3)
+	#   Month Ozone Solar.R   Wind  Temp (all)
+	# 1     5    NA      NA  360.3  2032    NA
+	# 2     6    NA    5705  308.0  2373    NA
+	# 3     7    NA    6711  277.2  2601    NA
+	# 4     8    NA      NA  272.6  2603    NA
+	# 5     9    NA    5023  305.4  2307    NA
+	# 6 (all)    NA      NA 1523.5 11916    NA
+dcast(dat4, Month ~ type, sum, margins = c('Month'))# 只显示列的汇总
+	# 	Month Ozone Solar.R   Wind  Temp
+	# 1     5    NA      NA  360.3  2032
+	# 2     6    NA    5705  308.0  2373
+	# 3     7    NA    6711  277.2  2601
+	# 4     8    NA      NA  272.6  2603
+	# 5     9    NA    5023  305.4  2307
+	# 6 (all)    NA      NA 1523.5 11916
+dcast(dat4, Month ~ type, sum, margins = c('type'))# 只显示行的汇总
+	# 	Month Ozone Solar.R  Wind Temp (all)
+	# 1     5    NA      NA 360.3 2032    NA
+	# 2     6    NA    5705 308.0 2373    NA
+	# 3     7    NA    6711 277.2 2601    NA
+	# 4     8    NA      NA 272.6 2603    NA
+	# 5     9    NA    5023 305.4 2307    NA
+</code></pre>
+</div>
+
+<ul>
+  <li>只显示部分的分类内容</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>library(plyr)
+air4 = dcast(dat4, Month ~ type, sum, subset = .(type == 'Wind' )) # 只显示type中Wind的情况
+dim(air4)
+	# [1] 5 2
+head(air4)
+	# 	Month  Wind
+	# 1     5 360.3
+	# 2     6 308.0
+	# 3     7 277.2
+	# 4     8 272.6
+	# 5     9 305.4
+</code></pre>
+</div>
+
+<ul>
+  <li>不存在的分类是否显示，以及怎么显示</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>air5 = dcast(dat4, Month + Day ~ type, length, drop = F) # 组合上存在的结果都显示
+tail(air5) # 这里的最后一行只是组合上存在，数据中并不在
+	# 		 Month Day Ozone Solar.R Wind Temp
+	# 150      9  26     1       1    1    1
+	# 151      9  27     1       1    1    1
+	# 152      9  28     1       1    1    1
+	# 153      9  29     1       1    1    1
+	# 154      9  30     1       1    1    1
+	# 155      9  31     0       0    0    0
+tail(dcast(dat4, Month + Day ~ type, length, drop = F, fill= -1)) # 更改不存在结果的显示值，最后一行显示为-1
+	# 		Month Day Ozone Solar.R Wind Temp
+	# 150     9  26     1       1    1    1
+	# 151     9  27     1       1    1    1
+	# 152     9  28     1       1    1    1
+	# 153     9  29     1       1    1    1
+	# 154     9  30     1       1    1    1
+	# 155     9  31    -1      -1   -1   -1
+</code></pre>
+</div>
+
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>数据合并-join函数</title>
+      <link>http://xukuang.github.io/blog/2016/01/join-function/</link>
+      <pubDate>2016-01-13T13:14:06-07:00</pubDate>
+      <author>Xu Kuang</author>
+      <guid>http://xukuang.github.io/blog/2016/01/join-function</guid>
+      <content:encoded><![CDATA[<p>前面介绍了数据框合并的merge函数方法，其实还可以借助plyr和dplyr包中的join函数进行数据框的合并，它们数据框合并的原理同样是数据框的合并原理是这样的：首先在x表按指定列每一行的内容在y表的指定列都进行逐行匹配，直到x中所有行匹配完为止。</p>
+
+<h2 id="section">数据说明</h2>
+<p>这里的数据仍使用merge函数中的两个数据(略有修改)：作者信息数据和书籍信息数据。依照下面介绍的合并条件，这两个数据既有相同的内容，又有彼此中不存在的内容。</p>
+
+<ul>
+  <li>作者信息数据</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>authors &lt;- data.frame(
+	id =  c(2, 4, 2, 5, 7, 8, 3),
+	surname = I(c("Tukey", "Venables", 'kx', "Tierney", "Ripley", "McNeil", "kuangxu")),
+	nationality = c("US", "Australia", 'China', "US", "UK", "Australia", "China"),
+	deceased = c("yes", rep("no", 6)))
+</code></pre>
+</div>
+<!--more-->
+<p>为了区别数据，就把自己的名字也给安排进去了，唯一的一个中国人啊。</p>
+
+<ul>
+  <li>书籍信息数据</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>books &lt;- data.frame(
+	id = c(1:7,2)
+    name = I(c("Tukey", "Venables", "Tierney",
+             "Ripley", "Ripley", "McNeil", "R Core", "kuang")),
+    title = c("Exploratory Data Analysis",
+              "Modern Applied Statistics ...",
+              "LISP-STAT",
+              "Spatial Statistics", "Stochastic Simulation",
+              "Interactive Data Analysis",
+              "An Introduction to R", "My R study"),
+    other.author = c(NA, "Ripley", NA, NA, NA, NA,
+                     "Venables &amp; Smith", NA))
+</code></pre>
+</div>
+
+<h2 id="plyrjoin">plyr包的join函数</h2>
+<p>join函数：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>join(x, y, by = NULL, type = 'left', match = 'all')
+</code></pre>
+</div>
+
+<ul>
+  <li>x,y 为合并的数据框</li>
+  <li>by 为排序依据，默认值Null时按名字相同的量匹配,此时,要求必须有相同列名的列</li>
+  <li>type为合并方式
+    <ul>
+      <li>inner，行：显示x，y中共有的行; 列：显示x，y中的所有列</li>
+      <li>left，行：显示x中所有的行; 列：显示x，y中的所有列，未匹配到的值，不论字符数字，全显示为NA</li>
+      <li>right，行：显示y中所有的行; 列：显示x，y中的所有列，未匹配到的值，不论字符数字，全显示为NA</li>
+      <li>full，先显示x中所有的行在y中的匹配结果，接着显示y中未匹配上的内容</li>
+    </ul>
+  </li>
+  <li>match匹配的规则
+    <ul>
+      <li>first，只匹配y中的第一个记录</li>
+      <li>match，匹配y中所有记录</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>join(authors, books)
+join(authors, books, type = 'left', match = 'first')
+join(authors, books, type = 'inner')
+join(authors, books, type = 'right')
+join(authors, books, type = 'full')
+</code></pre>
+</div>
+
+<h2 id="dplyrjoin">dplyr包的join函数</h2>
+<p>dplyr包是plyr包的升级，join函数在dplyr包中是个系列函数。
+join函数：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>join(x, y, by = NULL, copy = FALSE, ...)
+</code></pre>
+</div>
+
+<ul>
+  <li>x,y 为合并的数据框，不要求x,y中排序列唯一</li>
+  <li>by 为排序依据，默认值Null时按名字相同的量匹配,此时,要求必须有相同列名的列</li>
+  <li>join为系列函数，包括inner_join、left_join、semi_join和anti_join函数</li>
+</ul>
+
+<p>dplyr包的join函数似乎没有plyr包的join函数的match参数，只能进行所谓的all匹配</p>
+
+<h3 id="innerjoin">inner_join函数</h3>
+<p>函数结果, 行：显示x中所有能在y中匹配到行; 列：显示x，y中的所有列</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>library(dplyr)
+# 单指标匹配
+inner_join(authors, books)
+inner_join(authors, books, by = c('surname' = 'name'))
+# 多指标匹配
+inner_join(authors, books, by = c('id'='id','surname' = 'name'))
+</code></pre>
+</div>
+
+<h3 id="leftjoin">left_join函数</h3>
+
+<p>结果, 行：显示x中所有的行; 列：显示x，y中的所有列，未匹配到的值，不论字符数字，全显示为NA。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 单指标匹配
+left_join(authors, books)
+left_join(authors, books, by = c('surname' = 'name'))
+# 多指标匹配
+left_join(authors, books, by = c('id'='id','surname' = 'name'))
+</code></pre>
+</div>
+
+<h3 id="semijoin">semi_join函数</h3>
+<p>结果, 行：显示x中所有能在y匹配到行,并对显示结果按匹配依据进行了排序; 列：显示x中的所有列。
+<code class="highlighter-rouge">
+# 单指标匹配
+semi_join(authors, books)
+semi_join(authors, books, by = c('surname' = 'name'))
+# 多指标匹配
+semi_join(authors, books, by = c('id'='id','surname' = 'name'))
+</code></p>
+
+<h3 id="antijoin">anti_join函数</h3>
+<p>结果, 行：显示x中所有未能在y中匹配到行, 并对显示结果按匹配依据进行了排序; 列：显示x中的所有列。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 单指标匹配
+anti_join(authors, books)
+anti_join(authors, books, by = c('surname' = 'name'))
+# 多指标匹配
+anti_join(authors, books, by = c('id'='id','surname' = 'name'))
+</code></pre>
+</div>
+
+<h3 id="fulljoin">full_join函数</h3>
+<p>结果, 行：显示x, y中所有的行, 未匹配到的值，不论字符数字，全显示为NA。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 单指标匹配
+full_join(authors, books)
+full_join(authors, books, by = c('surname' = 'name'))
+# 多指标匹配
+full_join(authors, books, by = c('id'='id','surname' = 'name'))
+</code></pre>
+</div>
 ]]></content:encoded>
     </item>
     
