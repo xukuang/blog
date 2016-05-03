@@ -1,7 +1,7 @@
 markdown: kramdown
 kramdown:
     enable_coderay: true
-    coderay:
+    syntax_highlighter_opts:
         coderay_line_numbers: table
         coderay_css: class
 permalink: /:year/:month/:title/
