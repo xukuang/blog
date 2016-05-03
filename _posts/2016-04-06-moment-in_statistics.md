@@ -11,7 +11,7 @@ $$E[X] = \sum_{i=1}^n x_i$$
 
 期望存在一下特性:
 
-1. $$E[aX + bY] = aE[X] + bE(Y)$$
+1.$$E[aX + bY] = aE[X] + bE(Y)$$
 2. 一般情况下，$$E[X Y] \neq E[X]E(Y)$$；当X和Y相互独立时，才有$$E[X Y] = E[X]E(Y)$$<!--more-->
 
 ## 方差
