@@ -7,45 +7,15 @@
     <title>Xu Kuang</title>
     <atom:link href="http://xukuang.github.io/blog/feed/" rel="self" type="application/rss+xml" />
     <link>http://xukuang.github.io</link>
-    <lastBuildDate>2016-05-03T11:15:23-06:00</lastBuildDate>
+    <lastBuildDate>2016-05-03T11:18:18-06:00</lastBuildDate>
     <webMaster>kuang_xu@126.com</webMaster>
     
     <item>
-      <title>k12</title>
-      <link>http://xukuang.github.io/blog/2016/05/k12/</link>
-      <pubDate>2016-05-03T11:04:16-06:00</pubDate>
+      <title>k123</title>
+      <link>http://xukuang.github.io/blog/2016/05/k123/</link>
+      <pubDate>2016-05-03T05:16:37-06:00</pubDate>
       <author>Xu Kuang</author>
-      <guid>http://xukuang.github.io/blog/2016/05/k12</guid>
-      <content:encoded><![CDATA[
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>new-post</title>
-      <link>http://xukuang.github.io/blog/2016/05/new-post/</link>
-      <pubDate>2016-05-03T00:00:00-06:00</pubDate>
-      <author>Xu Kuang</author>
-      <guid>http://xukuang.github.io/blog/2016/05/new-post</guid>
-      <content:encoded><![CDATA[
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>k1</title>
-      <link>http://xukuang.github.io/blog/2016/05/k1/</link>
-      <pubDate>2016-05-03T00:00:00-06:00</pubDate>
-      <author>Xu Kuang</author>
-      <guid>http://xukuang.github.io/blog/2016/05/k1</guid>
-      <content:encoded><![CDATA[
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>k</title>
-      <link>http://xukuang.github.io/blog/2016/05/k/</link>
-      <pubDate>2016-05-03T00:00:00-06:00</pubDate>
-      <author>Xu Kuang</author>
-      <guid>http://xukuang.github.io/blog/2016/05/k</guid>
+      <guid>http://xukuang.github.io/blog/2016/05/k123</guid>
       <content:encoded><![CDATA[
 ]]></content:encoded>
     </item>
@@ -1971,6 +1941,1140 @@ adjustrsquare
 <p>-—–</p>
 
 <p><strong>本篇文章整理自维基百科。</strong></p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>用R进行文件系统管理</title>
+      <link>http://xukuang.github.io/blog/2016/03/docement-mangement/</link>
+      <pubDate>2016-03-01T10:24:47-07:00</pubDate>
+      <author>Xu Kuang</author>
+      <guid>http://xukuang.github.io/blog/2016/03/docement-mangement</guid>
+      <content:encoded><![CDATA[<p>学习中，已经体会到了R在数据处理方面的厉害，偶然看到张丹的博文<a href="http://blog.fens.me/r-file-folder/">《用R进行文件系统管理》</a>，发现R居然还可以进行文件系统的管理，又一次全新的认识了世界（其实主要是R）。这里基本上是把张丹的文章照搬过来了，只是加了少许自己学习时心得。本文中提到的文件系统管理主要是指文件和目录（即文件夹）的创建、查看、重命名、复制、删除和文件权限处理。</p>
+
+<h2 id="section">文件操作</h2>
+
+<ul>
+  <li>创建文件</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 创建一个空文件 A.txt
+file.create("A.txt")
+# 查看当前目录下的子目录和文件
+list.files()
+
+# 创建多个空文件 A1.txt，A2.txt，A3.txt
+file.create("A1.txt", "A2.txt", "A3.txt")
+# 查看当前目录下的子目录和文件
+list.files()
+
+# 创建一个有内容的文件 B.txt
+cat("文件测试\n", file = "B.txt")
+list.files()
+</code></pre>
+</div>
+
+<ul>
+  <li>查看文件</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 显示当前目录中的目录和文件
+
+## 下面两句结果相同
+list.files() # 建议使用该命令，方便记忆
+dir()
+
+
+## 参数full.names = TRUE，确定文件显示全名
+
+## 参数recursive = TRUE，递归显示，即把目录下的目录和文件都以文件的形式显示
+list.files(, full.names = TRUE, recursive = TRUE)
+
+# 检查文件是否存在
+
+## 存在的文件
+file.exists("A.txt")
+
+## 不存在的文件
+file.exists("readme.txt")
+
+# 判断是否是文件
+file_test("-f", "A.txt")
+</code></pre>
+</div>
+<!--more-->
+
+<ul>
+  <li>读取文件</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 文件A.txt读取
+readLines("A.txt")
+
+# 文件B.txt读取
+readLines("B.txt")
+</code></pre>
+</div>
+
+<ul>
+  <li>文件重命名</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 给文件A.txt重命名为AA.txt
+file.rename("A.txt","AA.txt")
+list.files()
+</code></pre>
+</div>
+
+<ul>
+  <li>复制文件</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>file.copy("B.txt", "C.txt")
+# 查看文件内容
+readLines("C.txt")
+</code></pre>
+</div>
+
+<ul>
+  <li>追加文件</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>file.append("A.txt", rep("B.txt", 10))
+# 查看文件内容
+readLines("A.txt") 
+</code></pre>
+</div>
+
+<ul>
+  <li>删除文件</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 新建文件
+file.create("tempa1", "tempa2", "tempa3", "tempa4")
+list.files()
+# 删除文件
+file.remove("tempa1", "tempa2", "tempa3", "tempa4")
+list.files()
+</code></pre>
+</div>
+
+<ul>
+  <li>文件权限</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 查看文件完整信息
+file.info("A.txt")
+
+# 查看文件访问权限
+# 0表示有相关权限
+# 1表示没有相关权限
+
+## 是否存在
+file.access("A.txt",0)
+
+## 是否可执行
+file.access("A.txt",1)
+
+## 是否可写
+file.access("A.txt",2)
+
+## 是否可读
+file.access("A.txt",4)
+
+# 文件权限修改
+
+## 查看文件信息
+file.info("A.txt")
+
+## 修改文件权限，创建者可读可写可执行，其他人无权限
+Sys.chmod("A.txt", mode = "0400", use_umask = TRUE)
+
+## 查看文件信息
+file.info("A.txt")
+</code></pre>
+</div>
+
+<h2 id="section-1">目录操作</h2>
+
+<ul>
+  <li>创建目录</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 新建一个目录
+dir.create("test") # 不能同时创建多个目录
+list.dirs()
+
+# 递归创建
+dir.create("test/test",recursive = TRUE)
+list.dirs()
+</code></pre>
+</div>
+
+<ul>
+  <li>查看目录</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 查看当前默认目录的一级目录和文件
+list.files() # 同时会显示目录下的文件
+dir()
+
+# 查看当前默认目录的子目录
+
+## 默认递归显示各级子目录
+list.dirs()
+
+## 只显示一级子目录
+list.dirs(recursive= FALSE)
+
+# 通过系统命令查看目录结构
+system("tree")
+
+# 检查目录是否存在
+# 存在的目录
+file.exists(".")
+file.exists("./test")
+
+# 不存在的目录
+file.exists("./test1")
+
+# 判断是否是目录
+
+## 下面两个语句结果相同
+file_test("-d", "./test")
+file_test("-d", "test")
+</code></pre>
+</div>
+
+<ul>
+  <li>目录重命名</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 查看目录
+dir()
+
+# 对test目录重命名
+file.rename("test", "test1")
+
+# 查看目录
+dir()
+
+# 目录重命名
+file.rename("test1", "test")
+</code></pre>
+</div>
+
+<ul>
+  <li>删除目录</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dir.create('temp')
+dir.create('temp1/temp1', recursive = TRUE)
+dir()
+
+# 删除temp目录
+unlink("temp", recursive = TRUE) # unlink也可用来删除文件，此时不需要设置参数recursive
+dir()
+
+unlink("temp1", recursive = TRUE) # 
+dir()
+</code></pre>
+</div>
+
+<ul>
+  <li>目录的权限</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 查看目录完整信息
+file.info(".")
+
+# 检查目录的权限
+df&lt;-dir(full.names = TRUE)
+
+# 检查文件或目录是否存在，mode=0
+file.access(df, 0) == 0
+
+# 检查文件或目录是否可执行，mode=1，目录为可以执行
+file.access(df, 1) == 0
+
+# 检查文件或目录是否可写，mode=2
+file.access(df, 2) == 0
+
+# 检查文件或目录是否可读，mode=4
+file.access(df, 4) == 0
+
+# 修改目录权限，所有用户只读
+Sys.chmod("./test", mode = "0555", use_umask = TRUE)
+file.info("./test")
+</code></pre>
+</div>
+
+<h2 id="section-2">其他功能函数</h2>
+
+<ul>
+  <li>拼接目录字符串</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>file.path("p1","p2","p3")
+</code></pre>
+</div>
+
+<ul>
+  <li>所在目录</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dirname("/home/conan/R/fs/readme.txt")
+</code></pre>
+</div>
+
+<ul>
+  <li>最底层子目录或文件名</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>basename("/home/conan/R/fs/readme.txt")
+basename("/home/conan/R/fs")
+</code></pre>
+</div>
+
+<ul>
+  <li>win下标准路径转化</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>normalizePath(c(R.home(), tempdir()))
+</code></pre>
+</div>
+
+<ul>
+  <li>短路径，缩减路径的显示长度，只在win中运行</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>shortPathName(c(R.home(), tempdir()))
+</code></pre>
+</div>
+
+<h2 id="section-3">几个特殊的目录</h2>
+
+<p><strong>R.home()</strong> 查看R软件的相关目录</p>
+
+<p><strong>.Library</strong> 查看R核心包的目录</p>
+
+<p>**.libPaths() ** 查看R所有包的存放目录</p>
+
+<p><strong>ystem.file()</strong> 查看指定包所在的目录</p>
+
+<ul>
+  <li>R软件的相关目录</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># R.home() 查看R软件的相关目录
+
+## 打印R软件安装目录
+R.home()
+
+## 打印R软件bin的目录
+R.home(component="bin")
+
+## 打印R软件文件的目录
+R.home(component="doc")
+</code></pre>
+</div>
+
+<ul>
+  <li>R软件的包目录</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 打印核心包的目录
+.Library
+# 打印所有包的存放目录
+.libPaths()
+</code></pre>
+</div>
+
+<ul>
+  <li>查看指定包所在的目录</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># base包的存放目录
+system.file()
+# dplyr包的存放目录
+system.file(package = "dplyr")
+</code></pre>
+</div>
+
+<h2 id="section-4">小结</h2>
+<p>正如张丹所说，用R语言操作文件系统还是很方便的，但其对于函数命名不太规范,比如文件和目录的操作函数名有时区分，有时又不区分。最后，对文件和目录的操作进行简单的小结以方便自己的记忆。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">操作名称</th>
+      <th style="text-align: center">文件操作</th>
+      <th style="text-align: right">目录操作</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">创建</td>
+      <td style="text-align: center">file.create()</td>
+      <td style="text-align: right">dir.create()</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">查看</td>
+      <td style="text-align: center">list.files()</td>
+      <td style="text-align: right">list.dirs()</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">读取</td>
+      <td style="text-align: center">readLines()</td>
+      <td style="text-align: right">-</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">重命名</td>
+      <td style="text-align: center">file.rename()</td>
+      <td style="text-align: right">file.rename()</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">复制</td>
+      <td style="text-align: center">file.copy()</td>
+      <td style="text-align: right">-</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">追加</td>
+      <td style="text-align: center">file.append()</td>
+      <td style="text-align: right">-</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">删除</td>
+      <td style="text-align: center">file.remove()</td>
+      <td style="text-align: right">unlink()</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">权限查看</td>
+      <td style="text-align: center">file.info()</td>
+      <td style="text-align: right">file.info()</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">权限查看</td>
+      <td style="text-align: center">file.access()</td>
+      <td style="text-align: right">file.access()</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">权限修改</td>
+      <td style="text-align: center">Sys.chomod()</td>
+      <td style="text-align: right">Sys.chomod()</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>R中的文本处理</title>
+      <link>http://xukuang.github.io/blog/2016/02/char-in-R/</link>
+      <pubDate>2016-02-27T10:14:59-07:00</pubDate>
+      <author>Xu Kuang</author>
+      <guid>http://xukuang.github.io/blog/2016/02/char-in-R</guid>
+      <content:encoded><![CDATA[<ul id="markdown-toc">
+  <li><a href="#section" id="markdown-toc-section">正则表达式</a></li>
+  <li><a href="#section-1" id="markdown-toc-section-1">文本处理</a>    <ul>
+      <li><a href="#section-2" id="markdown-toc-section-2">字符数统计</a></li>
+      <li><a href="#section-3" id="markdown-toc-section-3">字符大小写转化</a></li>
+      <li><a href="#section-4" id="markdown-toc-section-4">字符串连接</a></li>
+      <li><a href="#section-5" id="markdown-toc-section-5">字符串拆分</a></li>
+      <li><a href="#section-6" id="markdown-toc-section-6">字符串查询和替换</a>        <ul>
+          <li><a href="#section-7" id="markdown-toc-section-7">字符串查询</a></li>
+          <li><a href="#section-8" id="markdown-toc-section-8">字符串替换</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#section-9" id="markdown-toc-section-9">字符串提取</a>    <ul>
+      <li><a href="#section-10" id="markdown-toc-section-10">字符串的整理</a></li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <p>处理文本是每一种计算机语言都应该具备的功能，但不是每一种语言都侧重于处理文本。R语言是统计的语言，处理文本不是它的强项。尽管R语言处理文本的能力不够强，但适当使用可以大幅提高工作效率的，而且有些文本操作还不得不用。高效处理文本少不了正则表达式（regular expression），虽然R在这方面先天不高效，但其中处理文本的绝大多数函数都支持正则表达式。</p>
+</blockquote>
+
+<h2 id="section">正则表达式</h2>
+
+<p>正则表达式是用于描述和匹配一个文本集合的表达式。它不是R的专属内容，这里也只简单介绍，更详细的内容请查阅其他文章。<!--more--></p>
+
+<ol>
+  <li>所有英文字母、数字和很多可显示的字符本身就是正则表达式，用于匹配它们自己。比如 ‘a’ 就是匹配字母 ‘a’ 的正则表达式</li>
+  <li>一些特殊的字符在正则表达式中被“转义”不在用来描述它自身，这些字符称为“元字符”。常见元字符的意义如下:
+    <ul>
+      <li>\^放在表达式开始处表示匹配文本开始位置，放在方括号内开始处表示非方括号内的任一字符</li>
+      <li>$ 匹配一个字符串的结尾</li>
+      <li>点号. 表示除了换行符以外的任一字符</li>
+      <li>* 表示将其前的字符进行0个或多个的匹配</li>
+      <li>.* 可以匹配任意字符</li>
+      <li>+ 匹配1或多个正好在它之前的那个字符</li>
+      <li>? 匹配0或1个正好在它之前的那个字符</li>
+      <li>大括号{}表示前面的字符或表达式的重复次数</li>
+      <li>方括号[]表示选择方括号中的任意一个（如[a-z] 表示任意一个小写字符）</li>
+      <li>| 表示可选项，即| 前后的表达式任选一个</li>
+    </ul>
+  </li>
+  <li>
+    <p>如果要在正则表达式中表示元字符本身，比如我就要在文本中查找问号‘?’，那么就要使用引用符号（或称换码符号），一般是反斜杠 ‘'。需要注意的是，在R语言中得用两个反斜杠即 ‘\\’，如要匹配括号就要写成 ’\\(\\)‘</p>
+  </li>
+  <li>不同语言或应用程序（事实上很多规则都通用）定义了一些特殊的元字符用于表示某类字符，如 :
+    <ul>
+      <li>\d 表示数字0-9，\D 表示非数字</li>
+      <li>\s 表示空白字符（包括空格、制表符、换行符等），\S 表示非空白字符，</li>
+      <li>\w 表示字（字母和数字），\W 表示非字</li>
+      <li>\&lt; 和 \&gt; 分别表示以空白字符开始和结束的文本
+ 需要注意的是，反斜杠 ‘\‘在R语言中得用两个反斜杠即 ‘\\’，如’\s’就要写成 ’\\s‘。</li>
+    </ul>
+  </li>
+  <li>正则表达式符号运算顺序：圆括号括起来的表达式最优先，然后是表示重复次数的操作(即：* + {} )，接下来是连接运算（其实就是几个字符放在一起，如abc），最后是表示可选项的运算(|)。所以’foot|bar’ 可以匹配’foot‘或者’bar‘，但是 ‘foot|ba{2}r’匹配的是’foot‘或者’baar‘。</li>
+  <li>“贪婪”和“懒惰”的匹配规则。默认情况下是匹配尽可能多的字符，是为贪婪匹配，比如 “a.*b”默认匹配最长的a开头b结尾的字串，也就是整个字符串。如果要进行懒惰匹配，也就是匹配最短的字串，只需要在后面加个 ?，比如 “a.*?b”，就会匹配最开始找到的最短的a开头b结尾的字串</li>
+</ol>
+
+<h2 id="section-1">文本处理</h2>
+
+<h3 id="section-2">字符数统计</h3>
+<p>函数nchar，统计向量中每个元素的字符个数，注意这个函数和length函数的差别：length是向量长度（向量元素的个数）。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>x &lt;- c("Hellow", "World", "!") 
+nchar(x); length(x)
+	# [1] 6 5 1 
+	# [1] 3
+length(''); nchar('') 
+	# [1] 1 
+	# [1] 0 
+</code></pre>
+</div>
+
+<h3 id="section-3">字符大小写转化</h3>
+
+<ul>
+  <li>函数tolower，将向量中的元素转化为小写字母</li>
+  <li>函数toupper，将向量中的元素转化为大写字母</li>
+  <li>函数casefold，将向量中的元素转化为小或大写字母（upper = F，转化为小写；upper = T，转化为大写）</li>
+  <li>函数chartr，按指定的规则进行转换</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>tolower(x)
+	# [1] "hellow" "world"  "!"  
+toupper(x)
+	# [1] "HELLOW" "WORLD"  "!" 
+casefold(x) # 默认upper = F
+	# [1] "hellow" "world"  "!" 
+casefold(x, upper = T)
+	# [1] "HELLOW" "WORLD"  "!"  
+
+chartr('ol', 'pm', x) # o转化为p，l转化为m
+	# "Hemmpw" "Wprmd"  "!"
+	
+DNA &lt;- "AtGCtttACC" # DNA为长度为1的字符向量
+tolower(DNA) 
+	# [1] "atgctttacc" 
+toupper(DNA) 
+	# [1] "ATGCTTTACC" 
+chartr("Tt", "Uu", DNA) # T转化为U，t转化为u
+	# [1] "AuGCuuuACC" 
+chartr("Tt", "UU", DNA) 
+	# [1] "AUGCUUUACC"
+</code></pre>
+</div>
+
+<h3 id="section-4">字符串连接</h3>
+<p>函数paste应该是R中最常用字符串函数了，也是R字符串处理函数里面非常纯的不使用正则表达式的函数（因为用不着）。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>paste("CK", 1:6, sep = "")
+	# [1] "CK1" "CK2" "CK3" "CK4" "CK5" "CK6"
+x &lt;- list(a = "aaa", b = "bbb", c = "ccc")
+y &lt;- list(d = 1, e = 2)
+paste(x, y, sep = "-")  #较短的向量被循环使用
+	# [1] "aaa-1" "bbb-2" "ccc-1"
+</code></pre>
+</div>
+<p>paste函数还有一个用法，设置collapse参数，连成一个字符串。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>paste(x, y, sep = "-", collapse = "; ")
+	# [1] "aaa-1; bbb-2; ccc-1"
+paste(x, collapse = "; ")
+	# [1] "aaa; bbb; ccc"
+</code></pre>
+</div>
+
+<h3 id="section-5">字符串拆分</h3>
+
+<p>strsplit函数使用正则表达式，使用格式为:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
+</code></pre>
+</div>
+
+<ul>
+  <li>参数x为字串向量，每个元素都将单独进行拆分。</li>
+  <li>参数split为拆分位置的字串向量，</li>
+  <li>默认为正则表达式匹配（fixed=FALSE）。如果你没接触过正则表达式，设置fixed=TRUE，表示使用普通文本匹配或正则表达式的精确匹配。普通文本的运算速度快。</li>
+  <li>参数perl=TRUE/FALSE的设置和perl语言版本有关，如果正则表达式很长，正确设置表达式并且使用perl=TRUE可以提高运算速度。</li>
+  <li>参数useBytes设置是否逐个字节进行匹配，默认为FALSE，即按字符而不是字节进行匹配。</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>text &lt;- "Hello Adam!\nHello Ava!"
+strsplit(text, " ") # R语言的字符串事实上也是正则表达式，文本中的\n在图形输出中是被解释为换行符的。
+	# [[1]]
+	# [1] "Hello"        "Adam!\nHello" "Ava!"
+strsplit(text, "\\s")
+	# [[1]]
+	# [1] "Hello" "Adam!" "Hello" "Ava!"
+</code></pre>
+</div>
+
+<p>strsplit得到的结果是列表，后面要怎么处理就得看情况而定了。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class(strsplit(text, "\\s"))
+	# [1] "list"
+</code></pre>
+</div>
+<p>有一种情况很特殊，如果split参数的字符长度为0，得到的结果就是一个个的字符。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>strsplit(text, "")
+	# [[1]]
+	#  [1] "H"  "e"  "l"  "l"  "o"  " "  "A"  "d"  "a"  "m"  "!"  "\n" "H"  "e" 
+	# [15] "l"  "l"  "o"  " "  "A"  "v"  "a"  "!"
+</code></pre>
+</div>
+<p>从这里也可以看到R把 \n 是当成一个字符来处理的。</p>
+
+<h3 id="section-6">字符串查询和替换</h3>
+<p>R中字符串的查询函数有：grep、grepl、regexpr、gregexpr和regexpr，字符串的替换函数有sub和gsub。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 字符串查询
+grep(pattern, x, ignore.case = FALSE, perl = FALSE, value = FALSE,
+     fixed = FALSE, useBytes = FALSE, invert = FALSE)
+
+grepl(pattern, x, ignore.case = FALSE, perl = FALSE,
+      fixed = FALSE, useBytes = FALSE)
+
+regexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
+        fixed = FALSE, useBytes = FALSE)
+
+gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
+         fixed = FALSE, useBytes = FALSE)
+
+regexec(pattern, text, ignore.case = FALSE,
+        fixed = FALSE, useBytes = FALSE)
+# 字符串替换
+sub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
+    fixed = FALSE, useBytes = FALSE)
+## sub函数会根据pattern的规则对x中各元素进行搜索，遇到符合条件的第一个子字符串的位置，用replacement替换该子字符串，返回替换后的结果，和x的结构相同
+gsub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
+     fixed = FALSE, useBytes = FALSE)
+## gsub函数会根据pattern的规则对x中各元素进行搜索，找出所有符合条件的子字符串的位置，用replacement替换该子字符串，返回替换后的结果，和x的结构相同	 
+</code></pre>
+</div>
+
+<p>这几个函数有相似的格式，都使用正则表达式的规则进行匹配。默认是egrep的规则，也可以选用Perl语言的规则。</p>
+
+<ul>
+  <li>pattern为字符串表示正则表达式</li>
+  <li>replacement也是字符串表示替换的内容</li>
+  <li>x为字符型向量表示被替换的字符向量</li>
+  <li>参数ignore.case = FALSE，表示大小写敏感</li>
+  <li>参数extended = TRUE，表示使用egrep规则</li>
+  <li>perl = FALSE，表示不使用Perl规则</li>
+  <li>fixed = FALSE，表示不使用精确匹配</li>
+  <li>useBytes = FALSE，表示按字符匹配</li>
+</ul>
+
+<h4 id="section-7">字符串查询</h4>
+<p>grep和grepl函数这两个函数返回向量水平的匹配结果，不涉及匹配字符串的详细位置信息。此外，尽管这两个函数的参数看起来差不多，但是返回结果的形式并不一样。	
+regexpr、gregexpr和regexpr这三个函数返回的结果包均含了匹配的具体位置和字符串长度信息，只是他们的结果显示方式不同。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>text &lt;- c("Hellow, Adam!", "Hi, Paul!", "How are you, Adam.")
+grep("Adam", text)
+	# [1] 1 3
+grepl("Adam", text)
+	# [1]  TRUE FALSE  TRUE
+regexpr("Adam", text)
+	# [1]  9  -1 14
+	# attr(,"match.length")
+	# [1] 4 -1 4
+	# attr(,"useBytes")
+	# [1] TRUE
+gregexpr("Adam", text)
+	# [[1]]
+	# [1] 9
+	# attr(,"match.length")
+	# [1] 4
+	# attr(,"useBytes")
+	# [1] TRUE
+	# 
+	# [[2]]
+	# [1] -1
+	# attr(,"match.length")
+	# [1] -1
+	# attr(,"useBytes")
+	# [1] TRUE
+	# 
+	# [[3]]
+	# [1] 14
+	# attr(,"match.length")
+	# [1] 4
+	# attr(,"useBytes")
+	# [1] TRUE
+regexec("Adam", text)
+	# [[1]]
+	# [1] 9
+	# attr(,"match.length")
+	# [1] 4
+	# 
+	# [[2]]
+	# [1] -1
+	# attr(,"match.length")
+	# [1] -1
+	# 
+	# [[3]]
+	# [1] 14
+	# attr(,"match.length")
+	# [1] 4
+</code></pre>
+</div>
+
+<h4 id="section-8">字符串替换</h4>
+<p>尽管sub和gsub是用于字符串替换的函数，但严格地说R语言没有字符串替换的函数，因为R语言不管什么操作对参数都是传值不传址。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>text
+	# [1] "Hellow, Adam!"      "Hi, Paul!"          "How are you, Adam."
+sub(pattern = "Adam", replacement = "world", text)
+	# [1] "Hellow, world!"      "Hi, Paul!"          "How are you, world."
+text
+	# [1] "Hellow, Adam!"      "Hi, Paul!"          "How are you, Adam."
+</code></pre>
+</div>
+<p>可以看到：虽然说是“替换”，但原字符串并没有改变，要改变原变量我们只能通过再赋值的方式。 sub和gsub的区别是前者只做一次替换（不管有几次匹配），而gsub把满足条件的匹配都做替换。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>text1 = c("Hellow, Adam!", "Hi, Paul!", "How are you, Adam, Ava.")
+sub(pattern = "Adam|Ava", replacement = "world", text1)
+	# [1] "Hellow, world!"      "Hi, Paul!"          "How are you, world, Ava."
+gsub(pattern = "Adam|Ava", replacement = "world", text1)
+	# [1] "Hellow, world!"      "Hi, Paul"          "How are you, world, world."
+</code></pre>
+</div>
+
+<p>sub和gsub函数可以使用提取表达式（转义字符+数字）让部分变成全部：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sub(pattern = ".*(Adam).*", replacement = "Hi, \\1", text)
+	# [1] "Hi, Adam"  "Hi, Paul!" "Hi, Adam" 
+</code></pre>
+</div>
+
+<h2 id="section-9">字符串提取</h2>
+<p>substr和substring函数通过位置进行字符串拆分或提取，它们本身并不使用正则表达式，但是结合正则表达式函数regexpr、gregexpr或regexec使用可以非常方便地从大量文本中提取所需信息。两者的参数设置基本相同，但它们的返回值的长度（个数）有差别：substr返回的字串个数等于第一个参数的长度，而substring返回字串个数等于三个参数中最长向量长度，短向量循环使用。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>substr(x, start, stop)
+substring(text, first, last = 1000000L)
+</code></pre>
+</div>
+
+<ul>
+  <li>x均为要拆分的字串向量</li>
+  <li>start/first 为截取的起始位置向量</li>
+  <li>stop/last 为截取字串的终止位置向量</li>
+</ul>
+
+<p>先看第1参数（要拆分的字符向量）长度为1例子。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>x &lt;- "123456789"
+substr(x, c(2, 4), c(4, 5, 8))
+	# [1] "234"
+substring(x, c(2, 4), c(4, 5, 8))
+	# [1] "234"     "45"      "2345678"
+</code></pre>
+</div>
+<p>因为x的向量长度为1，所以substr获得的结果只有1个字串，即第2和第3个参数向量只用了第一个组合：起始位置2，终止位置4。 而substring的语句三个参数中最长的向量为c(4,5,8)，执行时按短向量循环使用的规则第一个参数事实上就是c(x,x,x)，第二个参数就成了c(2,4,2)，最终截取的字串起始位置组合为：2-4, 4-5和2-8。</p>
+
+<h3 id="section-10">字符串的整理</h3>
+
+<ul>
+  <li>strtrim 函数</li>
+</ul>
+
+<p>该函数用于将字符串修剪到特定的显示宽度，其用法为，</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>strtrim(x,width)
+</code></pre>
+</div>
+<p>返回字符串向量的长度等于x的长度。因为是“修剪”，所以只能去掉多余的字符不能增加其他额外的字符：如果字符串本身的长度小于width，得到的是原字符串，别指望它会用空格或其他什么字符补齐。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>strtrim(c("abcdef", "abcdef", "abcdef"), c(1, 5, 10))
+	# [1] "a"      "abcde"  "abcdef"
+strtrim(c(1, 123, 1234567), 4)
+	# [1] "1"    "123"  "1234"
+</code></pre>
+</div>
+
+<ul>
+  <li>strwrap函数</li>
+</ul>
+
+<p>该函数把一个字符串当成一个段落的文字（不管字符串中是否有换行符），按照段落的格式（缩进和长度）和断字方式进行分行，每一行是结果中的一个字符串。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>str1 &lt;- "Each character string in the input is first split into paragraphs\n(or lines containing whitespace only).  The paragraphs are then\nformatted by breaking lines at word boundaries.  The target\ncolumns for wrapping lines and the indentation of the first and\nall subsequent lines of a paragraph can be controlled\nindependently."
+str2 &lt;- rep(str1, 2)
+strwrap(str2, width = 80, indent = 2)
+	#  [1] "  Each character string in the input is first split into paragraphs (or lines"
+	#  [2] "containing whitespace only).  The paragraphs are then formatted by breaking"  
+	#  [3] "lines at word boundaries.  The target columns for wrapping lines and the"     
+	#  [4] "indentation of the first and all subsequent lines of a paragraph can be"      
+	#  [5] "controlled independently."                                                    
+	#  [6] "  Each character string in the input is first split into paragraphs (or lines"
+	#  [7] "containing whitespace only).  The paragraphs are then formatted by breaking"  
+	#  [8] "lines at word boundaries.  The target columns for wrapping lines and the"     
+	#  [9] "indentation of the first and all subsequent lines of a paragraph can be"      
+	# [10] "controlled independently."
+</code></pre>
+</div>
+
+<p>simplify参数用于指定结果的返回样式，默认为TRUE，即结果中所有的字符串都按顺序放在一个字符串向量中（如上）；如果为FALSE，那么结果将是列表。另外一个参数exdent用于指定除第一行以外的行缩进。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>strwrap(str1, width = 80, indent = 0, exdent = 2)
+	# [1] "Each character string in the input is first split into paragraphs (or lines"  
+	# [2] "  containing whitespace only).  The paragraphs are then formatted by breaking"
+	# [3] "  lines at word boundaries.  The target columns for wrapping lines and the"   
+	# [4] "  indentation of the first and all subsequent lines of a paragraph can be"    
+	# [5] "  controlled independently."
+</code></pre>
+</div>
+
+<ul>
+  <li>match和charmatch函数</li>
+</ul>
+
+<p>这两个函数用于字符的匹配。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>match("xx", c("abc", "xx", "xxx", "xx"))
+	# [1] 2
+match(2, c(3, 1, 2, 4))
+	# [1] 3
+charmatch("xx", "xx")
+	# [1] 1
+charmatch("xx", "xxa")
+	# [1] 1
+charmatch("xx", "axx")
+	# [1] NA
+</code></pre>
+</div>
+<p>match按向量进行运算，返回第一次匹配的元素的位置（如果有），非字符向量也可用。正如原作者说的那样，charmatch函数真太坑爹了，不建议使用。</p>
+
+<p>-—–</p>
+
+<p><strong>参考文章</strong></p>
+
+<ol>
+  <li>R语言进阶之二：文本（字符串）处理与正则表达式（这篇文章在许多网站都有转载，然而原创链接失效了）</li>
+  <li><a href="http://jianl.org/2010/02/14/2010-02-14-R%E4%B8%AD%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%AE%80%E4%BB%8B/">R中正则表达式简介</a></li>
+</ol>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>长宽数据之间的转化(一)</title>
+      <link>http://xukuang.github.io/blog/2016/01/melt-and-dcast/</link>
+      <pubDate>2016-01-18T03:32:19-07:00</pubDate>
+      <author>Xu Kuang</author>
+      <guid>http://xukuang.github.io/blog/2016/01/melt-and-dcast</guid>
+      <content:encoded><![CDATA[<p>这里将数据框分为两种：宽数据和长数据，宽数据便于数据成果的展示，长数据则便于数据在R中进行分析。reshape2包中的melt函数可以实现宽数据向长数据的转换，而dcast可以实现宽数据向长数据的转化。</p>
+
+<h2 id="section">宽数据转化为长数据</h2>
+
+<h3 id="melt">melt函数</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>melt(data, id.vars, measure.vars,
+  variable.name = "variable", ..., na.rm = FALSE, value.name = "value",
+  factorsAsStrings = TRUE)
+</code></pre>
+</div>
+
+<p><strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型</p>
+
+<p><strong>id.vars</strong> 数据的转化标准：依照那些列进行转化，数据格式为字符型或数字型的向量。如果该参数没有限定，会把所有数据转化为两列，其中指标一列，数据一列。</p>
+
+<p><strong>measure.vars</strong>	被转化的数据：将哪些列数据值转化，该参数在没有指定的默认情况下，会将id.vars中以外的所有列数据进行转化，数据格式为字符型或数字型的向量</p>
+
+<p><strong>variable.name</strong>	对转化后的数据标准列重新命名，默认情况下，列名为variable</p>
+
+<p><strong>na.rm</strong> 是否去除数据中的NA，默认情况下为FALSE，不去除NA</p>
+
+<p><strong>value.name</strong> 对转化后的数据列重新命名，默认情况下，列名为value</p>
+
+<p><strong>factorsAsStrings</strong>	转化过程中是否将因子类型数据转化为字符型数据，默认情况下为TRUE，将因子类型数据转化为字符型数据
+<!--more--></p>
+
+<h3 id="section-1">实例</h3>
+
+<ul>
+  <li>按Month和Day列将其他指标排成长数据</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 加载数据
+library(reshape2)
+head(airquality)
+	#   Ozone Solar.R Wind Temp Month Day
+	# 1    41     190  7.4   67     5   1
+	# 2    36     118  8.0   72     5   2
+	# 3    12     149 12.6   74     5   3
+	# 4    18     313 11.5   62     5   4
+	# 5    NA      NA 14.3   56     5   5
+	# 6    28      NA 14.9   66     5   6
+dim(airquality)	
+	# [1] 153   6
+dat1 = melt(airquality, id.vars = c('Month', 'Day'))
+head(dat1)
+	# 	Month Day variable value
+	# 1     5   1    Ozone    41
+	# 2     5   2    Ozone    36
+	# 3     5   3    Ozone    12
+	# 4     5   4    Ozone    18
+	# 5     5   5    Ozone    NA
+	# 6     5   6    Ozone    28
+dim(dat1)
+	# [1] 612   4
+</code></pre>
+</div>
+<p>需要注意的是melt函数当中如果id.vars参数不指定值，则会把所有数据转化为两列输出。</p>
+
+<ul>
+  <li>按Month和Day列将Ozone和Solar.R列指标排成长数据</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dat2 = melt(airquality, id.vars = c('Month', 'Day'),
+ measure = c('Ozone', 'Solar.R'))
+head(dat2)
+	# 	Month Day variable value
+	# 1     5   1    Ozone    41
+	# 2     5   2    Ozone    36
+	# 3     5   3    Ozone    12
+	# 4     5   4    Ozone    18
+	# 5     5   5    Ozone    NA
+	# 6     5   6    Ozone    28
+dim(dat2) # 函数是dat1的1/2
+	# [1] 306   4 
+</code></pre>
+</div>
+
+<ul>
+  <li>对排列后的数据进行重命名</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dat3 = melt(airquality, id.vars = c('Month', 'Day'),
+variable.name = 'type', value.name = 'value.type')
+head(dat3) # 列名发生变化
+	# 	Month Day  type value.type
+	# 1     5   1 Ozone         41
+	# 2     5   2 Ozone         36
+	# 3     5   3 Ozone         12
+	# 4     5   4 Ozone         18
+	# 5     5   5 Ozone         NA
+	# 6     5   6 Ozone         28
+dim(dat3)
+	# [1] 612   4
+</code></pre>
+</div>
+
+<ul>
+  <li>去除排列后数据中的NA</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#　 airquality$Ozone 数的前四列有44 个NA
+table(is.na(airquality$Ozone)) # 37
+	# FALSE  TRUE 
+	#   116    37 
+table(is.na(airquality$Solar.R)) # 4
+	# FALSE  TRUE 
+	#   146     7 
+table(is.na(airquality$Temp)) # 0
+	# FALSE 
+	#   153 
+table(is.na(airquality$Wind)) # 0
+	# FALSE 
+	#   153 
+dat4 = melt(airquality, id.vars = c('Month', 'Day'),
+variable.name = 'type', value.name = 'value.type', na.rm = TRUE)
+head(dat4)
+	#   Month Day  type value.type
+	# 1     5   1 Ozone         41
+	# 2     5   2 Ozone         36
+	# 3     5   3 Ozone         12
+	# 4     5   4 Ozone         18
+	# 6     5   6 Ozone         28
+	# 7     5   7 Ozone         23
+dim(dat4)# 比dat3少44行
+	# [1] 568   4	
+</code></pre>
+</div>
+<p>此外，还发现melt函数中所有参数名都可以只写’.’前的部分。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dat5 = melt(airquality, id = c('Month', 'Day'),
+variable = 'type', value = 'value.type', na = TRUE)
+head(dat5)
+	# 	Month Day  type value
+	# 1     5   1 Ozone    41
+	# 2     5   2 Ozone    36
+	# 3     5   3 Ozone    12
+	# 4     5   4 Ozone    18
+	# 5     5   5 Ozone    NA
+	# 6     5   6 Ozone    28
+</code></pre>
+</div>
+
+<h2 id="section-2">长数据转化为宽数据</h2>
+
+<h3 id="dcast">dcast函数</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dcast(data, formula, fun.aggregate = NULL, ..., margins = NULL,
+  subset = NULL, fill = NULL, drop = TRUE,
+  value.var = guess_value(data))
+</code></pre>
+</div>
+
+<p><strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型</p>
+
+<p><strong>formula</strong> 转化的标准，以公式的形式定义</p>
+
+<p><strong>fun.aggregate</strong> 汇总函数。分类后，如果分类结果不唯一，就必须使用汇总函数。常用的汇总函数，包括求个数、和、平均值、标准差、方差，默认的为求个数</p>
+
+<p><strong>margins</strong>	确定结果是否显示总的结果，默认不显示</p>
+
+<p><strong>subset</strong> 是否只对某些标准内容进行计算，结合plyr包一起使用</p>
+
+<p><strong>fill</strong> 不存在的组合值的显示结果。默认的显示为0。数据类型为数值型向量</p>
+
+<p><strong>drop</strong> 确认不存在分分类组合是否显示，默认情况下显示</p>
+
+<p><strong>value.var</strong> 貌似对对转化后的数据进行命名，使用默认情况即可</p>
+
+<h3 id="section-3">实例</h3>
+
+<ul>
+  <li>每个分类结果有一个数据，此时不需要使用汇总函数</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">air1</span> <span class="o">=</span>  <span class="n">dcast</span><span class="p">(</span><span class="n">dat4</span><span class="p">,</span> <span class="n">Month</span> <span class="o">+</span> <span class="n">Day</span> <span class="o">~</span> <span class="n">type</span><span class="p">)</span>
+<span class="n">dim</span><span class="p">(</span><span class="n">air1</span><span class="p">)</span>
+	<span class="c1"># [1] 153   6
+</span><span class="n">head</span><span class="p">(</span><span class="n">air1</span><span class="p">)</span> <span class="c1"># 数据与airquality相同
+</span>	<span class="c1"># 	Month Day Ozone Solar.R Wind Temp
+</span>	<span class="c1"># 1     5   1    41     190  7.4   67
+</span>	<span class="c1"># 2     5   2    36     118  8.0   72
+</span>	<span class="c1"># 3     5   3    12     149 12.6   74
+</span>	<span class="c1"># 4     5   4    18     313 11.5   62
+</span>	<span class="c1"># 5     5   5    NA      NA 14.3   56
+</span>	<span class="c1"># 6     5   6    28      NA 14.9   66
+</span></code></pre>
+</div>
+
+<ul>
+  <li>按Month列排成宽数据，每个分类结果有多个数据，必须有汇总函数</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>air2 =  dcast(dat4, Month ~ type, sum) # 这里使用sum函数
+dim(air2)
+	# [1] 5 5
+head(air2)
+	# 	Month Ozone Solar.R  Wind Temp
+	# 1     5    NA      NA 360.3 2032
+	# 2     6    NA    5705 308.0 2373
+	# 3     7    NA    6711 277.2 2601
+	# 4     8    NA      NA 272.6 2603
+	# 5     9    NA    5023 305.4 2307
+</code></pre>
+</div>
+
+<ul>
+  <li>是否显示总的分类结果</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>air3 = dcast(dat4, Month ~ type, sum, margins = T) #列、行的总汇总都显示
+dim(air3)
+	# [1] 6 6
+head(air3)
+	#   Month Ozone Solar.R   Wind  Temp (all)
+	# 1     5    NA      NA  360.3  2032    NA
+	# 2     6    NA    5705  308.0  2373    NA
+	# 3     7    NA    6711  277.2  2601    NA
+	# 4     8    NA      NA  272.6  2603    NA
+	# 5     9    NA    5023  305.4  2307    NA
+	# 6 (all)    NA      NA 1523.5 11916    NA
+dcast(dat4, Month ~ type, sum, margins = c('Month'))# 只显示列的汇总
+	# 	Month Ozone Solar.R   Wind  Temp
+	# 1     5    NA      NA  360.3  2032
+	# 2     6    NA    5705  308.0  2373
+	# 3     7    NA    6711  277.2  2601
+	# 4     8    NA      NA  272.6  2603
+	# 5     9    NA    5023  305.4  2307
+	# 6 (all)    NA      NA 1523.5 11916
+dcast(dat4, Month ~ type, sum, margins = c('type'))# 只显示行的汇总
+	# 	Month Ozone Solar.R  Wind Temp (all)
+	# 1     5    NA      NA 360.3 2032    NA
+	# 2     6    NA    5705 308.0 2373    NA
+	# 3     7    NA    6711 277.2 2601    NA
+	# 4     8    NA      NA 272.6 2603    NA
+	# 5     9    NA    5023 305.4 2307    NA
+</code></pre>
+</div>
+
+<ul>
+  <li>只显示部分的分类内容</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>library(plyr)
+air4 = dcast(dat4, Month ~ type, sum, subset = .(type == 'Wind' )) # 只显示type中Wind的情况
+dim(air4)
+	# [1] 5 2
+head(air4)
+	# 	Month  Wind
+	# 1     5 360.3
+	# 2     6 308.0
+	# 3     7 277.2
+	# 4     8 272.6
+	# 5     9 305.4
+</code></pre>
+</div>
+
+<ul>
+  <li>不存在的分类是否显示，以及怎么显示</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>air5 = dcast(dat4, Month + Day ~ type, length, drop = F) # 组合上存在的结果都显示
+tail(air5) # 这里的最后一行只是组合上存在，数据中并不在
+	# 		 Month Day Ozone Solar.R Wind Temp
+	# 150      9  26     1       1    1    1
+	# 151      9  27     1       1    1    1
+	# 152      9  28     1       1    1    1
+	# 153      9  29     1       1    1    1
+	# 154      9  30     1       1    1    1
+	# 155      9  31     0       0    0    0
+tail(dcast(dat4, Month + Day ~ type, length, drop = F, fill= -1)) # 更改不存在结果的显示值，最后一行显示为-1
+	# 		Month Day Ozone Solar.R Wind Temp
+	# 150     9  26     1       1    1    1
+	# 151     9  27     1       1    1    1
+	# 152     9  28     1       1    1    1
+	# 153     9  29     1       1    1    1
+	# 154     9  30     1       1    1    1
+	# 155     9  31    -1      -1   -1   -1
+</code></pre>
+</div>
+
 ]]></content:encoded>
     </item>
     

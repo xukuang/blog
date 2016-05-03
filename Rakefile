@@ -31,4 +31,6 @@ task :post do
     post.puts "tags: []"
 	post.puts "---"
   end
+  puts "Now open #{filename} in an editor."
+  system "open #{filename}"
 end
