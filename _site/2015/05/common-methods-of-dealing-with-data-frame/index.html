@@ -172,7 +172,7 @@ hf = arrange(hflights, desc(ArrDelay))
   <li>直接选取数据框中满足条件的数据行</li>
 </ul>
 
-<p>满足一个条件</p>
+<p>满足一个条件；</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">## 满足数据框hflights中Month列等于1
 </span><span class="n">hf1</span> <span class="o">=</span> <span class="n">hflights</span><span class="p">[</span><span class="n">hflights</span><span class="o">$</span><span class="n">Month</span> <span class="o">==</span> <span class="m">1</span><span class="p">]</span>
@@ -181,7 +181,7 @@ hf = arrange(hflights, desc(ArrDelay))
 </code></pre>
 </div>
 
-<p>两个以上的条件：同时满足(相当于逻辑“且”)</p>
+<p>两个以上的条件：同时满足(相当于逻辑“且”)；</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="c1"># 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1和2
@@ -196,9 +196,7 @@ hf = arrange(hflights, desc(ArrDelay))
 </code></pre>
 </div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>* 两个以上的条件：至少满足其中一个(相当于逻辑“或”)
-</code></pre>
-</div>
+<p>两个以上的条件：至少满足其中一个(相当于逻辑“或”)。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="c1"># 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1或2
@@ -214,14 +212,10 @@ hf = arrange(hflights, desc(ArrDelay))
 </div>
 
 <ul>
-  <li>
-    <p>subset函数</p>
-
-    <ul>
-      <li>满足一个条件</li>
-    </ul>
-  </li>
+  <li>subset函数</li>
 </ul>
+
+<p>满足一个条件；</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">## 满足数据框hflights中Month列等于1
 </span><span class="n">hf1</span> <span class="o">=</span> <span class="n">subset</span><span class="p">(</span><span class="n">hflights</span><span class="p">,</span> <span class="n">Month</span> <span class="o">==</span> <span class="m">1</span><span class="p">)</span>
@@ -230,9 +224,7 @@ hf = arrange(hflights, desc(ArrDelay))
 </code></pre>
 </div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>* 两个以上的条件：同时满足(相当于逻辑“且”)
-</code></pre>
-</div>
+<p>两个以上的条件：同时满足(相当于逻辑“且”)；</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="c1"># 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1和2
@@ -247,9 +239,7 @@ hf = arrange(hflights, desc(ArrDelay))
 </code></pre>
 </div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>* 两个以上的条件：至少满足其中一个(相当于逻辑“或”)
-</code></pre>
-</div>
+<p>两个以上的条件：至少满足其中一个(相当于逻辑“或”)。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="c1"># 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1或2
@@ -271,11 +261,9 @@ hf = arrange(hflights, desc(ArrDelay))
   <li>dplyr包中的fliter函数</li>
 </ul>
 
-<p>plyr包中并没有相似功能的filter函数</p>
+<p>plyr包中并没有相似功能的filter函数。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>* 满足一个条件
-</code></pre>
-</div>
+<p>满足一个条件；</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
 <span class="c1">## 满足数据框hflights中Month列等于1
@@ -285,9 +273,7 @@ hf = arrange(hflights, desc(ArrDelay))
 </code></pre>
 </div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>* 两个以上的条件：同时满足(相当于逻辑“且”)
-</code></pre>
-</div>
+<p>两个以上的条件：同时满足(相当于逻辑“且”)；</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="c1"># 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1和2
@@ -308,9 +294,7 @@ hf = arrange(hflights, desc(ArrDelay))
 </code></pre>
 </div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>* 两个以上的条件：至少满足其中一个(相当于逻辑“或”)
-</code></pre>
-</div>
+<p>两个以上的条件：至少满足其中一个(相当于逻辑“或”)。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="c1"># 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1或2
@@ -341,14 +325,10 @@ hf = arrange(hflights, desc(ArrDelay))
 </div>
 
 <ul>
-  <li>
-    <p>直接选取</p>
-
-    <ul>
-      <li>利用字符向量选取指定列</li>
-    </ul>
-  </li>
+  <li>直接选取</li>
 </ul>
+
+<p>利用字符向量选取指定列；</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="n">iris.part1</span> <span class="o">=</span> <span class="n">iris</span><span class="p">[,</span><span class="n">c</span><span class="p">(</span><span class="s1">'Sepal.Length'</span><span class="p">,</span> <span class="s1">'Sepal.Width'</span><span class="p">)]</span>
 <span class="n">head</span><span class="p">(</span><span class="n">iris.part1</span><span class="p">)</span>
@@ -362,9 +342,7 @@ hf = arrange(hflights, desc(ArrDelay))
 </code></pre>
 </div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>* 利用数字向量选择指定列
-</code></pre>
-</div>
+<p>利用数字向量选择指定列；</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="c1"># 利用":"选取相邻列
 </span><span class="n">iris.part2</span> <span class="o">=</span> <span class="n">iris</span><span class="p">[,</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span>
@@ -390,9 +368,7 @@ hf = arrange(hflights, desc(ArrDelay))
 </code></pre>
 </div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>* 利用“-”结合数字向量排除数据框的某些列
-</code></pre>
-</div>
+<p>利用“-”结合数字向量排除数据框的某些列。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="n">iris.part4</span> <span class="o">=</span> <span class="n">iris</span><span class="p">[,</span><span class="o">-</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)]</span>
 <span class="n">head</span><span class="p">(</span><span class="n">iris.part4</span><span class="p">)</span>
@@ -419,7 +395,7 @@ hf = arrange(hflights, desc(ArrDelay))
   <li>利用dplyr包中的select函数</li>
 </ul>
 
-<p>select函数能完成上部分基础函数的所有操作。plyr包中也没有相似功能的select函数</p>
+<p>select函数能完成上部分基础函数的所有操作。plyr包中也没有相似功能的select函数。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="c1"># 利用列名选取指定列
 </span><span class="n">iris.part1</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">iris</span><span class="p">,</span> <span class="n">Sepal.Length</span><span class="p">,</span> <span class="n">Sepal.Width</span><span class="p">)</span>
@@ -538,14 +514,10 @@ colMeans(hflights.dat, na.rm = T)
 </div>
 
 <ul>
-  <li>
-    <p>dplyr包的summarise_each或者mutate_each</p>
-
-    <ul>
-      <li>summarise_each可以进行求平均值、标准差、方差、最小值和最大值，此时被处理的数据列也不需要必须是数字类型(只是此时会有警告提示)。然而，无论如何要进行求和操作时，所有数据列必须是数字类型(原因是sum函数对字符求和，直接返回错误，而求平均值、标准差和方差只是返回NA，并提示警告，最小值和最大值时返回真实的结果)。当然也可以多个指标同时计算。</li>
-    </ul>
-  </li>
+  <li>dplyr包的summarise_each或者mutate_each</li>
 </ul>
+
+<p>summarise_each可以进行求平均值、标准差、方差、最小值和最大值，此时被处理的数据列也不需要必须是数字类型(只是此时会有警告提示)。然而，无论如何要进行求和操作时，所有数据列必须是数字类型(原因是sum函数对字符求和，直接返回错误，而求平均值、标准差和方差只是返回NA，并提示警告，最小值和最大值时返回真实的结果)。当然也可以多个指标同时计算。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code># 平均值，字符平均值返回NA
 summarise_each(hflights, funs(mean))
@@ -580,9 +552,7 @@ summarise_each(hflights.dat, funs(sum(., na.rm = T)))
 </code></pre>
 </div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>* mutate_each跟summarise_each最大的不同在于产生于原数据相同行数的结果，所以mutate_each除了可以进行summarise_each函数的操作以外，还可进行简单四则运算，当然进行四则运算时，要保证所有列都是数字型。	
-</code></pre>
-</div>
+<p>mutate_each跟summarise_each最大的不同在于产生于原数据相同行数的结果，所以mutate_each除了可以进行summarise_each函数的操作以外，还可进行简单四则运算，当然进行四则运算时，要保证所有列都是数字型。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code># 四则运算
 temp1 = mutate_each(hflights.dat, funs( . + 1))
