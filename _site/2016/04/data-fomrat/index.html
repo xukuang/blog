@@ -46,7 +46,7 @@
                                               <section class="post">
 <p>前面一篇<a href="http://xukuang.github.io/2016/01/18/melt-and-dcast/">文章</a>讲了用reshape2包中的函数实现长宽数据的转化，而tidyr是reshape2的升级版，主要用于数据框。这篇文章将介绍一下如何使用tidyr包中的函数实现长宽数据的转化。</p>
 
-<h2 id="section">宽数据转化为长数据</h2>
+<h2 id="section">1. 宽数据转化为长数据</h2>
 
 <h3 id="gather">gather函数</h3>
 
@@ -151,37 +151,39 @@ dim(dat3)
 	# [1] 612   4
 </code></pre>
 </div>
+
 <ul>
-  <li>去除排列后数据中的NA
-<code class="highlighter-rouge">
-#　 airquality$Ozone 数的前四列有44 个NA
-table(is.na(airquality$Ozone)) # 37
-  # FALSE  TRUE 
-  #   116    37 
-table(is.na(airquality$Solar.R)) # 4
-  # FALSE  TRUE 
-  #   146     7 
-table(is.na(airquality$Temp)) # 0
-  # FALSE 
-  #   153 
-table(is.na(airquality$Wind)) # 0
-  # FALSE 
-  #   153 
-dat4 = gather(airquality, type, value.type, Ozone:Temp, na.rm = TRUE)
-head(dat4)
-  #   Month Day  type value.type
-  # 1     5   1 Ozone         41
-  # 2     5   2 Ozone         36
-  # 3     5   3 Ozone         12
-  # 4     5   4 Ozone         18
-  # 6     5   6 Ozone         28
-  # 7     5   7 Ozone         23
-dim(dat4)# 比dat3少44行
-  # [1] 568   4	
-</code></li>
+  <li>去除排列后数据中的NA</li>
 </ul>
 
-<h2 id="section-2">长数据转化为宽数据</h2>
+<div class="highlighter-rouge"><pre class="highlight"><code>#　 airquality$Ozone 数的前四列有44 个NA
+table(is.na(airquality$Ozone)) # 37
+	# FALSE  TRUE 
+	#   116    37 
+table(is.na(airquality$Solar.R)) # 4
+	# FALSE  TRUE 
+	#   146     7 
+table(is.na(airquality$Temp)) # 0
+	# FALSE 
+	#   153 
+table(is.na(airquality$Wind)) # 0
+	# FALSE 
+	#   153 
+dat4 = gather(airquality, type, value.type, Ozone:Temp, na.rm = TRUE)
+head(dat4)
+	#   Month Day  type value.type
+	# 1     5   1 Ozone         41
+	# 2     5   2 Ozone         36
+	# 3     5   3 Ozone         12
+	# 4     5   4 Ozone         18
+	# 6     5   6 Ozone         28
+	# 7     5   7 Ozone         23
+dim(dat4)# 比dat3少44行
+	# [1] 568   4	
+</code></pre>
+</div>
+
+<h2 id="section-2">2. 长数据转化为宽数据</h2>
 
 <h3 id="spread">spread函数</h3>
 

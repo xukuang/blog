@@ -7,7 +7,7 @@ tags: [R, tidyr]
 ---
 前面一篇[文章](http://xukuang.github.io/2016/01/18/melt-and-dcast/)讲了用reshape2包中的函数实现长宽数据的转化，而tidyr是reshape2的升级版，主要用于数据框。这篇文章将介绍一下如何使用tidyr包中的函数实现长宽数据的转化。
 
-## 宽数据转化为长数据
+## 1. 宽数据转化为长数据
 
 ### gather函数
 
@@ -106,7 +106,9 @@ head(dat3)
 dim(dat3)
 	# [1] 612   4
 ```
+
 * 去除排列后数据中的NA
+
 ```
 #　 airquality$Ozone 数的前四列有44 个NA
 table(is.na(airquality$Ozone)) # 37
@@ -135,7 +137,7 @@ dim(dat4)# 比dat3少44行
 ```
 
 
-## 长数据转化为宽数据
+## 2. 长数据转化为宽数据
 
 ### spread函数
 
