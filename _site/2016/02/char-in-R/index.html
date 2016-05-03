@@ -85,13 +85,10 @@
       <li>\s 表示空白字符（包括空格、制表符、换行符等），\S 表示非空白字符，</li>
       <li>\w 表示字（字母和数字），\W 表示非字</li>
       <li>\&lt; 和 \&gt; 分别表示以空白字符开始和结束的文本
- 需要注意的是，反斜杠 ‘\‘在R语言中得用两个反斜杠即 ‘\\’，如’\s’就要写成 ’\\s‘。
-        <ol>
-          <li>正则表达式符号运算顺序：圆括号括起来的表达式最优先，然后是表示重复次数的操作(即：* + {} )，接下来是连接运算（其实就是几个字符放在一起，如abc），最后是表示可选项的运算(|)。所以’foot|bar’ 可以匹配’foot‘或者’bar‘，但是 ‘foot|ba{2}r’匹配的是’foot‘或者’baar‘。</li>
-        </ol>
-      </li>
+ 需要注意的是，反斜杠 ‘\‘在R语言中得用两个反斜杠即 ‘\\’，如’\s’就要写成 ’\\s‘。</li>
     </ul>
   </li>
+  <li>正则表达式符号运算顺序：圆括号括起来的表达式最优先，然后是表示重复次数的操作(即：* + {} )，接下来是连接运算（其实就是几个字符放在一起，如abc），最后是表示可选项的运算(|)。所以’foot|bar’ 可以匹配’foot‘或者’bar‘，但是 ‘foot|ba{2}r’匹配的是’foot‘或者’baar‘。</li>
   <li>“贪婪”和“懒惰”的匹配规则。默认情况下是匹配尽可能多的字符，是为贪婪匹配，比如 “a.*b”默认匹配最长的a开头b结尾的字串，也就是整个字符串。如果要进行懒惰匹配，也就是匹配最短的字串，只需要在后面加个 ?，比如 “a.*?b”，就会匹配最开始找到的最短的a开头b结尾的字串</li>
 </ol>
 
@@ -320,11 +317,13 @@ gsub(pattern = "Adam|Ava", replacement = "world", text1)
 	# [1] "Hellow, world!"      "Hi, Paul"          "How are you, world, world."
 </code></pre>
 </div>
-<p>sub和gsub函数可以使用提取表达式（转义字符+数字）让部分变成全部：
-<code class="highlighter-rouge">
-sub(pattern = ".*(Adam).*", replacement = "Hi, \\1", text)
+
+<p>sub和gsub函数可以使用提取表达式（转义字符+数字）让部分变成全部：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sub(pattern = ".*(Adam).*", replacement = "Hi, \\1", text)
 	# [1] "Hi, Adam"  "Hi, Paul!" "Hi, Adam" 
-</code></p>
+</code></pre>
+</div>
 
 <h2 id="section-9">字符串提取</h2>
 <p>substr和substring函数通过位置进行字符串拆分或提取，它们本身并不使用正则表达式，但是结合正则表达式函数regexpr、gregexpr或regexec使用可以非常方便地从大量文本中提取所需信息。两者的参数设置基本相同，但它们的返回值的长度（个数）有差别：substr返回的字串个数等于第一个参数的长度，而substring返回字串个数等于三个参数中最长向量长度，短向量循环使用。</p>
