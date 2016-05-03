@@ -99,7 +99,7 @@
 
 <h3 id="section-4">线性模拟</h3>
 
-<pre><code>x = c(0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.20, 0.21, 0.23)
+<div class="highlighter-rouge"><pre class="highlight"><code>x = c(0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.20, 0.21, 0.23)
 y = c(42.0, 43.5, 45.0, 45.5, 45.0, 47.5, 49.0, 53.0, 50.0, 55.0, 55.0, 60.0)
 fit = lm(y ~ x)
 summary(fit)
@@ -131,10 +131,11 @@ anova(fit)
 	##Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 </code></pre>
+</div>
 
 <h3 id="section-5">线性模拟各参数的提取</h3>
 
-<pre><code># 可以通过names函数查看summary(fit)中个具体参数的提取方法
+<div class="highlighter-rouge"><pre class="highlight"><code># 可以通过names函数查看summary(fit)中个具体参数的提取方法
 names(summary(fit))
 # 提取R square
 summary(fit)$r.squared ## 依照该形式可以提取names(summary(fit))中任意指标
@@ -159,12 +160,13 @@ predict(fit, new)
 ## 也可以做出预测区间
 predict(fit, new, interval = 'prediction', levels = 0.95)
 </code></pre>
+</div>
 
 <h3 id="section-6">线性模拟各参数中各量的算法</h3>
 
 <h4 id="section-7">五个和的计算</h4>
 
-<pre><code>## 预备统计量(Sums of square and sums of producte)
+<div class="highlighter-rouge"><pre class="highlight"><code>## 预备统计量(Sums of square and sums of producte)
 Sx = sum(x)
 Sy = sum(y)
 Sxx = sum((x - mean(x))^2)
@@ -175,10 +177,11 @@ Sxy = sum((x - mean(x)) * (y - mean(y)))
 Syy = deviance(lm(y~1))
 n = length(x)
 </code></pre>
+</div>
 
 <h4 id="section-8">回归系数</h4>
 
-<pre><code>## 回归系数$\alpha$和$beta$（这样计算，residuals有最小值)
+<div class="highlighter-rouge"><pre class="highlight"><code>## 回归系数$\alpha$和$beta$（这样计算，residuals有最小值)
 beta = Sxy/Sxx
 beta
 alpha = mean(y) - beta*mean(x)
@@ -186,38 +189,43 @@ alpha
 # 提取lm或glm对象中的回归系数
 coef(fit)
 </code></pre>
+</div>
 
 <h4 id="section-9">残差及五分位数</h4>
 
-<pre><code>residuals = y - (beta + alpha * x)
+<div class="highlighter-rouge"><pre class="highlight"><code>residuals = y - (beta + alpha * x)
 residuals
 quantile(residuals)
 # 提取模型lm或glm的残差
 # 也可简化为
 residuals(fit)
 </code></pre>
+</div>
 
 <h4 id="pearsonr-1">Pearson相关系数r</h4>
 
-<pre><code>r = sqrt(Sxy/(Sxx * Syy))
+<div class="highlighter-rouge"><pre class="highlight"><code>r = sqrt(Sxy/(Sxx * Syy))
 r
 </code></pre>
+</div>
 
 <h4 id="r-1">R平方</h4>
 <p>决定系数，其值为 回归的平方和/总的平方和。</p>
 
-<pre><code>rsquare = (Syy - sum(residuals^2))/Syy
+<div class="highlighter-rouge"><pre class="highlight"><code>rsquare = (Syy - sum(residuals^2))/Syy
 rsquare
 </code></pre>
+</div>
 
 <h4 id="adjust-r">adjust R平方</h4>
 
-<pre><code>## 考虑到了自变量的个数, 包括截距在内, 本例子中k = 2
+<div class="highlighter-rouge"><pre class="highlight"><code>## 考虑到了自变量的个数, 包括截距在内, 本例子中k = 2
 n = length(x)
 k = 2
 adjustrsquare = 1- (1-rsquare)*(n-1)/(n-k)
 adjustrsquare
 </code></pre>
+</div>
 
 <h3 id="f">回归方程的F检验</h3>
 <p>在简单线性回归的模型，我们可以在<script type="math/tex">β = 0</script>时，对F统计量进行检验。

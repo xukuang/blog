@@ -52,15 +52,16 @@
 <h2 id="section-1">发表一篇文章</h2>
 <p>　　在电脑hexo文件夹的空白处点击鼠标右键，选择Git bash，调出hexo命令窗口，输入以下命令（在这里，以创建本篇博文“如何用hexo发博文”为例）。</p>
 
-<pre><code>hexo new "blog build" # "blog build" 可以更改为你要写的博文名的简单英文名，该命令可以简写为hexo n "blog build"
+<div class="highlighter-rouge"><pre class="highlight"><code>hexo new "blog build" # "blog build" 可以更改为你要写的博文名的简单英文名，该命令可以简写为hexo n "blog build"
 </code></pre>
+</div>
 <p>　　
 需要注意的是，这里只是创建了一个“blog build.md”文件,即将生成的博文的一切内容（包括博文的题目）都是根据“blog build.md”这个文件中的内容创建的，而与“blog build.md”这个文件的文件名无关，所以，理论上说，“hexo new “blog build””中的”blog build”可以是任何英文名字(什么，为什么不是任何中文名？hexo不支持文中输入！！！)。这里，建议用所发表博文题目相关的英文名。</p>
 
 <h2 id="section-2">编辑博文内容</h2>
 <p>　　在电脑的hexo\source_posts中打开文件”blog build.md”（打开方式用“记事本”即可），编辑博文内容。</p>
 
-<pre><code>title: 如何用hexo发博文 # 即将生成博文的标题。如果这里改“我的博客构建学习之路”，即将生成的博文标题即为“我的博客构建学习之路”
+<div class="highlighter-rouge"><pre class="highlight"><code>title: 如何用hexo发博文 # 即将生成博文的标题。如果这里改“我的博客构建学习之路”，即将生成的博文标题即为“我的博客构建学习之路”
 date: 2014-05-14 18:09:01 # 发表日期，一般不改动
 categories: 技术篇 #文章文类
 tags: [hexo,博客] #文章标签，多于一项时用这种格式，注意[hexo，博客]中的逗号要用英文下的逗号
@@ -68,32 +69,37 @@ tags: [hexo,博客] #文章标签，多于一项时用这种格式，注意[hexo
 
 # 这里是本篇博文的正文，要用markdown编写，markdown的具体语法规则可从网上搜索
 </code></pre>
+</div>
 
 <h2 id="section-3">预览博文</h2>
 <p>　　在hexo命令窗口，输入以下命令，可以本地预览博客中的所有内容，包括即将推送的本篇文章。</p>
 
-<pre><code>hexo server # 该命令可以简写为hexo s
+<div class="highlighter-rouge"><pre class="highlight"><code>hexo server # 该命令可以简写为hexo s
 </code></pre>
+</div>
 <p>　　此时，在浏览器中输入localhost:4000，预览效果。无论如何，“预览博文”这一步是可以直接跳过，进入到下一步“推送博文”。</p>
 
 <h2 id="section-4">推送博文</h2>
 <p>　　在hexo命令窗口，Ctrl+C退出server（当然，如果没有执行上一步<strong>预览博文</strong>，这个操作不需进行），最后输入以下命令。</p>
 
-<pre><code>hexo generate # 文件的部署，该命令可以简写为hexo g
+<div class="highlighter-rouge"><pre class="highlight"><code>hexo generate # 文件的部署，该命令可以简写为hexo g
 hexo deploy # 博文的推送（上一条命令运行完毕，输入本条命令），该命令可以简写为hexo d
 </code></pre>
+</div>
 <p>　　同步到github。访问网站看看效果。</p>
 
 <h2 id="section-5">博文的修改</h2>
 <p>　　当我们要对博文的内容进行修改时，只需再次打开文件“如何用hexo发博文.md”（打开方式用“记事本”即可），进行修改，然后保存。需要注意的是当你对文章分类和文章标签更改时，请先执行下面的一条命令，这条命令的目的是删除以前的分类和标签，否则文章原来的分类和标签仍然存在。尽管这一步在未修改文章分类和标签时显得有点多余，但是建议每次推送博客前都执行该命令。</p>
 
-<pre><code>hexo clean
+<div class="highlighter-rouge"><pre class="highlight"><code>hexo clean
 </code></pre>
+</div>
 <p>　　最后，再次执行上一步的<strong>推送博文</strong>的相关命令即可。</p>
 
-<pre><code>hexo generate # 文件的部署，该命令可以简写为hexo g
+<div class="highlighter-rouge"><pre class="highlight"><code>hexo generate # 文件的部署，该命令可以简写为hexo g
 hexo deploy # 博文的推送（上一条命令运行完毕，输入本条命令），该命令可以简写为hexo d
 </code></pre>
+</div>
 
 <p>- - - - - -</p>
 

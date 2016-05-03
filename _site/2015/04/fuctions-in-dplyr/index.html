@@ -48,7 +48,7 @@
 
 <h2 id="dplyr">dplyr包的加载</h2>
 
-<pre><code># dplyr包加载
+<div class="highlighter-rouge"><pre class="highlight"><code># dplyr包加载
 library(dplyr)
 # 加载使用到其中数据的这些包
 library(Lahman) # Lahman包的棒球比赛数据
@@ -71,17 +71,19 @@ head(hflights)
 class(hflights)
 	[1] "data.frame"
 </code></pre>
+</div>
 <!--more-->
 
 <h2 id="section">数据转换</h2>
 
-<pre><code>## 将过长过大的数据集转换为显示更友好的 tbl_df 类型
+<div class="highlighter-rouge"><pre class="highlight"><code>## 将过长过大的数据集转换为显示更友好的 tbl_df 类型
 hflights_df &lt;- tbl_df(hflights)
 </code></pre>
+</div>
 
 <h2 id="section-1">数据筛选</h2>
 
-<pre><code># 筛选filter,类似于base::subset()函数
+<div class="highlighter-rouge"><pre class="highlight"><code># 筛选filter,类似于base::subset()函数
 filter(hflights_df, Month == 1, DayofMonth == 1)
 filter(hflights, Month == 1, DayofMonth == 1)
 # 用R自带函数实现:
@@ -90,10 +92,11 @@ hflights[hflights$Month == 1 &amp; hflights$DayofMonth == 1, ]
 filter(hflights_df, Month == 1 | Month == 2)
 # 注意: 表示 AND 时要使用 &amp; 而避免 &amp;&amp;
 </code></pre>
+</div>
 
 <h2 id="section-2">数据排列</h2>
 
-<pre><code># 排列: arrange(),按给定的列名依次对行进行排序.
+<div class="highlighter-rouge"><pre class="highlight"><code># 排列: arrange(),按给定的列名依次对行进行排序.
 arrange(hflights_df, DayofMonth, Month, Year)
 # 对列名加 desc() 进行倒序
 arrange(hflights_df, desc(ArrDelay))
@@ -102,10 +105,11 @@ arrange(hflights_df, desc(ArrDelay))
 hflights[order(hflights$DayofMonth, hflights$Month, hflights$Year), ]
 hflights[order(desc(hflights$ArrDelay)), ]
 </code></pre>
+</div>
 
 <h2 id="section-3">数据选择</h2>
 
-<pre><code>#  选择: select()
+<div class="highlighter-rouge"><pre class="highlight"><code>#  选择: select()
 # 用列名作参数来选择子数据集:
 select(hflights_df, Year, Month, DayOfWeek)
 # 还可以用 : 来连接列名, 没错, 就是把列名当作数字一样使用:
@@ -113,10 +117,11 @@ select(hflights_df, Year:DayOfWeek)
 # 用 - 来排除列名:
 select(hflights_df, -(Year:DayOfWeek))
 </code></pre>
+</div>
 
 <h2 id="section-4">数据变形</h2>
 
-<pre><code># 变形: mutate()
+<div class="highlighter-rouge"><pre class="highlight"><code># 变形: mutate()
 # 对已有列进行数据运算并添加为新列:
 mutate(hflights_df, 
   gain = ArrDelay - DepDelay, 
@@ -132,12 +137,13 @@ transform(hflights,
   gain_per_hour = gain / (AirTime / 60)
 )
 </code></pre>
+</div>
 
 <h2 id="section-5">数据分组</h2>
 
 <p>数据分组是指按指定列的内容进行分类统计分析，具体可以参考<a href="http://xukuang.github.io/2014/12/23/group-by-and-ungroup-function-in-R/">这里</a></p>
 
-<pre><code># 分组动作 group_by()
+<div class="highlighter-rouge"><pre class="highlight"><code># 分组动作 group_by()
 planes &lt;- group_by(hflights_df, TailNum)
 delay &lt;- summarise(planes, 
   count = n(), 
@@ -150,10 +156,11 @@ delay &lt;- filter(delay, count &gt; 20, dist &lt; 2000)
 # n_distinct(): 计算 x 中唯一值的个数. (原文为 count_distinct(x), 测试无用)
 # first(x), last(x) 和 nth(x, n): 返回对应秩的值, 类似于自带函数 x[1], x[length(x)], 和 x[n]
 </code></pre>
+</div>
 
 <h2 id="section-6">连接符</h2>
 
-<pre><code># 3 连接符 %.%
+<div class="highlighter-rouge"><pre class="highlight"><code># 3 连接符 %.%
 # 包里还新引进了一个操作符, 使用时把数据名作为开头, 然后依次对此数据进行多步操作.
 Batting %.%
     group_by(playerID) %.%
@@ -170,6 +177,7 @@ totals[ranks[1:5],]
 # 文章里还表示: 用他的 MacBook Air 跑 %.% 那段代码用了 0.036 秒, 
 # 跑上面这段代码则用了 0.266 秒, 运算速度提升了近7倍. (当然这只是一例, 还有其它更大的数字.)
 </code></pre>
+</div>
 
 <h3 id="section-7">对所有列进行相同操作</h3>
 
@@ -177,7 +185,7 @@ totals[ranks[1:5],]
   <li>summarise_each可以进行求平均值、标准差、方差、最小值和最大值，此时被处理的数据列也不需要必须是数字类型(只是此时会有警告提示)。然而，无论如何要进行求和操作时，所有数据列必须是数字类型(原因是sum函数对字符求和，直接返回错误，而求求平均值、标准差、方差、最小值和最大值只是返回NA，并提示警告)。当然也可以多个指标同时计算。</li>
 </ul>
 
-<pre><code># 平均值，字符平均值返回NA
+<div class="highlighter-rouge"><pre class="highlight"><code># 平均值，字符平均值返回NA
 summarise_each(hflights, funs(mean))
 # 标准差，字符标准差返回NA
 summarise_each(hflights, funs(sd))
@@ -208,15 +216,17 @@ summarise_each(hflights, funs(max(., na.rm = T)))
 # 求和
 summarise_each(hflights.dat, funs(sum(., na.rm = T)))
 </code></pre>
+</div>
 
 <ul>
   <li>mutate_each跟summarise_each最大的不同在于产生于原数据相同行数的结果，所以mutate_each除了可以进行summarise_each函数的操作以外，还可进行简单四则运算，当然进行四则运算时，要保证所有列都是数字型。</li>
 </ul>
 
-<pre><code>temp = mutate_each(hflights.dat, funs( . + 1))
+<div class="highlighter-rouge"><pre class="highlight"><code>temp = mutate_each(hflights.dat, funs( . + 1))
 head(hflights)
 head(temp)
 </code></pre>
+</div>
 
 </section>
 <section class="meta">

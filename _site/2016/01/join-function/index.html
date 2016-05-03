@@ -53,12 +53,13 @@
   <li>作者信息数据</li>
 </ul>
 
-<pre><code>authors &lt;- data.frame(
+<div class="highlighter-rouge"><pre class="highlight"><code>authors &lt;- data.frame(
 	id =  c(2, 4, 2, 5, 7, 8, 3),
 	surname = I(c("Tukey", "Venables", 'kx', "Tierney", "Ripley", "McNeil", "kuangxu")),
 	nationality = c("US", "Australia", 'China', "US", "UK", "Australia", "China"),
 	deceased = c("yes", rep("no", 6)))
 </code></pre>
+</div>
 <!--more-->
 <p>为了区别数据，就把自己的名字也给安排进去了，唯一的一个中国人啊。</p>
 
@@ -66,7 +67,7 @@
   <li>书籍信息数据</li>
 </ul>
 
-<pre><code>books &lt;- data.frame(
+<div class="highlighter-rouge"><pre class="highlight"><code>books &lt;- data.frame(
 	id = c(1:7,2)
     name = I(c("Tukey", "Venables", "Tierney",
              "Ripley", "Ripley", "McNeil", "R Core", "kuang")),
@@ -79,12 +80,14 @@
     other.author = c(NA, "Ripley", NA, NA, NA, NA,
                      "Venables &amp; Smith", NA))
 </code></pre>
+</div>
 
 <h2 id="plyrjoin">plyr包的join函数</h2>
 <p>join函数：</p>
 
-<pre><code>join(x, y, by = NULL, type = 'left', match = 'all')
+<div class="highlighter-rouge"><pre class="highlight"><code>join(x, y, by = NULL, type = 'left', match = 'all')
 </code></pre>
+</div>
 
 <ul>
   <li>x,y 为合并的数据框</li>
@@ -105,19 +108,21 @@
   </li>
 </ul>
 
-<pre><code>join(authors, books)
+<div class="highlighter-rouge"><pre class="highlight"><code>join(authors, books)
 join(authors, books, type = 'left', match = 'first')
 join(authors, books, type = 'inner')
 join(authors, books, type = 'right')
 join(authors, books, type = 'full')
 </code></pre>
+</div>
 
 <h2 id="dplyrjoin">dplyr包的join函数</h2>
 <p>dplyr包是plyr包的升级，join函数在dplyr包中是个系列函数。
 join函数：</p>
 
-<pre><code>join(x, y, by = NULL, copy = FALSE, ...)
+<div class="highlighter-rouge"><pre class="highlight"><code>join(x, y, by = NULL, copy = FALSE, ...)
 </code></pre>
+</div>
 
 <ul>
   <li>x,y 为合并的数据框，不要求x,y中排序列唯一</li>
@@ -130,28 +135,30 @@ join函数：</p>
 <h3 id="innerjoin">inner_join函数</h3>
 <p>函数结果, 行：显示x中所有能在y中匹配到行; 列：显示x，y中的所有列</p>
 
-<pre><code>library(dplyr)
+<div class="highlighter-rouge"><pre class="highlight"><code>library(dplyr)
 # 单指标匹配
 inner_join(authors, books)
 inner_join(authors, books, by = c('surname' = 'name'))
 # 多指标匹配
 inner_join(authors, books, by = c('id'='id','surname' = 'name'))
 </code></pre>
+</div>
 
 <h3 id="leftjoin">left_join函数</h3>
 
 <p>结果, 行：显示x中所有的行; 列：显示x，y中的所有列，未匹配到的值，不论字符数字，全显示为NA。</p>
 
-<pre><code># 单指标匹配
+<div class="highlighter-rouge"><pre class="highlight"><code># 单指标匹配
 left_join(authors, books)
 left_join(authors, books, by = c('surname' = 'name'))
 # 多指标匹配
 left_join(authors, books, by = c('id'='id','surname' = 'name'))
 </code></pre>
+</div>
 
 <h3 id="semijoin">semi_join函数</h3>
 <p>结果, 行：显示x中所有能在y匹配到行,并对显示结果按匹配依据进行了排序; 列：显示x中的所有列。
-<code>
+<code class="highlighter-rouge">
 # 单指标匹配
 semi_join(authors, books)
 semi_join(authors, books, by = c('surname' = 'name'))
@@ -162,22 +169,24 @@ semi_join(authors, books, by = c('id'='id','surname' = 'name'))
 <h3 id="antijoin">anti_join函数</h3>
 <p>结果, 行：显示x中所有未能在y中匹配到行, 并对显示结果按匹配依据进行了排序; 列：显示x中的所有列。</p>
 
-<pre><code># 单指标匹配
+<div class="highlighter-rouge"><pre class="highlight"><code># 单指标匹配
 anti_join(authors, books)
 anti_join(authors, books, by = c('surname' = 'name'))
 # 多指标匹配
 anti_join(authors, books, by = c('id'='id','surname' = 'name'))
 </code></pre>
+</div>
 
 <h3 id="fulljoin">full_join函数</h3>
 <p>结果, 行：显示x, y中所有的行, 未匹配到的值，不论字符数字，全显示为NA。</p>
 
-<pre><code># 单指标匹配
+<div class="highlighter-rouge"><pre class="highlight"><code># 单指标匹配
 full_join(authors, books)
 full_join(authors, books, by = c('surname' = 'name'))
 # 多指标匹配
 full_join(authors, books, by = c('id'='id','surname' = 'name'))
 </code></pre>
+</div>
 
 </section>
 <section class="meta">

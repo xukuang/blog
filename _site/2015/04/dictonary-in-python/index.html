@@ -65,14 +65,15 @@
 
 <h3 id="section-1">空字典的创建</h3>
 
-<pre><code># 空字典的创建
+<div class="highlighter-rouge"><pre class="highlight"><code># 空字典的创建
 D = dict()
 D = {} # 两种方法效果相同
 </code></pre>
+</div>
 
 <h3 id="section-2">一般字典创建</h3>
 
-<pre><code># 方法一，利用{}
+<div class="highlighter-rouge"><pre class="highlight"><code># 方法一，利用{}
 D = {'Spam': 2, 'eggs': 3, 'food': ['ham', 'egg']}
 D # 注意字典是无序的，因此结果显示与创建时并不一致
 # 方法二，dict()
@@ -85,33 +86,37 @@ D = dict.fromkeys(['a','b'], 0) # 字典有两项，每一项的值都为0
 D = {x : x for x in [1, 2, 3, 4]}
 D = {x : x for x in 'spam'}
 </code></pre>
+</div>
 
 <h2 id="section-3">2. 字典的引用(通过键而非偏移量)</h2>
 
-<pre><code>D = {'Spam': 2, 'eggs': 3, 'food': {'ham': 1, 'egg': 2}}
+<div class="highlighter-rouge"><pre class="highlight"><code>D = {'Spam': 2, 'eggs': 3, 'food': {'ham': 1, 'egg': 2}}
 D['Spam']
 D['food']['egg']
 </code></pre>
+</div>
 
 <h2 id="section-4">3. 字典相关属性的查看</h2>
 
 <h3 id="section-5">字典长度</h3>
 
-<pre><code class="language-python">D = {'Spam': 2, 'eggs': 3, 'food': {'ham': 1, 'egg': 2}}
-# len字典长度
-len(D)
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Spam'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">'food'</span><span class="p">:</span> <span class="p">{</span><span class="s">'ham'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'egg'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}}</span>
+<span class="c"># len字典长度</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
 </code></pre>
+</div>
 
 <h3 id="section-6">成员关系判断</h3>
 
-<pre><code># in
+<div class="highlighter-rouge"><pre class="highlight"><code># in
 D = {'Spam': 2, 'eggs': 3, 'food': {'ham': 1, 'egg': 2}}
 'Spam' in D
 </code></pre>
+</div>
 
 <h3 id="section-7">查看字典的键、值和项</h3>
 
-<pre><code>D = {'Spam': 2, 'ham':1, 'eggs': 3}
+<div class="highlighter-rouge"><pre class="highlight"><code>D = {'Spam': 2, 'ham':1, 'eggs': 3}
 # dict.keys返回字典的键,返回结果是个迭代器，借助list函数查看
 list(D.keys()) 
 # dict.values返回字典的值,返回结果是个迭代器，借助list函数查看
@@ -119,19 +124,21 @@ list(D.values())
 # dict.items返回字典的项,返回结果是个迭代器，借助list函数查看
 list(D.items()) 
 </code></pre>
+</div>
 
 <h3 id="section-8">判断键是否在字典中存在</h3>
 
-<pre><code class="language-python"># dict.get，键存在与字典则返回键的值，否则什么也不返回
-D = {'Spam': 2, 'ham':1, 'eggs': 3}
-D.get('Spam')
-D.get('Spams') # 键不在字典中，什么也不返回
-D.get('Spams', 0) # 键不在字典中，返回0，否则返回该键所对应的值
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c"># dict.get，键存在与字典则返回键的值，否则什么也不返回</span>
+<span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Spam'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'ham'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+<span class="n">D</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Spam'</span><span class="p">)</span>
+<span class="n">D</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Spams'</span><span class="p">)</span> <span class="c"># 键不在字典中，什么也不返回</span>
+<span class="n">D</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Spams'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c"># 键不在字典中，返回0，否则返回该键所对应的值</span>
 </code></pre>
+</div>
 
 <h3 id="section-9">字典的键可以执行交集和并集运算</h3>
 
-<pre><code>D = dict(a = 1, b = 2, c = 3)
+<div class="highlighter-rouge"><pre class="highlight"><code>D = dict(a = 1, b = 2, c = 3)
 K = D.keys() # K类似于集合，可以执行交集和并集运算
 V = D.values() # V值不唯一，不能执行交集和并集运算
 K | {'x': 4} # 结果为 {'a', 'b', 'c', 'x'}
@@ -141,27 +148,29 @@ K &amp; {'a', 'b', 'c'} # 字典未特定指明时，进行合并集操作，都
 D.items() | D.keys() # {('a', 1), ('b', 2), ('c', 3), 'a', 'b', 'c'}
 D.items() | D # {('a', 1), ('b', 2), ('c', 3), 'a', 'b', 'c'}
 </code></pre>
+</div>
 
 <h2 id="section-10">4. 字典的修改</h2>
 
-<pre><code class="language-python">D = {'Spam': 2, 'ham':1, 'eggs': 3}
-# 直接改变某个键的值
-D['ham'] = ['grill', 'bake', 'fry']
-# 添加新项
-D['brunch'] = 'Bacon'
-# 删除某项
-del D('eggs')
-D.pop('eggs') # 返回删除的键对应的值
-# del 删除字典
-del D
-# 用一个字典更新另一个字典
-# dict1.update(dict2)
-# dict2中的键在dict1中存在的则用dict2中键对应值替换调dict1原来的值
-# dict2中的键不在dict1中存在的直接合并到dict1中
-D1 = {'Spam': 2, 'ham':1, 'eggs': 3}
-D2 = {'Spams': 2, 'hams':2, 'eggs': 4}
-D1.update(D2)
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Spam'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'ham'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+<span class="c"># 直接改变某个键的值</span>
+<span class="n">D</span><span class="p">[</span><span class="s">'ham'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">'grill'</span><span class="p">,</span> <span class="s">'bake'</span><span class="p">,</span> <span class="s">'fry'</span><span class="p">]</span>
+<span class="c"># 添加新项</span>
+<span class="n">D</span><span class="p">[</span><span class="s">'brunch'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'Bacon'</span>
+<span class="c"># 删除某项</span>
+<span class="k">del</span> <span class="n">D</span><span class="p">(</span><span class="s">'eggs'</span><span class="p">)</span>
+<span class="n">D</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">'eggs'</span><span class="p">)</span> <span class="c"># 返回删除的键对应的值</span>
+<span class="c"># del 删除字典</span>
+<span class="k">del</span> <span class="n">D</span>
+<span class="c"># 用一个字典更新另一个字典</span>
+<span class="c"># dict1.update(dict2)</span>
+<span class="c"># dict2中的键在dict1中存在的则用dict2中键对应值替换调dict1原来的值</span>
+<span class="c"># dict2中的键不在dict1中存在的直接合并到dict1中</span>
+<span class="n">D1</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Spam'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'ham'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+<span class="n">D2</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Spams'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'hams'</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
+<span class="n">D1</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">D2</span><span class="p">)</span>
 </code></pre>
+</div>
 
 
 </section>

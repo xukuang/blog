@@ -55,7 +55,7 @@
 <h2 id="section-2">场景三</h2>
 <p>expand.grid()用来建立一些factor相乘出来的矩阵或data.frame。<!--more--></p>
 
-<pre><code>expand.grid(x = c('A', 'B', 'C', 'D'), y = 1:3)
+<div class="highlighter-rouge"><pre class="highlight"><code>expand.grid(x = c('A', 'B', 'C', 'D'), y = 1:3)
 	#    x y
 	# 1  A 1
 	# 2  B 1
@@ -70,11 +70,12 @@
 	# 11 C 3
 	# 12 D 3
 </code></pre>
+</div>
 
 <h2 id="section-3">场景四</h2>
 <p>使用with()和within()函数对数据框列引用时，可以不用再输入长长的数据框名了。两者的区别在于，with只是生成了一列数据，而within生成一个包含原始数据的数据框。</p>
 
-<pre><code>with(dat, y + 2)
+<div class="highlighter-rouge"><pre class="highlight"><code>with(dat, y + 2)
 	# [1] 4 5 6 7
 within(dat, {z = y + 2; a = x + 3})
 	#   x y a z
@@ -83,14 +84,16 @@ within(dat, {z = y + 2; a = x + 3})
 	# 3 3 4 6 6
 	# 4 4 5 7 7
 </code></pre>
+</div>
 
 <h2 id="section-4">场景五</h2>
 <p>cut()函数可以把连续变量离散化，即numeric型的数据转换成factor型，可以与table()函数一起使用。</p>
 
-<pre><code>cut(x, breaks, labels = NULL,
+<div class="highlighter-rouge"><pre class="highlight"><code>cut(x, breaks, labels = NULL,
     include.lowest = FALSE, right = TRUE, dig.lab = 3,
     ordered_result = FALSE, ...)
 </code></pre>
+</div>
 
 <p><strong>主要参数</strong></p>
 
@@ -108,7 +111,7 @@ within(dat, {z = y + 2; a = x + 3})
 
 <p>orederd_result: 逻辑类型，指定分类指标是否有序</p>
 
-<pre><code>cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf))
+<div class="highlighter-rouge"><pre class="highlight"><code>cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf))
 	#  [1] &lt;NA&gt;     (2.22,5] (2.22,5] (5,Inf]  (5,Inf]  (1,2.22] (2.22,5] (5,Inf]  (5,Inf]  (2.22,5] &lt;NA&gt;     (5,Inf] 
 	# Levels: (1,2.22] (2.22,5] (5,Inf]
 
@@ -132,6 +135,7 @@ cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf), right = F
 	#  [1] &lt;NA&gt;     (2.22,5] (2.22,5] (5,Inf]  (5,Inf]  (1,2.22] (2.22,5] (5,Inf]  (5,Inf]  (2.22,5] &lt;NA&gt;     (5,Inf] 
 	# Levels: (1,2.22] &lt; (2.22,5] &lt; (5,Inf]
 </code></pre>
+</div>
 
 <h2 id="section-5">场景六</h2>
 <p>求导数的函数。dxy=deriv(f~x^2+y^2,c(‘x’,’y’),func=T)</p>

@@ -1,9 +1,4 @@
 markdown: kramdown
-kramdown:
-    enable_coderay: true
-    syntax_highlighter_opts:
-        coderay_line_numbers: table
-        coderay_css: class
 permalink: /:year/:month/:title/
 url: http://xukuang.github.io/blog
 author: Xu Kuang
