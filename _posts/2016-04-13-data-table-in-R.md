@@ -83,6 +83,7 @@ DT[c(FALSE,TRUE)]          # even rows (usual recycling)
 #### 单列提取
 
 * 数字提取
+
 数字提取时，一定要把wth参数设置为FALSE。
 
 ```
@@ -131,6 +132,7 @@ setnames(dt,c("X","Y","Z"))        # replace all (length of names must be == nco
 #### 多列提取
 
 * 数字提取
+
 如同上面对按数字对单列的提取，对多列提取也要设置with参数为FALSE。
 
 ```
@@ -157,7 +159,9 @@ DT[,c(1,3),with=FALSE]
 	# 8: c 8
 	# 9: c 9      
 ```
+
 * 按列名提取
+
 ```
 DT[,list(y, v)]
 	#    y v
