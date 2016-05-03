@@ -45,14 +45,16 @@
                                               <article class="content">
                                               <section class="post">
 <h2 id="merge">merge函数介绍</h2>
-<p>merge函数是R的基础包中的函数，不需要加载R包可以直接使用，主要用于数据框的合并。数据框的合并原理是这样的：首先在x表按指定列每一行的内容在y表的指定列都进行逐行匹配，直到x中所有行匹配完为止。
-<code class="highlighter-rouge">
-merge(x, y, by = intersect(names(x), names(y)),
+
+<p>merge函数是R的基础包中的函数，不需要加载R包可以直接使用，主要用于数据框的合并。数据框的合并原理是这样的：首先在x表按指定列每一行的内容在y表的指定列都进行逐行匹配，直到x中所有行匹配完为止。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>merge(x, y, by = intersect(names(x), names(y)),
       by.x = by, by.y = by, all = FALSE, all.x = all, all.y = all,
       sort = TRUE, suffixes = c(".x",".y"),
       incomparables = NULL, ...)
-</code>
-<!--more--></p>
+</code></pre>
+</div>
+<!--more-->
 
 <p><strong>参数说明</strong></p>
 
@@ -69,20 +71,29 @@ merge(x, y, by = intersect(names(x), names(y)),
 merge函数的结果展示时，当y中每个内容只有一个结果能跟x匹配上时，结果的行数就会与从x中提取出指定合并列的公有内容的函数相一致。一旦当y中某个内容有多个结果能跟x匹配上时，结果的行数就会发生变化。</p>
 
 <h2 id="section">实例说明</h2>
-<p>### 数据说明
-这里用到的数据有两个：作者信息数据和书籍信息数据。依照下面介绍的合并条件，这两个数据既有相同的内容，又有彼此中不存在的内容。
-* 作者信息数据
-<code class="highlighter-rouge">
-authors &lt;- data.frame(
+
+<h3 id="section-1">数据说明</h3>
+
+<p>这里用到的数据有两个：作者信息数据和书籍信息数据。依照下面介绍的合并条件，这两个数据既有相同的内容，又有彼此中不存在的内容。</p>
+
+<ul>
+  <li>作者信息数据</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>authors &lt;- data.frame(
 	id =  c(2, 4, 5, 7, 8, 3),
 	surname = I(c("Tukey", "Venables", "Tierney", "Ripley", "McNeil", "kuangxu")),
 	nationality = c("US", "Australia", "US", "UK", "Australia", "China"),
 	deceased = c("yes", rep("no", 5)))
-</code>
-为了区别数据，就把自己的名字也给安排进去了，唯一的一个中国人啊。
-* 书籍信息数据
-<code class="highlighter-rouge">
-books &lt;- data.frame(
+</code></pre>
+</div>
+<p>为了区别数据，就把自己的名字也给安排进去了，唯一的一个中国人啊。</p>
+
+<ul>
+  <li>书籍信息数据</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>books &lt;- data.frame(
 	id = 1:7,
     name = I(c("Tukey", "Venables", "Tierney",
              "Ripley", "Ripley", "McNeil", "R Core")),
@@ -94,10 +105,12 @@ books &lt;- data.frame(
               "An Introduction to R"),
     other.author = c(NA, "Ripley", NA, NA, NA, NA,
                      "Venables &amp; Smith"))
-</code></p>
+</code></pre>
+</div>
 
-<h3 id="section-1">结果显示</h3>
-<p>#### by未设定的默认情况下，依照列名相同的列进行展示而且只显示相同内容的整理结果</p>
+<h3 id="section-2">结果显示</h3>
+
+<h4 id="by">by未设定的默认情况下，依照列名相同的列进行展示而且只显示相同内容的整理结果</h4>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>merge(authors, books)
 	#   id  surname nationality deceased     name                         title     other.author
@@ -108,9 +121,10 @@ books &lt;- data.frame(
 	# 5  7   Ripley          UK       no   R Core          An Introduction to R Venables &amp; Smith
 </code></pre>
 </div>
-<p>注意，哪个数据框在x的位置，结果将优先显示那个数据框的的列。当by=NULL时，则把数据框authors的每一行跟books的第一行匹配，之后匹配第二行，接着匹配下一行，直到books最后一行匹配完才结束(目前，还没有在plyr和dplyr中的join系列函数或者data.table包的merge函数中看到这个功能)。
-<code class="highlighter-rouge">
-merge(authors, books, by = NULL)
+
+<p>注意，哪个数据框在x的位置，结果将优先显示那个数据框的的列。当by=NULL时，则把数据框authors的每一行跟books的第一行匹配，之后匹配第二行，接着匹配下一行，直到books最后一行匹配完才结束(目前，还没有在plyr和dplyr中的join系列函数或者data.table包的merge函数中看到这个功能)。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>merge(authors, books, by = NULL)
 	#    id.x  surname nationality deceased id.y     name                         title     other.author
 	# 1     2    Tukey          US      yes    1    Tukey     Exploratory Data Analysis             &lt;NA&gt;
 	# 2     4 Venables   Australia       no    1    Tukey     Exploratory Data Analysis             &lt;NA&gt;
@@ -154,7 +168,8 @@ merge(authors, books, by = NULL)
 	# 40    7   Ripley          UK       no    7   R Core          An Introduction to R Venables &amp; Smith
 	# 41    8   McNeil   Australia       no    7   R Core          An Introduction to R Venables &amp; Smith
 	# 42    3  kuangxu       China       no    7   R Core          An Introduction to R Venables &amp; Smith
-</code></p>
+</code></pre>
+</div>
 
 <h4 id="byxbyy">by.x和by.y修改参照条件</h4>
 
@@ -168,12 +183,17 @@ merge(authors, books, by = NULL)
 	# 6 Venables    4   Australia       no    2 Modern Applied Statistics ...       Ripley
 </code></pre>
 </div>
-<p>注意，两个数据框中都有相同的列id，但并没有把id作为合并依照的条件，在结果显示中分别显示为id.x和id.y。
-#### all.x和all.y调整显示结果
-在未对参数设置时，只显示相同内容所在的行。
-* 显示x中所有的行（all.x = T）
-<code class="highlighter-rouge">
-merge(authors, books, by.x = "surname", by.y = "name", all.x = T)
+<p>注意，两个数据框中都有相同的列id，但并没有把id作为合并依照的条件，在结果显示中分别显示为id.x和id.y。</p>
+
+<h4 id="allxally">all.x和all.y调整显示结果</h4>
+
+<p>在未对参数设置时，只显示相同内容所在的行。</p>
+
+<ul>
+  <li>显示x中所有的行（all.x = T）</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>merge(authors, books, by.x = "surname", by.y = "name", all.x = T)
 	# surname id.x nationality deceased id.y                         title other.author
 	# 1  kuangxu    3       China       no   NA                          &lt;NA&gt;         &lt;NA&gt;
 	# 2   McNeil    8   Australia       no    6     Interactive Data Analysis         &lt;NA&gt;
@@ -182,10 +202,14 @@ merge(authors, books, by.x = "surname", by.y = "name", all.x = T)
 	# 5  Tierney    5          US       no    3                     LISP-STAT         &lt;NA&gt;
 	# 6    Tukey    2          US      yes    1     Exploratory Data Analysis         &lt;NA&gt;
 	# 7 Venables    4   Australia       no    2 Modern Applied Statistics ...       Ripley
-</code>
-* 显示y中所有的行（all.y = T）
-<code class="highlighter-rouge">
-merge(authors, books, by.x = "surname", by.y = "name", all.y = T)
+</code></pre>
+</div>
+
+<ul>
+  <li>显示y中所有的行（all.y = T）</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>merge(authors, books, by.x = "surname", by.y = "name", all.y = T)
 	# surname id.x nationality deceased id.y                         title     other.author
 	# 1   McNeil    8   Australia       no    6     Interactive Data Analysis             &lt;NA&gt;
 	# 2   R Core   NA        &lt;NA&gt;     &lt;NA&gt;    7          An Introduction to R Venables &amp; Smith
@@ -194,10 +218,14 @@ merge(authors, books, by.x = "surname", by.y = "name", all.y = T)
 	# 5  Tierney    5          US       no    3                     LISP-STAT             &lt;NA&gt;
 	# 6    Tukey    2          US      yes    1     Exploratory Data Analysis             &lt;NA&gt;
 	# 7 Venables    4   Australia       no    2 Modern Applied Statistics ...           Ripley
-</code>
-* 显示x和y中所有的行（all.x = T, all.y = T）
-<code class="highlighter-rouge">
-merge(authors, books, by.x = "surname", by.y = "name", all.x = T, all.y = T)
+</code></pre>
+</div>
+
+<ul>
+  <li>显示x和y中所有的行（all.x = T, all.y = T）</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>merge(authors, books, by.x = "surname", by.y = "name", all.x = T, all.y = T)
 	# surname id.x nationality deceased id.y                         title     other.author
 	# 1  kuangxu    3       China       no   NA                          &lt;NA&gt;             &lt;NA&gt;
 	# 2   McNeil    8   Australia       no    6     Interactive Data Analysis             &lt;NA&gt;
@@ -207,11 +235,13 @@ merge(authors, books, by.x = "surname", by.y = "name", all.x = T, all.y = T)
 	# 6  Tierney    5          US       no    3                     LISP-STAT             &lt;NA&gt;
 	# 7    Tukey    2          US      yes    1     Exploratory Data Analysis             &lt;NA&gt;
 	# 8 Venables    4   Australia       no    2 Modern Applied Statistics ...           Ripley
-</code>
-#### sort是否对合并结果重新排序
-sort = F时，对合并结果不进行排序，注意这里的不排序是根据排序条件中内容出现的先后进行数据展示而非按原始数据的行的顺序进行数据展示。
-<code class="highlighter-rouge">
-merge(authors, books, by.x = "surname", by.y = "name", sort = F)
+</code></pre>
+</div>
+
+<h4 id="sort">sort是否对合并结果重新排序</h4>
+<p>sort = F时，对合并结果不进行排序，注意这里的不排序是根据排序条件中内容出现的先后进行数据展示而非按原始数据的行的顺序进行数据展示。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>merge(authors, books, by.x = "surname", by.y = "name", sort = F)
 	# surname id.x nationality deceased id.y                         title other.author
 	# 1    Tukey    2          US      yes    1     Exploratory Data Analysis         &lt;NA&gt;
 	# 2 Venables    4   Australia       no    2 Modern Applied Statistics ...       Ripley
@@ -227,12 +257,17 @@ merge(authors, books, by.x = "surname", by.y = "name")
 	# 4  Tierney    5          US       no    3                     LISP-STAT         &lt;NA&gt;
 	# 5    Tukey    2          US      yes    1     Exploratory Data Analysis         &lt;NA&gt;
 	# 6 Venables    4   Australia       no    2 Modern Applied Statistics ...       Ripley
-</code>
-注意，上面的程序显示的结果是根据x列的内容进行排序的，而下面的sort未设置的默认情况对结果按照排序条件进行了重新排序。
-#### incomparables来排除相同列的不同内容
-* 未对incomparables设置
-<code class="highlighter-rouge">
-merge(authors, books, by.x = "surname", by.y = "name")
+</code></pre>
+</div>
+<p>注意，上面的程序显示的结果是根据x列的内容进行排序的，而下面的sort未设置的默认情况对结果按照排序条件进行了重新排序。</p>
+
+<h4 id="incomparables">incomparables来排除相同列的不同内容</h4>
+
+<ul>
+  <li>未对incomparables设置</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>merge(authors, books, by.x = "surname", by.y = "name")
 	#    surname id.x nationality deceased id.y                         title other.author
 	# 1   McNeil    8   Australia       no    6     Interactive Data Analysis         &lt;NA&gt;
 	# 2   Ripley    7          UK       no    4            Spatial Statistics         &lt;NA&gt;
@@ -240,19 +275,24 @@ merge(authors, books, by.x = "surname", by.y = "name")
 	# 4  Tierney    5          US       no    3                     LISP-STAT         &lt;NA&gt;
 	# 5    Tukey    2          US      yes    1     Exploratory Data Analysis         &lt;NA&gt;
 	# 6 Venables    4   Australia       no    2 Modern Applied Statistics ...       Ripley
-</code>
-* incomparables = ‘Tukey’时，则即使’Tukey’为相同的内容也要排除在外
-<code class="highlighter-rouge">
-merge(authors, books, by.x = "surname", by.y = "name", incomparables = 'Tukey')
+</code></pre>
+</div>
+
+<ul>
+  <li>incomparables = ‘Tukey’时，则即使’Tukey’为相同的内容也要排除在外</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>merge(authors, books, by.x = "surname", by.y = "name", incomparables = 'Tukey')
 	# surname id.x nationality deceased id.y                         title other.author
 	# 1   McNeil    8   Australia       no    6     Interactive Data Analysis         &lt;NA&gt;
 	# 2   Ripley    7          UK       no    4            Spatial Statistics         &lt;NA&gt;
 	# 3   Ripley    7          UK       no    5         Stochastic Simulation         &lt;NA&gt;
 	# 4  Tierney    5          US       no    3                     LISP-STAT         &lt;NA&gt;
 	# 5 Venables    4   Australia       no    2 Modern Applied Statistics ...       Ripley
-</code></p>
+</code></pre>
+</div>
 
-<h4 id="section-2">此外排序条件也可以针对多列</h4>
+<h4 id="section-3">此外排序条件也可以针对多列</h4>
 <p>merge(authors, books, by.x = c(“surname”, “id”), by.y = c(“name”, “id”))这条命令从理论上说也是对的，只是结果当中不存在相同的行。</p>
 
 </section>
