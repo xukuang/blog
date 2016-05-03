@@ -52,14 +52,18 @@ merge(x, y, by = intersect(names(x), names(y)),
       sort = TRUE, suffixes = c(".x",".y"),
       incomparables = NULL, ...)
 </code>
-<!--more-->
-<strong>参数说明</strong>
-* x,y：指两个用于合并的数据框。如果x，y不是数据框，那么合并时也将被强制转换为数据框，所以x，y必须是数据框类型，或者可以转换为数据框的数据类型。
-* by, by.x, by.y：这三个参数共同限定来说明x，y合并按哪一列进行。在没有特别指明参数值的情况下，x，y的合并以数据框中列名相同的相同的列进行（x，y合并时，x依照by.x指定的列进行合并，y依照by.y指定的列进行合并。在默认情况情况下，by.x，by.y 都等于by，而by为x，y中列名相同的列,所以默认情况下会依照两个数据框中列名相同的内容进行合并）。如果要修改x，y合并时依照的的条件，可以直接更改by.x和by.y的值。
-* all, all.x, all.y：这三个参数共同限定来表明结果的输出方式。在没有特别指明参数值的情况下，结果只会显示x，y这两个数据框中指定列中的相同内容的整理结果，而不同内容根本不会显示（x，y合并时，结果依照all.x是否显示x中不相同的内容，依照all.y是否显示y中不相同的内容。在默认情况情况下，all.x，all.y 都等于all，而all = FALSE，所以结果只会显示x，y这两个数据框中指定列中的相同内容的整理结果。如果要更改x，y中的显示结果，可以相应更改更改all.x和all.y的参数设置。
-* sort：指明是否按指定列中内容对结果排序显示。默认值为TRUE，表明默认情况下会对结果重新排序。
-* suffsuffixes：合并时除了依照条件外还有相同的列名，则结果中这个列表名会添加.x和.y后缀以示区别。
-* incomparables：合并时可以通过这个设置来排除相同列中部分相同内容的合并。</p>
+<!--more--></p>
+
+<p><strong>参数说明</strong></p>
+
+<ul>
+  <li>x,y：指两个用于合并的数据框。如果x，y不是数据框，那么合并时也将被强制转换为数据框，所以x，y必须是数据框类型，或者可以转换为数据框的数据类型。</li>
+  <li>by, by.x, by.y：这三个参数共同限定来说明x，y合并按哪一列进行。在没有特别指明参数值的情况下，x，y的合并以数据框中列名相同的相同的列进行（x，y合并时，x依照by.x指定的列进行合并，y依照by.y指定的列进行合并。在默认情况情况下，by.x，by.y 都等于by，而by为x，y中列名相同的列,所以默认情况下会依照两个数据框中列名相同的内容进行合并）。如果要修改x，y合并时依照的的条件，可以直接更改by.x和by.y的值。</li>
+  <li>all, all.x, all.y：这三个参数共同限定来表明结果的输出方式。在没有特别指明参数值的情况下，结果只会显示x，y这两个数据框中指定列中的相同内容的整理结果，而不同内容根本不会显示（x，y合并时，结果依照all.x是否显示x中不相同的内容，依照all.y是否显示y中不相同的内容。在默认情况情况下，all.x，all.y 都等于all，而all = FALSE，所以结果只会显示x，y这两个数据框中指定列中的相同内容的整理结果。如果要更改x，y中的显示结果，可以相应更改更改all.x和all.y的参数设置。</li>
+  <li>sort：指明是否按指定列中内容对结果排序显示。默认值为TRUE，表明默认情况下会对结果重新排序。</li>
+  <li>suffsuffixes：合并时除了依照条件外还有相同的列名，则结果中这个列表名会添加.x和.y后缀以示区别。</li>
+  <li>incomparables：合并时可以通过这个设置来排除相同列中部分相同内容的合并。</li>
+</ul>
 
 <p><strong>结果说明</strong>
 merge函数的结果展示时，当y中每个内容只有一个结果能跟x匹配上时，结果的行数就会与从x中提取出指定合并列的公有内容的函数相一致。一旦当y中某个内容有多个结果能跟x匹配上时，结果的行数就会发生变化。</p>
@@ -257,7 +261,7 @@ merge(authors, books, by.x = "surname", by.y = "name", incomparables = 'Tukey')
 
 
 <span>
-	<a  href="http://xukuang.github.io/blog/2015/05/common-methods-of-dealing-with-data-frame/" class="pageNav"  >Previous</a>
+	<a  href="http://xukuang.github.io/blog/2015/05/daqingxiangguo/" class="pageNav"  >Previous</a>
 	&nbsp;&nbsp;&nbsp;
 	<a  href="http://xukuang.github.io/blog/2015/05/push-ups/" class="pageNav"  >Next</a>
 </span>
@@ -323,7 +327,7 @@ $(function(){
     var url = false;
         if (e.which == 37 || e.which == 74) {  // Left arrow and J
             
-        url = 'http://xukuang.github.io/blog/2015/05/common-methods-of-dealing-with-data-frame/';
+        url = 'http://xukuang.github.io/blog/2015/05/daqingxiangguo/';
         
         }
         else if (e.which == 39 || e.which == 75) {  // Right arrow and K
