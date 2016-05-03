@@ -7,7 +7,7 @@
     <title>Xu Kuang</title>
     <atom:link href="http://xukuang.github.io/blog/feed/" rel="self" type="application/rss+xml" />
     <link>http://xukuang.github.io</link>
-    <lastBuildDate>2016-05-03T01:15:13-06:00</lastBuildDate>
+    <lastBuildDate>2016-05-03T01:17:24-06:00</lastBuildDate>
     <webMaster>kuang_xu@126.com</webMaster>
     
     <item>
@@ -1720,19 +1720,15 @@ adjustrsquare
 
 <script type="math/tex; mode=display">E[X] = \sum_{i=1}^n x_i</script>
 
-<p>期望存在一下特性:</p>
-
-<ul>
-  <li>
-    <script type="math/tex; mode=display">E[aX + bY] = aE[X] + bE(Y)</script>
-  </li>
-  <li>一般情况下，$E[X Y] \neq E[X]E(Y)$；当X和Y相互独立时，才有$E[X Y] = E[X]E(Y)$<!--more--></li>
-</ul>
+<p>期望存在一下特性:
+* <script type="math/tex">E[aX + bY] = aE[X] + bE(Y)</script>
+* 一般情况下，$E[X Y] \neq E[X]E(Y)$；当X和Y相互独立时，才有$E[X Y] = E[X]E(Y)$<!--more--></p>
 
 <h2 id="section-1">方差</h2>
-<p>方差描述的是随机变量的离散程度，也就是该变量离其期望值的距离。
-<script type="math/tex">Var(X) = E[(X -E[X])^2] = E[X^{2} - 2X E[X] + (E[X])^{2}] = E[X^{2}] - (E[X])^{2}</script>
-此外，方差还可以看作是随机变量和自身的协方差$Var(X) = Cov(X, X)$</p>
+<p>方差描述的是随机变量的离散程度，也就是该变量离其期望值的距离。</p>
+
+<p><script type="math/tex">Var(X) = E[(X -E[X])^2] = E[X^{2} - 2X E[X] + (E[X])^{2}] = E[X^{2}] - (E[X])^{2}</script>
+此外，方差还可以看作是随机变量和自身的协方差<script type="math/tex">Var(X) = Cov(X, X)</script></p>
 
 <h2 id="section-2">标准差</h2>
 <p>标准差是一组数值自平均值分散开来的程度的一种测量观念。
