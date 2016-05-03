@@ -12,12 +12,17 @@ n = 100
 x = rnorm(n)
 y = rnorm(n, x)
 ```
+
 ## 相关函数介绍
+<br>
 ### plot函数
+
 plot函数非常常用，这里不再详述，主要提醒一下其中的几个参数axes，xaxt和yaxt。
+
 * axes决定是否画坐标轴(包括坐标轴，刻度线和刻度线标签)。axes = F时，不画坐标轴。
 * xaxt和yaxt决定是否画坐标轴的刻度线和刻度线标签。xaxt = 'n'时，不画坐标轴x的刻度线和刻度线标签；yaxt = 'n'时，不画坐标轴y的刻度线和刻度线标签。
 具体的区别可以参见下面的程序和图形：
+
 ```
 par(mfrow = c(2,2))
 plot(x, y)
@@ -27,7 +32,9 @@ plot(x, y, axes = F)
 ```
 <!--more-->
 ![plot不同参数设置图](http://7xize0.com1.z0.glb.clouddn.com/plot.png)
+
 ### axis函数
+
 axis函数用来添坐标轴(包括坐标轴，刻度线和刻度线标签)
 axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA, pos = NA, outer = FALSE, font = NA, lty = "solid", lwd = 1, lwd.ticks = lwd, col = NULL, col.ticks = NULL, hadj = NA, padj = NA, ...)
 
@@ -39,9 +46,11 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA, pos = NA, outer = F
 * line可以水平移动坐标轴的位置，负的向正方向移动，正的向负方
 
 ### mtext函数
+
 mtext()函数用来向图的四条边上添加文本。
 
 **参数说明**
+
 * text确定添加文本的内容
 * side确定添加哪个轴，其中1为x轴，2为y轴，3为上面的轴，4为右面的轴。
 * at赋值时， 在指定位置添加文本。at赋值时，在坐标中中央添加文本。
@@ -49,6 +58,7 @@ mtext()函数用来向图的四条边上添加文本。
 
 ## 一个例子
 这个例子解决了R的绘图坐标轴刻度线与刻度线标签距离太大的问题。解决方法是两次画坐标轴，第一次只显示坐标轴的坐标轴和刻度线，第二次只显示坐标刻度线的标签。
+
 ```
 set.seed(1)
 n = 100
