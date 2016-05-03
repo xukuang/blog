@@ -50,9 +50,11 @@
 
 <p>期望存在一下特性:</p>
 
-<p>1.<script type="math/tex">E[aX + bY] = aE[X] + bE(Y)</script></p>
+<p>1.\ <script type="math/tex">E[aX + bY] = aE[X] + bE(Y)</script></p>
 
-<p>2.一般情况下，<script type="math/tex">E[X Y] \neq E[X]E(Y)</script>；当X和Y相互独立时，才有<script type="math/tex">E[X Y] = E[X]E(Y)</script><!--more--></p>
+<ol>
+  <li>一般情况下，<script type="math/tex">E[X Y] \neq E[X]E(Y)</script>；当X和Y相互独立时，才有<script type="math/tex">E[X Y] = E[X]E(Y)</script>，</li>
+</ol>
 
 <h2 id="section-1">方差</h2>
 <p>方差描述的是随机变量的离散程度，也就是该变量离其期望值的距离。</p>
@@ -73,7 +75,7 @@
 <h2 id="section-4">协方差</h2>
 <p>协方差用于衡量两个变量的总体误差。而方差是协方差的一种特殊情况，即当两个变量是相同的情况。</p>
 
-<p><script type="math/tex">Cov(X, Y) = E((X - E[X])(Y - E(Y)) = E[XY] - E[X] E[Y]</script>。</p>
+<script type="math/tex; mode=display">Cov(X, Y) = E((X - E[X])(Y - E(Y)) = E[XY] - E[X] E[Y]</script>
 
 <p>协方差表示的是两个变量的总体的误差，这与只表示一个变量误差的方差不同。 如果两个变量的变化趋势一致，也就是说如果其中一个大于自身的期望值，另外一个也大于自身的期望值，那么两个变量之间的协方差就是正值。如果两个变量的变化趋势相反，即其中一个大于自身的期望值，另外一个却小于自身的期望值，那么两个变量之间的协方差就是负值。如果X与Y是统计独立的，那么二者之间的协方差就是0，但是反过来并不成立，即如果X与Y的协方差为0，二者并不一定是统计独立的。</p>
 
