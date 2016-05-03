@@ -56,9 +56,9 @@
 
 <h2 id="section-1">各指标的计算</h2>
 
-<p>运用最小二乘法找出的这条最优直线一定经过点$(\overline{x}, \overline{y})$。其中</p>
+<p>运用最小二乘法找出的这条最优直线一定经过点<script type="math/tex">(\overline{x}, \overline{y})</script>。其中</p>
 
-<h3 id="betaalpha">斜率<script type="math/tex">\beta$和截距$\alpha</script>的估计值</h3>
+<h3 id="betaalpha">斜率<script type="math/tex">\beta</script>和截距<script type="math/tex">\alpha</script>的估计值</h3>
 
 <p><img src="http://xukuang.github.io/blog/images/beta.png" alt="" /></p>
 
@@ -228,10 +228,12 @@ adjustrsquare
 </div>
 
 <h3 id="f">回归方程的F检验</h3>
-<p>在简单线性回归的模型，我们可以在$β = 0$时，对F统计量进行检验。
-在F检验中统计量F
-<script type="math/tex">F = \frac{(回归的平方和/回归的自由度)}{(误差的平方和/误差的自由度}</script>
-对应p值越小，说明此时越小的概率时间发生了，越不能接受原假设。</p>
+<p>在简单线性回归的模型，我们可以在<script type="math/tex">β = 0</script>时，对F统计量进行检验。
+在F检验中统计量F</p>
+
+<script type="math/tex; mode=display">F = \frac{(回归的平方和/回归的自由度)}{(误差的平方和/误差的自由度}</script>
+
+<p>对应p值越小，说明此时越小的概率时间发生了，越不能接受原假设。</p>
 
 <h3 id="t">斜率β的t检验</h3>
 <p>在简单线性回归的模型，我们可以检验回归系数(斜率)β是否相等于特定的$β_0$(通常使$β_0 = 0$以检验$x_i$对$y_i$是否有关联)。
