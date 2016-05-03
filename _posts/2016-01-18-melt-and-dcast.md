@@ -17,12 +17,19 @@ melt(data, id.vars, measure.vars,
   factorsAsStrings = TRUE)
 ```
 
+
 **data** 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型	
+
 **id.vars** 数据的转化标准：依照那些列进行转化，数据格式为字符型或数字型的向量。如果该参数没有限定，会把所有数据转化为两列，其中指标一列，数据一列。
+
 **measure.vars**	被转化的数据：将哪些列数据值转化，该参数在没有指定的默认情况下，会将id.vars中以外的所有列数据进行转化，数据格式为字符型或数字型的向量
+
 **variable.name**	对转化后的数据标准列重新命名，默认情况下，列名为variable
+
 **na.rm** 是否去除数据中的NA，默认情况下为FALSE，不去除NA
+
 **value.name** 对转化后的数据列重新命名，默认情况下，列名为value
+
 **factorsAsStrings**	转化过程中是否将因子类型数据转化为字符型数据，默认情况下为TRUE，将因子类型数据转化为字符型数据
 <!--more-->
 
@@ -144,13 +151,21 @@ dcast(data, formula, fun.aggregate = NULL, ..., margins = NULL,
   subset = NULL, fill = NULL, drop = TRUE,
   value.var = guess_value(data))
 ```
+
 **data** 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型	
+
 **formula** 转化的标准，以公式的形式定义
+
 **fun.aggregate** 汇总函数。分类后，如果分类结果不唯一，就必须使用汇总函数。常用的汇总函数，包括求个数、和、平均值、标准差、方差，默认的为求个数
+
 **margins**	确定结果是否显示总的结果，默认不显示
+
 **subset** 是否只对某些标准内容进行计算，结合plyr包一起使用
+
 **fill** 不存在的组合值的显示结果。默认的显示为0。数据类型为数值型向量
+
 **drop** 确认不存在分分类组合是否显示，默认情况下显示
+
 **value.var** 貌似对对转化后的数据进行命名，使用默认情况即可
 
 ### 实例
