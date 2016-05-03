@@ -44,288 +44,364 @@
                                               </nav>
                                               <article class="content">
                                               <section class="post">
-<p>学习中，已经体会到了R在数据处理方面的厉害，偶然看到张丹的博文<a href="http://blog.fens.me/r-file-folder/">《用R进行文件系统管理》</a>，发现R居然还可以进行文件系统的管理，又一次全新的认识了世界（其实主要是R）。这里基本上是把张丹的文章照搬过来了，只是加了少许自己学习时心得。本文中提到的文件系统管理主要是指文件和目录（即文件夹）的创建、查看、重命名、复制、删除和文件权限处理。
-## 文件操作</p>
+<p>学习中，已经体会到了R在数据处理方面的厉害，偶然看到张丹的博文<a href="http://blog.fens.me/r-file-folder/">《用R进行文件系统管理》</a>，发现R居然还可以进行文件系统的管理，又一次全新的认识了世界（其实主要是R）。这里基本上是把张丹的文章照搬过来了，只是加了少许自己学习时心得。本文中提到的文件系统管理主要是指文件和目录（即文件夹）的创建、查看、重命名、复制、删除和文件权限处理。</p>
+
+<h2 id="section">文件操作</h2>
 
 <ul>
-  <li>创建文件
-```
-# 创建一个空文件 A.txt
-file.create(“A.txt”)
-# 查看当前目录下的子目录和文件
-list.files()</li>
+  <li>创建文件</li>
 </ul>
 
-<h1 id="a1txta2txta3txt">创建多个空文件 A1.txt，A2.txt，A3.txt</h1>
-<p>file.create(“A1.txt”, “A2.txt”, “A3.txt”)
+<div class="highlighter-rouge"><pre class="highlight"><code># 创建一个空文件 A.txt
+file.create("A.txt")
 # 查看当前目录下的子目录和文件
-list.files()</p>
+list.files()
 
-<h1 id="btxt">创建一个有内容的文件 B.txt</h1>
-<p>cat(“文件测试\n”, file = “B.txt”)
-list.files()</p>
+# 创建多个空文件 A1.txt，A2.txt，A3.txt
+file.create("A1.txt", "A2.txt", "A3.txt")
+# 查看当前目录下的子目录和文件
+list.files()
 
-<div class="highlighter-rouge"><pre class="highlight"><code>* 查看文件
+# 创建一个有内容的文件 B.txt
+cat("文件测试\n", file = "B.txt")
+list.files()
 </code></pre>
 </div>
-<p># 显示当前目录中的目录和文件
+
+<ul>
+  <li>查看文件</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 显示当前目录中的目录和文件
+
 ## 下面两句结果相同
 list.files() # 建议使用该命令，方便记忆
-dir()</p>
+dir()
 
-<h2 id="fullnames--true">参数full.names = TRUE，确定文件显示全名</h2>
-<p>## 参数recursive = TRUE，递归显示，即把目录下的目录和文件都以文件的形式显示
-list.files(, full.names = TRUE, recursive = TRUE)</p>
 
-<h1 id="section">检查文件是否存在</h1>
-<p>## 存在的文件
-file.exists(“A.txt”)
+## 参数full.names = TRUE，确定文件显示全名
+
+## 参数recursive = TRUE，递归显示，即把目录下的目录和文件都以文件的形式显示
+list.files(, full.names = TRUE, recursive = TRUE)
+
+# 检查文件是否存在
+
+## 存在的文件
+file.exists("A.txt")
+
 ## 不存在的文件
-file.exists(“readme.txt”)</p>
+file.exists("readme.txt")
 
-<h1 id="section-1">判断是否是文件</h1>
-<p>file_test(“-f”, “A.txt”)
-<code class="highlighter-rouge">
-&lt;!--more--&gt;
-* 读取文件
-</code>
-# 文件A.txt读取
-readLines(“A.txt”)</p>
-
-<h1 id="btxt-1">文件B.txt读取</h1>
-<p>readLines(“B.txt”)</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>* 文件重命名
+# 判断是否是文件
+file_test("-f", "A.txt")
 </code></pre>
 </div>
-<p># 给文件A.txt重命名为AA.txt
-file.rename(“A.txt”,”AA.txt”)
-list.files()</p>
+<!--more-->
 
-<div class="highlighter-rouge"><pre class="highlight"><code>* 复制文件
+<ul>
+  <li>读取文件</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 文件A.txt读取
+readLines("A.txt")
+
+# 文件B.txt读取
+readLines("B.txt")
+
 </code></pre>
 </div>
-<p>file.copy(“B.txt”, “C.txt”)
+
+<ul>
+  <li>文件重命名</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 给文件A.txt重命名为AA.txt
+file.rename("A.txt","AA.txt")
+list.files()
+
+</code></pre>
+</div>
+
+<ul>
+  <li>复制文件</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>file.copy("B.txt", "C.txt")
 # 查看文件内容
-readLines(“C.txt”)</p>
+readLines("C.txt")
 
-<div class="highlighter-rouge"><pre class="highlight"><code>* 追加文件
 </code></pre>
 </div>
-<p>file.append(“A.txt”, rep(“B.txt”, 10))
+
+<ul>
+  <li>追加文件</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>file.append("A.txt", rep("B.txt", 10))
 # 查看文件内容
-readLines(“A.txt”)</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>* 删除文件
+readLines("A.txt") 
 </code></pre>
 </div>
-<p># 新建文件
-file.create(“tempa1”, “tempa2”, “tempa3”, “tempa4”)
+
+<ul>
+  <li>删除文件</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 新建文件
+file.create("tempa1", "tempa2", "tempa3", "tempa4")
 list.files()
 # 删除文件
-file.remove(“tempa1”, “tempa2”, “tempa3”, “tempa4”)
-list.files()</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>* 文件权限
+file.remove("tempa1", "tempa2", "tempa3", "tempa4")
+list.files()
 </code></pre>
 </div>
-<p># 查看文件完整信息
-file.info(“A.txt”)</p>
 
-<h1 id="section-2">查看文件访问权限</h1>
-<p># 0表示有相关权限
+<ul>
+  <li>文件权限</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 查看文件完整信息
+file.info("A.txt")
+
+# 查看文件访问权限
+# 0表示有相关权限
 # 1表示没有相关权限
+
 ## 是否存在
-file.access(“A.txt”,0)</p>
+file.access("A.txt",0)
 
-<h2 id="section-3">是否可执行</h2>
-<p>file.access(“A.txt”,1)</p>
+## 是否可执行
+file.access("A.txt",1)
 
-<h2 id="section-4">是否可写</h2>
-<p>file.access(“A.txt”,2)</p>
+## 是否可写
+file.access("A.txt",2)
 
-<h2 id="section-5">是否可读</h2>
-<p>file.access(“A.txt”,4)</p>
+## 是否可读
+file.access("A.txt",4)
 
-<h1 id="section-6">文件权限修改</h1>
-<p>## 查看文件信息
-file.info(“A.txt”)</p>
+# 文件权限修改
 
-<h2 id="section-7">修改文件权限，创建者可读可写可执行，其他人无权限</h2>
-<p>Sys.chmod(“A.txt”, mode = “0400”, use_umask = TRUE)</p>
+## 查看文件信息
+file.info("A.txt")
 
-<h2 id="section-8">查看文件信息</h2>
-<p>file.info(“A.txt”)</p>
+## 修改文件权限，创建者可读可写可执行，其他人无权限
+Sys.chmod("A.txt", mode = "0400", use_umask = TRUE)
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
-## 目录操作
-* 创建目录
+## 查看文件信息
+file.info("A.txt")
 </code></pre>
 </div>
-<p># 新建一个目录
-dir.create(“test”) # 不能同时创建多个目录
-list.dirs()</p>
 
-<h1 id="section-9">递归创建</h1>
-<p>dir.create(“test/test”,recursive = TRUE)
-list.dirs()</p>
+<h2 id="section-1">目录操作</h2>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>* 查看目录
-</code></pre>
-</div>
-<p># 查看当前默认目录的一级目录和文件
-list.files() # 同时会显示目录下的文件
-dir()</p>
+<ul>
+  <li>创建目录</li>
+</ul>
 
-<h1 id="section-10">查看当前默认目录的子目录</h1>
-<p>## 默认递归显示各级子目录
+<div class="highlighter-rouge"><pre class="highlight"><code># 新建一个目录
+dir.create("test") # 不能同时创建多个目录
 list.dirs()
-## 只显示一级子目录
-list.dirs(recursive= FALSE)</p>
 
-<h1 id="section-11">通过系统命令查看目录结构</h1>
-<p>system(“tree”)</p>
+# 递归创建
+dir.create("test/test",recursive = TRUE)
+list.dirs()
 
-<h1 id="section-12">检查目录是否存在</h1>
-<p># 存在的目录
-file.exists(“.”)
-file.exists(“./test”)</p>
-
-<h1 id="section-13">不存在的目录</h1>
-<p>file.exists(“./test1”)</p>
-
-<h1 id="section-14">判断是否是目录</h1>
-<p>## 下面两个语句结果相同
-file_test(“-d”, “./test”)
-file_test(“-d”, “test”)
-<code class="highlighter-rouge">
-* 目录重命名
-</code>
-# 查看目录
-dir()</p>
-
-<h1 id="test">对test目录重命名</h1>
-<p>file.rename(“test”, “test1”)</p>
-
-<h1 id="section-15">查看目录</h1>
-<p>dir()</p>
-
-<h1 id="section-16">目录重命名</h1>
-<p>file.rename(“test1”, “test”)
-```</p>
+</code></pre>
+</div>
 
 <ul>
-  <li>删除目录
-```
-dir.create(‘temp’)
-dir.create(‘temp1/temp1’, recursive = TRUE)
-dir()</li>
+  <li>查看目录</li>
 </ul>
 
-<h1 id="temp">删除temp目录</h1>
-<p>unlink(“temp”, recursive = TRUE) # unlink也可用来删除文件，此时不需要设置参数recursive
-dir()</p>
-
-<p>unlink(“temp1”, recursive = TRUE) # 
+<div class="highlighter-rouge"><pre class="highlight"><code># 查看当前默认目录的一级目录和文件
+list.files() # 同时会显示目录下的文件
 dir()
-<code class="highlighter-rouge">
-* 目录的权限
-</code>
-# 查看目录完整信息
-file.info(“.”)</p>
 
-<h1 id="section-17">检查目录的权限</h1>
-<p>df&lt;-dir(full.names = TRUE)</p>
+# 查看当前默认目录的子目录
 
-<h1 id="mode0">检查文件或目录是否存在，mode=0</h1>
-<p>file.access(df, 0) == 0</p>
+## 默认递归显示各级子目录
+list.dirs()
 
-<h1 id="mode1">检查文件或目录是否可执行，mode=1，目录为可以执行</h1>
-<p>file.access(df, 1) == 0</p>
+## 只显示一级子目录
+list.dirs(recursive= FALSE)
 
-<h1 id="mode2">检查文件或目录是否可写，mode=2</h1>
-<p>file.access(df, 2) == 0</p>
+# 通过系统命令查看目录结构
+system("tree")
 
-<h1 id="mode4">检查文件或目录是否可读，mode=4</h1>
-<p>file.access(df, 4) == 0</p>
+# 检查目录是否存在
+# 存在的目录
+file.exists(".")
+file.exists("./test")
 
-<h1 id="section-18">修改目录权限，所有用户只读</h1>
-<p>Sys.chmod(“./test”, mode = “0555”, use_umask = TRUE)
-file.info(“./test”)
-```</p>
+# 不存在的目录
+file.exists("./test1")
 
-<h2 id="section-19">其他功能函数</h2>
+# 判断是否是目录
+
+## 下面两个语句结果相同
+file_test("-d", "./test")
+file_test("-d", "test")
+</code></pre>
+</div>
 
 <ul>
-  <li>拼接目录字符串
-<code class="highlighter-rouge">
-file.path("p1","p2","p3")
-</code></li>
-  <li>
-    <p>所在目录
-<code class="highlighter-rouge">
-dirname("/home/conan/R/fs/readme.txt")
-</code></p>
-  </li>
-  <li>
-    <p>最底层子目录或文件名
-<code class="highlighter-rouge">
-basename("/home/conan/R/fs/readme.txt")
-basename("/home/conan/R/fs")
-</code></p>
-  </li>
-  <li>
-    <p>win下标准路径转化
-<code class="highlighter-rouge">
-normalizePath(c(R.home(), tempdir()))
-</code></p>
-  </li>
-  <li>短路径，缩减路径的显示长度，只在win中运行
-<code class="highlighter-rouge">
-shortPathName(c(R.home(), tempdir()))
-</code></li>
+  <li>目录重命名</li>
 </ul>
 
-<h2 id="section-20">几个特殊的目录</h2>
-<p>** R.home() ** 查看R软件的相关目录
-** .Library ** 查看R核心包的目录
-** .libPaths() ** 查看R所有包的存放目录
-**  system.file() ** 查看指定包所在的目录
-* R软件的相关目录
-```
-# R.home() 查看R软件的相关目录
-## 打印R软件安装目录
-R.home()</p>
+<div class="highlighter-rouge"><pre class="highlight"><code># 查看目录
+dir()
 
-<h2 id="rbin">打印R软件bin的目录</h2>
-<p>R.home(component=”bin”)</p>
+# 对test目录重命名
+file.rename("test", "test1")
 
-<h2 id="r">打印R软件文件的目录</h2>
-<p>R.home(component=”doc”)
-```</p>
+# 查看目录
+dir()
+
+# 目录重命名
+file.rename("test1", "test")
+</code></pre>
+</div>
 
 <ul>
-  <li>
-    <p>R软件的包目录
-<code class="highlighter-rouge">
-# 打印核心包的目录
+  <li>删除目录</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dir.create('temp')
+dir.create('temp1/temp1', recursive = TRUE)
+dir()
+
+# 删除temp目录
+unlink("temp", recursive = TRUE) # unlink也可用来删除文件，此时不需要设置参数recursive
+dir()
+
+unlink("temp1", recursive = TRUE) # 
+dir()
+</code></pre>
+</div>
+
+<ul>
+  <li>目录的权限</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 查看目录完整信息
+file.info(".")
+
+# 检查目录的权限
+df&lt;-dir(full.names = TRUE)
+
+# 检查文件或目录是否存在，mode=0
+file.access(df, 0) == 0
+
+# 检查文件或目录是否可执行，mode=1，目录为可以执行
+file.access(df, 1) == 0
+
+
+# 检查文件或目录是否可写，mode=2
+file.access(df, 2) == 0
+
+
+# 检查文件或目录是否可读，mode=4
+file.access(df, 4) == 0
+
+# 修改目录权限，所有用户只读
+Sys.chmod("./test", mode = "0555", use_umask = TRUE)
+file.info("./test")
+</code></pre>
+</div>
+
+<h2 id="section-2">其他功能函数</h2>
+
+<ul>
+  <li>拼接目录字符串</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>file.path("p1","p2","p3")
+</code></pre>
+</div>
+
+<ul>
+  <li>所在目录</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dirname("/home/conan/R/fs/readme.txt")
+</code></pre>
+</div>
+
+<ul>
+  <li>最底层子目录或文件名</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>basename("/home/conan/R/fs/readme.txt")
+basename("/home/conan/R/fs")
+</code></pre>
+</div>
+
+<ul>
+  <li>win下标准路径转化</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>normalizePath(c(R.home(), tempdir()))
+</code></pre>
+</div>
+
+<ul>
+  <li>短路径，缩减路径的显示长度，只在win中运行</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>shortPathName(c(R.home(), tempdir()))
+</code></pre>
+</div>
+
+<h2 id="section-3">几个特殊的目录</h2>
+
+<p>** R.home() ** 查看R软件的相关目录</p>
+
+<p>** .Library ** 查看R核心包的目录</p>
+
+<p>** .libPaths() ** 查看R所有包的存放目录</p>
+
+<p>**  system.file() ** 查看指定包所在的目录</p>
+
+<ul>
+  <li>R软件的相关目录</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># R.home() 查看R软件的相关目录
+
+## 打印R软件安装目录
+R.home()
+
+## 打印R软件bin的目录
+R.home(component="bin")
+
+## 打印R软件文件的目录
+R.home(component="doc")
+</code></pre>
+</div>
+
+<ul>
+  <li>R软件的包目录</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 打印核心包的目录
 .Library
 # 打印所有包的存放目录
 .libPaths()
-</code></p>
-  </li>
-  <li>
-    <p>查看指定包所在的目录
-<code class="highlighter-rouge">
-# base包的存放目录
+</code></pre>
+</div>
+
+<ul>
+  <li>查看指定包所在的目录</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># base包的存放目录
 system.file()
 # dplyr包的存放目录
 system.file(package = "dplyr")
-</code></p>
-  </li>
-</ul>
+</code></pre>
+</div>
 
-<h2 id="section-21">小结</h2>
+<h2 id="section-4">小结</h2>
 <p>正如张丹所说，用R语言操作文件系统还是很方便的，但其对于函数命名不太规范,比如文件和目录的操作函数名有时区分，有时又不区分。最后，对文件和目录的操作进行简单的小结以方便自己的记忆。</p>
 
 <table>
