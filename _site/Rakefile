@@ -10,7 +10,7 @@ task :post do
   slug = title.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
   begin
     datetime = (ENV['date'] ? Time.parse(ENV['date']) : Time.now)
-           .strftime('%Y-%m-%d %H:%M:%S %z')
+           .strftime('%Y-%m-%d %H:%M:%S')
     date = datetime.split.first
   rescue Exception => e
     puts "Error: date format must be YYYY-MM-DD!"
@@ -27,7 +27,8 @@ task :post do
     post.puts "layout: post"
     post.puts "title: \"#{title.gsub(/-/,' ')}\""
     post.puts "date: #{datetime}"
-    post.puts "categories:"
-    post.puts "---"
+	post.puts "categories: []"
+    post.puts "tags: []"
+	post.puts "---"
   end
 end
