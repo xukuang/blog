@@ -6,19 +6,30 @@ categories: 技术篇
 tags: [R, tidyr]
 ---
 前面一篇[文章](http://xukuang.github.io/2016/01/18/melt-and-dcast/)讲了用reshape2包中的函数实现长宽数据的转化，而tidyr是reshape2的升级版，主要用于数据框。这篇文章将介绍一下如何使用tidyr包中的函数实现长宽数据的转化。
+
 ## 宽数据转化为长数据
+
 ### gather函数
+
 ```
 gather(data, key, value, ..., na.rm = FALSE, convert = FALSE)
 ```
-**data** 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型	
+
+**data** 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型
+	
 **key**  指定转化后数据框的指标列的列名，用于存放原数据中不同的数据指标
+
 **value**  指定转化后数据框的数据列的列名，用于存放原数据中不同的数据指标对应的值		
+
 **...** 指定哪些列聚到一列中。按那些列数据作为标准转化，这个参数接不能有那些列
+
 **na.rm** 确定是否去除数据中的NA，默认情况下为FALSE，不去除NA
 <!--more-->
+
 ### 实例
+
 * 将所有列排成长数据(默认情况下)
+
 ```
 # 加载数据
 library(reshape2)
@@ -53,7 +64,9 @@ tail(dat1)
 dim(dat1)	
 	# [1] 918   2
 ```
+
 * 按Month将其他指标排成长数据
+
 ```
 # 方法一
 dat2 = gather(airquality, time, value, Ozone:Temp, Day)
@@ -76,7 +89,9 @@ tail(dat2)
 	# 611     9  29 Temp    76
 	# 612     9  30 Temp    68
 ```
+
 * 按Month和Day列将其它列指标排成长数据
+
 ```
 dat3 = gather(airquality, type, value.type, Ozone:Temp)
 dat3 = gather(airquality, type, value.type, -Month, -Day)
@@ -119,17 +134,27 @@ dim(dat4)# 比dat3少44行
 	# [1] 568   4	
 ```
 
+
 ## 长数据转化为宽数据
+
 ### spread函数
+
 ```
 spread(data, key, value, fill = NA, convert = FALSE, drop = TRUE)
 ```
+
 **data** 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型
+
 **key**  指定需要将变量值拓展为字段的变量
+
 **value**  指定要分散的值
+
 **fill** 确认不存在的组合值的显示结果。默认的显示为NA。数据类型为数值型向量
+
 **drop** 确认不存在分分类组合是否显示，默认情况下显示。当然，如果drop = T，那么fill参数的设置将失去意义
+
 ### 实例
+
 ```R
 air1 =  spread(dat4, type, value.type)
 dim(air1)
@@ -143,7 +168,9 @@ head(air1) # 数据与airquality相同
 	# 5     5   5    NA      NA 14.3   56
 	# 6     5   6    28      NA 14.9   66
 ```
+
 不存在的分类是否显示，以及怎么显示
+
 ```
 air5 = spread(dat4, type, value.type, drop = F) # 组合上存在的结果都显示
 tail(air5) # 这里的最后一行只是组合上存在，原数据中并不在
@@ -163,17 +190,27 @@ tail(spread(dat4, type, value.type, drop = F, fill= -1)) # 更改不存在结果
 	# 154     9  30     1       1    1    1
 	# 155     9  31    -1      -1   -1   -1
 ```
+
 ## tidyr包中的其它函数
+
 ### seperate函数
+
 unite()函数可将多列合并为一列。
+
 ```
 unite(data, col, ..., sep = "_", remove = TRUE)
 ```
+
 **data** 要处理的数据框
+
 **col** 被组合的新列名称
+
 **...** 指定哪些列需要被组合
+
 **sep** 组合列之间的连接符，默认为下划线
+
 **remove** 是否删除被组合的列，默认删除
+
 ```
 set.seed(10)
 date <- as.Date('2016-04-10') + 0:14
@@ -222,17 +259,25 @@ dataNew <- data %>%
 
 ```
 tidyr包中的函数也可使用管道操作符%>%。
+
 ### seperate函数
 separate()函数可将一列拆分为多列，一般可用于日志数据或日期时间型数据的拆分。
+
 ```
 separate(data, col, into, sep = "[^[:alnum:]]+", remove = TRUE,
   convert = FALSE, extra = "warn", fill = "warn", ...)
 ```
+
 **data** 要处理的数据框
+
 **col** 需要被拆分的列
+
 **into** 新建的列名，为字符串向量
+
 **sep** 被拆分列的分隔符
+
 **remove** 是否删除被分割的列，默认删除
+
 ```
 dataold <- dataNew %>% 
   separate(datetime, c('date', 'time'), sep = ' ') %>% 

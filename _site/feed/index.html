@@ -7,7 +7,7 @@
     <title>Xu Kuang</title>
     <atom:link href="http://xukuang.github.io/blog/feed/" rel="self" type="application/rss+xml" />
     <link>http://xukuang.github.io</link>
-    <lastBuildDate>2016-05-03T01:36:16-06:00</lastBuildDate>
+    <lastBuildDate>2016-05-03T01:44:32-06:00</lastBuildDate>
     <webMaster>kuang_xu@126.com</webMaster>
     
     <item>
@@ -629,11 +629,13 @@ split()函数能将数据框按某一列分为包含若干个数据框的列表�
       <pubDate>2016-04-13T07:56:01-06:00</pubDate>
       <author>Xu Kuang</author>
       <guid>http://xukuang.github.io/blog/2016/04/data-table-in-R</guid>
-      <content:encoded><![CDATA[<p>相比dplyr包，data.table包能够更大程度地提高数据的处理速度，这里就简单介绍一下data.tale包的使用方法。
-## 数据的读取
-data.table包中数据读取的函数是fread()。</p>
+      <content:encoded><![CDATA[<p>相比dplyr包，data.table包能够更大程度地提高数据的处理速度，这里就简单介绍一下data.tale包的使用方法。</p>
+
+<h2 id="section">数据的读取</h2>
+<p>data.table包中数据读取的函数是fread()。</p>
 
 <h2 id="datatable-">data.table 的创建</h2>
+
 <div class="highlighter-rouge"><pre class="highlight"><code>library(data.table)
 DT = data.table(x=rep(c("a","b","c"),each=3), y=c(1,3,6), v=1:9)
 DT
@@ -650,23 +652,31 @@ DT
 </code></pre>
 </div>
 <!--more-->
-<p>## 基础操作
-### 行提取
-行提取分为单行提取和多行提取。
-#### 单行提取
-<code class="highlighter-rouge">
-DT[2]                      # 2nd row
+
+<h2 id="section-1">基础操作</h2>
+
+<h3 id="section-2">行提取</h3>
+<p>行提取分为单行提取和多行提取。</p>
+
+<h4 id="section-3">单行提取</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT[2]                      # 2nd row
 	#    x y v
 	# 1: a 3 2
 DT[2,]                     # same
 	#    x y v
 	# 1: a 3 2
-</code>
-这里DT[2]和DT[2,]是完全相同的，这里的『,』只是说明还有其他参数可设置，而其他参数按默认值进行计算。下文所有这样的最后一个『,』都不再写出来。
-#### 多行提取
-* 数字提取
-<code class="highlighter-rouge">
-DT[1:2]
+</code></pre>
+</div>
+<p>这里DT[2]和DT[2,]是完全相同的，这里的『,』只是说明还有其他参数可设置，而其他参数按默认值进行计算。下文所有这样的最后一个『,』都不再写出来。</p>
+
+<h4 id="section-4">多行提取</h4>
+
+<ul>
+  <li>数字提取</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT[1:2]
 	#    x y v
 	# 1: a 1 1
 	# 2: a 3 2
@@ -674,26 +684,35 @@ DT[c(2,5)]
 	#   x y v
 	#1: a 3 2
 	#2: b 3 5
-</code>
-* 逻辑提取
-<code class="highlighter-rouge">
-DT[c(FALSE,TRUE)]          # even rows (usual recycling)
+</code></pre>
+</div>
+
+<ul>
+  <li>逻辑提取</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT[c(FALSE,TRUE)]          # even rows (usual recycling)
 	#    x y v
 	# 1: a 3 2
 	# 2: b 1 4
 	# 3: b 6 6
 	# 4: c 3 8
-</code></p>
+</code></pre>
+</div>
 
 <p>此时,c(FALSE,TRUE)会自己重复匹配成与DT的行数相同的向量</p>
 
-<h3 id="section">列提取</h3>
-<p>与行提取相同，列的提取也包含单列提取和多列提取。
-#### 单列提取
-* 数字提取
-数字提取时，一定要把wth参数设置为FALSE。
-<code class="highlighter-rouge">
-DT[,2,with=FALSE]          # 2nd column
+<h3 id="section-5">列提取</h3>
+<p>与行提取相同，列的提取也包含单列提取和多列提取。</p>
+
+<h4 id="section-6">单列提取</h4>
+
+<ul>
+  <li>数字提取
+数字提取时，一定要把wth参数设置为FALSE。</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT[,2,with=FALSE]          # 2nd column
 	#    y
 	# 1: 1
 	# 2: 3
@@ -704,10 +723,14 @@ DT[,2,with=FALSE]          # 2nd column
 	# 7: 1
 	# 8: 3
 	# 9: 6
-</code>
-* 列名提取
-```
-DT[,list(v)]               # v column (as data.table
+</code></pre>
+</div>
+
+<ul>
+  <li>列名提取</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT[,list(v)]               # v column (as data.table
 	#    v
 	# 1: 1
 	# 2: 2
@@ -717,25 +740,31 @@ DT[,list(v)]               # v column (as data.table
 	# 6: 6
 	# 7: 7
 	# 8: 8
-	# 9: 9</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>### 列名的修改
-列名的修改可以使用setnames()函数，这个函数好像比对data.frame类型数据名更改的names()和colnames()函数也要快一些。
+	# 9: 9
 </code></pre>
 </div>
-<p>dt = data.table(a=1:2,b=3:4,c=5:6) # compare to data.table
+
+<h3 id="section-7">列名的修改</h3>
+<p>列名的修改可以使用setnames()函数，这个函数好像比对data.frame类型数据名更改的names()和colnames()函数也要快一些。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dt = data.table(a=1:2,b=3:4,c=5:6) # compare to data.table
 try(tracemem(dt))                  # by reference, no deep or shallow copies
-setnames(dt,”b”,”B”)               # by name, no match() needed (warning if “b” is missing)
-setnames(dt,3,”C”)                 # by position with warning if 3 &gt; ncol(dt)
-setnames(dt,2:3,c(“D”,”E”))        # multiple
-setnames(dt,c(“a”,”E”),c(“A”,”F”)) # multiple by name (warning if either “a” or “E” is missing)
-setnames(dt,c(“X”,”Y”,”Z”))        # replace all (length of names must be == ncol(DT))<br />
-<code class="highlighter-rouge">
-#### 多列提取
-* 数字提取
-如同上面对按数字对单列的提取，对多列提取也要设置with参数为FALSE。
-</code>
-DT[,2:3,with=FALSE]
+setnames(dt,"b","B")               # by name, no match() needed (warning if "b" is missing)
+setnames(dt,3,"C")                 # by position with warning if 3 &gt; ncol(dt)
+setnames(dt,2:3,c("D","E"))        # multiple
+setnames(dt,c("a","E"),c("A","F")) # multiple by name (warning if either "a" or "E" is missing)
+setnames(dt,c("X","Y","Z"))        # replace all (length of names must be == ncol(DT))  
+</code></pre>
+</div>
+
+<h4 id="section-8">多列提取</h4>
+
+<ul>
+  <li>数字提取
+如同上面对按数字对单列的提取，对多列提取也要设置with参数为FALSE。</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT[,2:3,with=FALSE]
 	#    y v
 	# 1: 1 1
 	# 2: 3 2
@@ -756,158 +785,177 @@ DT[,c(1,3),with=FALSE]
 	# 6: b 6
 	# 7: c 7
 	# 8: c 8
-	# 9: c 9    <br />
-<code class="highlighter-rouge">
-* 按列名提取
-</code>
-DT[,list(y, v)]
-	#    y v
-	# 1: 1 1
-	# 2: 3 2
-	# 3: 6 3
-	# 4: 1 4
-	# 5: 3 5
-	# 6: 6 6
-	# 7: 1 7
-	# 8: 3 8
-	# 9: 6 9
-<code class="highlighter-rouge">
-如果按列名提取时，不使用列表，仍然能对列进行提取，只是结果以向量的形式输出。
-</code>
-DT[,v]                     # v column (as vector)
-	# [1] 1 2 3 4 5 6 7 8 9
-DT[,c(v)]                  # same
-	# [1] 1 2 3 4 5 6 7 8 9 <br />
-DT[, c(y, v)]
-	# [1] 1 3 6 1 3 6 1 3 6 1 2 3 4 5 6 7 8 9
-```
-### 列的添加与删除</p>
-
-<h4 id="section-1">列的添加</h4>
+	# 9: c 9      
+</code></pre>
+</div>
 <ul>
-  <li>单列添加
+  <li>按列名提取
 <code class="highlighter-rouge">
-DT
-  #    x y v
-  # 1: a 1 1
-  # 2: a 3 2
-  # 3: a 6 3
-  # 4: b 1 4
-  # 5: b 3 5
-  # 6: b 6 6
-  # 7: c 1 7
-  # 8: c 3 8
-  # 9: c 6 9
-DT[, a := 'k']
-DT
-  #    x y v a
-  # 1: a 1 1 k
-  # 2: a 3 2 k
-  # 3: a 6 3 k
-  # 4: b 1 4 k
-  # 5: b 3 5 k
-  # 6: b 6 6 k
-  # 7: c 1 7 k
-  # 8: c 3 8 k
-  # 9: c 6 9 k
-DT[,c:=8]        # add a numeric column, 8 for all rows
-DT
-  #    x y v a c
-  # 1: a 1 1 k 8
-  # 2: a 3 2 k 8
-  # 3: a 6 3 k 8
-  # 4: b 1 4 k 8
-  # 5: b 3 5 k 8
-  # 6: b 6 6 k 8
-  # 7: c 1 7 k 8
-  # 8: c 3 8 k 8
-  # 9: c 6 9 k 8 
-DT[,d:=9L]       # add an integer column, 9L for all rows
-DT[2,d:=10L]     # subassign by reference to column d
-DT
-  #    x y v a c  d
-  # 1: a 1 1 k 8  9
-  # 2: a 3 2 k 8 10
-  # 3: a 6 3 k 8  9
-  # 4: b 1 4 k 8  9
-  # 5: b 3 5 k 8  9
-  # 6: b 6 6 k 8  9
-  # 7: c 1 7 k 8  9
-  # 8: c 3 8 k 8  9
-  # 9: c 6 9 k 8  9
-DT[, e := d + 2]
-DT
-  #    x y v a c  d  e
-  # 1: a 1 1 k 8  9 11
-  # 2: a 3 2 k 8 10 12
-  # 3: a 6 3 k 8  9 11
-  # 4: b 1 4 k 8  9 11
-  # 5: b 3 5 k 8  9 11
-  # 6: b 6 6 k 8  9 11
-  # 7: c 1 7 k 8  9 11
-  # 8: c 3 8 k 8  9 11
-  # 9: c 6 9 k 8  9 11
-</code>
-如果添加的列名，数据中已经包含则是对这一列数据的修改。</li>
-  <li>多列的添加
-<code class="highlighter-rouge">
-DT[, c('f', 'g') := list( d + 1, c)]
-DT[, ':='( f =  d + 1, g = c)]          # same
-DT
-  #    x y v a c  d  e  f g
-  # 1: a 1 1 k 8  9 11 10 8
-  # 2: a 3 2 k 8 10 12 11 8
-  # 3: a 6 3 k 8  9 11 10 8
-  # 4: b 1 4 k 8  9 11 10 8
-  # 5: b 3 5 k 8  9 11 10 8
-  # 6: b 6 6 k 8  9 11 10 8
-  # 7: c 1 7 k 8  9 11 10 8
-  # 8: c 3 8 k 8  9 11 10 8
-  # 9: c 6 9 k 8  9 11 10 8
-</code>
-此处，需要注意的是新创建的列只能依照原有数据列，而不能依照新创建的列。例如这个例子中，g = c是可以运行，而g = f则会提示错误。
-#### 列的删除
-<code class="highlighter-rouge">
-DT[,c:=NULL]     # remove column c
-DT
-  #    x y v a  d  e  f g
-  # 1: a 1 1 k  9 11 10 8
-  # 2: a 3 2 k 10 12 11 8
-  # 3: a 6 3 k  9 11 10 8
-  # 4: b 1 4 k  9 11 10 8
-  # 5: b 3 5 k  9 11 10 8
-  # 6: b 6 6 k  9 11 10 8
-  # 7: c 1 7 k  9 11 10 8
-  # 8: c 3 8 k  9 11 10 8
-  # 9: c 6 9 k  9 11 10 8
-DT[, c('d', 'e', 'f', 'g'):=NULL]     
-DT
-  #    x y v a
-  # 1: a 1 1 k
-  # 2: a 3 2 k
-  # 3: a 6 3 k
-  # 4: b 1 4 k
-  # 5: b 3 5 k
-  # 6: b 6 6 k
-  # 7: c 1 7 k
-  # 8: c 3 8 k
-  # 9: c 6 9 k
+DT[,list(y, v)]
+  #    y v
+  # 1: 1 1
+  # 2: 3 2
+  # 3: 6 3
+  # 4: 1 4
+  # 5: 3 5
+  # 6: 6 6
+  # 7: 1 7
+  # 8: 3 8
+  # 9: 6 9
 </code></li>
 </ul>
 
-<h2 id="section-2">列指标的简单操作</h2>
-<p>简单操作主要包括求和、平均值、方差和标准差等。
-<code class="highlighter-rouge">
-DT[2:3,sum(v)]             # sum(v) over rows 2 and 3
+<p>如果按列名提取时，不使用列表，仍然能对列进行提取，只是结果以向量的形式输出。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT[,v]                     # v column (as vector)
+	# [1] 1 2 3 4 5 6 7 8 9
+DT[,c(v)]                  # same
+	# [1] 1 2 3 4 5 6 7 8 9   
+DT[, c(y, v)]
+	# [1] 1 3 6 1 3 6 1 3 6 1 2 3 4 5 6 7 8 9
+</code></pre>
+</div>
+
+<h3 id="section-9">列的添加与删除</h3>
+
+<h4 id="section-10">列的添加</h4>
+
+<ul>
+  <li>单列添加</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT
+	#    x y v
+	# 1: a 1 1
+	# 2: a 3 2
+	# 3: a 6 3
+	# 4: b 1 4
+	# 5: b 3 5
+	# 6: b 6 6
+	# 7: c 1 7
+	# 8: c 3 8
+	# 9: c 6 9
+DT[, a := 'k']
+DT
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: a 3 2 k
+	# 3: a 6 3 k
+	# 4: b 1 4 k
+	# 5: b 3 5 k
+	# 6: b 6 6 k
+	# 7: c 1 7 k
+	# 8: c 3 8 k
+	# 9: c 6 9 k
+DT[,c:=8]        # add a numeric column, 8 for all rows
+DT
+	#    x y v a c
+	# 1: a 1 1 k 8
+	# 2: a 3 2 k 8
+	# 3: a 6 3 k 8
+	# 4: b 1 4 k 8
+	# 5: b 3 5 k 8
+	# 6: b 6 6 k 8
+	# 7: c 1 7 k 8
+	# 8: c 3 8 k 8
+	# 9: c 6 9 k 8 
+DT[,d:=9L]       # add an integer column, 9L for all rows
+DT[2,d:=10L]     # subassign by reference to column d
+DT
+	#    x y v a c  d
+	# 1: a 1 1 k 8  9
+	# 2: a 3 2 k 8 10
+	# 3: a 6 3 k 8  9
+	# 4: b 1 4 k 8  9
+	# 5: b 3 5 k 8  9
+	# 6: b 6 6 k 8  9
+	# 7: c 1 7 k 8  9
+	# 8: c 3 8 k 8  9
+	# 9: c 6 9 k 8  9
+DT[, e := d + 2]
+DT
+	#    x y v a c  d  e
+	# 1: a 1 1 k 8  9 11
+	# 2: a 3 2 k 8 10 12
+	# 3: a 6 3 k 8  9 11
+	# 4: b 1 4 k 8  9 11
+	# 5: b 3 5 k 8  9 11
+	# 6: b 6 6 k 8  9 11
+	# 7: c 1 7 k 8  9 11
+	# 8: c 3 8 k 8  9 11
+	# 9: c 6 9 k 8  9 11
+</code></pre>
+</div>
+<p>如果添加的列名，数据中已经包含则是对这一列数据的修改。</p>
+
+<ul>
+  <li>多列的添加</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT[, c('f', 'g') := list( d + 1, c)]
+DT[, ':='( f =  d + 1, g = c)]          # same
+DT
+	#    x y v a c  d  e  f g
+	# 1: a 1 1 k 8  9 11 10 8
+	# 2: a 3 2 k 8 10 12 11 8
+	# 3: a 6 3 k 8  9 11 10 8
+	# 4: b 1 4 k 8  9 11 10 8
+	# 5: b 3 5 k 8  9 11 10 8
+	# 6: b 6 6 k 8  9 11 10 8
+	# 7: c 1 7 k 8  9 11 10 8
+	# 8: c 3 8 k 8  9 11 10 8
+	# 9: c 6 9 k 8  9 11 10 8
+</code></pre>
+</div>
+<p>此处，需要注意的是新创建的列只能依照原有数据列，而不能依照新创建的列。例如这个例子中，g = c是可以运行，而g = f则会提示错误。</p>
+
+<h4 id="section-11">列的删除</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT[,c:=NULL]     # remove column c
+DT
+	#    x y v a  d  e  f g
+	# 1: a 1 1 k  9 11 10 8
+	# 2: a 3 2 k 10 12 11 8
+	# 3: a 6 3 k  9 11 10 8
+	# 4: b 1 4 k  9 11 10 8
+	# 5: b 3 5 k  9 11 10 8
+	# 6: b 6 6 k  9 11 10 8
+	# 7: c 1 7 k  9 11 10 8
+	# 8: c 3 8 k  9 11 10 8
+	# 9: c 6 9 k  9 11 10 8
+DT[, c('d', 'e', 'f', 'g'):=NULL]     
+DT
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: a 3 2 k
+	# 3: a 6 3 k
+	# 4: b 1 4 k
+	# 5: b 3 5 k
+	# 6: b 6 6 k
+	# 7: c 1 7 k
+	# 8: c 3 8 k
+	# 9: c 6 9 k
+</code></pre>
+</div>
+
+<h2 id="section-12">列指标的简单操作</h2>
+<p>简单操作主要包括求和、平均值、方差和标准差等。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT[2:3,sum(v)]             # sum(v) over rows 2 and 3
 # [1] 5
 DT[2:3,mean(v)]             # sum(v) over rows 2 and 3
 # [1] 2.5
-</code>
-## 索引key
-### 查看和创建索引
-索引是对列而言的，索引创建后，数据将自动按索引值进行重新排序，所以每个数据最多只能有一个索引，但是索引可以由多列组成，这些列可以是数字、因子、字符串或其他格式。
-#### 单列索引的创建
-<code class="highlighter-rouge">
+</code></pre>
+</div>
+
+<h2 id="key">索引key</h2>
+
+<h3 id="section-13">查看和创建索引</h3>
+<p>索引是对列而言的，索引创建后，数据将自动按索引值进行重新排序，所以每个数据最多只能有一个索引，但是索引可以由多列组成，这些列可以是数字、因子、字符串或其他格式。</p>
+
+<h4 id="section-14">单列索引的创建</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
 ## methdod first
 key(DT)                    # key
 	# NULL 
@@ -925,34 +973,21 @@ DT
 	# 7: c 1 7 k
 	# 8: c 3 8 k
 	# 9: c 6 9 k
+
 ## method second
 setkeyv(DT,"y")            # same (v in setkeyv stands for vector)
 key(DT)
 	# [1] "y"
-</code>
-一旦对数据进行新的索引，原有的索引将消失。
-#### 多列索引的创建
-```
-## methdod first                    # key 
+</code></pre>
+</div>
+<p>一旦对数据进行新的索引，原有的索引将消失。</p>
+
+<h4 id="section-15">多列索引的创建</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## methdod first                    # key 
 setkey(DT,x,v)               # set a 1-column key. No quotes, for convenience.
 key(DT)
-	# [1] “x” “v”
-DT
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: a 3 2 k
-	# 3: a 6 3 k
-	# 4: b 1 4 k
-	# 5: b 3 5 k
-	# 6: b 6 6 k
-	# 7: c 1 7 k
-	# 8: c 3 8 k
-	# 9: c 6 9 k</p>
-
-<h2 id="method-second">method second</h2>
-<p>setkeyv(DT,c(“x”, “y”))           # same (v in setkeyv stands for vector)
-key(DT)
-	# [1] “x” “v”
+	# [1] "x" "v"
 DT
 	#    x y v a
 	# 1: a 1 1 k
@@ -964,14 +999,33 @@ DT
 	# 7: c 1 7 k
 	# 8: c 3 8 k
 	# 9: c 6 9 k
-```</p>
 
-<h3 id="section-3">通过索引进行数据的提取</h3>
-<p>按照索引对数据提取，可以加快提取数据的速度。
-#### 单索引
-正向提取
-<code class="highlighter-rouge">
-setkey(DT, x)
+
+## method second
+setkeyv(DT,c("x", "y"))           # same (v in setkeyv stands for vector)
+key(DT)
+	# [1] "x" "v"
+DT
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: a 3 2 k
+	# 3: a 6 3 k
+	# 4: b 1 4 k
+	# 5: b 3 5 k
+	# 6: b 6 6 k
+	# 7: c 1 7 k
+	# 8: c 3 8 k
+	# 9: c 6 9 k
+</code></pre>
+</div>
+
+<h3 id="section-16">通过索引进行数据的提取</h3>
+<p>按照索引对数据提取，可以加快提取数据的速度。</p>
+
+<h4 id="section-17">单索引</h4>
+<p>正向提取</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>setkey(DT, x)
 DT["a"]                    # binary search (fast)
 	#    x y v a
 	# 1: a 1 1 k
@@ -987,10 +1041,14 @@ DT[x=="a"]                 # same; i.e. binary search (fast)
 	# 1: a 1 1 k
 	# 2: a 3 2 k
 	# 3: a 6 3 k
-</code>
-* 反向提取
-```
-DT[!.(“a”)]                # not join
+</code></pre>
+</div>
+
+<ul>
+  <li>反向提取</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT[!.("a")]                # not join
 	#    x y v a
 	# 1: b 1 4 k
 	# 2: b 3 5 k
@@ -998,7 +1056,7 @@ DT[!.(“a”)]                # not join
 	# 4: c 1 7 k
 	# 5: c 3 8 k
 	# 6: c 6 9 k
-DT[!”a”]                   # same
+DT[!"a"]                   # same
 	#    x y v a
 	# 1: b 1 4 k
 	# 2: b 3 5 k
@@ -1013,98 +1071,109 @@ DT[!2:4]                   # all rows other than 2:4
 	# 3: b 6 6 k
 	# 4: c 1 7 k
 	# 5: c 3 8 k
-	# 6: c 6 9 k</p>
+	# 6: c 6 9 k
 
-<div class="highlighter-rouge"><pre class="highlight"><code>#### 多索引
-* 正向提取
 </code></pre>
 </div>
-<p>setkey(DT, x, y)
-# Mehtod First
-DT[“a”]                    # join to 1st column of key
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: a 3 2 k
-	# 3: a 6 3 k
-DT[.(“a”)]                 # same, .() is an alias for list()
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: a 3 2 k
-	# 3: a 6 3 k
-DT[.(“a”,3)]               # join to 2 columns
-    #    x y v a
-	# 1: a 3 2 k
-DT[.(“a”,3:6)]             # join 4 rows (2 missing)
-	#    x y  v  a
-	# 1: a 3  2  k
-	# 2: a 4 NA NA
-	# 3: a 5 NA NA
-	# 4: a 6  3  k
-DT[.(“a”,3:6),nomatch=0]   # remove missing
-	#    x y v a
-	# 1: a 3 2 k
-	# 2: a 6 3 k
-DT[.(“a”,3:6),roll=TRUE]   # rolling join (locf)
-	#    x y v a
-	# 1: a 3 2 k
-	# 2: a 4 2 k
-	# 3: a 5 2 k
-	# 4: a 6 3 k
-## Method Second
-DT[J(‘a’)]
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: a 3 2 k
-	# 3: a 6 3 k
-DT[J(“a”,3)]               # binary search (fast)
-	#    x y v a
-	# 1: a 3 2 k
-DT[J(“a”,3:6)]              # same; i.e. binary search (fast)
-	#    x y  v  a
-	# 1: a 3  2  k
-	# 2: a 4 NA NA
-	# 3: a 5 NA NA
-	# 4: a 6  3  k
-DT[J(“a”,3:6), nomatch = 0]
-	#    x y v a
-	# 1: a 3 2 k
-	# 2: a 6 3 k
-DT[J(“a”,3:6), roll = T]
-	#    x y v a
-	# 1: a 3 2 k
-	# 2: a 4 2 k
-	# 3: a 5 2 k
-	# 4: a 6 3 k</p>
 
-<h2 id="method-third">Method Third</h2>
-<p>DT[list(“a”)]
+<h4 id="section-18">多索引</h4>
+
+<ul>
+  <li>正向提取</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>setkey(DT, x, y)
+# Mehtod First
+DT["a"]                    # join to 1st column of key
 	#    x y v a
 	# 1: a 1 1 k
 	# 2: a 3 2 k
 	# 3: a 6 3 k
-DT[list(“a”,3)]
+DT[.("a")]                 # same, .() is an alias for list()
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: a 3 2 k
+	# 3: a 6 3 k
+DT[.("a",3)]               # join to 2 columns
     #    x y v a
 	# 1: a 3 2 k
-DT[list(“a”, 3:6)]
+DT[.("a",3:6)]             # join 4 rows (2 missing)
 	#    x y  v  a
 	# 1: a 3  2  k
 	# 2: a 4 NA NA
 	# 3: a 5 NA NA
 	# 4: a 6  3  k
-DT[list(“a”, 3:6), nomatch = 0]
+DT[.("a",3:6),nomatch=0]   # remove missing
 	#    x y v a
 	# 1: a 3 2 k
 	# 2: a 6 3 k
-DT[list(“a”, 3:6), roll = T]
+DT[.("a",3:6),roll=TRUE]   # rolling join (locf)
 	#    x y v a
 	# 1: a 3 2 k
 	# 2: a 4 2 k
 	# 3: a 5 2 k
 	# 4: a 6 3 k
-<code class="highlighter-rouge">
-* 反向提取
-</code>
-DT[x!=”b” | y!=3]          # not yet optimized, currently vector scans
+
+## Method Second
+DT[J('a')]
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: a 3 2 k
+	# 3: a 6 3 k
+DT[J("a",3)]               # binary search (fast)
+	#    x y v a
+	# 1: a 3 2 k
+DT[J("a",3:6)]              # same; i.e. binary search (fast)
+	#    x y  v  a
+	# 1: a 3  2  k
+	# 2: a 4 NA NA
+	# 3: a 5 NA NA
+	# 4: a 6  3  k
+DT[J("a",3:6), nomatch = 0]
+	#    x y v a
+	# 1: a 3 2 k
+	# 2: a 6 3 k
+DT[J("a",3:6), roll = T]
+	#    x y v a
+	# 1: a 3 2 k
+	# 2: a 4 2 k
+	# 3: a 5 2 k
+	# 4: a 6 3 k
+
+
+## Method Third
+DT[list("a")]
+	#    x y v a
+	# 1: a 1 1 k
+	# 2: a 3 2 k
+	# 3: a 6 3 k
+DT[list("a",3)]
+    #    x y v a
+	# 1: a 3 2 k
+DT[list("a", 3:6)]
+	#    x y  v  a
+	# 1: a 3  2  k
+	# 2: a 4 NA NA
+	# 3: a 5 NA NA
+	# 4: a 6  3  k
+DT[list("a", 3:6), nomatch = 0]
+	#    x y v a
+	# 1: a 3 2 k
+	# 2: a 6 3 k
+DT[list("a", 3:6), roll = T]
+	#    x y v a
+	# 1: a 3 2 k
+	# 2: a 4 2 k
+	# 3: a 5 2 k
+	# 4: a 6 3 k
+</code></pre>
+</div>
+
+<ul>
+  <li>反向提取</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT[x!="b" | y!=3]          # not yet optimized, currently vector scans
 	#    x y v a
 	# 1: a 1 1 k
 	# 2: a 3 2 k
@@ -1114,7 +1183,7 @@ DT[x!=”b” | y!=3]          # not yet optimized, currently vector scans
 	# 6: c 1 7 k
 	# 7: c 3 8 k
 	# 8: c 6 9 k
-DT[!.(“b”,3)]              # same result but much faster
+DT[!.("b",3)]              # same result but much faster
 	#    x y v a
 	# 1: a 1 1 k
 	# 2: a 3 2 k
@@ -1123,68 +1192,85 @@ DT[!.(“b”,3)]              # same result but much faster
 	# 5: b 6 6 k
 	# 6: c 1 7 k
 	# 7: c 3 8 k
-	# 8: c 6 9 k</p>
+	# 8: c 6 9 k
 
-<div class="highlighter-rouge"><pre class="highlight"><code>## 分类汇总
-分类汇总是指按某列的分类指标进行简单操作，这里借助by参数实现。此外，by参数与索引相互没有影响。
-### 单指标的分类汇总
-* 默认汇总名称
 </code></pre>
 </div>
-<p>DT[,sum(v),by=x]
+
+<h2 id="section-19">分类汇总</h2>
+<p>分类汇总是指按某列的分类指标进行简单操作，这里借助by参数实现。此外，by参数与索引相互没有影响。</p>
+
+<h3 id="section-20">单指标的分类汇总</h3>
+
+<ul>
+  <li>默认汇总名称</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT[,sum(v),by=x]
 	#    x V1
 	# 1: a  6
 	# 2: b 15
-	# 3: c 24         <br />
+	# 3: c 24           
 DT[,sum(v),by=y] 
 	#    y V1
 	# 1: 1 12
 	# 2: 3 15
-	# 3: 6 18        <br />
-<code class="highlighter-rouge">
-* 自定义汇总名称
-</code>
-DT[,list(sum.v.x = sum(v)),by=x]
-	#    x sum.v.x
-	# 1: a       6
-	# 2: b      15
-	# 3: c      24         <br />
-DT[,list(sum.v.y = sum(v)),by=y] 
-	#    y sum.v.y
-	# 1: 1      12
-	# 2: 3      15
-	# 3: 6      18 
-DT[,sum.v.y := sum(v) ,by=y]
-	#    x y v a sum.v.y
-	# 1: a 1 1 k      12
-	# 2: a 3 2 k      15
-	# 3: a 6 3 k      18
-	# 4: b 1 4 k      12
-	# 5: b 3 5 k      15
-	# 6: b 6 6 k      18
-	# 7: c 1 7 k      12
-	# 8: c 3 8 k      15
-	# 9: c 6 9 k      18 	
-<code class="highlighter-rouge">
-* 汇总结果与原始数据进行匹配
-</code>
-DT[,sum.v.y := sum(v) ,by=y]
-	#    x y v a sum.v.y
-	# 1: a 1 1 k      12
-	# 2: a 3 2 k      15
-	# 3: a 6 3 k      18
-	# 4: b 1 4 k      12
-	# 5: b 3 5 k      15
-	# 6: b 6 6 k      18
-	# 7: c 1 7 k      12
-	# 8: c 3 8 k      15
-	# 9: c 6 9 k      18</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>### 多指标的多个分类汇总
-* 默认汇总名称
+	# 3: 6 18          
 </code></pre>
 </div>
-<p>DT[,list(mean(v),sum(v)),by=list(x,y)]   # keyed by
+<ul>
+  <li>
+    <p>自定义汇总名称
+<code class="highlighter-rouge">
+DT[,list(sum.v.x = sum(v)),by=x]
+  #    x sum.v.x
+  # 1: a       6
+  # 2: b      15
+  # 3: c      24           
+DT[,list(sum.v.y = sum(v)),by=y] 
+  #    y sum.v.y
+  # 1: 1      12
+  # 2: 3      15
+  # 3: 6      18 
+DT[,sum.v.y := sum(v) ,by=y]
+  #    x y v a sum.v.y
+  # 1: a 1 1 k      12
+  # 2: a 3 2 k      15
+  # 3: a 6 3 k      18
+  # 4: b 1 4 k      12
+  # 5: b 3 5 k      15
+  # 6: b 6 6 k      18
+  # 7: c 1 7 k      12
+  # 8: c 3 8 k      15
+  # 9: c 6 9 k      18 	
+</code></p>
+  </li>
+  <li>
+    <p>汇总结果与原始数据进行匹配</p>
+  </li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT[,sum.v.y := sum(v) ,by=y]
+	#    x y v a sum.v.y
+	# 1: a 1 1 k      12
+	# 2: a 3 2 k      15
+	# 3: a 6 3 k      18
+	# 4: b 1 4 k      12
+	# 5: b 3 5 k      15
+	# 6: b 6 6 k      18
+	# 7: c 1 7 k      12
+	# 8: c 3 8 k      15
+	# 9: c 6 9 k      18
+</code></pre>
+</div>
+
+<h3 id="section-21">多指标的多个分类汇总</h3>
+
+<ul>
+  <li>默认汇总名称</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT[,list(mean(v),sum(v)),by=list(x,y)]   # keyed by
 	#    x y V1 V2
 	# 1: a 1  1  1
 	# 2: a 3  2  2
@@ -1195,10 +1281,14 @@ DT[,sum.v.y := sum(v) ,by=y]
 	# 7: c 1  7  7
 	# 8: c 3  8  8
 	# 9: c 6  9  9
-<code class="highlighter-rouge">
-* 自定义汇总名称
-</code>
-DT[,list(mean.v = mean(v),sum.v = sum(v)),by=list(x,y)]   # keyed by
+</code></pre>
+</div>
+
+<ul>
+  <li>自定义汇总名称</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT[,list(mean.v = mean(v),sum.v = sum(v)),by=list(x,y)]   # keyed by
 	#   x y mean.v sum.v
 	#1: a 1      1     1
 	#2: a 3      2     2
@@ -1209,10 +1299,14 @@ DT[,list(mean.v = mean(v),sum.v = sum(v)),by=list(x,y)]   # keyed by
 	#7: c 1      7     7
 	#8: c 3      8     8
 	#9: c 6      9     9
-<code class="highlighter-rouge">
-* 汇总结果与原始数据进行匹配
-</code>
-DT[,c(“mean.v”, “sum.v.y”) := list(mean(v),sum(v)) ,by=list(x,y)]
+</code></pre>
+</div>
+
+<ul>
+  <li>汇总结果与原始数据进行匹配</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT[,c("mean.v", "sum.v.y") := list(mean(v),sum(v)) ,by=list(x,y)]
 	#    x y v a sum.v.y mean.v
 	# 1: a 1 1 k       1      1
 	# 2: a 3 2 k       2      2
@@ -1222,21 +1316,23 @@ DT[,c(“mean.v”, “sum.v.y”) := list(mean(v),sum(v)) ,by=list(x,y)]
 	# 6: b 6 6 k       6      6
 	# 7: c 1 7 k       7      7
 	# 8: c 3 8 k       8      8
-	# 9: c 6 9 k       9      9</p>
+	# 9: c 6 9 k       9      9
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
-## data.table与data.frame的转化
-data.table格式加快了处理速度，而data.frame则更为基础。两者的转化可以通过data.table(),setDT()和setDT()来实现，其中data.table()和setDT()函数可以将数据从data.frame转化为data.table，setDF()函数可以将数据从data.table转化为data.frame。注意使用data.table(),setDT()和setDT()时，参数本身的数据类型也会发生变化。
 </code></pre>
 </div>
-<p>class(DT)
-	# [1] “data.table” “data.frame”<br />
+
+<h2 id="datatabledataframe">data.table与data.frame的转化</h2>
+<p>data.table格式加快了处理速度，而data.frame则更为基础。两者的转化可以通过data.table(),setDT()和setDT()来实现，其中data.table()和setDT()函数可以将数据从data.frame转化为data.table，setDF()函数可以将数据从data.table转化为data.frame。注意使用data.table(),setDT()和setDT()时，参数本身的数据类型也会发生变化。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class(DT)
+	# [1] "data.table" "data.frame"  
 class(setDF(DT))
-	# [1] “data.frame”
+	# [1] "data.frame"
 class(DT)
-	# [1] “data.frame”
-```
-此外，data.table包还可以与基础包中的duplicated()、unique()、subset() 函数结合使用。 不仅如此，data.table包还有一些基础包的替代函数。rbind()升级版的rbindlist()，可以合并列数不同和列位置不同的数据。比dplyr包中arrange()函数更快的setorder()排序函数。</p>
+	# [1] "data.frame"
+</code></pre>
+</div>
+<p>此外，data.table包还可以与基础包中的duplicated()、unique()、subset() 函数结合使用。 不仅如此，data.table包还有一些基础包的替代函数。rbind()升级版的rbindlist()，可以合并列数不同和列位置不同的数据。比dplyr包中arrange()函数更快的setorder()排序函数。</p>
 ]]></content:encoded>
     </item>
     
@@ -1246,22 +1342,34 @@ class(DT)
       <pubDate>2016-04-10T04:32:19-06:00</pubDate>
       <author>Xu Kuang</author>
       <guid>http://xukuang.github.io/blog/2016/04/data-fomrat</guid>
-      <content:encoded><![CDATA[<p>前面一篇<a href="http://xukuang.github.io/2016/01/18/melt-and-dcast/">文章</a>讲了用reshape2包中的函数实现长宽数据的转化，而tidyr是reshape2的升级版，主要用于数据框。这篇文章将介绍一下如何使用tidyr包中的函数实现长宽数据的转化。
-## 宽数据转化为长数据
-### gather函数
-<code class="highlighter-rouge">
-gather(data, key, value, ..., na.rm = FALSE, convert = FALSE)
-</code>
-<strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型	
-<strong>key</strong>  指定转化后数据框的指标列的列名，用于存放原数据中不同的数据指标
-<strong>value</strong>  指定转化后数据框的数据列的列名，用于存放原数据中不同的数据指标对应的值		
-<strong>…</strong> 指定哪些列聚到一列中。按那些列数据作为标准转化，这个参数接不能有那些列
-<strong>na.rm</strong> 确定是否去除数据中的NA，默认情况下为FALSE，不去除NA
-<!--more-->
-### 实例
-* 将所有列排成长数据(默认情况下)
-<code class="highlighter-rouge">
-# 加载数据
+      <content:encoded><![CDATA[<p>前面一篇<a href="http://xukuang.github.io/2016/01/18/melt-and-dcast/">文章</a>讲了用reshape2包中的函数实现长宽数据的转化，而tidyr是reshape2的升级版，主要用于数据框。这篇文章将介绍一下如何使用tidyr包中的函数实现长宽数据的转化。</p>
+
+<h2 id="section">宽数据转化为长数据</h2>
+
+<h3 id="gather">gather函数</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>gather(data, key, value, ..., na.rm = FALSE, convert = FALSE)
+</code></pre>
+</div>
+
+<p><strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型</p>
+
+<p><strong>key</strong>  指定转化后数据框的指标列的列名，用于存放原数据中不同的数据指标</p>
+
+<p><strong>value</strong>  指定转化后数据框的数据列的列名，用于存放原数据中不同的数据指标对应的值</p>
+
+<p><strong>…</strong> 指定哪些列聚到一列中。按那些列数据作为标准转化，这个参数接不能有那些列</p>
+
+<p><strong>na.rm</strong> 确定是否去除数据中的NA，默认情况下为FALSE，不去除NA
+<!--more--></p>
+
+<h3 id="section-1">实例</h3>
+
+<ul>
+  <li>将所有列排成长数据(默认情况下)</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 加载数据
 library(reshape2)
 head(airquality)
 	# 	Month Day variable value
@@ -1293,10 +1401,14 @@ tail(dat1)
     # 918  Day    30
 dim(dat1)	
 	# [1] 918   2
-</code>
-* 按Month将其他指标排成长数据
-<code class="highlighter-rouge">
-# 方法一
+</code></pre>
+</div>
+
+<ul>
+  <li>按Month将其他指标排成长数据</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 方法一
 dat2 = gather(airquality, time, value, Ozone:Temp, Day)
 # 方法二
 dat2 = gather(airquality, time, value, -Month)
@@ -1316,10 +1428,14 @@ tail(dat2)
 	# 610     9  28 Temp    75
 	# 611     9  29 Temp    76
 	# 612     9  30 Temp    68
-</code>
-* 按Month和Day列将其它列指标排成长数据
-<code class="highlighter-rouge">
-dat3 = gather(airquality, type, value.type, Ozone:Temp)
+</code></pre>
+</div>
+
+<ul>
+  <li>按Month和Day列将其它列指标排成长数据</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dat3 = gather(airquality, type, value.type, Ozone:Temp)
 dat3 = gather(airquality, type, value.type, -Month, -Day)
 head(dat3) 
 	# 	 Month Day  type value.type
@@ -1331,62 +1447,75 @@ head(dat3)
 	# 6     5   6 Ozone         28
 dim(dat3)
 	# [1] 612   4
-</code>
-* 去除排列后数据中的NA
+</code></pre>
+</div>
+<ul>
+  <li>去除排列后数据中的NA
 <code class="highlighter-rouge">
 #　 airquality$Ozone 数的前四列有44 个NA
 table(is.na(airquality$Ozone)) # 37
-	# FALSE  TRUE 
-	#   116    37 
+  # FALSE  TRUE 
+  #   116    37 
 table(is.na(airquality$Solar.R)) # 4
-	# FALSE  TRUE 
-	#   146     7 
+  # FALSE  TRUE 
+  #   146     7 
 table(is.na(airquality$Temp)) # 0
-	# FALSE 
-	#   153 
+  # FALSE 
+  #   153 
 table(is.na(airquality$Wind)) # 0
-	# FALSE 
-	#   153 
+  # FALSE 
+  #   153 
 dat4 = gather(airquality, type, value.type, Ozone:Temp, na.rm = TRUE)
 head(dat4)
-	#   Month Day  type value.type
-	# 1     5   1 Ozone         41
-	# 2     5   2 Ozone         36
-	# 3     5   3 Ozone         12
-	# 4     5   4 Ozone         18
-	# 6     5   6 Ozone         28
-	# 7     5   7 Ozone         23
+  #   Month Day  type value.type
+  # 1     5   1 Ozone         41
+  # 2     5   2 Ozone         36
+  # 3     5   3 Ozone         12
+  # 4     5   4 Ozone         18
+  # 6     5   6 Ozone         28
+  # 7     5   7 Ozone         23
 dim(dat4)# 比dat3少44行
-	# [1] 568   4	
-</code></p>
+  # [1] 568   4	
+</code></li>
+</ul>
 
-<h2 id="section">长数据转化为宽数据</h2>
-<p>### spread函数
-<code class="highlighter-rouge">
-spread(data, key, value, fill = NA, convert = FALSE, drop = TRUE)
-</code>
-<strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型
-<strong>key</strong>  指定需要将变量值拓展为字段的变量
-<strong>value</strong>  指定要分散的值
-<strong>fill</strong> 确认不存在的组合值的显示结果。默认的显示为NA。数据类型为数值型向量
-<strong>drop</strong> 确认不存在分分类组合是否显示，默认情况下显示。当然，如果drop = T，那么fill参数的设置将失去意义
-### 实例
-<code class="highlighter-rouge">R
-air1 =  spread(dat4, type, value.type)
-dim(air1)
-	# [1] 153   6
-head(air1) # 数据与airquality相同
-	# 	Month Day Ozone Solar.R Wind Temp
-	# 1     5   1    41     190  7.4   67
-	# 2     5   2    36     118  8.0   72
-	# 3     5   3    12     149 12.6   74
-	# 4     5   4    18     313 11.5   62
-	# 5     5   5    NA      NA 14.3   56
-	# 6     5   6    28      NA 14.9   66
-</code>
-不存在的分类是否显示，以及怎么显示
-<code class="highlighter-rouge">
-air5 = spread(dat4, type, value.type, drop = F) # 组合上存在的结果都显示
+<h2 id="section-2">长数据转化为宽数据</h2>
+
+<h3 id="spread">spread函数</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>spread(data, key, value, fill = NA, convert = FALSE, drop = TRUE)
+</code></pre>
+</div>
+
+<p><strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型</p>
+
+<p><strong>key</strong>  指定需要将变量值拓展为字段的变量</p>
+
+<p><strong>value</strong>  指定要分散的值</p>
+
+<p><strong>fill</strong> 确认不存在的组合值的显示结果。默认的显示为NA。数据类型为数值型向量</p>
+
+<p><strong>drop</strong> 确认不存在分分类组合是否显示，默认情况下显示。当然，如果drop = T，那么fill参数的设置将失去意义</p>
+
+<h3 id="section-3">实例</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">air1</span> <span class="o">=</span>  <span class="n">spread</span><span class="p">(</span><span class="n">dat4</span><span class="p">,</span> <span class="n">type</span><span class="p">,</span> <span class="n">value.type</span><span class="p">)</span>
+<span class="n">dim</span><span class="p">(</span><span class="n">air1</span><span class="p">)</span>
+	<span class="c1"># [1] 153   6
+</span><span class="n">head</span><span class="p">(</span><span class="n">air1</span><span class="p">)</span> <span class="c1"># 数据与airquality相同
+</span>	<span class="c1"># 	Month Day Ozone Solar.R Wind Temp
+</span>	<span class="c1"># 1     5   1    41     190  7.4   67
+</span>	<span class="c1"># 2     5   2    36     118  8.0   72
+</span>	<span class="c1"># 3     5   3    12     149 12.6   74
+</span>	<span class="c1"># 4     5   4    18     313 11.5   62
+</span>	<span class="c1"># 5     5   5    NA      NA 14.3   56
+</span>	<span class="c1"># 6     5   6    28      NA 14.9   66
+</span></code></pre>
+</div>
+
+<p>不存在的分类是否显示，以及怎么显示</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>air5 = spread(dat4, type, value.type, drop = F) # 组合上存在的结果都显示
 tail(air5) # 这里的最后一行只是组合上存在，原数据中并不在
 	# 		 Month Day Ozone Solar.R Wind Temp
 	# 150      9  26     1       1    1    1
@@ -1403,21 +1532,31 @@ tail(spread(dat4, type, value.type, drop = F, fill= -1)) # 更改不存在结果
 	# 153     9  29     1       1    1    1
 	# 154     9  30     1       1    1    1
 	# 155     9  31    -1      -1   -1   -1
-</code>
-## tidyr包中的其它函数
-### seperate函数
-unite()函数可将多列合并为一列。
-<code class="highlighter-rouge">
-unite(data, col, ..., sep = "_", remove = TRUE)
-</code>
-<strong>data</strong> 要处理的数据框
-<strong>col</strong> 被组合的新列名称
-<strong>…</strong> 指定哪些列需要被组合
-<strong>sep</strong> 组合列之间的连接符，默认为下划线
-<strong>remove</strong> 是否删除被组合的列，默认删除
-```
-set.seed(10)
-date &lt;- as.Date(‘2016-04-10’) + 0:14
+</code></pre>
+</div>
+
+<h2 id="tidyr">tidyr包中的其它函数</h2>
+
+<h3 id="seperate">seperate函数</h3>
+
+<p>unite()函数可将多列合并为一列。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>unite(data, col, ..., sep = "_", remove = TRUE)
+</code></pre>
+</div>
+
+<p><strong>data</strong> 要处理的数据框</p>
+
+<p><strong>col</strong> 被组合的新列名称</p>
+
+<p><strong>…</strong> 指定哪些列需要被组合</p>
+
+<p><strong>sep</strong> 组合列之间的连接符，默认为下划线</p>
+
+<p><strong>remove</strong> 是否删除被组合的列，默认删除</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>set.seed(10)
+date &lt;- as.Date('2016-04-10') + 0:14
 hour &lt;- sample(1:24, 15)
 min &lt;- sample(1:60, 15)
 second &lt;- sample(1:60, 15)
@@ -1439,11 +1578,11 @@ data
 	# 12 2016-04-21   23  53     12     g
 	# 13 2016-04-22   20  12      1     o
 	# 14 2016-04-23   21  37     35     f
-	# 15 2016-04-24    4  17     49     n</p>
+	# 15 2016-04-24    4  17     49     n
 
-<p>dataNew &lt;- data %&gt;%
-  unite(datehour, date, hour, sep = ‘ ‘) %&gt;%
-  unite(datetime, datehour, min, second, sep = ‘:’)
+dataNew &lt;- data %&gt;%
+  unite(datehour, date, hour, sep = ' ') %&gt;%
+  unite(datetime, datehour, min, second, sep = ':')
 	#              datetime event
 	#1  2016-04-10 13:26:33     e
 	#2     2016-04-11 8:4:6     a
@@ -1459,25 +1598,33 @@ data
 	#12 2016-04-21 23:53:12     g
 	#13  2016-04-22 20:12:1     o
 	#14 2016-04-23 21:37:35     f
-	#15  2016-04-24 4:17:49     n</p>
+	#15  2016-04-24 4:17:49     n
 
-<div class="highlighter-rouge"><pre class="highlight"><code>tidyr包中的函数也可使用管道操作符%&gt;%。
-### seperate函数
-separate()函数可将一列拆分为多列，一般可用于日志数据或日期时间型数据的拆分。
 </code></pre>
 </div>
-<p>separate(data, col, into, sep = “[^[:alnum:]]+”, remove = TRUE,
-  convert = FALSE, extra = “warn”, fill = “warn”, …)
-<code class="highlighter-rouge">
-**data** 要处理的数据框
-**col** 需要被拆分的列
-**into** 新建的列名，为字符串向量
-**sep** 被拆分列的分隔符
-**remove** 是否删除被分割的列，默认删除
-</code>
-dataold &lt;- dataNew %&gt;% 
-  separate(datetime, c(‘date’, ‘time’), sep = ‘ ‘) %&gt;% 
-  separate(time, c(‘hour’, ‘min’, ‘second’), sep = ‘:’)
+<p>tidyr包中的函数也可使用管道操作符%&gt;%。</p>
+
+<h3 id="seperate-1">seperate函数</h3>
+<p>separate()函数可将一列拆分为多列，一般可用于日志数据或日期时间型数据的拆分。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>separate(data, col, into, sep = "[^[:alnum:]]+", remove = TRUE,
+  convert = FALSE, extra = "warn", fill = "warn", ...)
+</code></pre>
+</div>
+
+<p><strong>data</strong> 要处理的数据框</p>
+
+<p><strong>col</strong> 需要被拆分的列</p>
+
+<p><strong>into</strong> 新建的列名，为字符串向量</p>
+
+<p><strong>sep</strong> 被拆分列的分隔符</p>
+
+<p><strong>remove</strong> 是否删除被分割的列，默认删除</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dataold &lt;- dataNew %&gt;% 
+  separate(datetime, c('date', 'time'), sep = ' ') %&gt;% 
+  separate(time, c('hour', 'min', 'second'), sep = ':')
 dataold
 	# 		date hour min second event
 	# 1  2016-04-10   13  26     33     e
@@ -1495,7 +1642,8 @@ dataold
 	# 13 2016-04-22   20  12      1     o
 	# 14 2016-04-23   21  37     35     f
 	# 15 2016-04-24    4  17     49     n
-```</p>
+</code></pre>
+</div>
 
 ]]></content:encoded>
     </item>

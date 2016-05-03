@@ -44,22 +44,34 @@
                                               </nav>
                                               <article class="content">
                                               <section class="post">
-<p>前面一篇<a href="http://xukuang.github.io/2016/01/18/melt-and-dcast/">文章</a>讲了用reshape2包中的函数实现长宽数据的转化，而tidyr是reshape2的升级版，主要用于数据框。这篇文章将介绍一下如何使用tidyr包中的函数实现长宽数据的转化。
-## 宽数据转化为长数据
-### gather函数
-<code class="highlighter-rouge">
-gather(data, key, value, ..., na.rm = FALSE, convert = FALSE)
-</code>
-<strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型	
-<strong>key</strong>  指定转化后数据框的指标列的列名，用于存放原数据中不同的数据指标
-<strong>value</strong>  指定转化后数据框的数据列的列名，用于存放原数据中不同的数据指标对应的值		
-<strong>…</strong> 指定哪些列聚到一列中。按那些列数据作为标准转化，这个参数接不能有那些列
-<strong>na.rm</strong> 确定是否去除数据中的NA，默认情况下为FALSE，不去除NA
-<!--more-->
-### 实例
-* 将所有列排成长数据(默认情况下)
-<code class="highlighter-rouge">
-# 加载数据
+<p>前面一篇<a href="http://xukuang.github.io/2016/01/18/melt-and-dcast/">文章</a>讲了用reshape2包中的函数实现长宽数据的转化，而tidyr是reshape2的升级版，主要用于数据框。这篇文章将介绍一下如何使用tidyr包中的函数实现长宽数据的转化。</p>
+
+<h2 id="section">宽数据转化为长数据</h2>
+
+<h3 id="gather">gather函数</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>gather(data, key, value, ..., na.rm = FALSE, convert = FALSE)
+</code></pre>
+</div>
+
+<p><strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型</p>
+
+<p><strong>key</strong>  指定转化后数据框的指标列的列名，用于存放原数据中不同的数据指标</p>
+
+<p><strong>value</strong>  指定转化后数据框的数据列的列名，用于存放原数据中不同的数据指标对应的值</p>
+
+<p><strong>…</strong> 指定哪些列聚到一列中。按那些列数据作为标准转化，这个参数接不能有那些列</p>
+
+<p><strong>na.rm</strong> 确定是否去除数据中的NA，默认情况下为FALSE，不去除NA
+<!--more--></p>
+
+<h3 id="section-1">实例</h3>
+
+<ul>
+  <li>将所有列排成长数据(默认情况下)</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 加载数据
 library(reshape2)
 head(airquality)
 	# 	Month Day variable value
@@ -91,10 +103,14 @@ tail(dat1)
     # 918  Day    30
 dim(dat1)	
 	# [1] 918   2
-</code>
-* 按Month将其他指标排成长数据
-<code class="highlighter-rouge">
-# 方法一
+</code></pre>
+</div>
+
+<ul>
+  <li>按Month将其他指标排成长数据</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 方法一
 dat2 = gather(airquality, time, value, Ozone:Temp, Day)
 # 方法二
 dat2 = gather(airquality, time, value, -Month)
@@ -114,10 +130,14 @@ tail(dat2)
 	# 610     9  28 Temp    75
 	# 611     9  29 Temp    76
 	# 612     9  30 Temp    68
-</code>
-* 按Month和Day列将其它列指标排成长数据
-<code class="highlighter-rouge">
-dat3 = gather(airquality, type, value.type, Ozone:Temp)
+</code></pre>
+</div>
+
+<ul>
+  <li>按Month和Day列将其它列指标排成长数据</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dat3 = gather(airquality, type, value.type, Ozone:Temp)
 dat3 = gather(airquality, type, value.type, -Month, -Day)
 head(dat3) 
 	# 	 Month Day  type value.type
@@ -129,62 +149,75 @@ head(dat3)
 	# 6     5   6 Ozone         28
 dim(dat3)
 	# [1] 612   4
-</code>
-* 去除排列后数据中的NA
+</code></pre>
+</div>
+<ul>
+  <li>去除排列后数据中的NA
 <code class="highlighter-rouge">
 #　 airquality$Ozone 数的前四列有44 个NA
 table(is.na(airquality$Ozone)) # 37
-	# FALSE  TRUE 
-	#   116    37 
+  # FALSE  TRUE 
+  #   116    37 
 table(is.na(airquality$Solar.R)) # 4
-	# FALSE  TRUE 
-	#   146     7 
+  # FALSE  TRUE 
+  #   146     7 
 table(is.na(airquality$Temp)) # 0
-	# FALSE 
-	#   153 
+  # FALSE 
+  #   153 
 table(is.na(airquality$Wind)) # 0
-	# FALSE 
-	#   153 
+  # FALSE 
+  #   153 
 dat4 = gather(airquality, type, value.type, Ozone:Temp, na.rm = TRUE)
 head(dat4)
-	#   Month Day  type value.type
-	# 1     5   1 Ozone         41
-	# 2     5   2 Ozone         36
-	# 3     5   3 Ozone         12
-	# 4     5   4 Ozone         18
-	# 6     5   6 Ozone         28
-	# 7     5   7 Ozone         23
+  #   Month Day  type value.type
+  # 1     5   1 Ozone         41
+  # 2     5   2 Ozone         36
+  # 3     5   3 Ozone         12
+  # 4     5   4 Ozone         18
+  # 6     5   6 Ozone         28
+  # 7     5   7 Ozone         23
 dim(dat4)# 比dat3少44行
-	# [1] 568   4	
-</code></p>
+  # [1] 568   4	
+</code></li>
+</ul>
 
-<h2 id="section">长数据转化为宽数据</h2>
-<p>### spread函数
-<code class="highlighter-rouge">
-spread(data, key, value, fill = NA, convert = FALSE, drop = TRUE)
-</code>
-<strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型
-<strong>key</strong>  指定需要将变量值拓展为字段的变量
-<strong>value</strong>  指定要分散的值
-<strong>fill</strong> 确认不存在的组合值的显示结果。默认的显示为NA。数据类型为数值型向量
-<strong>drop</strong> 确认不存在分分类组合是否显示，默认情况下显示。当然，如果drop = T，那么fill参数的设置将失去意义
-### 实例
-<code class="highlighter-rouge">R
-air1 =  spread(dat4, type, value.type)
-dim(air1)
-	# [1] 153   6
-head(air1) # 数据与airquality相同
-	# 	Month Day Ozone Solar.R Wind Temp
-	# 1     5   1    41     190  7.4   67
-	# 2     5   2    36     118  8.0   72
-	# 3     5   3    12     149 12.6   74
-	# 4     5   4    18     313 11.5   62
-	# 5     5   5    NA      NA 14.3   56
-	# 6     5   6    28      NA 14.9   66
-</code>
-不存在的分类是否显示，以及怎么显示
-<code class="highlighter-rouge">
-air5 = spread(dat4, type, value.type, drop = F) # 组合上存在的结果都显示
+<h2 id="section-2">长数据转化为宽数据</h2>
+
+<h3 id="spread">spread函数</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>spread(data, key, value, fill = NA, convert = FALSE, drop = TRUE)
+</code></pre>
+</div>
+
+<p><strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型</p>
+
+<p><strong>key</strong>  指定需要将变量值拓展为字段的变量</p>
+
+<p><strong>value</strong>  指定要分散的值</p>
+
+<p><strong>fill</strong> 确认不存在的组合值的显示结果。默认的显示为NA。数据类型为数值型向量</p>
+
+<p><strong>drop</strong> 确认不存在分分类组合是否显示，默认情况下显示。当然，如果drop = T，那么fill参数的设置将失去意义</p>
+
+<h3 id="section-3">实例</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">air1</span> <span class="o">=</span>  <span class="n">spread</span><span class="p">(</span><span class="n">dat4</span><span class="p">,</span> <span class="n">type</span><span class="p">,</span> <span class="n">value.type</span><span class="p">)</span>
+<span class="n">dim</span><span class="p">(</span><span class="n">air1</span><span class="p">)</span>
+	<span class="c1"># [1] 153   6
+</span><span class="n">head</span><span class="p">(</span><span class="n">air1</span><span class="p">)</span> <span class="c1"># 数据与airquality相同
+</span>	<span class="c1"># 	Month Day Ozone Solar.R Wind Temp
+</span>	<span class="c1"># 1     5   1    41     190  7.4   67
+</span>	<span class="c1"># 2     5   2    36     118  8.0   72
+</span>	<span class="c1"># 3     5   3    12     149 12.6   74
+</span>	<span class="c1"># 4     5   4    18     313 11.5   62
+</span>	<span class="c1"># 5     5   5    NA      NA 14.3   56
+</span>	<span class="c1"># 6     5   6    28      NA 14.9   66
+</span></code></pre>
+</div>
+
+<p>不存在的分类是否显示，以及怎么显示</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>air5 = spread(dat4, type, value.type, drop = F) # 组合上存在的结果都显示
 tail(air5) # 这里的最后一行只是组合上存在，原数据中并不在
 	# 		 Month Day Ozone Solar.R Wind Temp
 	# 150      9  26     1       1    1    1
@@ -201,21 +234,31 @@ tail(spread(dat4, type, value.type, drop = F, fill= -1)) # 更改不存在结果
 	# 153     9  29     1       1    1    1
 	# 154     9  30     1       1    1    1
 	# 155     9  31    -1      -1   -1   -1
-</code>
-## tidyr包中的其它函数
-### seperate函数
-unite()函数可将多列合并为一列。
-<code class="highlighter-rouge">
-unite(data, col, ..., sep = "_", remove = TRUE)
-</code>
-<strong>data</strong> 要处理的数据框
-<strong>col</strong> 被组合的新列名称
-<strong>…</strong> 指定哪些列需要被组合
-<strong>sep</strong> 组合列之间的连接符，默认为下划线
-<strong>remove</strong> 是否删除被组合的列，默认删除
-```
-set.seed(10)
-date &lt;- as.Date(‘2016-04-10’) + 0:14
+</code></pre>
+</div>
+
+<h2 id="tidyr">tidyr包中的其它函数</h2>
+
+<h3 id="seperate">seperate函数</h3>
+
+<p>unite()函数可将多列合并为一列。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>unite(data, col, ..., sep = "_", remove = TRUE)
+</code></pre>
+</div>
+
+<p><strong>data</strong> 要处理的数据框</p>
+
+<p><strong>col</strong> 被组合的新列名称</p>
+
+<p><strong>…</strong> 指定哪些列需要被组合</p>
+
+<p><strong>sep</strong> 组合列之间的连接符，默认为下划线</p>
+
+<p><strong>remove</strong> 是否删除被组合的列，默认删除</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>set.seed(10)
+date &lt;- as.Date('2016-04-10') + 0:14
 hour &lt;- sample(1:24, 15)
 min &lt;- sample(1:60, 15)
 second &lt;- sample(1:60, 15)
@@ -237,11 +280,11 @@ data
 	# 12 2016-04-21   23  53     12     g
 	# 13 2016-04-22   20  12      1     o
 	# 14 2016-04-23   21  37     35     f
-	# 15 2016-04-24    4  17     49     n</p>
+	# 15 2016-04-24    4  17     49     n
 
-<p>dataNew &lt;- data %&gt;%
-  unite(datehour, date, hour, sep = ‘ ‘) %&gt;%
-  unite(datetime, datehour, min, second, sep = ‘:’)
+dataNew &lt;- data %&gt;%
+  unite(datehour, date, hour, sep = ' ') %&gt;%
+  unite(datetime, datehour, min, second, sep = ':')
 	#              datetime event
 	#1  2016-04-10 13:26:33     e
 	#2     2016-04-11 8:4:6     a
@@ -257,25 +300,33 @@ data
 	#12 2016-04-21 23:53:12     g
 	#13  2016-04-22 20:12:1     o
 	#14 2016-04-23 21:37:35     f
-	#15  2016-04-24 4:17:49     n</p>
+	#15  2016-04-24 4:17:49     n
 
-<div class="highlighter-rouge"><pre class="highlight"><code>tidyr包中的函数也可使用管道操作符%&gt;%。
-### seperate函数
-separate()函数可将一列拆分为多列，一般可用于日志数据或日期时间型数据的拆分。
 </code></pre>
 </div>
-<p>separate(data, col, into, sep = “[^[:alnum:]]+”, remove = TRUE,
-  convert = FALSE, extra = “warn”, fill = “warn”, …)
-<code class="highlighter-rouge">
-**data** 要处理的数据框
-**col** 需要被拆分的列
-**into** 新建的列名，为字符串向量
-**sep** 被拆分列的分隔符
-**remove** 是否删除被分割的列，默认删除
-</code>
-dataold &lt;- dataNew %&gt;% 
-  separate(datetime, c(‘date’, ‘time’), sep = ‘ ‘) %&gt;% 
-  separate(time, c(‘hour’, ‘min’, ‘second’), sep = ‘:’)
+<p>tidyr包中的函数也可使用管道操作符%&gt;%。</p>
+
+<h3 id="seperate-1">seperate函数</h3>
+<p>separate()函数可将一列拆分为多列，一般可用于日志数据或日期时间型数据的拆分。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>separate(data, col, into, sep = "[^[:alnum:]]+", remove = TRUE,
+  convert = FALSE, extra = "warn", fill = "warn", ...)
+</code></pre>
+</div>
+
+<p><strong>data</strong> 要处理的数据框</p>
+
+<p><strong>col</strong> 需要被拆分的列</p>
+
+<p><strong>into</strong> 新建的列名，为字符串向量</p>
+
+<p><strong>sep</strong> 被拆分列的分隔符</p>
+
+<p><strong>remove</strong> 是否删除被分割的列，默认删除</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dataold &lt;- dataNew %&gt;% 
+  separate(datetime, c('date', 'time'), sep = ' ') %&gt;% 
+  separate(time, c('hour', 'min', 'second'), sep = ':')
 dataold
 	# 		date hour min second event
 	# 1  2016-04-10   13  26     33     e
@@ -293,7 +344,8 @@ dataold
 	# 13 2016-04-22   20  12      1     o
 	# 14 2016-04-23   21  37     35     f
 	# 15 2016-04-24    4  17     49     n
-```</p>
+</code></pre>
+</div>
 
 
 </section>
