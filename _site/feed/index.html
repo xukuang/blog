@@ -7,7 +7,7 @@
     <title>Xu Kuang</title>
     <atom:link href="http://xukuang.github.io/blog/feed/" rel="self" type="application/rss+xml" />
     <link>http://xukuang.github.io</link>
-    <lastBuildDate>2016-05-03T11:55:51-06:00</lastBuildDate>
+    <lastBuildDate>2016-05-03T11:56:53-06:00</lastBuildDate>
     <webMaster>kuang_xu@126.com</webMaster>
     
     <item>
@@ -2380,8 +2380,6 @@ system.file(package = "dplyr")
   <li><a href="#1.github博客概述">1.github博客概述</a></li>
 </ul>
 
-<h3 id="github">1.github博客概述</h3>
-
 <blockquote>
   <p>处理文本是每一种计算机语言都应该具备的功能，但不是每一种语言都侧重于处理文本。R语言是统计的语言，处理文本不是它的强项。尽管R语言处理文本的能力不够强，但适当使用可以大幅提高工作效率的，而且有些文本操作还不得不用。高效处理文本少不了正则表达式（regular expression），虽然R在这方面先天不高效，但其中处理文本的绝大多数函数都支持正则表达式。</p>
 </blockquote>
@@ -2436,8 +2434,10 @@ length(''); nchar('')
 	# [1] 0 
 </code></pre>
 </div>
-<p>### 1.github博客概述
-### 字符大小写转化</p>
+
+<h3 id="github">1.github博客概述</h3>
+
+<h3 id="section-4">字符大小写转化</h3>
 
 <ul>
   <li>函数tolower，将向量中的元素转化为小写字母</li>
@@ -2470,7 +2470,7 @@ chartr("Tt", "UU", DNA)
 </code></pre>
 </div>
 
-<h3 id="section-4">字符串连接</h3>
+<h3 id="section-5">字符串连接</h3>
 <p>函数paste应该是R中最常用字符串函数了，也是R字符串处理函数里面非常纯的不使用正则表达式的函数（因为用不着）。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>paste("CK", 1:6, sep = "")
@@ -2490,7 +2490,7 @@ paste(x, collapse = "; ")
 </code></pre>
 </div>
 
-<h3 id="section-5">字符串拆分</h3>
+<h3 id="section-6">字符串拆分</h3>
 
 <p>strsplit函数使用正则表达式，使用格式为:</p>
 
@@ -2532,7 +2532,7 @@ strsplit(text, "\\s")
 </div>
 <p>从这里也可以看到R把 \n 是当成一个字符来处理的。</p>
 
-<h3 id="section-6">字符串查询和替换</h3>
+<h3 id="section-7">字符串查询和替换</h3>
 <p>R中字符串的查询函数有：grep、grepl、regexpr、gregexpr和regexpr，字符串的替换函数有sub和gsub。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code># 字符串查询
@@ -2573,7 +2573,7 @@ gsub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
   <li>useBytes = FALSE，表示按字符匹配</li>
 </ul>
 
-<h4 id="section-7">字符串查询</h4>
+<h4 id="section-8">字符串查询</h4>
 <p>grep和grepl函数这两个函数返回向量水平的匹配结果，不涉及匹配字符串的详细位置信息。此外，尽管这两个函数的参数看起来差不多，但是返回结果的形式并不一样。	
 regexpr、gregexpr和regexpr这三个函数返回的结果包均含了匹配的具体位置和字符串长度信息，只是他们的结果显示方式不同。</p>
 
@@ -2627,7 +2627,7 @@ regexec("Adam", text)
 </code></pre>
 </div>
 
-<h4 id="section-8">字符串替换</h4>
+<h4 id="section-9">字符串替换</h4>
 <p>尽管sub和gsub是用于字符串替换的函数，但严格地说R语言没有字符串替换的函数，因为R语言不管什么操作对参数都是传值不传址。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>text
@@ -2655,7 +2655,7 @@ gsub(pattern = "Adam|Ava", replacement = "world", text1)
 </code></pre>
 </div>
 
-<h2 id="section-9">字符串提取</h2>
+<h2 id="section-10">字符串提取</h2>
 <p>substr和substring函数通过位置进行字符串拆分或提取，它们本身并不使用正则表达式，但是结合正则表达式函数regexpr、gregexpr或regexec使用可以非常方便地从大量文本中提取所需信息。两者的参数设置基本相同，但它们的返回值的长度（个数）有差别：substr返回的字串个数等于第一个参数的长度，而substring返回字串个数等于三个参数中最长向量长度，短向量循环使用。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>substr(x, start, stop)
@@ -2680,7 +2680,7 @@ substring(x, c(2, 4), c(4, 5, 8))
 </div>
 <p>因为x的向量长度为1，所以substr获得的结果只有1个字串，即第2和第3个参数向量只用了第一个组合：起始位置2，终止位置4。 而substring的语句三个参数中最长的向量为c(4,5,8)，执行时按短向量循环使用的规则第一个参数事实上就是c(x,x,x)，第二个参数就成了c(2,4,2)，最终截取的字串起始位置组合为：2-4, 4-5和2-8。</p>
 
-<h3 id="section-10">字符串的整理</h3>
+<h3 id="section-11">字符串的整理</h3>
 
 <ul>
   <li>strtrim 函数</li>
