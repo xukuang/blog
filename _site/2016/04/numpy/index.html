@@ -44,7 +44,8 @@
                                               </nav>
                                               <article class="content">
                                               <section class="post">
-<p>Numpy 是 Numerical python 的简称，是高性能计算和数据分析的基础包。Numpy 的核心内容是它的多维数组对象——ndarray（N-Dimensions Array），整个包几乎都是围绕这个对象展开。Numpy 本身并没有提供多么高级的数据结构和分析功能，但它是很多高级工具（如 pandas）构建的基础，在结构和操作上具有统一性，因此理解 Numpy 的数组及面向数组的计算有助于更加高效地使用诸如 pandas 之类的工具。</p>
+<p>Numpy 是 Numerical python 的简称，是高性能计算和数据分析的基础包。其实它 本身并没有提供多么高级的数据结构和分析功能，但它是很多高级工具（如 pandas）构建的基础，在结构和操作上具有统一性，因此理解 Numpy 的数组及面向数组的计算有助于更加高效地使用诸如 pandas 之类的工具。
+Numpy 的核心内容是它的多维数组对象——ndarray（N-Dimensions Array），整个包几乎都是围绕这个对象展开。</p>
 
 <h3 id="ndarray">ndarray：多维数组对象</h3>
 <p>Numpy 的 ndarray 提供了一种将同质数据块解释为多维数组对象的方式。同质，表示数组的元素必须都是相同的数据类型（如 int，float 等）；解释，表示 ndarray 的数据块其实是线性存储的，并通过额外的元信息解释为多维数组结构。</p>
@@ -76,7 +77,7 @@ array1.strides
 </div>
 <p>这个矩阵的形状（shape）是（2,3）或 2×3，即它有 2 个长度为 3 的一维数组；它的 dtype 是 float64 表示它的单位元素是占 8 字节的浮点型；跨度（strides）元组指的是在某一维度下为了获取到下一个元素需要“跨过”的字节数。可见跨度是可以由 形状+dtype 来确定的。显然这种同质的静态数据结构在进行数值运算时效率要比 Python 内建的可以混杂动态类型的列表要快得多。</p>
 
-<h4 id="ndarray-1">创建ndarray对象</h4>
+<h3 id="ndarray-1">创建ndarray对象</h3>
 <p>创建数组的方法是使用array( )函数。它接受一切序列对象，产生一个包含所传递的数据的新ndarry数组，维度视序列的嵌套深度而定。首先，列表就是一个很好的用于转换的候选。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>data1 = [6, 7.5, 8, 0, 1]
@@ -100,9 +101,11 @@ arr2.shape
 </code></pre>
 </div>
 <p>数组的 dtype 会由系统自动推定，除非你显式传递一个参数进去。系统一般会默认使用 int32 或 float64。
-除 array() 之外，还有许多函数来创建新的数组。
-<strong>数组构建函数</strong>
-|函数|描述|
+除 array() 之外，还有许多函数来创建新的数组。</p>
+
+<p><strong>数组构建函数</strong></p>
+
+<p>|函数|描述|
 |:—|:—|
 |array|转换输入数据（列表，数组或其它序列类型）为ndarray，可以推断一个dtype或明确的设置一个dtype，默认拷贝输入数据|
 |asarray|将输入转换为 ndarray，若输入本身是 ndarray 就不拷贝|
@@ -111,9 +114,9 @@ arr2.shape
 |zeros, zeros_like|同ones和ones_like，但是生成一个全0的数组|
 |empty, enpty_like|创建新数组，但只分配内存空间不赋值|
 |eye, identity|创建一个NxN的单位方阵（对角线上为1，其余为0）|
-例如，zeros 和 ones 使用给定的长度或形状分别的创建0‘s 和 1‘s数组。empty 会创建一个没有使用特定值来初始化的数组。通过这些方法可以传递一个元组作为形状来创建高维数组。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>np.zeros(10)
+例如，zeros 和 ones 使用给定的长度或形状分别的创建0‘s 和 1‘s数组。
+<code class="highlighter-rouge">
+np.zeros(10)
 	## array([ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.])
 np.zeros((3, 6))
 	## array([[ 0., 0., 0., 0., 0., 0.],
@@ -126,8 +129,9 @@ np.empty((2, 3, 2))
 	##        [[ 1.90723115e+083, 5.73293533e-053],
 	##         [ -2.33568637e+124, -6.70608105e-012],
 	##         [ 4.42786966e+160, 1.27100354e+025]]])
-</code></pre>
-</div>
+</code>
+在 pandas 中尽量不要使用 np.empty()，这个函数创建的数组里面是有值的，除非你确定创建的这个数组能被完全赋值，否则后面运算起来很麻烦，这些“空值”的布尔类型是 True，而且 dropna() 方法删不掉。想创建空的 Series ，可以使用 Series(np.nan,index=???)。</p>
+
 <p>arange 是python内建 range 函数的数组版本。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>np.arange(15)
