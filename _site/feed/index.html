@@ -7,7 +7,7 @@
     <title>Xu Kuang</title>
     <atom:link href="http://xukuang.github.io/blog/feed/" rel="self" type="application/rss+xml" />
     <link>http://xukuang.github.io</link>
-    <lastBuildDate>2016-05-03T15:39:30-06:00</lastBuildDate>
+    <lastBuildDate>2016-05-04T16:50:12-06:00</lastBuildDate>
     <webMaster>kuang_xu@126.com</webMaster>
     
     <item>
@@ -16,35 +16,14 @@
       <pubDate>2016-04-27T07:04:53-06:00</pubDate>
       <author>Xu Kuang</author>
       <guid>http://xukuang.github.io/blog/2016/04/numpy</guid>
-      <content:encoded><![CDATA[<p>Numpy 是 Numerical python 的简称，是高性能计算和数据分析的基础包。</p>
+      <content:encoded><![CDATA[<p>Numpy 是 Numerical python 的简称，是高性能计算和数据分析的基础包。Numpy 的核心内容是它的多维数组对象——ndarray（N-Dimensions Array），整个包几乎都是围绕这个对象展开。Numpy 本身并没有提供多么高级的数据结构和分析功能，但它是很多高级工具（如 pandas）构建的基础，在结构和操作上具有统一性，因此理解 Numpy 的数组及面向数组的计算有助于更加高效地使用诸如 pandas 之类的工具。</p>
 
-<ul>
-  <li>快速和节省空间的多维数组ndarray，可以提供数组化的算术运算和高级的广播功能『广播功能是个什么东东啊』</li>
-  <li>能够使用标准数学函数对整个数组的数据进行快速运算，而不需要编写循环</li>
-  <li>读取/写入磁盘上的阵列数据和操作存储器映像文件的工具</li>
-  <li>线性代数，随机数生成，和傅里叶变换的能力</li>
-  <li>集成C，C++，Fortran代码的工具</li>
-</ul>
-
-<p>从生态系统的角度看，最后一点是最为重要的。因为Numpy提供了易用的CApI，它可以很容易的将数据传递到使用低级语言编写的外部库，也可以使外部库返回Numpy数组数据到python。这一特性使得python成为包装传统的C/C++/Fortran代码库，并给它们一个动态的、易于使用的接口的首选语言。『完全不懂啊』</p>
-
-<p>虽然Numpy本身并没有提供非常高级的数据分析功能，但是了解Numpy的数组和面向数组的计算将会帮助你高效的使用类似于pandas这样的工具。
-对于大多数的数据分析应用来说，我们关注的主要功能是:</p>
-
-<ul>
-  <li>快速的矢量化数组操作：数据切割和清除，子集和过滤，转化和任何其它类型的计算</li>
-  <li>通用的数组算法，例如：sorting，unique和set操作</li>
-  <li>有效的描述性统计和聚集/汇总数据</li>
-  <li>数据对齐、关系数据的合并操作、异构数据的拼接操作</li>
-  <li>使用数组表达式来表示条件逻辑，而不是用带有 if-elif-else 分支的循环来表示</li>
-  <li>组间数据的操作（聚合，转换，功能应用）</li>
-</ul>
-
-<h3 id="numpy-ndarray">Numpy ndarray：多维数组对象</h3>
-<p>Numpy的一个关键特性是它的N维数组对象(ndarray)。ndarray在python中是一个大型数据集的快速的，灵活的容器。它使我们能够在整个数据块上进行数学运算，且与对应的纯量元素间操作有相似的语法。</p>
+<h3 id="ndarray">ndarray：多维数组对象</h3>
+<p>Numpy 的 ndarray 提供了一种将同质数据块解释为多维数组对象的方式。同质，表示数组的元素必须都是相同的数据类型（如 int，float 等）；解释，表示 ndarray 的数据块其实是线性存储的，并通过额外的元信息解释为多维数组结构。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>import pandas as pd
-array1 = np.array([[ 0.9526, -0.246 , -0.8856], [ 0.5639, 0.2379, 0.9104]])
+array1 = np.array([[ 0.9526, -0.246 , -0.8856], 
+				   [ 0.5639, 0.2379, 0.9104]])
 array1
 	## array([[ 0.9526, -0.246 , -0.8856],
 	## 		[ 0.5639,  0.2379,  0.9104]])
@@ -57,17 +36,20 @@ array1 + array1
 </code></pre>
 </div>
 
-<p>ndarray是一个同种类数据的多维容器，也就是说，它的所有元素都是同类型的。每一个数组都有一个 shape（表示ndarry每一维大小的元组）和 dtype （描述ndarry数据类型的对象）属性。</p>
+<p>上面是一个 2×3 的矩阵。在使用类似 2×3×4…这种格式表示多维数组的结构时，从左向右的数字对应表示由表及里的维度，或称为轴，按索引给轴编号后可称为“轴 0”、“轴 1”和“轴2”等）</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>array1.shape
 	## (2, 3)
 array1.dtype
 	## dtype('float64')
+array1.strides
+	## (24, 8)
 </code></pre>
 </div>
+<p>这个矩阵的形状（shape）是（2,3）或 2×3，即它有 2 个长度为 3 的一维数组；它的 dtype 是 float64 表示它的单位元素是占 8 字节的浮点型；跨度（strides）元组指的是在某一维度下为了获取到下一个元素需要“跨过”的字节数。可见跨度是可以由 形状+dtype 来确定的。显然这种同质的静态数据结构在进行数值运算时效率要比 Python 内建的可以混杂动态类型的列表要快得多。</p>
 
-<h4 id="ndarray">创建ndarray对象</h4>
-<p>最简单的创建数组的方式是使用array( )函数。它接受任何数组对象，产生一个包含所传递的数据的新Numpy数组。首先，列表就是一个很好的用于转换的候选。</p>
+<h4 id="ndarray-1">创建ndarray对象</h4>
+<p>创建数组的方法是使用array( )函数。它接受一切序列对象，产生一个包含所传递的数据的新ndarry数组，维度视序列的嵌套深度而定。首先，列表就是一个很好的用于转换的候选。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>data1 = [6, 7.5, 8, 0, 1]
 arr1 = np.array(data1)
@@ -89,7 +71,19 @@ arr2.shape
 	## (2, 4)
 </code></pre>
 </div>
-<p>除 np.array 之外，还有许多函数来创建新的数组。例如，zeros 和 ones 使用给定的长度或形状分别的创建0‘s 和 1‘s数组。empty 会创建一个没有使用特定值来初始化的数组。通过这些方法可以传递一个元组作为形状来创建高维数组。</p>
+<p>数组的 dtype 会由系统自动推定，除非你显式传递一个参数进去。系统一般会默认使用 int32 或 float64。
+除 array() 之外，还有许多函数来创建新的数组。
+<strong>数组构建函数</strong>
+|函数|描述|
+|:—|:—|
+|array|转换输入数据（列表，数组或其它序列类型）为ndarray，可以推断一个dtype或明确的设置一个dtype，默认拷贝输入数据|
+|asarray|将输入转换为 ndarray，若输入本身是 ndarray 就不拷贝|
+|arange|同内建的range函数，但不返回的不是列表而是一个一维的ndarray|
+|ones, ones_like|根据提供的shape和dtype产生一个全1的数组；ones_like使用另一个数组为参数，产生一个shape和dtype都相同的数组|
+|zeros, zeros_like|同ones和ones_like，但是生成一个全0的数组|
+|empty, enpty_like|创建新数组，但只分配内存空间不赋值|
+|eye, identity|创建一个NxN的单位方阵（对角线上为1，其余为0）|
+例如，zeros 和 ones 使用给定的长度或形状分别的创建0‘s 和 1‘s数组。empty 会创建一个没有使用特定值来初始化的数组。通过这些方法可以传递一个元组作为形状来创建高维数组。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>np.zeros(10)
 	## array([ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.])
@@ -112,43 +106,10 @@ np.empty((2, 3, 2))
 	## array([ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
 </code></pre>
 </div>
-<div class="wy-table-responsive"><table border="1" class="docutils" id="id1">
-<caption>数组构建函数</caption>
-<colgroup>
-<col width="20%" />
-<col width="80%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">函数</th>
-<th class="head">描述</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>array</td>
-<td>转换输入数据（列表，数组或其它序列类型）到一个ndarray，可以推断一个dtype或明确的设置一个dtype。默认拷贝输入数据。</td>
-</tr>
-<tr class="row-odd"><td>asarray</td>
-<td>转换输入为一个ndarray，当输入已经是一个ndarray时就不拷贝。</td>
-</tr>
-<tr class="row-even"><td>arange</td>
-<td>同内建的range函数，但不返回列表而是一个ndarray</td>
-</tr>
-<tr class="row-odd"><td>ones, ones_like</td>
-<td>根据提供的shape和dtype产生一个全1的数组。ones_like使用另一歌数组为入参，产生一个shape和dtype都相同的数组。</td>
-</tr>
-<tr class="row-even"><td>zeros, zeros_like</td>
-<td>同ones和ones_like，但是生成全0的数组</td>
-</tr>
-<tr class="row-odd"><td>empty, enpty_like</td>
-<td>通过分配新内存来构造新的数组，但不同与ones 和 zeros，不初始任何值。</td>
-</tr>
-<tr class="row-even"><td>eye, identity</td>
-<td>生成一个NxN的单位方阵（对角线上为1，其它地方为0）</td>
-</tr>
-</tbody>
-</table></div>
-<p>#### 数组和纯量间的操作
-数组非常重要，因为它们使你不使用循环就可以在数据上进行一系列操作。这通常被叫做矢量化。相同大小的数组间的算术运算，其操作作用在对应的元素上。</p>
+
+<h4 id="section">数组和纯量间的操作</h4>
+
+<p>数组非常重要，因为它们使你不使用循环就可以在数据上进行一系列操作。这通常被叫做矢量化。相同大小的数组间的算术运算，其操作作用在对应的元素上。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>arr = np.array([[1., 2., 3.], [4., 5., 6.]])
 arr
@@ -168,7 +129,7 @@ arr * arr
 </code></pre>
 </div>
 
-<h4 id="section">基本的索引和切片</h4>
+<h4 id="section-1">基本的索引和切片</h4>
 <p>Numpy的索引是一个内容丰富的主题，因为有许多方法可以使你在你的数据中选取一个子集或单个元素。一维的数组很简单，表面上它们的行为类似于python的列表。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>arr = np.arange(10)
@@ -300,7 +261,7 @@ arr2d[:2]
 </code></pre>
 </div>
 
-<h2 id="section-1">布尔索引</h2>
+<h2 id="section-2">布尔索引</h2>
 <p>让我们来考虑一个例子，我们有一些数据在一个数组中和一个有重复名字的数组。我将会在这使用 numpy.random 中的 randn 函数来产生一些随机的正态分布的数据。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>import numpy.random as np_rd
@@ -520,7 +481,7 @@ arr.swapaxes(1, 2)
 </div>
 <p>类似的 swapaxes 返回在数据上的一个视窗，而不进行拷贝。</p>
 
-<h3 id="section-2">通用函数：快速的基于元素的数组函数</h3>
+<h3 id="section-3">通用函数：快速的基于元素的数组函数</h3>
 <p>一个通用的函数，是一个在ndarrays的数据上进行基于元素的操作的函数。你可以认为它们是对简单函数的一个快速矢量化封装，它们接受一个或多个标量值并产生一个或多个标量值。
 许多 ufuncs 都是基于元素的简单变换，像 sqrt 或 exp 。</p>
 
