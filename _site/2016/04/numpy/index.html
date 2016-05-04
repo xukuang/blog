@@ -106,14 +106,14 @@ arr2.shape
 <p><strong>数组构建函数</strong></p>
 
 <p>|函数|描述|
-|:—|:—|
-|array|转换输入数据（列表，数组或其它序列类型）为ndarray，可以推断一个dtype或明确的设置一个dtype，默认拷贝输入数据|
-|asarray|将输入转换为 ndarray，若输入本身是 ndarray 就不拷贝|
-|arange|同内建的range函数，但不返回的不是列表而是一个一维的ndarray|
-|ones, ones_like|根据提供的shape和dtype产生一个全1的数组；ones_like使用另一个数组为参数，产生一个shape和dtype都相同的数组|
-|zeros, zeros_like|同ones和ones_like，但是生成一个全0的数组|
-|empty, enpty_like|创建新数组，但只分配内存空间不赋值|
-|eye, identity|创建一个NxN的单位方阵（对角线上为1，其余为0）|
+| :— | :— |
+| array | 转换输入数据（列表，数组或其它序列类型）为ndarray，可以推断一个dtype或明确的设置一个dtype，默认拷贝输入数据 |
+| asarray | 将输入转换为 ndarray，若输入本身是 ndarray 就不拷贝 |
+| arange | 同内建的range函数，但不返回的不是列表而是一个一维的ndarray |
+| ones, ones_like | 根据提供的shape和dtype产生一个全1的数组；ones_like使用另一个数组为参数，产生一个shape和dtype都相同的数组 |
+| zeros, zeros_like | 同ones和ones_like，但是生成一个全0的数组 |
+| empty, enpty_like | 创建新数组，但只分配内存空间不赋值 |
+| eye, identity | 创建一个NxN的单位方阵（对角线上为1，其余为0） |
 例如，zeros 和 ones 使用给定的长度或形状分别的创建0‘s 和 1‘s数组。
 <code class="highlighter-rouge">
 np.zeros(10)
