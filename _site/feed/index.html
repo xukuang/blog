@@ -7,7 +7,7 @@
     <title>Xu Kuang</title>
     <atom:link href="http://xukuang.github.io/blog/feed/" rel="self" type="application/rss+xml" />
     <link>http://xukuang.github.io/</link>
-    <lastBuildDate>2016-05-05T15:35:55-06:00</lastBuildDate>
+    <lastBuildDate>2016-05-05T15:36:16-06:00</lastBuildDate>
     <webMaster>kuang_xu@126.com</webMaster>
     
     <item>
@@ -404,7 +404,7 @@ foo + bar
 
 <p>当希望将函数应用到 DataFrame 对象的某一行或列时，可以使用 .apply(func, axis=0, args=(), **kwds) 方法。</p>
 
-<p>f = lambda x:x.max()-x.min()
+<div class="highlighter-rouge"><pre class="highlight"><code>f = lambda x:x.max()-x.min()
 df
     ##    Ohio  Texas  California
     ## a     0      1           2
@@ -422,7 +422,8 @@ df.apply(f,axis=1)
 	## c    2
 	## d    2
 	## dtype: int64
-```</p>
+</code></pre>
+</div>
 
 <ul>
   <li>排序和排名</li>
