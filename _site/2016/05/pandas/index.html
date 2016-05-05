@@ -403,12 +403,12 @@ df.ix[:,df.ix['c']&gt;=4]
 
 <p>pandas 最重要的一个功能是，它可以对不同索引的对象进行算术运算。在将对象相加时，结果的索引取索引对的并集。自动的数据对齐在不重叠的索引处引入空值，默认为 NaN。</p>
 
-<p>foo = Series({‘a’:1,’b’:2})
+<div class="highlighter-rouge"><pre class="highlight"><code>foo = Series({'a':1,'b':2})
 foo
 	## a    1
 	## b    2
 	## dtype: int64
-bar = Series({‘b’:3,’d’:4})
+bar = Series({'b':3,'d':4})
 bar
 	## b    3
 	## d    4
@@ -418,8 +418,9 @@ foo + bar
 	## b     5
 	## d   NaN
 	## dtype: float64
-```
-DataFrame 的对齐操作会同时发生在行和列上。</p>
+</code></pre>
+</div>
+<p>DataFrame 的对齐操作会同时发生在行和列上。</p>
 
 <p>当不希望在运算结果中出现 NA 值时，可以使用前面 reindex 中提到过 fill_value 参数，不过为了传递这个参数，就需要使用对象的方法，而不是操作符：df1.add(df2,fill_value=0)。其他算术方法还有：sub(), div(), mul()。</p>
 
