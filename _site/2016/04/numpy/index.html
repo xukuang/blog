@@ -395,7 +395,9 @@ arr3d
 </div>
 <p>arr3d[0] 是一个 2*3 的数组。</p>
 
-<p>** 布尔型索引</p>
+<ul>
+  <li>布尔型索引</li>
+</ul>
 
 <p>布尔型索引指的是使用一个布尔型数组而非 [::] 作为切片手段，操作会将被切片对象中对应于布尔型数组中 True 元素位置的元素返回，并总是返回一个新的副本。</p>
 
@@ -443,10 +445,8 @@ foo[[7,2,5],[0,2,2]]
 
 <p>在花式索引中，使用负数表示从结尾选择行。</p>
 
-<ul>
-  <li>通用函数
-通用函数（即 ufunc）是一种对 ndarray 执行元素级运算的函数。通用函数依据参数的数量不同，可分为一元（unary）函数和二元（binary）函数。（参数一般都是 ndarray 对象）。</li>
-</ul>
+<h3 id="section-2">通用函数</h3>
+<p>通用函数（即 ufunc）是一种对 ndarray 执行元素级运算的函数。通用函数依据参数的数量不同，可分为一元（unary）函数和二元（binary）函数。（参数一般都是 ndarray 对象）。</p>
 
 <p><strong>一元函数</strong></p>
 
@@ -596,8 +596,10 @@ np.where(arr%2==0,1,0)
 	##        [1, 0, 1, 0]])
 </code></pre>
 </div>
-<p>-—-
-<strong>参考资料</strong></p>
+
+<p>-—-</p>
+
+<p><strong>参考资料</strong></p>
 
 <ol>
   <li><a href="http://my.oschina.net/lionets/blog/276574">Python 数据分析基础包：Numpy</a></li>
