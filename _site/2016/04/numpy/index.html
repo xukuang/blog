@@ -172,88 +172,146 @@ np.empty((2, 3, 2))
 </div>
 
 <h3 id="ndarray-">ndarray 对象的属性</h3>
+
 <p>.reshape(shape)</p>
 
-<p>此方法用于改变数组的形状。虽然我觉得既然 ndarray 对象的数据块都是线性存储的，按说调用 .reshape() 方法的话只需要改一下数据头中的 shape 属性就可以了啊，但实际上不是这样子的！a.reshape(shape, order=’C’) 方法会返回一个新数组，而不是直接改变调用者的形状。</p>
+<p>此方法用于改变数组的形状。虽然我觉得既然 ndarray 对象的数据块都是线性存储的，按说调用 .reshape() 方法的话只需要改一下数据头中的 shape 属性就可以了啊，但实际上不是这样子的！<strong>a.reshape(shape, order=’C’) 方法会返回一个新数组，而不是直接改变调用者的形状</strong>。</p>
 
-<blockquote>
-  <blockquote>
-    <blockquote>
-      <p>foo = np.arange(9)
+<div class="highlighter-rouge"><pre class="highlight"><code>foo = np.arange(9)
 bar = foo.reshape((3,3))
 bar
-array([[0, 1, 2],
-       [3, 4, 5],
-       [6, 7, 8]])
+	## array([[0, 1, 2],
+	##        [3, 4, 5],
+	##        [6, 7, 8]])
 foo
-array([0, 1, 2, 3, 4, 5, 6, 7, 8])</p>
-    </blockquote>
-  </blockquote>
-</blockquote>
+	## array([0, 1, 2, 3, 4, 5, 6, 7, 8])
+</code></pre>
+</div>
 
 <p>.astype(dtype)</p>
 
-<p>这是一个用于转换数组 dtype 的方法，从前面的 ndarray 数据结构可以猜到，这种转换必然需要创建一个新数组。如果转换过程因为某种原因而失败了，就会引发一个 TypeError 异常。另外，如 np.int32() 这样把 dtype 当做函数来用也是可行的，但更推荐 .astype() 方法：</p>
+<p>这是一个用于转换数组 dtype 的方法，从前面的 ndarray 数据结构可以猜到，这种转换必然需要创建一个新数组。如果转换过程因为某种原因而失败了，就会引发一个 TypeError 异常。另外，如 np.int32() 这样把 dtype 当做函数来用也是可行的，但更推荐 .astype() 方法。</p>
 
-<blockquote>
-  <blockquote>
-    <blockquote>
-      <p>bar.astype(float)
-array([[ 0.,  1.,  2.],
-       [ 3.,  4.,  5.],
-       [ 6.,  7.,  8.]])
-本例中使用 Python 内建的 float 当做 dtype 传了进去，也是可行的哦，当对数据大小不敏感时就可以这么做。</p>
-    </blockquote>
-  </blockquote>
-</blockquote>
+<div class="highlighter-rouge"><pre class="highlight"><code>bar.astype(float)
+	## array([[ 0.,  1.,  2.],
+	##        [ 3.,  4.,  5.],
+	##        [ 6.,  7.,  8.]])
+</code></pre>
+</div>
+
+<p>本例中使用 Python 内建的 float 当做 dtype 传了进去，也是可行的哦，当对数据大小不敏感时就可以这么做。</p>
 
 <p>.transpose(*axes)</p>
 
 <p>转置方法返回的是原数组的视图（不复制）。因为我对多维数组也搞不太懂，就只举个二维数组的例子吧（不给 axes 参数）：</p>
 
-<blockquote>
-  <blockquote>
-    <blockquote>
-      <p>foo = np.arange(8).reshape(2,4)
+<div class="highlighter-rouge"><pre class="highlight"><code>foo = np.arange(8).reshape(2,4)
 foo
-array([[0, 1, 2, 3],
-       [4, 5, 6, 7]])
+	## array([[0, 1, 2, 3],
+	##        [4, 5, 6, 7]])
 foo.transpose()
-array([[0, 4],
-       [1, 5],
-       [2, 6],
-       [3, 7]])
+	## array([[0, 4],
+	##        [1, 5],
+	##        [2, 6],
+	##        [3, 7]])
 foo.T
-array([[0, 4],
-       [1, 5],
-       [2, 6],
-       [3, 7]])
-数组的 .T 属性是轴对换的快捷方式。一般在计算矩阵点积时比较方便：np.dot(arr,att.T)。嗯，简单的乘法（星号）是广播运算，点积需要使用 dot() 函数。</p>
-    </blockquote>
-  </blockquote>
-</blockquote>
+	## array([[0, 4],
+	##        [1, 5],
+	##        [2, 6],
+	##        [3, 7]])
+</code></pre>
+</div>
+<p>数组的 .T 属性是轴对换的快捷方式。一般在计算矩阵点积时比较方便：np.dot(arr,att.T)。嗯，简单的乘法（星号）是广播运算，点积需要使用 dot() 函数。</p>
 
 <p>.sort()</p>
 
 <p>ndarray 的 .sort(axis=-1, kind=’quicksort’, order=None) 方法可用于给数组在指定轴向上排序。比如一个 （4，3，2）的数组，它的对应轴向分别为（2，1，0），方法默认的 axis=-1 代表最外层维度，如 “表” 里的 “行”。</p>
 
+<div class="highlighter-rouge"><pre class="highlight"><code>a = np.array([[1,4], [3,1]])
+a
+	## array([[1, 4],
+	##        [3, 1]])
+np.sort(a,0)
+	## array([[1, 1],
+	##        [3, 4]])
+np.sort(a,1)
+	## array([[1, 4],
+	##        [1, 3]])
+</code></pre>
+</div>
+
+<p>这里使用了外部函数 np.sort() 是为了在演示过程中不会影响到原数组。np.sort() 函数总是返回一份拷贝，而 .sort() 方法则会更改原数组。</p>
+
+<p>统计方法</p>
+
+<p>ndarray 对象还有一些统计方法，可以对整个数组或某个轴向上的数据进行统计计算（轴向数字越大代表的维度越高，从 0 开始计数）。这些方法同时也可以当做顶级函数使用。例如：</p>
+
 <blockquote>
   <blockquote>
     <blockquote>
-      <p>a = np.array([[1,4], [3,1]])
-a
-array([[1, 4],
-       [3, 1]])
-np.sort(a,0)
-array([[1, 1],
-       [3, 4]])
-np.sort(a,1)
-array([[1, 4],
-       [1, 3]])
-这里使用了外部函数 np.sort() 是为了在演示过程中不会影响到原数组。np.sort() 函数总是返回一份拷贝，而 .sort() 方法则会更改原数组。</p>
+      <p>arr = np.arange(12).reshape(3,4)
+arr
+array([[ 0,  1,  2,  3],
+       [ 4,  5,  6,  7],
+       [ 8,  9, 10, 11]])
+arr.sum()
+66
+np.sum(arr)
+66
+arr.mean(0)
+array([ 4.,  5.,  6.,  7.])
+arr.mean(1)
+array([ 1.5,  5.5,  9.5])
+arr.mean(2)
+Traceback (most recent call last):
+  File “&lt;pyshell#35&gt;”, line 1, in <module>
+    arr.mean(2)
+    items *= arr.shape[ax]
+IndexError: tuple index out of range</module></p>
     </blockquote>
   </blockquote>
 </blockquote>
+
+<p><strong>基本的数组统计方法</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">统计方法</th>
+      <th style="text-align: left">描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">sum</td>
+      <td style="text-align: left">求和</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">mean</td>
+      <td style="text-align: left">均值</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">std，var</td>
+      <td style="text-align: left">标准差和方差</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">min，max</td>
+      <td style="text-align: left">最小值和最大值</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">argmin，argmax</td>
+      <td style="text-align: left">最小值和最大值的索引</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">cumsum</td>
+      <td style="text-align: left">累积和</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">cumprod</td>
+      <td style="text-align: left">累积积</td>
+    </tr>
+  </tbody>
+</table>
 
 <h4 id="section">数组和纯量间的操作</h4>
 
