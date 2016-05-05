@@ -115,9 +115,9 @@ DataFrame 是一个表格型的数据结构，它含有一组有序的列（类�
 
 <p>构建DataFrame的方法有多种，但最常用的一个是用一个相等长度列表的字典或NumPy数组。具体DataFrame 的构造方法与 Series 类似，只不过可以同时接受多条一维数据源，每一条都会成为单独的一列。</p>
 
-<p>data = {‘state’:[‘Ohino’,’Ohino’,’Ohino’,’Nevada’,’Nevada’],
-        ‘year’:[2000,2001,2002,2001,2002],
-        ‘pop’:[1.5,1.7,3.6,2.4,2.9]}
+<div class="highlighter-rouge"><pre class="highlight"><code>data = {'state':['Ohino','Ohino','Ohino','Nevada','Nevada'],
+        'year':[2000,2001,2002,2001,2002],
+        'pop':[1.5,1.7,3.6,2.4,2.9]}
 df = DataFrame(data)
 df
 	## pop   state  year
@@ -128,8 +128,9 @@ df
 	## 4  2.9  Nevada  2002
 	## 
 	## [5 rows x 3 columns]
-```
-虽然参数 data 看起来是个字典，但字典的键并非充当 DataFrame 的 index 的角色，而是 Series 的 “name” 属性，且对Series按”name”进行了排序。这里生成的 index 仍是 “01234”。</p>
+</code></pre>
+</div>
+<p>虽然参数 data 看起来是个字典，但字典的键并非充当 DataFrame 的 index 的角色，而是 Series 的 “name” 属性，且对Series按”name”进行了排序。这里生成的 index 仍是 “01234”。</p>
 
 <p>较完整的 DataFrame 构造器参数为：DataFrame(data=None,index=None,coloumns=None)，columns 即 “name”，可以精确的按照你所传递的顺序排列Series。</p>
 
@@ -144,17 +145,17 @@ df
 	## five   2002  Nevada  2.9  NaN
 	## 
 	## [5 rows x 4 columns]
-同样缺失值由 NaN 补上。看一下 index、columns 和 索引的类型：
-
 </code></pre>
 </div>
-<p>df.index
-	## Index([‘one’, ‘two’, ‘three’, ‘four’, ‘five’], dtype=’object’)
+<p>同样缺失值由 NaN 补上。看一下 index、columns 和 索引的类型：
+<code class="highlighter-rouge">
+df.index
+	## Index(['one', 'two', 'three', 'four', 'five'], dtype='object')
 df.columns
-	## Index([‘year’, ‘state’, ‘pop’, ‘debt’], dtype=’object’)
-type(df[‘debt’])
-	## &lt;class ‘pandas.core.series.Series’&gt;
-```
+	## Index(['year', 'state', 'pop', 'debt'], dtype='object')
+type(df['debt'])
+	## &lt;class 'pandas.core.series.Series'&gt;
+</code>
 DataFrame 面向行和面向列的操作基本是平衡的，任意抽出一列都是 Series。</p>
 
 <h3 id="section">对象属性</h3>
