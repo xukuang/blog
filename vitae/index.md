@@ -6,7 +6,7 @@ title: Vitae
 ## 联系方式
 
 地址：辽宁省沈阳市文化路72号；邮编：110016   
-Email：kuang_xu@126.com；主页：<http://xukuang.github.io/>
+Email：kuang_xu**at**126**dot**com；主页：<http://xukuang.github.io/>
 
 ------------------------------------------------------
 
