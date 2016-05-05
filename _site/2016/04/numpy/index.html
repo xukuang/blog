@@ -66,7 +66,7 @@ array1 + array1
 </code></pre>
 </div>
 
-<p>上面是一个 2×3 的矩阵。在使用类似 2×3×4…这种格式表示多维数组的结构时，从左向右的数字对应表示由表及里的维度，或称为轴，按索引给轴编号后可称为“轴 0”、“轴 1”和“轴2”等）</p>
+<p>上面是一个 2×3 的矩阵。在使用类似 2×3×4…这种格式表示多维数组的结构时，从左向右的数字对应表示由表及里的维度，或称为轴，按索引给轴编号后可称为“轴 0”、“轴 1”和“轴2”等）。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>array1.shape
 	## (2, 3)
@@ -145,9 +145,9 @@ arr2.shape
   </tbody>
 </table>
 
-<p>例如，zeros 和 ones 使用给定的长度或形状分别的创建0‘s 和 1‘s数组。
-<code class="highlighter-rouge">
-np.zeros(10)
+<p>例如，zeros 和 ones 使用给定的长度或形状分别的创建0‘s 和 1‘s数组。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>np.zeros(10)
 	## array([ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.])
 np.zeros((3, 6))
 	## array([[ 0., 0., 0., 0., 0., 0.],
@@ -160,8 +160,9 @@ np.empty((2, 3, 2))
 	##        [[ 1.90723115e+083, 5.73293533e-053],
 	##         [ -2.33568637e+124, -6.70608105e-012],
 	##         [ 4.42786966e+160, 1.27100354e+025]]])
-</code>
-在 pandas 中尽量不要使用 np.empty()，这个函数创建的数组里面是有值的，除非你确定创建的这个数组能被完全赋值，否则后面运算起来很麻烦，这些“空值”的布尔类型是 True，而且 dropna() 方法删不掉。想创建空的 Series ，可以使用 Series(np.nan,index=???)。</p>
+</code></pre>
+</div>
+<p>在 pandas 中尽量不要使用 np.empty()，这个函数创建的数组里面是有值的，除非你确定创建的这个数组能被完全赋值，否则后面运算起来很麻烦，这些“空值”的布尔类型是 True，而且 dropna() 方法删不掉。想创建空的 Series ，可以使用 Series(np.nan,index=???)。</p>
 
 <p>arange 是python内建 range 函数的数组版本。</p>
 

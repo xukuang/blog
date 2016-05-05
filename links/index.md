@@ -8,7 +8,7 @@ comments: yes
 
 姓名拼音排序：
 
-- [赵伟](http://zipperary.com) 我的个人博客搭建的启蒙人。
+- [赵伟](http://zipperary.com) 我的个人博客搭建的启蒙人
 - [张兵](http://spatial-r.com)
 
 # 统计
