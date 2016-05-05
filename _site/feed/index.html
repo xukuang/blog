@@ -7,7 +7,7 @@
     <title>Xu Kuang</title>
     <atom:link href="http://xukuang.github.io/blog/feed/" rel="self" type="application/rss+xml" />
     <link>http://xukuang.github.io</link>
-    <lastBuildDate>2016-05-05T10:21:45-06:00</lastBuildDate>
+    <lastBuildDate>2016-05-05T11:32:35-06:00</lastBuildDate>
     <webMaster>kuang_xu@126.com</webMaster>
     
     <item>
@@ -175,7 +175,7 @@ foo
 
 <p>.transpose(*axes)</p>
 
-<p>转置方法返回的是原数组的视图（不复制）。因为我对多维数组也搞不太懂，就只举个二维数组的例子吧（不给 axes 参数）：</p>
+<p>转置方法返回的是原数组的视图（不复制）。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>foo = np.arange(8).reshape(2,4)
 foo
@@ -193,6 +193,22 @@ foo.T
 	##        [3, 7]])
 </code></pre>
 </div>
+<p>因为对多维数组比较麻烦，这里就只先举个例子。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>arr = np.arange(16).reshape((2, 2, 4))
+arr
+	## array([[[ 0, 1, 2, 3],
+	##         [ 4, 5, 6, 7]],
+	##        [[ 8, 9, 10, 11],
+	##         [12, 13, 14, 15]]])
+arr.transpose((1, 0, 2))
+	## array([[[ 0, 1, 2, 3],
+	##         [ 8, 9, 10, 11]],
+	##        [[ 4, 5, 6, 7],
+	##         [12, 13, 14, 15]]])
+</code></pre>
+</div>
+
 <p>数组的 .T 属性是轴对换的快捷方式。一般在计算矩阵点积时比较方便：np.dot(arr,att.T)。嗯，简单的乘法（星号）是广播运算，点积需要使用 dot() 函数。</p>
 
 <p>.sort()</p>
@@ -214,35 +230,31 @@ np.sort(a,1)
 
 <p>这里使用了外部函数 np.sort() 是为了在演示过程中不会影响到原数组。np.sort() 函数总是返回一份拷贝，而 .sort() 方法则会更改原数组。</p>
 
-<p>统计方法</p>
+<h3 id="section">统计方法</h3>
 
 <p>ndarray 对象还有一些统计方法，可以对整个数组或某个轴向上的数据进行统计计算（轴向数字越大代表的维度越高，从 0 开始计数）。这些方法同时也可以当做顶级函数使用。例如：</p>
 
-<blockquote>
-  <blockquote>
-    <blockquote>
-      <p>arr = np.arange(12).reshape(3,4)
+<div class="highlighter-rouge"><pre class="highlight"><code>arr = np.arange(12).reshape(3,4)
 arr
-array([[ 0,  1,  2,  3],
-       [ 4,  5,  6,  7],
-       [ 8,  9, 10, 11]])
+	## array([[ 0,  1,  2,  3],
+	##        [ 4,  5,  6,  7],
+	##        [ 8,  9, 10, 11]])
 arr.sum()
-66
+	## 66
 np.sum(arr)
-66
+	## 66
 arr.mean(0)
-array([ 4.,  5.,  6.,  7.])
+	## array([ 4.,  5.,  6.,  7.])
 arr.mean(1)
-array([ 1.5,  5.5,  9.5])
+	## array([ 1.5,  5.5,  9.5])
 arr.mean(2)
-Traceback (most recent call last):
-  File “&lt;pyshell#35&gt;”, line 1, in <module>
-    arr.mean(2)
-    items *= arr.shape[ax]
-IndexError: tuple index out of range</module></p>
-    </blockquote>
-  </blockquote>
-</blockquote>
+	## Traceback (most recent call last):
+	##   File "&lt;pyshell#35&gt;", line 1, in &lt;module&gt;
+	##     arr.mean(2)
+	##     items *= arr.shape[ax]
+	## IndexError: tuple index out of range
+</code></pre>
+</div>
 
 <p><strong>基本的数组统计方法</strong></p>
 
@@ -285,76 +297,65 @@ IndexError: tuple index out of range</module></p>
   </tbody>
 </table>
 
-<h4 id="section">数组和纯量间的操作</h4>
+<h3 id="section-1">索引和切片</h3>
+<p>ndarray 的索引和切片语法与 Python 的列表相似。都是通过如 [0]，[0:5:2] 这样的方括号和 冒号来完成。比较不同之处在于为了方便对多维数组切片，ndarray 对象还支持使用逗号间隔的多维切片方法：[0,3]，[0,3:9:2]。</p>
 
-<p>数组非常重要，因为它们使你不使用循环就可以在数据上进行一系列操作。这通常被叫做矢量化。相同大小的数组间的算术运算，其操作作用在对应的元素上。</p>
+<ul>
+  <li>普通索引</li>
+</ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arr = np.array([[1., 2., 3.], [4., 5., 6.]])
-arr
-	## array([[ 1.,  2.,  3.],
-	##        [ 4.,  5.,  6.]])
-arr * arr                 
-	## array([[  1.,   4.,   9.],       
-	##        [ 16.,  25.,  36.]])
+<div class="highlighter-rouge"><pre class="highlight"><code>foo = np.arange(12)
+foo
+	## array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11])
+foo[:5]
+	## array([0, 1, 2, 3, 4])
+foo[:5]=0
+foo
+	## array([ 0,  0,  0,  0,  0,  5,  6,  7,  8,  9, 10, 11])
+bar = foo[:5]
+bar[0] = 1024
+bar
+	## array([1024,    1,    2,    3,    4])
+foo
+	## array([1024,  0,  0,  0,  0,  5,  6,  7,  8,  9, 10, 11])
 </code></pre>
 </div>
+<p>注意这里，为了节省内存，对 ndarray 的切片操作获得的都是对原数组的引用，因此对该引用的更改操作都会反映到原数组上，这也是与Python 的列表的一个重要的区别。如果你是使用Numpy的新手，这一点会使你感到惊讶『真的惊讶到我了』，尤其当你使用过其它数组编程语言，它们非常热衷于拷贝数据。请记住，Numpy是设计用来处理大数据的情况，你可以想象如果Numpy坚持使用拷贝数据将会出现的性能和内存问题。如果你想复制出一段副本，就应当使用 .copy() 方法。</p>
 
-<p>纯量的算术操作正如你期望的一样，把操作值作用于每一个元素：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>1 / arr                       
-	## array([[ 1. , 0.5 , 0.3333],            
-	##        [ 0.25 , 0.2 , 0.1667]])
+<div class="highlighter-rouge"><pre class="highlight"><code>bar = foo[:5].copy()
+bar[:] = 1
+foo
+	## array([1024,  0,  0,  0,  0,  5,  6,  7,  8,  9, 10, 11])
 </code></pre>
 </div>
+<p>也许你会对这里的 foo[:] 感兴趣，这代表切全部的片，不可以使用 foo = 1 这样的赋值语句，这等于给 foo 重新指向一个新的内存地址，而非对切片元素进行操作。</p>
 
-<h4 id="section-1">基本的索引和切片</h4>
-<p>Numpy的索引是一个内容丰富的主题，因为有许多方法可以使你在你的数据中选取一个子集或单个元素。一维的数组很简单，表面上它们的行为类似于python的列表。</p>
+<p>前面提到的使用逗号在多维度下的切片方法。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arr = np.arange(10)
-arr
-	## array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
-arr[5]
-	## 5
-arr[5:8]
-	## array([5, 6, 7])
-arr[5:8] = 12
-arr
-	## array([ 0,  1,  2,  3,  4, 12, 12, 12,  8,  9])
+<div class="highlighter-rouge"><pre class="highlight"><code>foo = np.arange(12).reshape(3,4)
+foo
+	## array([[ 0,  1,  2,  3],
+	##        [ 4,  5,  6,  7],
+	##        [ 8,  9, 10, 11]])
+foo[0,1]
+	## 1
+foo[0,::2]
+	## array([0, 2])
 </code></pre>
 </div>
-<p>如你所见，当你给一个切片赋一纯量值，如 arr[5:8] = 12 所示，该值被传送(或传播)到整个选择区域。与列表的第一个重要的区别是数组的切片在原来的数组上（不生成新的数组）。这意味着数据不会被拷贝，且对切片的任何修改都会影响源数组。</p>
+<p>这种切片方法可以看做是一种语法糖『表示不懂』，因为最标准的对多维数组的切片方法应该是下面这样子的，包括 Python 原本对嵌套列表的切片方法也是这样子的：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arr_slice = arr[5:8]
-arr_slice[1] = 12345
-arr_slice
-	## array([   12, 12345,    12])
-arr
-	## array([ 0, 1, 2, 3, 4, 12, 12345, 12, 8, 9])
-arr_slice[:] = 64
-arr_slice
-	## array([64, 64, 64])
-arr
-	## array([ 0, 1, 2, 3, 4, 64, 64, 64, 8, 9])
+<div class="highlighter-rouge"><pre class="highlight"><code>foo
+	## array([[ 0,  1,  2,  3],
+	##        [ 4,  5,  6,  7],
+	##        [ 8,  9, 10, 11]])
+foo[0][1]
+	## 1
+foo[0][::2]
+	## array([0, 2])
 </code></pre>
 </div>
-<p>如果你是使用Numpy的新手，这一点会使你感到惊讶『真的惊讶到我了』，尤其当你使用过其它数组编程语言，它们非常热衷于拷贝数据。请记住，Numpy是设计用来处理大数据的情况，你可以想象如果Numpy坚持使用拷贝数据将会出现的性能和内存问题。如果你想有数组切片的一个拷贝，你需要明显的拷贝数组；例如 arr[5:8].copy() 。</p>
-
-<p>对于高维数组，你会有更多选项。在两维的数组，每一个索引的元素将不再是一个纯量，而是一个一维数组。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>arr2d = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-arr2d[2]
-	## array([7, 8, 9])
-</code></pre>
-</div>
-<p>因此，单个元素可以递归的访问，但是这会做多一点的工作。不过，你可以使用一个逗号分隔的索引列表来选择单个元素。因此，下面的操作是等价的。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>arr2d[0][2]
-	## 3
-arr2d[0, 2]
-	## 3
-</code></pre>
-</div>
-<p>在多维数组中，如果你省略了后面的索引，返回的对象将会是一个较低维的ndarray，它包括较高维度的所有数据。因此，在 2*\2*3 的数组 arr3d 中</p>
+<p>即 foo[0,1] 与 foo[0][1] 效果相同，这种实现可以节省时间，但不如原始方法更直观一点。只要记住对多维数组的单层切片总是切的最外层维度这点，操作起来就不容易乱。 例如，在多维数组中，如果你省略了后面的索引，返回的对象将会是一个较低维的ndarray，它包括较高维度的所有数据。因此，在 2*\2*3 的数组 arr3d 中</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>arr3d = np.array([[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]])
 arr3d
@@ -366,333 +367,205 @@ arr3d
 </div>
 <p>arr3d[0] 是一个 2*3 的数组。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arr3d[0]
-	## array([[1, 2, 3],
-	##        [4, 5, 6]])
+<p>** 布尔型索引</p>
+
+<p>布尔型索引指的是使用一个布尔型数组而非 [::] 作为切片手段，操作会将被切片对象中对应于布尔型数组中 True 元素位置的元素返回，并总是返回一个新的副本。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>foo = np.arange(12).reshape(3,4)
+bar = foo.copy()
+bar%2==0
+	## array([[ True, False,  True, False],
+	##        [ True, False,  True, False],
+	##        [ True, False,  True, False]], dtype=bool)
+foo[bar%2==0]
+	## array([ 0,  2,  4,  6,  8, 10])
 </code></pre>
 </div>
-<p>纯量值和数组都可以给 arr3d[0] 赋值。</p>
+<p>本例中一个值得注意之处在于 bar%2==0 这个表达式，在 Python 的标准语法中对一个列表和一个整型应用取余操作是非法的，你必须使用循环（如 for）遍历列表的单个元素才行。但 numpy 很贴心地通过广播解决了这个问题，吊不吊！
+此外，在布尔索引中，你还可以使用 ！= 或 - 对条件表达式取反，使用 &amp; （and） 和 | （or）来结合多个布尔条件。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>old_values = arr3d[0].copy()
-arr3d[0] = 42
-arr3d
-	## array([[[42, 42, 42],
-	##         [42, 42, 42]],
-	##        [[ 7, 8, 9],
-	##         [10, 11, 12]]])
-arr3d[0] = old_values
-arr3d
-	## array([[[ 1, 2, 3],
-	##         [ 4, 5, 6]],
-	##        [[ 7, 8, 9],
-	##         [10, 11, 12]]])
-</code></pre>
-</div>
-<p>类似的， arr3d[1, 0] 给出那些索引以 (1, 0) 开始的值，形成了一个1维数组：</p>
+<ul>
+  <li>花式索引</li>
+</ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arr3d[1, 0]
-	## array([7, 8, 9])
-</code></pre>
-</div>
-<p>请注意，在所有的情况下，被选中的子节返回的数组总是数组视窗。
-如同一维对象，ndarrys可以使用熟悉的语法来切片。</p>
+<p>花式索引（fancy indexing）是一个 Numpy 术语，它指的是利用整数数组进行索引，这里的整数数组起到了index的作用。
+如同布尔索引，花式索引也总是拷贝数据到一个新的数组。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arr[1:6]
-	## array([ 1, 2, 3, 4, 64])
-</code></pre>
-</div>
-<p>较高维的对象给你更多的选择，你可以切割一个或多个坐标坐标轴，并且可以混合整数。对上面的2维数组，arr2d ，对它的切片有些不同。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>arr2d
-	## array([[1, 2, 3],          
-	##        [4, 5, 6],                 
-	##        [7, 8, 9]])
-arr2d[:2]
-	## array([[1, 2, 3],
-	##        [4, 5, 6]])
-</code></pre>
-</div>
-<p>正如你所见，它沿着0坐标坐标轴（第一个坐标坐标轴）切片。因此，一个切片沿着一个坐标坐标轴向选择一个范围的元素。你可以传递多个切片，就像你传递多个索引一样。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>arr2d[:2, 1:]
-	## array([[2, 3],
-	##        [5, 6]])
-</code></pre>
-</div>
-<p>像这样这样切片时，你得到的总是相同维数的数组视窗。通过混合整形索引和切片，你可以得到较低维的切片。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>arr2d[1, :2] 
-	## array([4, 5])
-</code></pre>
-</div>
-<p>注意，一个单一的冒号意味着取整个坐标/坐标轴，因此，你可以只切割更高维的坐标轴，做法如下：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>arr2d[:, :1]
-	## array([[1],
-	##        [4],
-	##        [7]])
-</code></pre>
-</div>
-<p>当然，给一个切片表达式赋值会对整个选择赋值：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>arr2d[:2, 1:] = 0
-</code></pre>
-</div>
-
-<h2 id="section-2">布尔索引</h2>
-<p>让我们来考虑一个例子，我们有一些数据在一个数组中和一个有重复名字的数组。我将会在这使用 numpy.random 中的 randn 函数来产生一些随机的正态分布的数据。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>import numpy.random as np_rd
-names = np.array(['Bob', 'Joe', 'Will', 'Bob', 'Will', 'Joe', 'Joe'])
-data = np_rd.randn(7, 4)
-names
-	## array(['Bob', 'Joe', 'Will', 'Bob', 'Will', 'Joe', 'Joe'],
-	##       dtype='|S4')
-data
-	## array([[-0.048 , 0.5433, -0.2349, 1.2792],
-	##        [-0.268 , 0.5465, 0.0939, -2.0445],
-	##        [-0.047 , -2.026 , 0.7719, 0.3103],
-	##        [ 2.1452, 0.8799, -0.0523, 0.0672],
-	##        [-1.0023, -0.1698, 1.1503, 1.7289],
-	##        [ 0.1913, 0.4544, 0.4519, 0.5535],
-	##        [ 0.5994, 0.8174, -0.9297, -1.2564]])
-</code></pre>
-</div>
-<p>假设每一个名字都和data数组中的一行对应。如果我们想要选择与‘Bob’名字对应的所有行。象算术运算一样，数组的比较操作（例如 == ）也可以矢量化。因此，names和Bob字符窜的比较会产生一个布尔数组。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>names == 'Bob'
-	## array([ True, False, False, True, False, False, False], dtype=bool)
-</code></pre>
-</div>
-<p>当索引数组时可以传递这一布尔数组。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>data[names == 'Bob']
-	## array([[-0.048 , 0.5433, -0.2349, 1.2792],
-	##        [ 2.1452, 0.8799, -0.0523, 0.0672]])
-</code></pre>
-</div>
-<p>布尔数组必须和它索引的坐标轴的长度相同。你甚至可以把布尔数组和切片或整数（或者整数序列）混合和匹配起来。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>data[names == 'Bob', 2:]
-	## array([[-0.2349, 1.2792],
-	##        [-0.0523, 0.0672]])
-</code></pre>
-</div>
-<p>为了选择除了 ‘Bob’ 之外的所有东西，你可以使用 ！= 或用 - 对条件表达式取反：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>names != 'Bob'
-	## array([False, True, True, False, True, True, True], dtype=bool)
-data[-(names == 'Bob')]
-	## array([[-0.268 , 0.5465, 0.0939, -2.0445],
-	##        [-0.047 , -2.026 , 0.7719, 0.3103],
-	##        [-1.0023, -0.1698, 1.1503, 1.7289],
-	##        [ 0.1913, 0.4544, 0.4519, 0.5535],
-	##        [ 0.5994, 0.8174, -0.9297, -1.2564]])
-</code></pre>
-</div>
-<p>使用布尔算术操作符如 &amp; （and） 和 | （or）来结合多个布尔条件，下面是从三个名字中选取两个的操作。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>mask = (names == 'Bob') | (names == 'Will')
-mask
-array([True, False, True, True, True, False, False], dtype=bool)
-data[mask]
-	## array([[-0.048 , 0.5433, -0.2349, 1.2792],
-	##        [-0.047 , -2.026 , 0.7719, 0.3103],
-	##        [ 2.1452, 0.8799, -0.0523, 0.0672],
-	##        [-1.0023, -0.1698, 1.1503, 1.7289]])
-</code></pre>
-</div>
-<p>通过布尔索引从一个数组中选取数据总是会创建数据的一份拷贝，即使是返回的数组没有改变。
-为了设置 data 中所有的负值为0，我们只需要。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>data[data &lt; 0] = 0
-data
-	## array([[ 0. , 0.5433, 0. , 1.2792],
-	##        [ 0. , 0.5465, 0.0939, 0. ],
-	##        [ 0. , 0. , 0.7719, 0.3103],
-	##        [ 2.1452, 0.8799, 0. , 0.0672],
-	##        [ 0. , 0. , 1.1503, 1.7289],
-	##        [ 0.1913, 0.4544, 0.4519, 0.5535],
-	##        [ 0.5994, 0.8174, 0. , 0. ]])
-</code></pre>
-</div>
-<p>使用一维布尔数组设置整行或列也非常简单：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>data[names != 'Joe'] = 7
-data
-array([[ 7. , 7. , 7. , 7. ],
-       [ 0. , 0.5465, 0.0939, 0. ],
-       [ 7. , 7. , 7. , 7. ],
-       [ 7. , 7. , 7. , 7. ],
-       [ 7. , 7. , 7. , 7. ],
-       [ 0.1913, 0.4544, 0.4519, 0.5535],
-       [ 0.5994, 0.8174, 0. , 0. ]])
-</code></pre>
-</div>
-
-<h4 id="fancy">Fancy索引</h4>
-<p>Fancy索引是一个术语，被Numpy用来描述使用整形数组索引。假如我们有一个 8*4 的数组。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>arr = np.empty((8, 4))
+<div class="highlighter-rouge"><pre class="highlight"><code>foo = np.empty((8,4),int)
 for i in range(8):
-    arr[i] = i
-arr
-	## array([[ 0., 0., 0., 0.],
-	##        [ 1., 1., 1., 1.],
-	##        [ 2., 2., 2., 2.],
-	##        [ 3., 3., 3., 3.],
-	##        [ 4., 4., 4., 4.],
-	##        [ 5., 5., 5., 5.],
-	##        [ 6., 6., 6., 6.],
-	##        [ 7., 7., 7., 7.]])
+	foo[i] = i
+foo
+	## array([[0, 0, 0, 0],
+	##        [1, 1, 1, 1],
+	##        [2, 2, 2, 2],
+	##        [3, 3, 3, 3],
+	##        [4, 4, 4, 4],
+	##        [5, 5, 5, 5],
+	##        [6, 6, 6, 6],
+	##        [7, 7, 7, 7]])
+foo[[7,2,5]]
+	## array([[7, 7, 7, 7],
+	##        [2, 2, 2, 2],
+	##        [5, 5, 5, 5]])
+foo[[7,2,5],[0,2,2]]
+	## array([7, 2, 5])
 </code></pre>
 </div>
-<p>为了选出一个有特定顺序行的子集，你可以传递一个列表或整形ndarray来指定想要的顺序。</p>
+<p>上例中 foo[[7,2,5],[0,2,2]] 处两个列表索引之间的逗号，所起的作用与上面普通索引处的作用相同，均为在更低一级维度上索引之用。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arr[[4, 3, 0, 6]]
-	## array([[ 4., 4., 4., 4.],
-	##        [ 3., 3., 3., 3.],
-	##        [ 0., 0., 0., 0.],
-	##        [ 6., 6., 6., 6.]])
-</code></pre>
-</div>
-<p>很庆幸这个代码做了你所期望的！使用负的索引从结尾选择行。</p>
+<p>在花式索引中，使用负数表示从结尾选择行。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arr[[-3, -5, -7]]
-	## array([[ 5., 5., 5., 5.],
-	##        [ 3., 3., 3., 3.],
-	##        [ 1., 1., 1., 1.]])
-</code></pre>
-</div>
-<p>传递多个索引数组有些微的不同，它选取一个一维数组，元素对应与索引的每一个元组。</p>
+<ul>
+  <li>通用函数
+通用函数（即 ufunc）是一种对 ndarray 执行元素级运算的函数。通用函数依据参数的数量不同，可分为一元（unary）函数和二元（binary）函数。（参数一般都是 ndarray 对象）。</li>
+</ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arr = np.arange(32).reshape((8, 4))
-arr
-	## array([[ 0, 1, 2, 3],
-	##        [ 4, 5, 6, 7],
-	##        [ 8, 9, 10, 11],
-	##        [12, 13, 14, 15],
-	##        [16, 17, 18, 19],
-	##        [20, 21, 22, 23],
-	##        [24, 25, 26, 27],
-	##        [28, 29, 30, 31]])
-arr[[1, 5, 7, 2], [0, 3, 1, 2]]
-	## array([ 4, 23, 29, 10])
-</code></pre>
-</div>
-<p>花一点儿时间来看看刚刚发生了什么：元素 (1, 0), (5, 3), (7, 1), 和(2, 2)被选择了。 fancy索引的行为与一些用户可能期望的有所不同，它因该是一个矩形区域，由选取的矩形的行和列组成。这里有一个方法来得到它。</p>
+<p><strong>一元函数</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arr[[1, 5, 7, 2]][:, [0, 3, 1, 2]]
-	## array([[ 4, 7, 5, 6],
-	##        [20, 23, 21, 22],
-	##        [28, 31, 29, 30],
-	##        [ 8, 11, 9, 10]])
-</code></pre>
-</div>
-<p>另一种方法是使用 np.ix_ 函数，将两个以为整形数组转换为位标，来选取一个正方形区域：</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">函数</th>
+      <th style="text-align: left">描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">abs，fabs</td>
+      <td style="text-align: left">整数、浮点、复数的绝对值，对于非复数，可用更快的 fabs</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sqrt</td>
+      <td style="text-align: left">平方根，等于 arr**0.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">square</td>
+      <td style="text-align: left">平方，等于 arr**2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">exp</td>
+      <td style="text-align: left">以 e 为底的指数函数</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">log，log10，log2，log1p</td>
+      <td style="text-align: left">以 e 为底的对数函数</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">sign</td>
+      <td style="text-align: left">计算各元素的正负号，1（正），0（零），-1（负）</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ceil</td>
+      <td style="text-align: left">计算大于等于该值的最小整数</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">floor</td>
+      <td style="text-align: left">计算小于等于该值的最大整数</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">rint</td>
+      <td style="text-align: left">round int，四舍五入到整数</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">modf</td>
+      <td style="text-align: left">将数组的整数和小数部分以两个独立数组的形式返回</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">isnan</td>
+      <td style="text-align: left">返回一个 “哪些值是 NaN” 的布尔型数组</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">isfinite，isinf</td>
+      <td style="text-align: left">返回是否是有穷（无穷）的布尔型数组</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">cos，cosh，sin，sinh，tan，tanh</td>
+      <td style="text-align: left">普通和双曲型三角函数</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">arccos，arccosh…等同上</td>
+      <td style="text-align: left">反三角函数</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">logical_not</td>
+      <td style="text-align: left">计算各元素 not x 的真值，等于 -arr</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">unique</td>
+      <td style="text-align: left">计算元素唯一值并返回排序后的结果</td>
+    </tr>
+  </tbody>
+</table>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arr[np.ix_([1, 5, 7, 2], [0, 3, 1, 2])]
-	## array([[ 4, 7, 5, 6],
-	##        [20, 23, 21, 22],
-	##        [28, 31, 29, 30],
-	##        [ 8, 11, 9, 10]])
-</code></pre>
-</div>
-<p>注意，fancy索引，不像切片，它总是拷贝数据到一个新的数组。
-### 转置数组和交换坐标轴
-转置是一种特殊形式的变形，类似的它会返回基础数据的一个视窗，而不会拷贝任何东西。数组有 transpose 方法和专门的 T 属性：</p>
+<p><strong>一元函数</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arr = np.arange(15).reshape((3, 5))
-arr                  
-	## array([[ 0, 1, 2, 3, 4],               
-	##        [ 5, 6, 7, 8, 9],               
-	##        [10, 11, 12, 13, 14]])          
-arr.T
-	## array([[ 0, 5, 10],
-	##        [ 1, 6, 11],
-	##        [ 2, 7, 12],
-	##        [ 3, 8, 13],
-	##        [ 4, 9, 14]])
-</code></pre>
-</div>
-<p>当进行矩阵运算时，你常常会这样做，像下面的例子一样，使用 np.dot 计算内部矩阵来产生 XTX` 。</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">函数</th>
+      <th style="text-align: left">描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">add</td>
+      <td style="text-align: left">加法，+</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">subtract</td>
+      <td style="text-align: left">减法，-</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">multiply</td>
+      <td style="text-align: left">乘法，*</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">divide，floor_divide</td>
+      <td style="text-align: left">除法和地板除，/ 和 //</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">power</td>
+      <td style="text-align: left">乘方，**</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">maximum，fmax</td>
+      <td style="text-align: left">元素级最大值，fmax 将忽略 NaN</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">minimum，fmin</td>
+      <td style="text-align: left">同上</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">mod</td>
+      <td style="text-align: left">取模，%</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">copysign</td>
+      <td style="text-align: left">将第二数组元素的符号复制给第一数组</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">greater（<em>equal），less（_equal），（not</em>）equal</td>
+      <td style="text-align: left">字面意义，返回布尔数组</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">logical_and，logical_or，logical_xor</td>
+      <td style="text-align: left">字面意义，返回布尔数组</td>
+    </tr>
+  </tbody>
+</table>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arr = np.random.randn(6, 3)
-np.dot(arr.T, arr)
-	## array([[ 2.584 , 1.8753, 0.8888],
-	##        [ 1.8753, 6.6636, 0.3884],
-	##        [ 0.8888, 0.3884, 3.9781]])
-</code></pre>
-</div>
-<p>对于更高维的数组， transpose 接受用于转置的坐标轴的号码的一个元组（for extra mind bending）：</p>
+<p><strong>三元函数</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arr = np.arange(16).reshape((2, 2, 4))
-arr
-	## array([[[ 0, 1, 2, 3],
-	##         [ 4, 5, 6, 7]],
-	##        [[ 8, 9, 10, 11],
-	##         [12, 13, 14, 15]]])
-arr.transpose((1, 0, 2))
-	## array([[[ 0, 1, 2, 3],
-	##         [ 8, 9, 10, 11]],
-	##        [[ 4, 5, 6, 7],
-	##         [12, 13, 14, 15]]])
-</code></pre>
-</div>
-<p>使用 .T 的转置，仅仅是交换坐标轴的一个特殊的情况。</p>
+<p>这里的三元函数只有一个，而且不是接受 3 个数组参数的意思。它其实是一个条件运算函数，即 foo if cond else bar 这个表达式的 numpy 版——where(condition, [x, y])</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arr                            			                   
-	## array([[[ 0, 1, 2, 3],            
-	##         [ 4, 5, 6, 7]],                                     
-	##        [[ 8, 9, 10, 11],          
-	##         [12, 13, 14, 15]]])                                      
-arr.swapaxes(1, 2)          
-    ## array([[[ 0, 4],
-    ##         [ 1, 5],
-    ##         [ 2, 6],
-    ##         [ 3, 7]],
-    ##        [[ 8, 12],
-    ##        [ 9, 13],
-    ##        [10, 14],
-    ##        [11, 15]]])
-</code></pre>
-</div>
-<p>类似的 swapaxes 返回在数据上的一个视窗，而不进行拷贝。</p>
-
-<h3 id="section-3">通用函数：快速的基于元素的数组函数</h3>
-<p>一个通用的函数，是一个在ndarrays的数据上进行基于元素的操作的函数。你可以认为它们是对简单函数的一个快速矢量化封装，它们接受一个或多个标量值并产生一个或多个标量值。
-许多 ufuncs 都是基于元素的简单变换，像 sqrt 或 exp 。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>Iarr = np.arange(10)
-Inp.sqrt(arr)
-	## array([ 0. , 1. , 1.4142, 1.7321, 2. , 2.2361, 2.4495,
-	##         2.6458, 2.8284, 3. ])
-np.exp(arr)
-	## array([ 1. , 2.7183, 7.3891, 20.0855, 54.5982,
-	##        148.4132, 403.4288, 1096.6332, 2980.958 , 8103.0839])
-</code></pre>
-</div>
-<p>这些归诸于unary ufuncs。其它的，例如add或maximum ，接受两个数组(因此，叫做binary ufuncs)且返回一个数组：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>x = randn(8)
-y = randn(8)
-x
-	## array([ 0.0749, 0.0974, 0.2002, -0.2551, 0.4655, 0.9222, 0.446 ,
-	##        -0.9337])
-y
-	## array([ 0.267 , -1.1131, -0.3361, 0.6117, -1.2323, 0.4788, 0.4315,
-	##        -0.7147])
-np.maximum(x, y) # element-wise maximum
-	## array([ 0.267 , 0.0974, 0.2002, 0.6117, 0.4655, 0.9222, 0.446 ,
-	##        -0.7147])
-</code></pre>
-</div>
-<p>虽然不常见，一个ufunc可以返回多个数组。 nodf 就是一个例子，它是python内建 divmod 的矢量化的版本：它返回一个 浮点数数组的分数和整数部分。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>arr = randn(7) * 5
-np.modf(arr)
-	##(array([-0.6808, 0.0636, -0.386 , 0.1393, -0.8806, 0.9363, -0.883 ]),
-	## array([-2., 4., -3., 5., -3., 3., -6.]))
+<div class="highlighter-rouge"><pre class="highlight"><code>arr = np.arange(12).reshape(3,4)arr
+	## array([[ 0,  1,  2,  3],
+	##        [ 4,  5,  6,  7],
+	##        [ 8,  9, 10, 11]])
+np.where(arr%2==0,1,0)
+	## array([[1, 0, 1, 0],
+	##        [1, 0, 1, 0],
+	##        [1, 0, 1, 0]])
 </code></pre>
 </div>
 ]]></content:encoded>
