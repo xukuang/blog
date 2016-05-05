@@ -488,7 +488,7 @@ df.sort_index(axis=1)
 </div>
 <p>排名（Series.rank(method=’average’, ascending=True)）的作用与排序的不同之处在于，他会把对象的 values 替换成名次（从 1 到 n）。这时唯一的问题在于如何处理平级项，方法里的 method 参数就是起这个作用的，他有四个值可选：average, min, max, first。</p>
 
-<p>ser=Series([3,2,0,3],index=list(‘abcd’))
+<div class="highlighter-rouge"><pre class="highlight"><code>ser=Series([3,2,0,3],index=list('abcd'))
 ser
 	## a    3
 	## b    2
@@ -501,26 +501,27 @@ ser.rank()
 	## c    1.0
 	## d    3.5
 	## dtype: float64
-ser.rank(method=’min’)
+ser.rank(method='min')
 	## a    3
 	## b    2
 	## c    1
 	## d    3
 	## dtype: float64
-ser.rank(method=’max’)
+ser.rank(method='max')
 	## a    4
 	## b    2
 	## c    1
 	## d    4
 	## dtype: float64
-ser.rank(method=’first’)
+ser.rank(method='first')
 	## a    3
 	## b    2
 	## c    1
 	## d    4
 	## dtype: float64
-```
-注意在 ser[0]=ser[3] 这对平级项上，不同 method 参数表现出的不同名次。</p>
+</code></pre>
+</div>
+<p>注意在 ser[0]=ser[3] 这对平级项上，不同 method 参数表现出的不同名次。</p>
 
 <p>DataFrame 的 .rank(axis=0, method=’average’, ascending=True) 方法多了个 axis 参数，可选择按行或列分别进行排名，暂时好像没有针对全部元素的排名方法。</p>
 
