@@ -108,10 +108,12 @@ s
 	## Name: a_series, dtype: int64
 </code></pre>
 </div>
+
 <ul>
-  <li>DataFrame
-DataFrame 是一个表格型的数据结构，它含有一组有序的列（类似于 index），每列可以是不同的值类型（不像 ndarray 只能有一个 dtype）。基本上可以把 DataFrame 看成是共享同一个 index 的 Series 的集合。与其它你以前使用过的（如 R 的 data.frame )类似Datarame的结构相比，在DataFrame里的面向行和面向列的操作大致是对称的。在底层，数据是作为一个或多个二维数组存储的，而不是列表，字典，或其它一维的数组集合。</li>
+  <li>DataFrame</li>
 </ul>
+
+<p>DataFrame 是一个表格型的数据结构，它含有一组有序的列（类似于 index），每列可以是不同的值类型（不像 ndarray 只能有一个 dtype）。基本上可以把 DataFrame 看成是共享同一个 index 的 Series 的集合。与其它你以前使用过的（如 R 的 data.frame )类似Datarame的结构相比，在DataFrame里的面向行和面向列的操作大致是对称的。在底层，数据是作为一个或多个二维数组存储的，而不是列表，字典，或其它一维的数组集合。</p>
 
 <p>构建DataFrame的方法有多种，但最常用的一个是用一个相等长度列表的字典或NumPy数组。具体DataFrame 的构造方法与 Series 类似，只不过可以同时接受多条一维数据源，每一条都会成为单独的一列。</p>
 
@@ -147,16 +149,17 @@ df
 	## [5 rows x 4 columns]
 </code></pre>
 </div>
-<p>同样缺失值由 NaN 补上。看一下 index、columns 和 索引的类型：
-<code class="highlighter-rouge">
-df.index
+<p>同样缺失值由 NaN 补上。看一下 index、columns 和 索引的类型。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>df.index
 	## Index(['one', 'two', 'three', 'four', 'five'], dtype='object')
 df.columns
 	## Index(['year', 'state', 'pop', 'debt'], dtype='object')
 type(df['debt'])
 	## &lt;class 'pandas.core.series.Series'&gt;
-</code>
-DataFrame 面向行和面向列的操作基本是平衡的，任意抽出一列都是 Series。</p>
+</code></pre>
+</div>
+<p>DataFrame 面向行和面向列的操作基本是平衡的，任意抽出一列都是 Series。</p>
 
 <h3 id="section">对象属性</h3>
 
