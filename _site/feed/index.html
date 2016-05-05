@@ -7,7 +7,7 @@
     <title>Xu Kuang</title>
     <atom:link href="http://xukuang.github.io/blog/feed/" rel="self" type="application/rss+xml" />
     <link>http://xukuang.github.io/</link>
-    <lastBuildDate>2016-05-05T15:53:59-06:00</lastBuildDate>
+    <lastBuildDate>2016-05-05T15:55:38-06:00</lastBuildDate>
     <webMaster>kuang_xu@126.com</webMaster>
     
     <item>
@@ -695,7 +695,7 @@ df2.reset_index()
 <h3 id="section-2">层次化索引</h3>
 <p>层次化索引（hierarchical indexing）是 pandas 的一项重要功能，它允许你在一个轴上拥有多个索引级别。换句话说，一个使用了层次化的索引的二维数组，可以存储和处理三维以上的数据。</p>
 
-<p>hdf = DataFrame(np.arange(8).reshape(4,2),index=[[‘sh’,’sh’,’sz’,’sz’],[‘600000’,’600001’,’000001’,’000002’]],columns=[‘open’,’close’])
+<div class="highlighter-rouge"><pre class="highlight"><code>hdf = DataFrame(np.arange(8).reshape(4,2),index=[['sh','sh','sz','sz'],['600000','600001','000001','000002']],columns=['open','close'])
 hdf
 	##            open  close
 	## sh 600000     0      1
@@ -705,9 +705,10 @@ hdf
 	## 
 	## [4 rows x 2 columns]
 hdf.index
-	## MultiIndex(levels=[[‘sh’, ‘sz’], [‘000001’, ‘000002’, ‘600000’, ‘600001’]],
+	## MultiIndex(levels=[['sh', 'sz'], ['000001', '000002', '600000', '600001']],
 	##            labels=[[0, 0, 1, 1], [2, 3, 0, 1]])
-```</p>
+</code></pre>
+</div>
 
 <p>上例中原本 sh 和 sz 已经是第三维的索引了，但使用层次化索引后，可以将整个数据集控制在二维表结构中。这对于数据重塑和基于分组的操作（如生成透视表）比较重要。</p>
 
