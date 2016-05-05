@@ -238,13 +238,13 @@ df.reindex(index=['a','b','c','d'],columns=state,method='ffill')
 </code></pre>
 </div>
 
-<p>不过 fill_value 依然对有效。聪明的小伙伴可能已经想到了，可不可以通过 df.T.reindex(index,method=’<strong>’).T 这样的方式来实现在列上的插值呢，答案是可行的。另外要注意，使用 reindex(index,method=’</strong>’) 的时候，index 必须是单调的，否则就会引发一个 ValueError: Must be monotonic for forward fill，比如上例中的最后一次调用，如果使用 index=[‘a’,’b’,’d’,’c’] 的话就不行。</p>
+<p>不过 fill_value 依然对有效。聪明的小伙伴可能已经想到了，可不可以通过 df.T.reindex(index,method=’**’).T 这样的方式来实现在列上的插值呢，答案是可行的。另外要注意，使用 reindex(index,method=’**’) 的时候，index 必须是单调的，否则就会引发一个 ValueError: Must be monotonic for forward fill，比如上例中的最后一次调用，如果使用 index=[‘a’,’b’,’d’,’c’] 的话就不行。</p>
 
 <ul>
   <li>删除指定轴上的项</li>
 </ul>
 
-<p>即删除 Series 的元素或 DataFrame 的某一行（列）的意思，通过对象的 .drop(labels, axis=0) 方法：</p>
+<p>即删除 Series 的元素或 DataFrame 的某一行（列）的意思，通过对象的 .drop(labels, axis=0) 方法。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>ser = Series([4.5,7.2,-5.3,3.6],index=['d','b','a','c'])
 	## ser
@@ -293,9 +293,9 @@ df.drop(['Ohio','Texas'],axis=1)
 
 <p>就像 Numpy，pandas 也支持通过 obj[::] 的方式进行索引和切片，以及通过布尔型数组进行过滤。</p>
 
-<p>不过须要注意，因为 pandas 对象的 index 不限于整数，所以当使用非整数作为切片索引时，它是末端包含的。
-<code class="highlighter-rouge">
-foo
+<p>不过须要注意，因为 pandas 对象的 index 不限于整数，所以当使用非整数作为切片索引时，它是末端包含的。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>foo
 	## a    4.5
 	## b    7.2
 	## c   -5.3
@@ -320,8 +320,9 @@ foo[:'c']
 	## b    7.2
 	## c   -5.3
 	## dtype: float64
-</code>
-这里 foo 和 bar 只有 index 不同——bar 的 index 是整数序列。可见当使用整数索引切片时，结果与 Python 列表或 Numpy 的默认状况相同；换成 ‘c’ 这样的字符串索引时，结果就包含了这个边界元素。</p>
+</code></pre>
+</div>
+<p>这里 foo 和 bar 只有 index 不同——bar 的 index 是整数序列。可见当使用整数索引切片时，结果与 Python 列表或 Numpy 的默认状况相同；换成 ‘c’ 这样的字符串索引时，结果就包含了这个边界元素。</p>
 
 <p>另外一个特别之处在于 DataFrame 对象的索引方式，因为他有两个轴向（双重索引）。</p>
 
@@ -371,11 +372,9 @@ df[:2]
 
 <p>当整数类型的时候，你使用整数索引，都会被自动解释为基于标签的索引，而不是基于位置的索引。要想消除这种歧义，可以使用</p>
 
-<p>.loc[label] 这是严格基于标签的索引
-.iloc[inte] 这是严格基于整数位置的索引
-.ix[] 更像是这两种严格方式的智能整合版。</p>
+<p>.loc[label] 这是严格基于标签的索引，.iloc[inte] 这是严格基于整数位置的索引，.ix[] 更像是这两种严格方式的智能整合版。</p>
 
-<p>使用布尔型数组的情况，注意行与列的不同切法（列切法的 : 不能省）：</p>
+<p>使用布尔型数组的情况，注意行与列的不同切法（列切法的 : 不能省）。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>df['Texas']&gt;=4
 	## a    False
