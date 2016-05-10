@@ -580,6 +580,7 @@ DT[,sum(v),by=y]
 	# 3: 6 18          
 ```
 * 自定义汇总名称
+
 ```
 DT[,list(sum.v.x = sum(v)),by=x]
 	#    x sum.v.x

@@ -670,35 +670,35 @@ DT[,sum(v),by=y]
 </code></pre>
 </div>
 <ul>
-  <li>
-    <p>自定义汇总名称
-<code class="highlighter-rouge">
-DT[,list(sum.v.x = sum(v)),by=x]
-  #    x sum.v.x
-  # 1: a       6
-  # 2: b      15
-  # 3: c      24           
+  <li>自定义汇总名称</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>DT[,list(sum.v.x = sum(v)),by=x]
+	#    x sum.v.x
+	# 1: a       6
+	# 2: b      15
+	# 3: c      24           
 DT[,list(sum.v.y = sum(v)),by=y] 
-  #    y sum.v.y
-  # 1: 1      12
-  # 2: 3      15
-  # 3: 6      18 
+	#    y sum.v.y
+	# 1: 1      12
+	# 2: 3      15
+	# 3: 6      18 
 DT[,sum.v.y := sum(v) ,by=y]
-  #    x y v a sum.v.y
-  # 1: a 1 1 k      12
-  # 2: a 3 2 k      15
-  # 3: a 6 3 k      18
-  # 4: b 1 4 k      12
-  # 5: b 3 5 k      15
-  # 6: b 6 6 k      18
-  # 7: c 1 7 k      12
-  # 8: c 3 8 k      15
-  # 9: c 6 9 k      18 	
-</code></p>
-  </li>
-  <li>
-    <p>汇总结果与原始数据进行匹配</p>
-  </li>
+	#    x y v a sum.v.y
+	# 1: a 1 1 k      12
+	# 2: a 3 2 k      15
+	# 3: a 6 3 k      18
+	# 4: b 1 4 k      12
+	# 5: b 3 5 k      15
+	# 6: b 6 6 k      18
+	# 7: c 1 7 k      12
+	# 8: c 3 8 k      15
+	# 9: c 6 9 k      18 	
+</code></pre>
+</div>
+
+<ul>
+  <li>汇总结果与原始数据进行匹配</li>
 </ul>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>DT[,sum.v.y := sum(v) ,by=y]
@@ -878,7 +878,7 @@ $(function(){
 	   
 	   
 	   <footer>
-           <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> & <a href="http://pages.github.com">GitHub</a>| Copyright  2016 by <a href="http://xukuang.github.io/blog/about/">Xu Kuang</a> | <span class="label label-info" id="timeSpan" style = 'background-color:rgb(0, 0, 238)></span></small></p>
+           <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> & <a href="http://pages.github.com">GitHub</a>| Copyright  2016 by <a href="http://xukuang.github.io/blog/about/">Xu Kuang</a> | <span class="label label-info" id="timeSpan" ></span></small></p>
        </footer>
 	   
 	   

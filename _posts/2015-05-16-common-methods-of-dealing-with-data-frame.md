@@ -57,11 +57,21 @@ companiesData
 	9 2012 Microsoft   73723  16978  Aerica 23.02945
 ```
 
-相对第一种方法，transform可以同时添加多列，书写相对简单，但是利用tranform时，新列必须是原始列的计算，而不能对刚刚建立起来的列进行计算，换句话说上面的第二条语句，如果要写成这样是错误的：companiesData <- transform(companiesData,  country = 'Aerica', margin = (profit/revenue) * 100, margin.new = margin * 1.2),原因就在于margin.new = margin \* 1.2中margin是新生的数据列，而非数据中原有的列。
+相对第一种方法，transform可以同时添加多列，书写相对简单，但是利用tranform时，新列必须是原始列的计算，而不能对刚刚建立起来的列进行计算，换句话说上面的第二条语句，如果要写成下面这样是错误的,原因就在于margin.new = margin \* 1.2中margin是新生的数据列，而非数据中原有的列。
+
+```
+companiesData <- transform(companiesData,  country = 'Aerica', margin = (profit/revenue) * 100, margin.new = margin * 1.2)
+```
 
 * dplyr包中的mutate函数
 
-dplyr包可以简单地认为是对plyr包的升级，所以这两个包中的mutate函数有相似的作用。mutate函数很好的解决了transform函数不能解决的问题，即mutate函数，允许新列对刚刚建立起来的列进行计算。所以，对于tansform函数来说，错误的companiesData <- transform(companiesData,  country = 'Aerica', margin = (profit/revenue) * 100, margin.new = margin \* 1.2)，对于mutate函数来说，companiesData <- mutate(companiesData,  country = 'Aerica', margin = (profit/revenue) * 100, margin.new = margin \* 1.2)是正确的。
+dplyr包可以简单地认为是对plyr包的升级，所以这两个包中的mutate函数有相似的作用。mutate函数很好的解决了transform函数不能解决的问题，即mutate函数，允许新列对刚刚建立起来的列进行计算。所以，对于tansform函数来说，错误的用法。
+
+```
+companiesData <- transform(companiesData,  country = 'Aerica', margin = (profit/revenue) * 100, margin.new = margin \* 1.2)
+```
+
+对于mutate函数来说，是正确的。
 
 ```R
 library(dplyr)
