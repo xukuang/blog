@@ -77,6 +77,7 @@
          <article class="content">
            <section class="post">
 <h2 id="section">1. 使用到的数据</h2>
+
 <div class="highlighter-rouge"><pre class="highlight"><code>set.seed(1)
 n = 100
 x = rnorm(n)
@@ -109,14 +110,19 @@ plot(x, y, axes = F)
 <h3 id="axis">axis函数</h3>
 
 <p>axis函数用来添坐标轴(包括坐标轴，刻度线和刻度线标签)
-axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA, pos = NA, outer = FALSE, font = NA, lty = “solid”, lwd = 1, lwd.ticks = lwd, col = NULL, col.ticks = NULL, hadj = NA, padj = NA, …)</p>
+<code class="highlighter-rouge">
+axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA, pos = NA, outer = FALSE, font = NA, lty = "solid", lwd = 1, lwd.ticks = lwd, col = NULL, col.ticks = NULL, hadj = NA, padj = NA, ...)
+</code></p>
 
-<p><strong>参数说明</strong>
-* side确定添加哪个轴，其中1为x轴，2为y轴，3为上面的轴，4为右面的轴。
-* at确定坐标轴刻度线添加的位置。at也可以不赋值，此时，刻度线会根据默认的算法添加
-* labels确定坐标轴刻度线标签的名称。当at确定后，若labels没有赋值，则会把at的值赋给刻度线标签
-* tck确定刻度线的长短，其中负数为向下，整数向上，越大越长
-* line可以水平移动坐标轴的位置，负的向正方向移动，正的向负方</p>
+<p><strong>参数说明</strong></p>
+
+<ul>
+  <li>side确定添加哪个轴，其中1为x轴，2为y轴，3为上面的轴，4为右面的轴。</li>
+  <li>at确定坐标轴刻度线添加的位置。at也可以不赋值，此时，刻度线会根据默认的算法添加</li>
+  <li>labels确定坐标轴刻度线标签的名称。当at确定后，若labels没有赋值，则会把at的值赋给刻度线标签</li>
+  <li>tck确定刻度线的长短，其中负数为向下，整数向上，越大越长</li>
+  <li>line可以水平移动坐标轴的位置，负的向正方向移动，正的向负方</li>
+</ul>
 
 <h3 id="mtext">mtext函数</h3>
 

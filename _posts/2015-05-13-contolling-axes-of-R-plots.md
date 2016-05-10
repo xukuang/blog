@@ -6,6 +6,7 @@ categories: 技术篇
 tags: [R, 坐标轴]
 ---
 ## 1. 使用到的数据
+
 ```
 set.seed(1)
 n = 100
@@ -36,9 +37,12 @@ plot(x, y, axes = F)
 ### axis函数
 
 axis函数用来添坐标轴(包括坐标轴，刻度线和刻度线标签)
+```
 axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA, pos = NA, outer = FALSE, font = NA, lty = "solid", lwd = 1, lwd.ticks = lwd, col = NULL, col.ticks = NULL, hadj = NA, padj = NA, ...)
+```
 
 **参数说明**
+
 * side确定添加哪个轴，其中1为x轴，2为y轴，3为上面的轴，4为右面的轴。
 * at确定坐标轴刻度线添加的位置。at也可以不赋值，此时，刻度线会根据默认的算法添加
 * labels确定坐标轴刻度线标签的名称。当at确定后，若labels没有赋值，则会把at的值赋给刻度线标签
