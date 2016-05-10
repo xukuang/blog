@@ -43,7 +43,7 @@ ddply(.data, .variables, .fun = NULL, ..., .progress = "none",.inform = FALSE, .
  
 ## 单变量的汇总
  
-常见汇总方式有三种，这里我们用单变量进行举例说明
+常见汇总方式有三种，这里我们用单变量进行举例说明。
 
 ### 整个数据框的汇总（统计数据框的行数和列数，即nrow和ncol）
  	
@@ -92,7 +92,7 @@ ddply(dfx, .(sex), mutate, worktime.mean = mean(worktime))
 ddply(dfx, .(sex), mutate, worktime.sd = sd(worktime))
 ddply(dfx, .(sex), mutate, worktime.sd = median(worktime))
 ```
-　　注意：这种方式下，summarise或者mutate参数至少要选择其中的一个，否则不能得到想要的结果
+　　注意：这种方式下，summarise或者mutate参数至少要选择其中的一个，否则不能得到想要的结果。
 
 ### 通用汇总方式（编写函数）
 	
