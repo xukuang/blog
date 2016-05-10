@@ -117,13 +117,13 @@
 
 <h3 id="nrowncol">整个数据框的汇总（统计数据框的行数和列数，即nrow和ncol）</h3>
 
-<p><code class="highlighter-rouge">
-	## 数据框的汇总，只有函数，但其中没有参数
+<div class="highlighter-rouge"><pre class="highlight"><code>	## 数据框的汇总，只有函数，但其中没有参数
 	ddply(dfx, .(sex), nrow) #这里不能对汇总结果进行命名，即 numrow = nrow 是错误的
 	ddply(dfx, .(sex), ncol) #这里不能对汇总结果进行命名，即 numrow = nrow 是错误的
 	ddply(dfx, .(sex), c("nrow","ncol"))
-	</code>
-　　注意：这种方式是对整个数据框进行的，不能使用summarise或者mutate参数。</p>
+</code></pre>
+</div>
+<p>　　注意：这种方式是对整个数据框进行的，不能使用summarise或者mutate参数。</p>
 
 <h3 id="section-1">数据框中某一列的常见汇总（最大值，最小值，平均值，方差，标准差， 中位数）</h3>
 
