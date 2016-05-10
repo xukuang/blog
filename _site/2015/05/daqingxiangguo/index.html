@@ -24,7 +24,6 @@
       <!--mathjax end-->
    </head>
    <script type="text/javascript">
-   require 'time'
     function setTimeSpan(){
     	var date = new Date();
     	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
@@ -50,7 +49,7 @@
     	return format;
 		}
   </script>
-   <body>
+   <body onLoad="setInterval(setTimeSpan,1000);">
      <div id="container">
        <div id="main" role="main">
          <header>
