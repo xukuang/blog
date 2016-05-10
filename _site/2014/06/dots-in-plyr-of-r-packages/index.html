@@ -191,13 +191,13 @@ ddply(dfx, .(sex), function(x){median(x$worktime)})
 </div>
 
 <ul>
-  <li>
-    <p>colwise函数
-　　colwise函数是plyr包的内置函数，可以对数据框中所有的数据列进行相同的操作，省去每一例的大量重复操作。(类似的功能在dplyr包中可以通过summarise_each或mutate_each来实现)</p>
-  </li>
-  <li>
-    <p>直接对数据列进行相同操作</p>
-  </li>
+  <li>colwise函数</li>
+</ul>
+
+<p>　　colwise函数是plyr包的内置函数，可以对数据框中所有的数据列进行相同的操作，省去每一例的大量重复操作。(类似的功能在dplyr包中可以通过summarise_each或mutate_each来实现)</p>
+
+<ul>
+  <li>直接对数据列进行相同操作</li>
 </ul>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>dfx.data = dfx[, c('age', 'worktime')]
