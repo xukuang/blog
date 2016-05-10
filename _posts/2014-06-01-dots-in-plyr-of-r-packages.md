@@ -92,7 +92,7 @@ ddply(.data, .variables, .fun = NULL, ..., .progress = "none",.inform = FALSE, .
 	ddply(dfx, .(sex), mutate, worktime.sd = sd(worktime))
 	ddply(dfx, .(sex), mutate, worktime.sd = median(worktime))
 	
-	```
+```
 　　注意：这种方式下，summarise或者mutate参数至少要选择其中的一个，否则不能得到想要的结果
 
 ### 通用汇总方式（编写函数）
@@ -101,21 +101,22 @@ ddply(.data, .variables, .fun = NULL, ..., .progress = "none",.inform = FALSE, .
 
 * 1对应的函数调用方式
 	
-	```R
+```R
 	ddply(dfx, .(sex), function(x){nrow(x)}) # 不能对汇总结果进行重新命名，即numrow = nrow(x)是错误的
 	ddply(dfx, .(sex), function(x){ncol(x)}) # 不能对汇总结果进行重新命名，即numcol = ncol(x)是错误的
-	```
+```
 
 * 2对应的函数调用方式
 
-	```R
+```R
 	## 这里其实对应2中summarise参数的形式
 	ddply(dfx, .(sex), function(x){max(x$worktime)})
 	ddply(dfx, .(sex), function(x){min(x$worktime)})
 	ddply(dfx, .(sex), function(x){mean(x$worktime)})
 	ddply(dfx, .(sex), function(x){sd(x$worktime)})
 	ddply(dfx, .(sex), function(x){median(x$worktime)})
-	```
+```
+
 * colwise函数
 　　colwise函数是plyr包的内置函数，可以对数据框中所有的数据列进行相同的操作，省去每一例的大量重复操作。(类似的功能在dplyr包中可以通过summarise_each或mutate_each来实现)
 

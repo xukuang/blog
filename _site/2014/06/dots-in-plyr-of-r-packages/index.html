@@ -161,43 +161,53 @@
 	ddply(dfx, .(sex), mutate, worktime.sd = sd(worktime))
 	ddply(dfx, .(sex), mutate, worktime.sd = median(worktime))
 	
-	```
-　　注意：这种方式下，summarise或者mutate参数至少要选择其中的一个，否则不能得到想要的结果
-
-### 通用汇总方式（编写函数）
-	
-　　这种汇总方式是最通用的汇总方式，其中的函数参数为数据框。事实上，1,2的汇总方式都可以通过3的汇总方式调用函数实现。
-
-* 1对应的函数调用方式
-	
-	```R
-	ddply(dfx, .(sex), function(x){nrow(x)}) # 不能对汇总结果进行重新命名，即numrow = nrow(x)是错误的
-	ddply(dfx, .(sex), function(x){ncol(x)}) # 不能对汇总结果进行重新命名，即numcol = ncol(x)是错误的
-	```
-
-* 2对应的函数调用方式
-
-	```R
-	## 这里其实对应2中summarise参数的形式
-	ddply(dfx, .(sex), function(x){max(x$worktime)})
-	ddply(dfx, .(sex), function(x){min(x$worktime)})
-	ddply(dfx, .(sex), function(x){mean(x$worktime)})
-	ddply(dfx, .(sex), function(x){sd(x$worktime)})
-	ddply(dfx, .(sex), function(x){median(x$worktime)})
-	```
-* colwise函数
-　　colwise函数是plyr包的内置函数，可以对数据框中所有的数据列进行相同的操作，省去每一例的大量重复操作。(类似的功能在dplyr包中可以通过summarise_each或mutate_each来实现)
-
-* 直接对数据列进行相同操作
-
 </code></pre>
 </div>
-<p>dfx.data = dfx[, c(‘age’, ‘worktime’)]
+<p>　　注意：这种方式下，summarise或者mutate参数至少要选择其中的一个，否则不能得到想要的结果</p>
+
+<h3 id="section-2">通用汇总方式（编写函数）</h3>
+
+<p>　　这种汇总方式是最通用的汇总方式，其中的函数参数为数据框。事实上，1,2的汇总方式都可以通过3的汇总方式调用函数实现。</p>
+
+<ul>
+  <li>1对应的函数调用方式</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>	<span class="n">ddply</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="err">.</span><span class="p">(</span><span class="n">sex</span><span class="p">),</span> <span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="n">nrow</span><span class="p">(</span><span class="n">x</span><span class="p">)})</span> <span class="c1"># 不能对汇总结果进行重新命名，即numrow = nrow(x)是错误的
+</span>	<span class="n">ddply</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="err">.</span><span class="p">(</span><span class="n">sex</span><span class="p">),</span> <span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="n">ncol</span><span class="p">(</span><span class="n">x</span><span class="p">)})</span> <span class="c1"># 不能对汇总结果进行重新命名，即numcol = ncol(x)是错误的
+</span></code></pre>
+</div>
+
+<ul>
+  <li>2对应的函数调用方式</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>	<span class="c1">## 这里其实对应2中summarise参数的形式
+</span>	<span class="n">ddply</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="err">.</span><span class="p">(</span><span class="n">sex</span><span class="p">),</span> <span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="o">$</span><span class="n">worktime</span><span class="p">)})</span>
+	<span class="n">ddply</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="err">.</span><span class="p">(</span><span class="n">sex</span><span class="p">),</span> <span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="n">min</span><span class="p">(</span><span class="n">x</span><span class="o">$</span><span class="n">worktime</span><span class="p">)})</span>
+	<span class="n">ddply</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="err">.</span><span class="p">(</span><span class="n">sex</span><span class="p">),</span> <span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="o">$</span><span class="n">worktime</span><span class="p">)})</span>
+	<span class="n">ddply</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="err">.</span><span class="p">(</span><span class="n">sex</span><span class="p">),</span> <span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="n">sd</span><span class="p">(</span><span class="n">x</span><span class="o">$</span><span class="n">worktime</span><span class="p">)})</span>
+	<span class="n">ddply</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="err">.</span><span class="p">(</span><span class="n">sex</span><span class="p">),</span> <span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="n">median</span><span class="p">(</span><span class="n">x</span><span class="o">$</span><span class="n">worktime</span><span class="p">)})</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>
+    <p>colwise函数
+　　colwise函数是plyr包的内置函数，可以对数据框中所有的数据列进行相同的操作，省去每一例的大量重复操作。(类似的功能在dplyr包中可以通过summarise_each或mutate_each来实现)</p>
+  </li>
+  <li>
+    <p>直接对数据列进行相同操作</p>
+  </li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dfx.data = dfx[, c('age', 'worktime')]
 dfx.data
 colwise(mean)(dfx.data)
 colwise(mean)(dfx.data)
-```
-　　这里对所有列求平均值时，如果某些列是字符无法进行相应操作，则为返回NA，只是有“warning messages:”的提示，但是并不影响最终的结果，因此，也可以直接求平均值。</p>
+</code></pre>
+</div>
+<p>　　这里对所有列求平均值时，如果某些列是字符无法进行相应操作，则为返回NA，只是有“warning messages:”的提示，但是并不影响最终的结果，因此，也可以直接求平均值。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>colwise(mean)(dfx)
 colwise(mean)(dfx)
@@ -213,7 +223,7 @@ colwise(mean)(dfx)
 </div>
 <p>　　事实上，通用汇总方式的用途比我们的例子强大的多，这里有点就事论事的味道，反而限制了该方式的灵活运用。</p>
 
-<h2 id="section-2">多变量的汇总</h2>
+<h2 id="section-3">多变量的汇总</h2>
 <p>plyr包当然不仅仅可以对单一列变量进行分析，还可以以进行多变量的分析。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>ddply(dfx, .(sex, age), function(x){mean(x$worktime)})
