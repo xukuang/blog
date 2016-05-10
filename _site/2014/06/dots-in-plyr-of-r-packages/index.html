@@ -117,14 +117,15 @@
 
 <h3 id="nrowncol">整个数据框的汇总（统计数据框的行数和列数，即nrow和ncol）</h3>
 
-<p><code class="highlighter-rouge">R
+<p><code class="highlighter-rouge">
 	## 数据框的汇总，只有函数，但其中没有参数
 	ddply(dfx, .(sex), nrow) #这里不能对汇总结果进行命名，即 numrow = nrow 是错误的
 	ddply(dfx, .(sex), ncol) #这里不能对汇总结果进行命名，即 numrow = nrow 是错误的
 	ddply(dfx, .(sex), c("nrow","ncol"))
 	</code>
-　　注意：这种方式是对整个数据框进行的，不能使用summarise或者mutate参数。
-### 数据框中某一列的常见汇总（最大值，最小值，平均值，方差，标准差， 中位数）</p>
+　　注意：这种方式是对整个数据框进行的，不能使用summarise或者mutate参数。</p>
+
+<h3 id="section-1">数据框中某一列的常见汇总（最大值，最小值，平均值，方差，标准差， 中位数）</h3>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>	<span class="c1">## 数据框某一列的汇总，函数中包含参数，需借助summarise或mutate参数
 </span>	<span class="c1">## summarise参数和mutate参数的区别与函数summarise和mutate的区别一样，
@@ -211,7 +212,7 @@ colwise(mean)(dfx)
 </div>
 <p>　　事实上，通用汇总方式的用途比我们的例子强大的多，这里有点就事论事的味道，反而限制了该方式的灵活运用。</p>
 
-<h2 id="section-1">多变量的汇总</h2>
+<h2 id="section-2">多变量的汇总</h2>
 <p>plyr包当然不仅仅可以对单一列变量进行分析，还可以以进行多变量的分析。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>ddply(dfx, .(sex, age), function(x){mean(x$worktime)})

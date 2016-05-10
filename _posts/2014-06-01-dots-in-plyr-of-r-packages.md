@@ -47,13 +47,14 @@ ddply(.data, .variables, .fun = NULL, ..., .progress = "none",.inform = FALSE, .
 
 ### 整个数据框的汇总（统计数据框的行数和列数，即nrow和ncol）
  	
- ```R
+ ```
 	## 数据框的汇总，只有函数，但其中没有参数
 	ddply(dfx, .(sex), nrow) #这里不能对汇总结果进行命名，即 numrow = nrow 是错误的
 	ddply(dfx, .(sex), ncol) #这里不能对汇总结果进行命名，即 numrow = nrow 是错误的
 	ddply(dfx, .(sex), c("nrow","ncol"))
 	```
 　　注意：这种方式是对整个数据框进行的，不能使用summarise或者mutate参数。
+
 ### 数据框中某一列的常见汇总（最大值，最小值，平均值，方差，标准差， 中位数）
 	
 ```R
