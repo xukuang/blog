@@ -159,9 +159,8 @@
 </div>
 
 <h2 id="groupby--ungroup-2">group_by &amp; ungroup延伸</h2>
-<p>使用<strong>group_by</strong>函数进行分组的数据，数据本身常常包含着分组依据，所以在未去除分组（<strong>ungroup</strong>）或下一次分组（使用<strong>group_by</strong>）前，分组依据常常保留，这会影响一些函数的运算结果，其中包括<strong>filter</strong>，<strong>arrange</strong>函数和指标函数(<strong>n</strong>，<strong>sum</strong>，<strong>mean</strong>，<strong>sd</strong>，<strong>var</strong>，<strong>min</strong>，<strong>max</strong>函数）</p>
-
-<h3 id="filter">filter函数</h3>
+<p>使用<strong>group_by</strong>函数进行分组的数据，数据本身常常包含着分组依据，所以在未去除分组（<strong>ungroup</strong>）或下一次分组（使用<strong>group_by</strong>）前，分组依据常常保留，这会影响一些函数的运算结果，其中包括<strong>filter</strong>，<strong>arrange</strong>函数和指标函数。
+### filter函数</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">### 这里按cyl进行分组，所以筛选结果有3条
 </span><span class="n">filter</span><span class="p">(</span><span class="n">by_cyl</span><span class="p">,</span> <span class="n">disp</span> <span class="o">==</span> <span class="n">max</span><span class="p">(</span><span class="n">disp</span><span class="p">))</span>
@@ -302,7 +301,7 @@ $(function(){
 	   
 	   
 	   <footer>
-           <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> & <a href="http://pages.github.com">GitHub</a>| Copyright  2016 by <a href="http://xukuang.github.io/blog/about/">Xu Kuang</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+           <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> & <a href="http://pages.github.com">GitHub</a>| Copyright  2016 by <a href="http://xukuang.github.io/blog/about/">Xu Kuang</a> | <span class="label label-info" id="timeSpan" style = 'background-color:rgb(0, 0, 238)></span></small></p>
        </footer>
 	   
 	   
