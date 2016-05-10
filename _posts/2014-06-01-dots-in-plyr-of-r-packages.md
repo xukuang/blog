@@ -12,20 +12,20 @@ tags: [plyr, R]
 　　**summarise**和**mutate**函数都可以对一个数据框的某一列**(而不是整个数据框)**进行修改和汇总，两者的主要区别在于返回结果的方式不同，其中**summarise**函数返回一个只包含修改或汇总后数据的数据框，而**mutate**函数则返回一个由原始数据和修改或汇总后数据两部分构成的数据框。具体内容加下面代码：<!--more-->
 
 ```R
-	require(plyr)
-	set.seed(1) # 保证每次产生的数据框的唯一性
-	dfx <- data.frame(
-	  group = c(rep('A', 8), rep('B', 15), rep('C', 6)),
-	  sex = sample(c("M", "F"), size = 29, replace = TRUE),
-	  age = sample(20:30, size = 29, replace = TRUE),
-	  worktime = sample(1:5, size = 29, replace = TRUE)
-	)
-	### 数据修改
-	summarise(dfx, age = age + 1) # 返回一个只含一列age的数据框
-	mutate(dfx, age = age + 1) # 返回一个和dfx列数一样的4列数据框，但age列的数值已经修改
-	### 数据汇总
-	summarise(dfx, mean.age = mean(age), sd.age = sd(age)) # 返回一个只含汇总结果的2列数据框
-	mutate(dfx, mean.age = mean(age), sd.age = sd(age)) # 返回一个由dfx和汇总结果组成的4列数据框
+require(plyr)
+set.seed(1) # 保证每次产生的数据框的唯一性
+dfx <- data.frame(
+  group = c(rep('A', 8), rep('B', 15), rep('C', 6)),
+  sex = sample(c("M", "F"), size = 29, replace = TRUE),
+  age = sample(20:30, size = 29, replace = TRUE),
+  worktime = sample(1:5, size = 29, replace = TRUE)
+)
+### 数据修改
+summarise(dfx, age = age + 1) # 返回一个只含一列age的数据框
+mutate(dfx, age = age + 1) # 返回一个和dfx列数一样的4列数据框，但age列的数值已经修改
+### 数据汇总
+summarise(dfx, mean.age = mean(age), sd.age = sd(age)) # 返回一个只含汇总结果的2列数据框
+mutate(dfx, mean.age = mean(age), sd.age = sd(age)) # 返回一个由dfx和汇总结果组成的4列数据框
 ```
 
 ## ddply函数
@@ -48,10 +48,10 @@ ddply(.data, .variables, .fun = NULL, ..., .progress = "none",.inform = FALSE, .
 ### 整个数据框的汇总（统计数据框的行数和列数，即nrow和ncol）
  	
 ```
-	## 数据框的汇总，只有函数，但其中没有参数
-	ddply(dfx, .(sex), nrow) #这里不能对汇总结果进行命名，即 numrow = nrow 是错误的
-	ddply(dfx, .(sex), ncol) #这里不能对汇总结果进行命名，即 numrow = nrow 是错误的
-	ddply(dfx, .(sex), c("nrow","ncol"))
+## 数据框的汇总，只有函数，但其中没有参数
+ddply(dfx, .(sex), nrow) #这里不能对汇总结果进行命名，即 numrow = nrow 是错误的
+ddply(dfx, .(sex), ncol) #这里不能对汇总结果进行命名，即 numrow = nrow 是错误的
+ddply(dfx, .(sex), c("nrow","ncol"))
 ```
 　　注意：这种方式是对整个数据框进行的，不能使用summarise或者mutate参数。
 
@@ -59,39 +59,38 @@ ddply(.data, .variables, .fun = NULL, ..., .progress = "none",.inform = FALSE, .
 对某一列的汇总主要包括最大值，最小值，平均值，方差，标准差， 中位数。
 	
 ```
-	## 数据框某一列的汇总，函数中包含参数，需借助summarise或mutate参数
-	## summarise参数和mutate参数的区别与函数summarise和mutate的区别一样，
-	## summarise参数返回的结果只包含汇总结果，mutate参数返回结果包含原始数据和汇总数据
-		## summarise
-	ddply(dfx, .(sex), summarise, max(worktime))
-	ddply(dfx, .(sex), summarise, min(worktime))
-	ddply(dfx, .(sex), summarise, mean(worktime))
-	ddply(dfx, .(sex), summarise, sd(worktime))
-	ddply(dfx, .(sex), summarise, median(worktime))
-	## mutate
-	ddply(dfx, .(sex), mutate, max(worktime))
-	ddply(dfx, .(sex), mutate, min(worktime))
-	ddply(dfx, .(sex), mutate, mean(worktime))
-	ddply(dfx, .(sex), mutate, sd(worktime))
-	ddply(dfx, .(sex), mutate, median(worktime))
+## 数据框某一列的汇总，函数中包含参数，需借助summarise或mutate参数
+## summarise参数和mutate参数的区别与函数summarise和mutate的区别一样，
+## summarise参数返回的结果只包含汇总结果，mutate参数返回结果包含原始数据和汇总数据
+	## summarise
+ddply(dfx, .(sex), summarise, max(worktime))
+ddply(dfx, .(sex), summarise, min(worktime))
+ddply(dfx, .(sex), summarise, mean(worktime))
+ddply(dfx, .(sex), summarise, sd(worktime))
+ddply(dfx, .(sex), summarise, median(worktime))
+## mutate
+ddply(dfx, .(sex), mutate, max(worktime))
+ddply(dfx, .(sex), mutate, min(worktime))
+ddply(dfx, .(sex), mutate, mean(worktime))
+ddply(dfx, .(sex), mutate, sd(worktime))
+ddply(dfx, .(sex), mutate, median(worktime))
 ```
 
 注意：三种汇总方式中，只有这种方式可以选择性对汇总结果进行命名，即下面的使用方式也是对的。
 	
 ```
-	## summarise
-	ddply(dfx, .(sex), summarise, worktime.max = max(worktime))
-	ddply(dfx, .(sex), summarise, worktime.min = min(worktime))
-	ddply(dfx, .(sex), summarise, worktime.mean = mean(worktime))
-	ddply(dfx, .(sex), summarise, worktime.sd = sd(worktime))
-	ddply(dfx, .(sex), summarise, worktime.sd = median(worktime))
-	## mutate
-	ddply(dfx, .(sex), mutate, worktime.max = max(worktime))
-	ddply(dfx, .(sex), mutate, worktime.min = min(worktime))
-	ddply(dfx, .(sex), mutate, worktime.mean = mean(worktime))
-	ddply(dfx, .(sex), mutate, worktime.sd = sd(worktime))
-	ddply(dfx, .(sex), mutate, worktime.sd = median(worktime))
-	
+## summarise
+ddply(dfx, .(sex), summarise, worktime.max = max(worktime))
+ddply(dfx, .(sex), summarise, worktime.min = min(worktime))
+ddply(dfx, .(sex), summarise, worktime.mean = mean(worktime))
+ddply(dfx, .(sex), summarise, worktime.sd = sd(worktime))
+ddply(dfx, .(sex), summarise, worktime.sd = median(worktime))
+## mutate
+ddply(dfx, .(sex), mutate, worktime.max = max(worktime))
+ddply(dfx, .(sex), mutate, worktime.min = min(worktime))
+ddply(dfx, .(sex), mutate, worktime.mean = mean(worktime))
+ddply(dfx, .(sex), mutate, worktime.sd = sd(worktime))
+ddply(dfx, .(sex), mutate, worktime.sd = median(worktime))
 ```
 　　注意：这种方式下，summarise或者mutate参数至少要选择其中的一个，否则不能得到想要的结果
 
@@ -101,20 +100,20 @@ ddply(.data, .variables, .fun = NULL, ..., .progress = "none",.inform = FALSE, .
 
 * 1对应的函数调用方式
 	
-```R
-	ddply(dfx, .(sex), function(x){nrow(x)}) # 不能对汇总结果进行重新命名，即numrow = nrow(x)是错误的
-	ddply(dfx, .(sex), function(x){ncol(x)}) # 不能对汇总结果进行重新命名，即numcol = ncol(x)是错误的
+```
+ddply(dfx, .(sex), function(x){nrow(x)}) # 不能对汇总结果进行重新命名，即numrow = nrow(x)是错误的
+ddply(dfx, .(sex), function(x){ncol(x)}) # 不能对汇总结果进行重新命名，即numcol = ncol(x)是错误的
 ```
 
 * 2对应的函数调用方式
 
-```R
-	## 这里其实对应2中summarise参数的形式
-	ddply(dfx, .(sex), function(x){max(x$worktime)})
-	ddply(dfx, .(sex), function(x){min(x$worktime)})
-	ddply(dfx, .(sex), function(x){mean(x$worktime)})
-	ddply(dfx, .(sex), function(x){sd(x$worktime)})
-	ddply(dfx, .(sex), function(x){median(x$worktime)})
+```
+## 这里其实对应2中summarise参数的形式
+ddply(dfx, .(sex), function(x){max(x$worktime)})
+ddply(dfx, .(sex), function(x){min(x$worktime)})
+ddply(dfx, .(sex), function(x){mean(x$worktime)})
+ddply(dfx, .(sex), function(x){sd(x$worktime)})
+ddply(dfx, .(sex), function(x){median(x$worktime)})
 ```
 
 * colwise函数

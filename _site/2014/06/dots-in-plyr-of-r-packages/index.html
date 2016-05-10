@@ -81,20 +81,20 @@
 <h2 id="summarise--mutate-">summarise 和 mutate 函数</h2>
 <p>　　<strong>summarise</strong>和<strong>mutate</strong>函数都可以对一个数据框的某一列<strong>(而不是整个数据框)</strong>进行修改和汇总，两者的主要区别在于返回结果的方式不同，其中<strong>summarise</strong>函数返回一个只包含修改或汇总后数据的数据框，而<strong>mutate</strong>函数则返回一个由原始数据和修改或汇总后数据两部分构成的数据框。具体内容加下面代码：<!--more--></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>	<span class="n">require</span><span class="p">(</span><span class="n">plyr</span><span class="p">)</span>
-	<span class="n">set.seed</span><span class="p">(</span><span class="m">1</span><span class="p">)</span> <span class="c1"># 保证每次产生的数据框的唯一性
-</span>	<span class="n">dfx</span> <span class="o">&lt;-</span> <span class="n">data.frame</span><span class="p">(</span>
-	  <span class="n">group</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="n">rep</span><span class="p">(</span><span class="s1">'A'</span><span class="p">,</span> <span class="m">8</span><span class="p">),</span> <span class="n">rep</span><span class="p">(</span><span class="s1">'B'</span><span class="p">,</span> <span class="m">15</span><span class="p">),</span> <span class="n">rep</span><span class="p">(</span><span class="s1">'C'</span><span class="p">,</span> <span class="m">6</span><span class="p">)),</span>
-	  <span class="n">sex</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="s2">"M"</span><span class="p">,</span> <span class="s2">"F"</span><span class="p">),</span> <span class="n">size</span> <span class="o">=</span> <span class="m">29</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">),</span>
-	  <span class="n">age</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="m">20</span><span class="o">:</span><span class="m">30</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="m">29</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">),</span>
-	  <span class="n">worktime</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="m">29</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
-	<span class="p">)</span>
-	<span class="c1">### 数据修改
-</span>	<span class="n">summarise</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="n">age</span> <span class="o">=</span> <span class="n">age</span> <span class="o">+</span> <span class="m">1</span><span class="p">)</span> <span class="c1"># 返回一个只含一列age的数据框
-</span>	<span class="n">mutate</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="n">age</span> <span class="o">=</span> <span class="n">age</span> <span class="o">+</span> <span class="m">1</span><span class="p">)</span> <span class="c1"># 返回一个和dfx列数一样的4列数据框，但age列的数值已经修改
-</span>	<span class="c1">### 数据汇总
-</span>	<span class="n">summarise</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="n">mean.age</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">age</span><span class="p">),</span> <span class="n">sd.age</span> <span class="o">=</span> <span class="n">sd</span><span class="p">(</span><span class="n">age</span><span class="p">))</span> <span class="c1"># 返回一个只含汇总结果的2列数据框
-</span>	<span class="n">mutate</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="n">mean.age</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">age</span><span class="p">),</span> <span class="n">sd.age</span> <span class="o">=</span> <span class="n">sd</span><span class="p">(</span><span class="n">age</span><span class="p">))</span> <span class="c1"># 返回一个由dfx和汇总结果组成的4列数据框
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">plyr</span><span class="p">)</span>
+<span class="n">set.seed</span><span class="p">(</span><span class="m">1</span><span class="p">)</span> <span class="c1"># 保证每次产生的数据框的唯一性
+</span><span class="n">dfx</span> <span class="o">&lt;-</span> <span class="n">data.frame</span><span class="p">(</span>
+  <span class="n">group</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="n">rep</span><span class="p">(</span><span class="s1">'A'</span><span class="p">,</span> <span class="m">8</span><span class="p">),</span> <span class="n">rep</span><span class="p">(</span><span class="s1">'B'</span><span class="p">,</span> <span class="m">15</span><span class="p">),</span> <span class="n">rep</span><span class="p">(</span><span class="s1">'C'</span><span class="p">,</span> <span class="m">6</span><span class="p">)),</span>
+  <span class="n">sex</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="s2">"M"</span><span class="p">,</span> <span class="s2">"F"</span><span class="p">),</span> <span class="n">size</span> <span class="o">=</span> <span class="m">29</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">),</span>
+  <span class="n">age</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="m">20</span><span class="o">:</span><span class="m">30</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="m">29</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">),</span>
+  <span class="n">worktime</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="m">29</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="c1">### 数据修改
+</span><span class="n">summarise</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="n">age</span> <span class="o">=</span> <span class="n">age</span> <span class="o">+</span> <span class="m">1</span><span class="p">)</span> <span class="c1"># 返回一个只含一列age的数据框
+</span><span class="n">mutate</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="n">age</span> <span class="o">=</span> <span class="n">age</span> <span class="o">+</span> <span class="m">1</span><span class="p">)</span> <span class="c1"># 返回一个和dfx列数一样的4列数据框，但age列的数值已经修改
+### 数据汇总
+</span><span class="n">summarise</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="n">mean.age</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">age</span><span class="p">),</span> <span class="n">sd.age</span> <span class="o">=</span> <span class="n">sd</span><span class="p">(</span><span class="n">age</span><span class="p">))</span> <span class="c1"># 返回一个只含汇总结果的2列数据框
+</span><span class="n">mutate</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="n">mean.age</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">age</span><span class="p">),</span> <span class="n">sd.age</span> <span class="o">=</span> <span class="n">sd</span><span class="p">(</span><span class="n">age</span><span class="p">))</span> <span class="c1"># 返回一个由dfx和汇总结果组成的4列数据框
 </span></code></pre>
 </div>
 
@@ -117,10 +117,10 @@
 
 <h3 id="nrowncol">整个数据框的汇总（统计数据框的行数和列数，即nrow和ncol）</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>	## 数据框的汇总，只有函数，但其中没有参数
-	ddply(dfx, .(sex), nrow) #这里不能对汇总结果进行命名，即 numrow = nrow 是错误的
-	ddply(dfx, .(sex), ncol) #这里不能对汇总结果进行命名，即 numrow = nrow 是错误的
-	ddply(dfx, .(sex), c("nrow","ncol"))
+<div class="highlighter-rouge"><pre class="highlight"><code>## 数据框的汇总，只有函数，但其中没有参数
+ddply(dfx, .(sex), nrow) #这里不能对汇总结果进行命名，即 numrow = nrow 是错误的
+ddply(dfx, .(sex), ncol) #这里不能对汇总结果进行命名，即 numrow = nrow 是错误的
+ddply(dfx, .(sex), c("nrow","ncol"))
 </code></pre>
 </div>
 <p>　　注意：这种方式是对整个数据框进行的，不能使用summarise或者mutate参数。</p>
@@ -128,39 +128,38 @@
 <h3 id="section-1">数据框中某一列的汇总</h3>
 <p>对某一列的汇总主要包括最大值，最小值，平均值，方差，标准差， 中位数。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>	## 数据框某一列的汇总，函数中包含参数，需借助summarise或mutate参数
-	## summarise参数和mutate参数的区别与函数summarise和mutate的区别一样，
-	## summarise参数返回的结果只包含汇总结果，mutate参数返回结果包含原始数据和汇总数据
-		## summarise
-	ddply(dfx, .(sex), summarise, max(worktime))
-	ddply(dfx, .(sex), summarise, min(worktime))
-	ddply(dfx, .(sex), summarise, mean(worktime))
-	ddply(dfx, .(sex), summarise, sd(worktime))
-	ddply(dfx, .(sex), summarise, median(worktime))
-	## mutate
-	ddply(dfx, .(sex), mutate, max(worktime))
-	ddply(dfx, .(sex), mutate, min(worktime))
-	ddply(dfx, .(sex), mutate, mean(worktime))
-	ddply(dfx, .(sex), mutate, sd(worktime))
-	ddply(dfx, .(sex), mutate, median(worktime))
+<div class="highlighter-rouge"><pre class="highlight"><code>## 数据框某一列的汇总，函数中包含参数，需借助summarise或mutate参数
+## summarise参数和mutate参数的区别与函数summarise和mutate的区别一样，
+## summarise参数返回的结果只包含汇总结果，mutate参数返回结果包含原始数据和汇总数据
+	## summarise
+ddply(dfx, .(sex), summarise, max(worktime))
+ddply(dfx, .(sex), summarise, min(worktime))
+ddply(dfx, .(sex), summarise, mean(worktime))
+ddply(dfx, .(sex), summarise, sd(worktime))
+ddply(dfx, .(sex), summarise, median(worktime))
+## mutate
+ddply(dfx, .(sex), mutate, max(worktime))
+ddply(dfx, .(sex), mutate, min(worktime))
+ddply(dfx, .(sex), mutate, mean(worktime))
+ddply(dfx, .(sex), mutate, sd(worktime))
+ddply(dfx, .(sex), mutate, median(worktime))
 </code></pre>
 </div>
 
 <p>注意：三种汇总方式中，只有这种方式可以选择性对汇总结果进行命名，即下面的使用方式也是对的。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>	## summarise
-	ddply(dfx, .(sex), summarise, worktime.max = max(worktime))
-	ddply(dfx, .(sex), summarise, worktime.min = min(worktime))
-	ddply(dfx, .(sex), summarise, worktime.mean = mean(worktime))
-	ddply(dfx, .(sex), summarise, worktime.sd = sd(worktime))
-	ddply(dfx, .(sex), summarise, worktime.sd = median(worktime))
-	## mutate
-	ddply(dfx, .(sex), mutate, worktime.max = max(worktime))
-	ddply(dfx, .(sex), mutate, worktime.min = min(worktime))
-	ddply(dfx, .(sex), mutate, worktime.mean = mean(worktime))
-	ddply(dfx, .(sex), mutate, worktime.sd = sd(worktime))
-	ddply(dfx, .(sex), mutate, worktime.sd = median(worktime))
-	
+<div class="highlighter-rouge"><pre class="highlight"><code>## summarise
+ddply(dfx, .(sex), summarise, worktime.max = max(worktime))
+ddply(dfx, .(sex), summarise, worktime.min = min(worktime))
+ddply(dfx, .(sex), summarise, worktime.mean = mean(worktime))
+ddply(dfx, .(sex), summarise, worktime.sd = sd(worktime))
+ddply(dfx, .(sex), summarise, worktime.sd = median(worktime))
+## mutate
+ddply(dfx, .(sex), mutate, worktime.max = max(worktime))
+ddply(dfx, .(sex), mutate, worktime.min = min(worktime))
+ddply(dfx, .(sex), mutate, worktime.mean = mean(worktime))
+ddply(dfx, .(sex), mutate, worktime.sd = sd(worktime))
+ddply(dfx, .(sex), mutate, worktime.sd = median(worktime))
 </code></pre>
 </div>
 <p>　　注意：这种方式下，summarise或者mutate参数至少要选择其中的一个，否则不能得到想要的结果</p>
@@ -173,21 +172,21 @@
   <li>1对应的函数调用方式</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>	<span class="n">ddply</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="err">.</span><span class="p">(</span><span class="n">sex</span><span class="p">),</span> <span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="n">nrow</span><span class="p">(</span><span class="n">x</span><span class="p">)})</span> <span class="c1"># 不能对汇总结果进行重新命名，即numrow = nrow(x)是错误的
-</span>	<span class="n">ddply</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="err">.</span><span class="p">(</span><span class="n">sex</span><span class="p">),</span> <span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="n">ncol</span><span class="p">(</span><span class="n">x</span><span class="p">)})</span> <span class="c1"># 不能对汇总结果进行重新命名，即numcol = ncol(x)是错误的
-</span></code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code>ddply(dfx, .(sex), function(x){nrow(x)}) # 不能对汇总结果进行重新命名，即numrow = nrow(x)是错误的
+ddply(dfx, .(sex), function(x){ncol(x)}) # 不能对汇总结果进行重新命名，即numcol = ncol(x)是错误的
+</code></pre>
 </div>
 
 <ul>
   <li>2对应的函数调用方式</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>	<span class="c1">## 这里其实对应2中summarise参数的形式
-</span>	<span class="n">ddply</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="err">.</span><span class="p">(</span><span class="n">sex</span><span class="p">),</span> <span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="o">$</span><span class="n">worktime</span><span class="p">)})</span>
-	<span class="n">ddply</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="err">.</span><span class="p">(</span><span class="n">sex</span><span class="p">),</span> <span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="n">min</span><span class="p">(</span><span class="n">x</span><span class="o">$</span><span class="n">worktime</span><span class="p">)})</span>
-	<span class="n">ddply</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="err">.</span><span class="p">(</span><span class="n">sex</span><span class="p">),</span> <span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="o">$</span><span class="n">worktime</span><span class="p">)})</span>
-	<span class="n">ddply</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="err">.</span><span class="p">(</span><span class="n">sex</span><span class="p">),</span> <span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="n">sd</span><span class="p">(</span><span class="n">x</span><span class="o">$</span><span class="n">worktime</span><span class="p">)})</span>
-	<span class="n">ddply</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span> <span class="err">.</span><span class="p">(</span><span class="n">sex</span><span class="p">),</span> <span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="n">median</span><span class="p">(</span><span class="n">x</span><span class="o">$</span><span class="n">worktime</span><span class="p">)})</span>
+<div class="highlighter-rouge"><pre class="highlight"><code>## 这里其实对应2中summarise参数的形式
+ddply(dfx, .(sex), function(x){max(x$worktime)})
+ddply(dfx, .(sex), function(x){min(x$worktime)})
+ddply(dfx, .(sex), function(x){mean(x$worktime)})
+ddply(dfx, .(sex), function(x){sd(x$worktime)})
+ddply(dfx, .(sex), function(x){median(x$worktime)})
 </code></pre>
 </div>
 
