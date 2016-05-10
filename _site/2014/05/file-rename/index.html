@@ -23,6 +23,32 @@
       </script>
       <!--mathjax end-->
    </head>
+   <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+    
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
    <body>
      <div id="container">
        <div id="main" role="main">
@@ -48,7 +74,6 @@
             </li>
            </ul>-->
          </nav>
-	
          <article class="content">
            <section class="post">
 <h2 id="section">缘由</h2>
@@ -166,18 +191,44 @@ $(function(){
 
 
          </article>
-                                                </div>
-                                                </div>
-                                                <script type="text/javascript">
-                                                  var _gaq = _gaq || [];
-                                                  _gaq.push(['_setAccount', '']);
-                                                  _gaq.push(['_trackPageview']);
-                                                  (function() {
-                                                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                                                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                                                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-                                                  })();
-                                                  </script>
-                                                    </body>
-                                                    </html>
+       </div>
+	   
+	   
+	   <footer>
+           <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> & <a href="http://pages.github.com">GitHub</a>| Copyright 2012 - 2016 by <a href="/about/">andieguo</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+       </footer>
+	   
+	   
+	   </div>
+       
+	   <script type="text/javascript">
+         var _gaq = _gaq || [];
+         _gaq.push(['_setAccount', '']);
+         _gaq.push(['_trackPageview']);
+         (function() {
+           var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+           ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        </script>
+		
+		<!-- Baidu share -->
+	<script type="text/javascript">
+	window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"32"},"slide":{"type":"slide","bdImg":"0","bdPos":"right","bdTop":"100"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+	</script>
+
+    <!-- Baidu Button BEGIN -->
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?310f86f887042ea3a15786be6e96eb30";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+	<!-- Baidu Button END -->
+	
+    </body>
+  </html>
                                                     

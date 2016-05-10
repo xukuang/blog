@@ -23,6 +23,32 @@
       </script>
       <!--mathjax end-->
    </head>
+   <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+    
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
    <body>
      <div id="container">
        <div id="main" role="main">
@@ -48,7 +74,6 @@
             </li>
            </ul>-->
          </nav>
-	
          <article class="content">
            <section class="post">
 <p>　　距离<strong>dropbox</strong>不能使用已经有一段时间，期间一直在寻找dropbox能够继续使用的方法，各种不成功，习惯了dropbox的好，一下子不能用了，让人十分不适。与国内其他替代品相比，dropbox优点多多，然而其最牛气的功能就是能够保存文件的版本记录历史来寻找文件。这一牛气的优点足以甩开国内一味提供大容量空间的网络云盘几条街。好吧，不得不承认我以前认识的肤浅，尽管可能现在的认识也不专业，但跟以往有了不同。dropbox最重要的优点体现在它的准确性，及时准备地发现内容改变的文件，并同步到云端。比如，我现在用的国内某云盘，在用hexo推送博文产生大量新文件后，就会产生假死现象，无法同步，不得不重启云盘。其次，dropbox的使用简单，只需要设定dropbox的默认工作目录，就可以实现本地和云盘的快速同步，这个优点是在dropbox彻底不能使用了转到国内某云盘时才发现的。什么自动备份，同步文件，还有麻烦的设置，用了较长的时间才能上手。好吧，可能是我比较low。不过，有胜于无吧，只能凑合着用了。我还是太天真了，居然以为国内某云盘，能够凑合这了呢？最近，才发现差的远呢？云盘识别不出来云端与本地的同一个文件，居然自己主动地在本地和云端建了一个同一文件的复制文件。你豪，你家的云盘大，可我的云盘吃不消啊。此外，还发现一个好端端的文件夹想同步到云盘，居然反复被提醒好几个文件不符合法律规定(哎，什么东西)。看来要用国内云盘办公只能是痴心妄想了。</p>
@@ -147,18 +172,44 @@ $(function(){
 
 
          </article>
-                                                </div>
-                                                </div>
-                                                <script type="text/javascript">
-                                                  var _gaq = _gaq || [];
-                                                  _gaq.push(['_setAccount', '']);
-                                                  _gaq.push(['_trackPageview']);
-                                                  (function() {
-                                                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                                                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                                                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-                                                  })();
-                                                  </script>
-                                                    </body>
-                                                    </html>
+       </div>
+	   
+	   
+	   <footer>
+           <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> & <a href="http://pages.github.com">GitHub</a>| Copyright 2012 - 2016 by <a href="/about/">andieguo</a> | <span class="label label-info" id="timeSpan"></span></small></p>
+       </footer>
+	   
+	   
+	   </div>
+       
+	   <script type="text/javascript">
+         var _gaq = _gaq || [];
+         _gaq.push(['_setAccount', '']);
+         _gaq.push(['_trackPageview']);
+         (function() {
+           var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+           ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        </script>
+		
+		<!-- Baidu share -->
+	<script type="text/javascript">
+	window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"32"},"slide":{"type":"slide","bdImg":"0","bdPos":"right","bdTop":"100"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+	</script>
+
+    <!-- Baidu Button BEGIN -->
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?310f86f887042ea3a15786be6e96eb30";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+	<!-- Baidu Button END -->
+	
+    </body>
+  </html>
                                                     
