@@ -6,8 +6,6 @@ comments: yes
 
 # 个人
 
-姓名拼音排序：
-
 - [赵伟](http://zipperary.com) 我的个人博客搭建的启蒙人
 - [张兵](http://spatial-r.com) 目前博客的搭建多亏了他
 
