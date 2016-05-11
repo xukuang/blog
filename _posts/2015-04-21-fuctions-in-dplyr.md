@@ -102,7 +102,7 @@ transform(hflights,
 
 ## 数据分组
 
-数据分组是指按指定列的内容进行分类统计分析，具体可以参考[这里](http://xukuang.github.io/2014/12/23/group-by-and-ungroup-function-in-R/)
+数据分组是指按指定列的内容进行分类统计分析，具体可以参考[这里](http://xukuang.github.io/2014/12/group-by-and-ungroup-function-in-R/)
 
 ```
 # 分组动作 group_by()
