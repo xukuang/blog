@@ -30,6 +30,8 @@ task :post do
 	post.puts "categories: []"
     post.puts "tags: []"
 	post.puts "---"
+	post.puts "\n\n"
+	post.puts "\\- - - - - -"
   end
   puts "Now open #{filename} in an editor."
   system "open #{filename}"
