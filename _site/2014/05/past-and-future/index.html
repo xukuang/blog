@@ -23,7 +23,7 @@
       </script>
       <!--mathjax end-->
    </head>
-   <!--<script type="text/javascript">
+   <script type="text/javascript">
     function setTimeSpan(){
     	var date = new Date();
     	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
@@ -48,7 +48,7 @@
     	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
     	return format;
 		}
-  </script>-->
+  </script>
    <body onLoad="setInterval(setTimeSpan,1000);">
      <div id="container">
        <div id="main" role="main">
@@ -181,16 +181,14 @@ $(function(){
        </div>
 	   
 	   
+	  
 	   <footer>
-           <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> & <a href="http://pages.github.com">GitHub</a>| Copyright  2016 by <a href="http://xukuang.github.io/blog/about/">Xu Kuang</a></small></p>
-       </footer>
-	     <!--<footer>
            <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> & <a href="http://pages.github.com">GitHub</a>| Copyright  2016 by <a href="http://xukuang.github.io/blog/about/">Xu Kuang</a> | <span class="label label-info" id="timeSpan" ></span></small></p>
-       </footer>--> 
+       </footer> 
 	   
 	   </div>
        
-	   <script type="text/javascript">
+	   <!--<script type="text/javascript">
          var _gaq = _gaq || [];
          _gaq.push(['_setAccount', '']);
          _gaq.push(['_trackPageview']);
@@ -199,7 +197,7 @@ $(function(){
            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
           })();
-        </script>
+        </script> -->
 	
     <!-- Baidu share-->
 	<!-- <script type="text/javascript">
