@@ -3,7 +3,7 @@
     <head>
       <meta http-equiv="content-type" content="text/html; charset=utf-8" />
       <meta name="author" content="Xu Kuang" />
-      <title>HTML学习 | Xu Kuang</title>
+      <title>CSS学习 | Xu Kuang</title>
       <link rel="shortcut icon" href="/favicon.ico">
       <link href="http://xukuang.github.io/blog/feed/" rel="alternate" title="Xu Kuang" type="application/atom+xml" />
       <link rel="stylesheet" href="/media/css/style.css">
@@ -53,7 +53,7 @@
      <div id="container">
        <div id="main" role="main">
          <header>
-           <h1>HTML学习</h1>
+           <h1>CSS学习</h1>
          </header>
          <nav>
            <!-- Sidebar -->
@@ -76,36 +76,61 @@
          </nav>
          <article class="content">
            <section class="post">
-<p>HTML(Hyper Text Mark-up Language, 超文本标记语言)是一种标记性语言，用来控制网页内容和布局。所谓的网页布局，其实就是使用适合的标记来定义网页的元素，而标记是指用来描述网页内容的一些特定符号。</p>
+<p>CSS(Cascading Style Sheets, 层叠样式表)一种用来为结构化文档（如HTML文档或XML应用）添加样式（字体、间距和颜色等）的计算机语言。CSS的作用是将网页的内容和网页的外观进行分离。</p>
 
-<h2 id="html">HTML标记类型</h2>
-<p>HTML标记的类型：单标记和双标记，而单双标记又可以分为无属性值的单双标记和有属性值的单双标记。基本格式为：</p>
-
-<ul>
-  <li>单标记</li>
-</ul>
-<p>&lt;标记 属性1=参数1 属性2=参数2 … /&gt;</p>
+<h2 id="css">CSS的语法结构</h2>
+<p>CSS由多组“规则”组成。每个规则由“选择器”（selector）、“属性”（property）和“值”（value）组成。</p>
 
 <ul>
-  <li>双标记</li>
+  <li>
+    <p>选择器（Selector）：指明样式所要针对的对象，可以是一个HTMl标记，也可以是定义了特定的id或class标记。多个选择器可以半角逗号（,）隔开。</p>
+  </li>
+  <li>
+    <p>属性（property）：目的在于控制选择器的样式。如颜色、大小、定位和浮动方式等。</p>
+  </li>
+  <li>
+    <p>值（value）：指属性接受的设置值，多个关键字时大都以空格隔开。</p>
+  </li>
 </ul>
-<p>&lt;标记 属性1=参数1 属性2=参数2 …&gt;内容&lt;/标记&gt;</p>
 
-<p>说明：</p>
+<p>属性和值之间用半角冒号（:）隔开，属性和值合称为“特性”。多个特性间用“;”隔开，最后用“{ }”括起来。</p>
 
-<ol>
-  <li>标记与属性、属性与属性之间空格分隔</li>
-  <li>属性不区分先后顺序，且属性不是必需的</li>
-</ol>
+<h3 id="section">选择器类型</h3>
 
-<h2 id="html-1">HTML文档结构</h2>
-<p>所有的HTML文件通常有四对标记来构成，具体内容如下：</p>
+<p>CSS里常见的选择器有：</p>
+
+<ul>
+  <li>类型选择器（h1，p等）——elementname</li>
+  <li>类别选择器（class）——.elementname
+× ID选择器（ID）——#elementname</li>
+</ul>
+
+<p>要针对没有标签定义范围进行样式设置时，可利用<span>与&lt;div&gt;标记。<span>标记用来组合文档中的行内元素; &lt;div&gt;标记可定义文档中的分区或节，它是一个块级元素。</span></span></p>
+
+<h2 id="css-1">CSS在网页中常见的应用方式</h2>
+
+<ul>
+  <li>内联式样式表
+直接写在现有的标记当中。格式如下：</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;p style='color:red'&gt;文字内容&lt;/p&gt;
+</code></pre>
+</div>
+
+<ul>
+  <li>嵌入式样式表
+使用&lt;style&gt;&lt;/style&gt;标签嵌入到HTML文件的头部&lt;head&gt;&lt;/head&gt;标记中。格式如下：</li>
+</ul>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
 	<span class="nt">&lt;head&gt;</span>
 		<span class="nt">&lt;title&gt;</span>
 			标题
 		<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;style </span><span class="na">type=</span><span class="s">'text/css'</span><span class="nt">&gt;</span>
+			<span class="nt">body</span><span class="p">{</span><span class="nl">background</span><span class="p">:</span><span class="no">white</span><span class="p">;</span><span class="nl">color</span><span class="p">:</span><span class="no">black</span><span class="p">;}</span>
+		<span class="nt">&lt;/style&gt;</span>
 	<span class="nt">&lt;/head&gt;</span>
 	<span class="nt">&lt;body&gt;</span>
 	正文
@@ -114,16 +139,31 @@
 </code></pre>
 </div>
 
-<ol>
-  <li>&lt;html&gt;……&lt;/html&gt;标识网页文件的开始与结束，所有的html元素都要放在这对标记中。</li>
-  <li>&lt;head&gt;……&lt;/head&gt;标识网页文件的头部信息，如标题、搜索引擎关键字等。</li>
-  <li>&lt;titel&gt;……&lt;/title&gt;标识网页文件的标题。</li>
-  <li>&lt;body&gt;……&lt;/body&gt;标识网页文件的主体部分。</li>
-</ol>
+<ul>
+  <li>外部链接式样式表
+将样式表写在一个独立的.css文件中，然后在页面的head区域通过&lt;link \&gt;标记调用。具体格式为：</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
+	<span class="nt">&lt;head&gt;</span>
+		<span class="nt">&lt;title&gt;</span>
+			标题
+		<span class="nt">&lt;/title&gt;</span>
+		<span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">'CSS文件位置'</span> <span class="na">rel=</span><span class="s">'stylesheet'</span> <span class="na">type=</span><span class="s">'text/css'</span><span class="nt">/&gt;</span>
+	<span class="nt">&lt;/head&gt;</span>
+	<span class="nt">&lt;body&gt;</span>
+	正文
+	<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+</div>
 
 <p>- - - - -</p>
 
-<p>网易云课题<a href="http://study.163.com/course/courseLearn.htm?courseId=215009#/learn/video?lessonId=310094&amp;courseId=215009">《html标记语法基础_html文档结构》</a>学习总结</p>
+<ol>
+  <li><a href="https://zh.wikipedia.org/wiki/%E5%B1%82%E5%8F%A0%E6%A0%B7%E5%BC%8F%E8%A1%A8#.E9.81.B8.E6.93.87.E5.99.A8">层叠样式表</a></li>
+  <li>网易云课题<a href="http://study.163.com/course/courseLearn.htm?courseId=215009#/learn/video?lessonId=310121&amp;courseId=215009">《css在网页中的应用方式》</a>学习总结</li>
+</ol>
 
 </section>
 <section class="meta">
@@ -131,9 +171,9 @@
 
 
 <span>
-	<a  href="http://xukuang.github.io/blog/2016/06/css/" class="pageNav"  >Previous</a>
+	<a  href="http://xukuang.github.io/blog/2016/05/pandas/" class="pageNav"  >Previous</a>
 	&nbsp;&nbsp;&nbsp;
-	<a   class="pageNavInvalid"  >Next</a>
+	<a  href="http://xukuang.github.io/blog/2016/06/html/" class="pageNav"  >Next</a>
 </span>
 
 
@@ -195,11 +235,13 @@ $(function(){
     var url = false;
         if (e.which == 37 || e.which == 74) {  // Left arrow and J
             
-        url = 'http://xukuang.github.io/blog/2016/06/css/';
+        url = 'http://xukuang.github.io/blog/2016/05/pandas/';
         
         }
         else if (e.which == 39 || e.which == 75) {  // Right arrow and K
             
+        url = 'http://xukuang.github.io/blog/2016/06/html/';
+        
         }
         if (url) {
             window.location = url;
