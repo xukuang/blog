@@ -37,14 +37,7 @@ background-image:url("bg.jpg");
 	* 设置背景图案出现在正下方 background-position: bottom;
 	* 设置背景图案出现在下右方 background-position: bottom right;
 
-	此外，也可以通过坐标准确的定位图片的位置(x,y) x水平方方向的位置 y垂直方向的位置，单位是像素(px)。
-
-	```
-	background-position: 0 0; 
-	background-position: 75px 0;
-	background-position: -75px 0;
-	background-position: 0 100px;
-	```
+	此外，也可以通过坐标准确的定位图片的位置(x,y) x水平方方向的位置 y垂直方向的位置，单位是像素(px)。例如，"background-position: 0 0;"。 
 
 4. 背景附着(background-attachment)
 
