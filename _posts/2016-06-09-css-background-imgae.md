@@ -1,43 +1,43 @@
 ---
 layout: post
-title: "css¿ØÖÆ±³¾°Í¼Æ¬"
+title: "cssæ§åˆ¶èƒŒæ™¯å›¾ç‰‡"
 date: 2016-06-09 22:11:08
-categories: [¼¼ÊõÆª]
+categories: [æŠ€æœ¯ç¯‡]
 tags: [html]
 ---
-±³¾°(background)ÊÇcssÖĞÒ»¸öÖØÒªµÄµÄ²¿·Ö£¬Ò²ÊÇĞèÒªÖªµÀµÄcssµÄ»ù´¡ÖªÊ¶Ö®Ò»¡£ÕâÆªÎÄÕÂ½«»áÉæ¼°css±³¾°(background)µÄ»ù±¾ÓÃ·¨£¬°üÀ¨ÖîÈç background-attachment µÈµÄÊôĞÔ£¬Ò²»á½éÉÜÒ»Ğ©ÓĞ¹Ø±³¾°(background)µÄ³£ÓÃ¼¼ÇÉ£¬ÒÔ¼° css3 ÖĞµÄ ±³¾°(background)(°üº¬4¸öĞÂµÄ±³¾°(background)ÊôĞÔ)¡£
+èƒŒæ™¯(background)æ˜¯cssä¸­ä¸€ä¸ªé‡è¦çš„çš„éƒ¨åˆ†ï¼Œä¹Ÿæ˜¯éœ€è¦çŸ¥é“çš„cssçš„åŸºç¡€çŸ¥è¯†ä¹‹ä¸€ã€‚è¿™ç¯‡æ–‡ç« å°†ä¼šæ¶‰åŠcssèƒŒæ™¯(background)çš„åŸºæœ¬ç”¨æ³•ï¼ŒåŒ…æ‹¬è¯¸å¦‚ background-attachment ç­‰çš„å±æ€§ï¼Œä¹Ÿä¼šä»‹ç»ä¸€äº›æœ‰å…³èƒŒæ™¯(background)çš„å¸¸ç”¨æŠ€å·§ï¼Œä»¥åŠ css3 ä¸­çš„ èƒŒæ™¯(background)(åŒ…å«4ä¸ªæ–°çš„èƒŒæ™¯(background)å±æ€§)ã€‚
 
-## ÉèÖÃ±³¾°ÑÕÉ«(background-color)
+## è®¾ç½®èƒŒæ™¯é¢œè‰²(background-color)
 
-* Ê®Áù½øÖÆ background-color:#ff0000;
-* Ó¢ÎÄÃû³Æ background-color:red;
-* ÈıÔ­É« background-color:rgb(255,0,0);
-* Í¸Ã÷ background-color:transparent;
+* åå…­è¿›åˆ¶ background-color:#ff0000;
+* è‹±æ–‡åç§° background-color:red;
+* ä¸‰åŸè‰² background-color:rgb(255,0,0);
+* é€æ˜ background-color:transparent;
 
-## ÉèÖÃ±³¾°Í¼Æ¬
+## è®¾ç½®èƒŒæ™¯å›¾ç‰‡
 
-1. ÒıÈë±³¾°Í¼Æ¬(background-image)
+1. å¼•å…¥èƒŒæ™¯å›¾ç‰‡(background-image)
 background-image:url("bg.jpg");
 
 
-2. ±³¾°Í¼Æ¬µÄÆ½ÆÌ·½Ê½(background-repeat)
-	* ½«±³¾°Í¼°¸ÌîÂúÕû¸ö±³¾° background-repeat:repeat;
-	* ½«±³¾°Í¼°¸ÔÚË®Æ½·½ÏòÌíÂú repeat-x;
-	* ½«±³¾°Í¼°¸ÔÚ´¹Ö±·½ÏòÌíÂú repeat-y;
-	* Í¼°¸Ö»³öÏÖÒ»´Î: no-repeat;
+2. èƒŒæ™¯å›¾ç‰‡çš„å¹³é“ºæ–¹å¼(background-repeat)
+	* å°†èƒŒæ™¯å›¾æ¡ˆå¡«æ»¡æ•´ä¸ªèƒŒæ™¯ background-repeat:repeat;
+	* å°†èƒŒæ™¯å›¾æ¡ˆåœ¨æ°´å¹³æ–¹å‘æ·»æ»¡ repeat-x;
+	* å°†èƒŒæ™¯å›¾æ¡ˆåœ¨å‚ç›´æ–¹å‘æ·»æ»¡ repeat-y;
+	* å›¾æ¡ˆåªå‡ºç°ä¸€æ¬¡: no-repeat;
 
-3. ±³¾°Í¼Æ¬Î»ÖÃ(background-position)
-	* ÉèÖÃ±³¾°Í¼°¸³öÏÖÔÚÉÏ×ó·½: background-position: top left;
-	* ÉèÖÃ±³¾°Í¼°¸³öÏÖÔÚÉÏ·½ÖĞ¼ä background-position: top center;
-	* ÉèÖÃ±³¾°Í¼°¸³öÏÖÔÚÉÏÓÒ·½ background-position: top right;
-	* ÉèÖÃ±³¾°Í¼°¸³öÏÖÔÚÖĞ¼ä×ó·½ background-position: center left;
-	* ÉèÖÃ±³¾°Í¼°¸³öÏÖÔÚIEÖĞ¼ä background-position: center center;
-	* ÉèÖÃ±³¾°Í¼°¸³öÏÖÖĞ¼äÓÒ·½ background-position: center right;
-	* ÉèÖÃ±³¾°Í¼°¸³öÏÖÔÚÏÂ×ó·½ background-position: bottom left;
-	* ÉèÖÃ±³¾°Í¼°¸³öÏÖÔÚÕıÏÂ·½ background-position: bottom;
-	* ÉèÖÃ±³¾°Í¼°¸³öÏÖÔÚÏÂÓÒ·½ background-position: bottom right;
+3. èƒŒæ™¯å›¾ç‰‡ä½ç½®(background-position)
+	* è®¾ç½®èƒŒæ™¯å›¾æ¡ˆå‡ºç°åœ¨ä¸Šå·¦æ–¹: background-position: top left;
+	* è®¾ç½®èƒŒæ™¯å›¾æ¡ˆå‡ºç°åœ¨ä¸Šæ–¹ä¸­é—´ background-position: top center;
+	* è®¾ç½®èƒŒæ™¯å›¾æ¡ˆå‡ºç°åœ¨ä¸Šå³æ–¹ background-position: top right;
+	* è®¾ç½®èƒŒæ™¯å›¾æ¡ˆå‡ºç°åœ¨ä¸­é—´å·¦æ–¹ background-position: center left;
+	* è®¾ç½®èƒŒæ™¯å›¾æ¡ˆå‡ºç°åœ¨IEä¸­é—´ background-position: center center;
+	* è®¾ç½®èƒŒæ™¯å›¾æ¡ˆå‡ºç°ä¸­é—´å³æ–¹ background-position: center right;
+	* è®¾ç½®èƒŒæ™¯å›¾æ¡ˆå‡ºç°åœ¨ä¸‹å·¦æ–¹ background-position: bottom left;
+	* è®¾ç½®èƒŒæ™¯å›¾æ¡ˆå‡ºç°åœ¨æ­£ä¸‹æ–¹ background-position: bottom;
+	* è®¾ç½®èƒŒæ™¯å›¾æ¡ˆå‡ºç°åœ¨ä¸‹å³æ–¹ background-position: bottom right;
 
-´ËÍâ£¬Ò²¿ÉÒÔÍ¨¹ı×ø±ê×¼È·µÄ¶¨Î»Í¼Æ¬µÄÎ»ÖÃ(x,y) xË®Æ½·½·½ÏòµÄÎ»ÖÃ y´¹Ö±·½ÏòµÄÎ»ÖÃ£¬µ¥Î»ÊÇÏñËØ(px)¡£
+æ­¤å¤–ï¼Œä¹Ÿå¯ä»¥é€šè¿‡åæ ‡å‡†ç¡®çš„å®šä½å›¾ç‰‡çš„ä½ç½®(x,y) xæ°´å¹³æ–¹æ–¹å‘çš„ä½ç½® yå‚ç›´æ–¹å‘çš„ä½ç½®ï¼Œå•ä½æ˜¯åƒç´ (px)ã€‚
 
 ```
 background-position: 0 0; 
@@ -45,17 +45,17 @@ background-position: 75px 0;
 background-position: -75px 0;
 background-position: 0 100px;
 ```
-4. ±³¾°¸½×Å(background-attachment)
-ÉèÖÃ±³¾°Í¼ÏñÊÇ·ñ»áËæÊÓ´°¹ö¶¯¶ø¹ö¶¯¡£
+4. èƒŒæ™¯é™„ç€(background-attachment)
+è®¾ç½®èƒŒæ™¯å›¾åƒæ˜¯å¦ä¼šéšè§†çª—æ»šåŠ¨è€Œæ»šåŠ¨ã€‚
 
-* ÉèÖÃ±³¾°Í¼Ïñ»áËæÊÓ´°¹ö¶¯ÌõµÄÒÆ¶¯¶øÒÆ¶¯(Ä¬ÈÏ) background-attachment: scroll
-* ÉèÖÃ±³¾°Í¼Ïñ²»»áËæÊÓ´°¹ö¶¯ÌõµÄÒÆ¶¯¶øÒÆ¶¯ background-attachment: fixed 
+* è®¾ç½®èƒŒæ™¯å›¾åƒä¼šéšè§†çª—æ»šåŠ¨æ¡çš„ç§»åŠ¨è€Œç§»åŠ¨(é»˜è®¤) background-attachment: scroll
+* è®¾ç½®èƒŒæ™¯å›¾åƒä¸ä¼šéšè§†çª—æ»šåŠ¨æ¡çš„ç§»åŠ¨è€Œç§»åŠ¨ background-attachment: fixed 
 
 
-## ±³¾°µÄ¼òĞ´ÊôĞÔ
-¿ÉÒÔ°Ñ±³¾°µÄ¸÷¸öÊôĞÔºÏÎªÒ»ĞĞ£¬¶ø²»ÓÃÃ¿´Î¶¼µ¥¶À°ÑËûÃÇĞ´³öÀ´¡£
+## èƒŒæ™¯çš„ç®€å†™å±æ€§
+å¯ä»¥æŠŠèƒŒæ™¯çš„å„ä¸ªå±æ€§åˆä¸ºä¸€è¡Œï¼Œè€Œä¸ç”¨æ¯æ¬¡éƒ½å•ç‹¬æŠŠä»–ä»¬å†™å‡ºæ¥ã€‚
 
-ÀıÈç£¬ÏÂÃæµÄÉùÃ÷:
+ä¾‹å¦‚ï¼Œä¸‹é¢çš„å£°æ˜:
 
 ```
 background-color: transparent;
@@ -64,19 +64,19 @@ background-position: 50% 0 ;
 background-attachment: scroll;
 background-repeat: repeat-y;
 ```
-¿ÉÒÔºÏÎªµ¥¶ÀÒ»ĞĞ£º
+å¯ä»¥åˆä¸ºå•ç‹¬ä¸€è¡Œï¼š
 
 ```
 background: transparent url(image.jpg) 50% 0 scroll repeat-y;
 ```
-¶øÇÒ²»ĞèÒªÖ¸¶¨Ã¿Ò»¸öÖµ¡£Èç¹ûÊ¡ÂÔÖµµØ»°£¬¾ÍÊ¹ÓÃÊôĞÔµØÄ¬ÈÏÖµ¡£ÀıÈç£¬ÉÏÃæÄÇĞĞºÍÏÂÃæÕâ¸öĞ§¹ûÒ»Ñù£º
+è€Œä¸”ä¸éœ€è¦æŒ‡å®šæ¯ä¸€ä¸ªå€¼ã€‚å¦‚æœçœç•¥å€¼åœ°è¯ï¼Œå°±ä½¿ç”¨å±æ€§åœ°é»˜è®¤å€¼ã€‚ä¾‹å¦‚ï¼Œä¸Šé¢é‚£è¡Œå’Œä¸‹é¢è¿™ä¸ªæ•ˆæœä¸€æ ·ï¼š
 
 ```
 background: url(image.jpg) 50% 0 repeat-y;
 ```
 
 \- - - - - -
-**²Î¿¼×ÊÁÏ**
+**å‚è€ƒèµ„æ–™**
 
-1. [css¿ØÖÆ±³¾°Ê¾Àı(cssÉèÖÃ±³¾°Í¼Æ¬¡¢ÉèÖÃ±³¾°ÑÕÉ«)](http://www.jb51.net/css/154155.html)
+1. [cssæ§åˆ¶èƒŒæ™¯ç¤ºä¾‹(cssè®¾ç½®èƒŒæ™¯å›¾ç‰‡ã€è®¾ç½®èƒŒæ™¯é¢œè‰²)](http://www.jb51.net/css/154155.html)
 2. [http://blog.csdn.net/adenfeng/article/details/8199362/](http://blog.csdn.net/adenfeng/article/details/8199362/)
