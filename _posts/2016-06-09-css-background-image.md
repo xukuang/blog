@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "css控制背景图片"
-date: 2016-06-09 22:11:08
+date: 2016-06-08 22:11:08
 categories: [技术篇]
 tags: [html]
 ---
