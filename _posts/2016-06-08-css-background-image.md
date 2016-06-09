@@ -31,7 +31,7 @@ background-image:url("bg.jpg");
 	* 设置背景图案出现在上方中间 background-position: top center;
 	* 设置背景图案出现在上右方 background-position: top right;
 	* 设置背景图案出现在中间左方 background-position: center left;
-	* 设置背景图案出现在IE中间 background-position: center center;
+	* 设置背景图案出现在中间 background-position: center center;
 	* 设置背景图案出现中间右方 background-position: center right;
 	* 设置背景图案出现在下左方 background-position: bottom left;
 	* 设置背景图案出现在正下方 background-position: bottom;
