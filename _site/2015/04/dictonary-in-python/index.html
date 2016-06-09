@@ -132,7 +132,7 @@ D['food']['egg']
 
 <h3 id="section-5">字典长度</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Spam'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">'food'</span><span class="p">:</span> <span class="p">{</span><span class="s">'ham'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'egg'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}}</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Spam'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s">'food'</span><span class="p">:</span> <span class="p">{</span><span class="s">'ham'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'egg'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}}</span>
 <span class="c"># len字典长度</span>
 <span class="nb">len</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
 </code></pre>
@@ -160,7 +160,7 @@ list(D.items())
 
 <h3 id="section-8">判断键是否在字典中存在</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="c"># dict.get，键存在与字典则返回键的值，否则什么也不返回</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># dict.get，键存在与字典则返回键的值，否则什么也不返回</span>
 <span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Spam'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'ham'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
 <span class="n">D</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Spam'</span><span class="p">)</span>
 <span class="n">D</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'Spams'</span><span class="p">)</span> <span class="c"># 键不在字典中，什么也不返回</span>
@@ -184,7 +184,7 @@ D.items() | D # {('a', 1), ('b', 2), ('c', 3), 'a', 'b', 'c'}
 
 <h2 id="section-10">4. 字典的修改</h2>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Spam'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'ham'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Spam'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'ham'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
 <span class="c"># 直接改变某个键的值</span>
 <span class="n">D</span><span class="p">[</span><span class="s">'ham'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">'grill'</span><span class="p">,</span> <span class="s">'bake'</span><span class="p">,</span> <span class="s">'fry'</span><span class="p">]</span>
 <span class="c"># 添加新项</span>
