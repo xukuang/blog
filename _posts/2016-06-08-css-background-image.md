@@ -45,7 +45,9 @@ background-image:url("bg.jpg");
 	background-position: -75px 0;
 	background-position: 0 100px;
 	```
+
 4. 背景附着(background-attachment)
+
 设置背景图像是否会随视窗滚动而滚动。
 
 * 设置背景图像会随视窗滚动条的移动而移动(默认) background-attachment: scroll
