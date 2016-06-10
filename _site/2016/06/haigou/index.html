@@ -3,7 +3,7 @@
     <head>
       <meta http-equiv="content-type" content="text/html; charset=utf-8" />
       <meta name="author" content="Xu Kuang" />
-      <title>HTML标签元素的分类 | Xu Kuang</title>
+      <title> | Xu Kuang</title>
       <link rel="shortcut icon" href="/favicon.ico">
       <link href="http://xukuang.github.io/blog/feed/" rel="alternate" title="Xu Kuang" type="application/atom+xml" />
       <link rel="stylesheet" href="/media/css/style.css">
@@ -53,7 +53,7 @@
      <div id="container">
        <div id="main" role="main">
          <header>
-           <h1>HTML标签元素的分类</h1>
+           <h1></h1>
          </header>
          <nav>
            <!-- Sidebar -->
@@ -76,74 +76,6 @@
          </nav>
          <article class="content">
            <section class="post">
-<p>在CSS中，HTML中的标签在文档类型定义内有默认的分类，可以通过CSS修改分类的定义。元素大体被分为三种不同的类型：块状元素、内联元素和内联块状元素。</p>
-
-<h2 id="section">块级元素</h2>
-
-<ul>
-  <li>常用的块状元素</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;div&gt;、&lt;p&gt;、&lt;h1&gt;...&lt;h6&gt;、&lt;ol&gt;、&lt;ul&gt;、&lt;dl&gt;、&lt;table&gt;、&lt;address&gt;、&lt;blockquote&gt; 、&lt;form&gt;
-</code></pre>
-</div>
-
-<ul>
-  <li>块级元素特点</li>
-</ul>
-
-<ol>
-  <li>每个块级元素都从新的一行开始，并且其后的元素也另起一行。（真霸道，一个块级元素独占一行）</li>
-  <li>元素的高度、宽度、行高以及顶和底边距都可设置。</li>
-  <li>元素宽度在不设置的情况下，是它本身父容器的100%（和父元素的宽度一致），除非设定一个宽度。</li>
-</ol>
-
-<p>可以通过设置display:block将元素显示为块级元素。如下代码就是将行内元素a转换为块状元素，使a元素具有块状元素特点。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>a{display:block;}
-</code></pre>
-</div>
-
-<h2 id="section-1">内联元素</h2>
-
-<ul>
-  <li>常用的内联元素</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;a&gt;、&lt;span&gt;、&lt;br&gt;、&lt;i&gt;、&lt;em&gt;、&lt;strong&gt;、&lt;label&gt;、&lt;q&gt;、&lt;var&gt;、&lt;cite&gt;、&lt;code&gt;
-</code></pre>
-</div>
-<p>在html中，块状元素也可以通过代码display:inline将元素设置为行内元素。</p>
-
-<ul>
-  <li>内联元素特点</li>
-</ul>
-
-<ol>
-  <li>和其他元素都在一行上；</li>
-  <li>元素的高度、宽度、行高及顶部和底部边距不可设置；</li>
-  <li>元素的宽度就是它包含的文字或图片的宽度，不可改变。</li>
-</ol>
-
-<h2 id="section-2">内联块状元素</h2>
-<p>内联块状元素(inline-block)就是同时具备内联元素、块状元素的特点，代码display:inline-block就是将元素设置为内联块状元素。</p>
-
-<ul>
-  <li>常用的内联块状元素</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;img&gt;、&lt;input&gt;
-</code></pre>
-</div>
-<ul>
-  <li>内联块状元素特点
-    <ol>
-      <li>和其他元素都在一行上；</li>
-      <li>元素的高度、宽度、行高以及顶和底边距都可设置</li>
-    </ol>
-  </li>
-</ul>
-
 <p>- - - - - -</p>
 
 </section>
@@ -152,9 +84,9 @@
 
 
 <span>
-	<a  href="http://xukuang.github.io/blog/2016/06/css-background-image/" class="pageNav"  >Previous</a>
+	<a  href="http://xukuang.github.io/blog/2016/06/meilishuo/" class="pageNav"  >Previous</a>
 	&nbsp;&nbsp;&nbsp;
-	<a  href="http://xukuang.github.io/blog/2016/06/meilishuo/" class="pageNav"  >Next</a>
+	<a   class="pageNavInvalid"  >Next</a>
 </span>
 
 
@@ -173,15 +105,11 @@
 <span class="categories">
   in categories
   
-  <a href="http://xukuang.github.io/blog/categories/#技术篇" title="技术篇">技术篇</a>&nbsp;
-  
 </span>
 
 
 <span class="tags">
   tagged with 
-  
-  <a href="http://xukuang.github.io/blog/tags/#html" title="html">html</a>&nbsp;
   
 </span>
 
@@ -216,13 +144,11 @@ $(function(){
     var url = false;
         if (e.which == 37 || e.which == 74) {  // Left arrow and J
             
-        url = 'http://xukuang.github.io/blog/2016/06/css-background-image/';
+        url = 'http://xukuang.github.io/blog/2016/06/meilishuo/';
         
         }
         else if (e.which == 39 || e.which == 75) {  // Right arrow and K
             
-        url = 'http://xukuang.github.io/blog/2016/06/meilishuo/';
-        
         }
         if (url) {
             window.location = url;
