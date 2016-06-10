@@ -7,8 +7,20 @@
     <title>Xu Kuang</title>
     <atom:link href="http://xukuang.github.io/blog/feed/" rel="self" type="application/rss+xml" />
     <link>http://xukuang.github.io/</link>
-    <lastBuildDate>2016-06-10T13:57:57+08:00</lastBuildDate>
+    <lastBuildDate>2016-06-10T15:48:48+08:00</lastBuildDate>
     <webMaster>kuang_xu@126.com</webMaster>
+    
+    <item>
+      <title>中国</title>
+      <link>http://xukuang.github.io/blog/2016/06/kuangxu/</link>
+      <pubDate>2016-06-10T15:47:23+08:00</pubDate>
+      <author>Xu Kuang</author>
+      <guid>http://xukuang.github.io/blog/2016/06/kuangxu</guid>
+      <content:encoded><![CDATA[<p>匡旭</p>
+
+<p>- - - - - -</p>
+]]></content:encoded>
+    </item>
     
     <item>
       <title>HTML标签元素的分类</title>
@@ -2755,218 +2767,6 @@ dataold
 </code></pre>
 </div>
 
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>简单线性回归中各指标在R中的计算</title>
-      <link>http://xukuang.github.io/blog/2016/04/simple-linear-regression/</link>
-      <pubDate>2016-04-07T22:50:50+08:00</pubDate>
-      <author>Xu Kuang</author>
-      <guid>http://xukuang.github.io/blog/2016/04/simple-linear-regression</guid>
-      <content:encoded><![CDATA[<h2 id="section">前话</h2>
-<p>简单线性回归用于计算两个连续型变量(如X，Y)之间的线性关系，具体地说就是计算下面公式中的<script type="math/tex">\alpha和\beta</script>。</p>
-
-<script type="math/tex; mode=display">Y = \alpha + \beta X + \varepsilon</script>
-
-<p>其中<script type="math/tex">\varepsilon</script>称为残差,服从从<script type="math/tex">N(0,\sigma^2)</script>的正态分布，自由度为(n-1) - (2-1) = n-2
-为了找到这条直线的位置，我们使用最小二乘法(least squares approach)。最小二乘法确保所有点处的残差的平方和最小时计算<script type="math/tex">\alpha和\beta</script>，即下面示意图中<script type="math/tex">\sum_{i=1}^{4}\varepsilon_i^2 = \varepsilon_1^2 + \varepsilon_2^2 + \varepsilon_3^2 + \varepsilon_4^2</script>有最小值。</p>
-
-<p><img src="http://xukuang.github.io/blog/images/y_x_scatter_plot.png" alt="简单线性相关示意图" /><!--more--></p>
-
-<h2 id="section-1">各指标的计算</h2>
-
-<p>运用最小二乘法找出的这条最优直线一定经过点<script type="math/tex">(\overline{x}, \overline{y})</script>。其中</p>
-
-<h3 id="betaalpha">斜率<script type="math/tex">\beta</script>和截距<script type="math/tex">\alpha</script>的估计值</h3>
-
-<p><img src="http://xukuang.github.io/blog/images/beta.png" alt="" /></p>
-
-<h3 id="pearsonr">Pearson相关系数r</h3>
-
-<script type="math/tex; mode=display">r_{xy} = \frac{\overline{xy} - \bar{x}\bar{y} }{ \sqrt{ \left(\overline{x^2} - \bar{x}^2\right)\left(\overline{y^2} - \bar{y}^2\right)}}</script>
-
-<h3 id="section-2">方差分析</h3>
-<p>在方差分析(ANOVA)中，总的平方和包含回归平方和残差平方和两部分。</p>
-
-<ul>
-  <li>总的平方和</li>
-</ul>
-
-<p><script type="math/tex">SS_{tot}=\sum_i (y_i-\bar{y})^2</script>
-其自由度为 n - 1，这里n为观测点的个数。</p>
-
-<ul>
-  <li>回归的平方和</li>
-</ul>
-
-<p><script type="math/tex">SS_\text{reg}=\sum_i (\hat y_i -\bar{y})^2</script>
-其自由度为 2 - 1 = 1。</p>
-
-<ul>
-  <li>残差的平方和</li>
-</ul>
-
-<p><script type="math/tex">SS_\text{res}=\sum_i (y_i - \hat y_i)^2=\sum_i e_i^2</script>
-其自由度为 (n -1) - (2 - 1) = n -2。</p>
-
-<h3 id="section-3">决定系数(拟合优势度)</h3>
-
-<p><img src="http://xukuang.github.io/blog/images/error.png" alt="" />
-决定系数是用来表示模型的解释度，理论上与相关系数没有关系，只是在简单线性回归中，决定系数$R^2 $值等于Pearson相关系数r的平方。</p>
-
-<h2 id="r">R中的实现</h2>
-
-<h3 id="section-4">线性模拟</h3>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>x = c(0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.20, 0.21, 0.23)
-y = c(42.0, 43.5, 45.0, 45.5, 45.0, 47.5, 49.0, 53.0, 50.0, 55.0, 55.0, 60.0)
-fit = lm(y ~ x)
-summary(fit)
-	## Call:
-	## lm(formula = y ~ x)
-	## 
-	## Residuals:
-	##	 #Min      1Q  Median      3Q     Max 
-	## -2.0431 -0.7056  0.1694  0.6633  2.2653 
-	## 
-	## Coefficients:
-	## 				#Estimate Std. Error t value Pr(&gt;|t|)    
-	## (Intercept)   28.493      1.580   18.04 5.88e-09 ***
-	## x            130.835      9.683   13.51 9.50e-08 ***
-	## ---
-	## Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-	## 
-	## Residual standard error: 1.319 on 10 degrees of freedom
-	## Multiple R-squared:  0.9481,    Adjusted R-squared:  0.9429 
-	## F-statistic: 182.6 on 1 and 10 DF,  p-value: 9.505e-08
-anova(fit)
-	##Analysis of Variance Table
-	##
-	##Response: y
-	##			#Df Sum Sq Mean Sq F value    Pr(&gt;F)    
-	##x          1 317.82  317.82  182.55 9.505e-08 ***
-	##Residuals 10  17.41    1.74                      
-	##---
-	##Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-</code></pre>
-</div>
-
-<h3 id="section-5">线性模拟各参数的提取</h3>
-
-<div class="highlighter-rouge"><pre class="highlight"><code># 可以通过names函数查看summary(fit)中个具体参数的提取方法
-names(summary(fit))
-# 提取R square
-summary(fit)$r.squared ## 依照该形式可以提取names(summary(fit))中任意指标
-# 其它常用指标的提取
-# 提取模型lm或glm提取回归系数
-coefficients(fit)
-# 还可简化为
-coef(fit)
-# 提取模型lm或glm的残差
-# 也可简化为
-residuals(fit)
-resid(fit)
-# 提取lm或glm对象中残差的平方和
-deviance(fit)
-# 提取lm或glm对象中的方差分析表
-# 其中p值越小，差异越显著, beita1越不可能为0
-anova(fit)
-# 预测数据
-new &lt;- data.frame(x=c(0.16, 2.3))
-predict(fit, new)
-
-## 也可以做出预测区间
-predict(fit, new, interval = 'prediction', levels = 0.95)
-</code></pre>
-</div>
-
-<h3 id="section-6">线性模拟各参数中各量的算法</h3>
-
-<h4 id="section-7">五个和的计算</h4>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>## 预备统计量(Sums of square and sums of producte)
-Sx = sum(x)
-Sy = sum(y)
-Sxx = sum((x - mean(x))^2)
-Syy = sum((y - mean(y))^2)
-Sxy = sum((x - mean(x)) * (y - mean(y)))
-
-## 这里仅仅作为补充,具体原因不是很清楚
-Syy = deviance(lm(y~1))
-n = length(x)
-</code></pre>
-</div>
-
-<h4 id="section-8">回归系数</h4>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>## 回归系数$\alpha$和$beta$（这样计算，residuals有最小值)
-beta = Sxy/Sxx
-beta
-alpha = mean(y) - beta*mean(x)
-alpha
-# 提取lm或glm对象中的回归系数
-coef(fit)
-</code></pre>
-</div>
-
-<h4 id="section-9">残差及五分位数</h4>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>residuals = y - (beta + alpha * x)
-residuals
-quantile(residuals)
-# 提取模型lm或glm的残差
-# 也可简化为
-residuals(fit)
-</code></pre>
-</div>
-
-<h4 id="pearsonr-1">Pearson相关系数r</h4>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>r = sqrt(Sxy/(Sxx * Syy))
-r
-</code></pre>
-</div>
-
-<h4 id="r-1">R平方</h4>
-<p>决定系数，其值为 回归的平方和/总的平方和。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>rsquare = (Syy - sum(residuals^2))/Syy
-rsquare
-</code></pre>
-</div>
-
-<h4 id="adjust-r">adjust R平方</h4>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>## 考虑到了自变量的个数, 包括截距在内, 本例子中k = 2
-n = length(x)
-k = 2
-adjustrsquare = 1- (1-rsquare)*(n-1)/(n-k)
-adjustrsquare
-</code></pre>
-</div>
-
-<h3 id="f">回归方程的F检验</h3>
-<p>在简单线性回归的模型，我们可以在<script type="math/tex">β = 0</script>时，对F统计量进行检验。
-在F检验中统计量F</p>
-
-<script type="math/tex; mode=display">F = \frac{(回归的平方和/回归的自由度)}{(误差的平方和/误差的自由度}</script>
-
-<p>对应p值越小，说明此时越小的概率时间发生了，越不能接受原假设。</p>
-
-<h3 id="t">斜率β的t检验</h3>
-<p>在简单线性回归的模型，我们可以检验回归系数(斜率)β是否相等于特定的$β_0$(通常使$β_0 = 0$以检验$x_i$对$y_i$是否有关联)。
-统计量t</p>
-
-<p><img src="http://xukuang.github.io/blog/images/student_t.png" alt="" />
-在零假设为$β = β_0$的情况下服从自由度为n − 2之t分布，其中</p>
-
-<p><img src="http://xukuang.github.io/blog/images/student_se.png" alt="" />
-同F检验一样，p值越小，说明此时越小的概率事件发生了，越不能接受原假设。</p>
-
-<h2 id="section-10">话外篇</h2>
-<p>在R中，lm(y ~ x)和lm(y ~ x + 1)的效果是相同的。此外，lm(y ~ 1)中截距的估计值为y的平均值，残差为每个y与均值的离差。</p>
 ]]></content:encoded>
     </item>
     

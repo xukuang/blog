@@ -26,7 +26,7 @@ task :post do
     post.puts "---"
     post.puts "layout: post"
     post.puts "title: \"\""
-    post.puts "date: #{datetime}"
+    post.puts "date: #{datetime} +0800"
 	post.puts "categories: []"
     post.puts "tags: []"
 	post.puts "---"
