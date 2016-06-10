@@ -3,7 +3,7 @@
     <head>
       <meta http-equiv="content-type" content="text/html; charset=utf-8" />
       <meta name="author" content="Xu Kuang" />
-      <title>css控制背景图片 | Xu Kuang</title>
+      <title>HTML标签元素的分类 | Xu Kuang</title>
       <link rel="shortcut icon" href="/favicon.ico">
       <link href="http://xukuang.github.io/blog/feed/" rel="alternate" title="Xu Kuang" type="application/atom+xml" />
       <link rel="stylesheet" href="/media/css/style.css">
@@ -53,7 +53,7 @@
      <div id="container">
        <div id="main" role="main">
          <header>
-           <h1>css控制背景图片</h1>
+           <h1>HTML标签元素的分类</h1>
          </header>
          <nav>
            <!-- Sidebar -->
@@ -76,87 +76,75 @@
          </nav>
          <article class="content">
            <section class="post">
-<p>背景(background)是css中一个重要的的部分，也是需要知道的css的基础知识之一。这篇文章将会涉及css背景(background)的基本用法，包括诸如 background-attachment 等的属性，也会介绍一些有关背景(background)的常用技巧，以及 css3 中的 背景(background)(包含4个新的背景(background)属性)。</p>
+<p>在CSS中，HTML中的标签在文档类型定义内有默认的分类，可以通过CSS修改分类的定义。元素大体被分为三种不同的类型：块状元素、内联元素和内联块状元素。</p>
 
-<h2 id="background-color">设置背景颜色(background-color)</h2>
-
-<ul>
-  <li>十六进制 background-color:#ff0000;</li>
-  <li>英文名称 background-color:red;</li>
-  <li>三原色 background-color:rgb(255,0,0);</li>
-  <li>透明 background-color:transparent;</li>
-</ul>
-
-<h2 id="section">设置背景图片</h2>
-
-<ol>
-  <li>
-    <p>引入背景图片(background-image)
-background-image:url(“bg.jpg”);</p>
-  </li>
-  <li>背景图片的平铺方式(background-repeat)
-    <ul>
-      <li>将背景图案填满整个背景 background-repeat:repeat;</li>
-      <li>将背景图案在水平方向添满 repeat-x;</li>
-      <li>将背景图案在垂直方向添满 repeat-y;</li>
-      <li>图案只出现一次: no-repeat;</li>
-    </ul>
-  </li>
-  <li>背景图片位置(background-position)
-    <ul>
-      <li>设置背景图案出现在上左方: background-position: top left;</li>
-      <li>设置背景图案出现在上方中间 background-position: top center;</li>
-      <li>设置背景图案出现在上右方 background-position: top right;</li>
-      <li>设置背景图案出现在中间左方 background-position: center left;</li>
-      <li>设置背景图案出现在中间 background-position: center center;</li>
-      <li>设置背景图案出现中间右方 background-position: center right;</li>
-      <li>设置背景图案出现在下左方 background-position: bottom left;</li>
-      <li>设置背景图案出现在正下方 background-position: bottom;</li>
-      <li>设置背景图案出现在下右方 background-position: bottom right;</li>
-    </ul>
-
-    <p>此外，也可以通过坐标准确的定位图片的位置(x,y) x水平方方向的位置 y垂直方向的位置，单位是像素(px)。例如，”background-position: 0 0;”。</p>
-  </li>
-  <li>背景附着(background-attachment)</li>
-</ol>
-
-<p>设置背景图像是否会随视窗滚动而滚动。</p>
+<h2 id="section">块级元素</h2>
 
 <ul>
-  <li>设置背景图像会随视窗滚动条的移动而移动(默认) background-attachment: scroll</li>
-  <li>设置背景图像不会随视窗滚动条的移动而移动 background-attachment: fixed</li>
+  <li>常用的块状元素</li>
 </ul>
 
-<h2 id="section-1">背景的简写属性</h2>
-<p>可以把背景的各个属性合为一行，而不用每次都单独把他们写出来。</p>
-
-<p>例如，下面的声明:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>background-color: transparent;
-background-image: url(image.jpg);
-background-position: 50% 0 ;
-background-attachment: scroll;
-background-repeat: repeat-y;
-</code></pre>
-</div>
-<p>可以合为单独一行：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>background: transparent url(image.jpg) 50% 0 scroll repeat-y;
-</code></pre>
-</div>
-<p>而且不需要指定每一个值。如果省略值地话，就使用属性地默认值。例如，上面那行和下面这个效果一样：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>background: url(image.jpg) 50% 0 repeat-y;
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;div&gt;、&lt;p&gt;、&lt;h1&gt;...&lt;h6&gt;、&lt;ol&gt;、&lt;ul&gt;、&lt;dl&gt;、&lt;table&gt;、&lt;address&gt;、&lt;blockquote&gt; 、&lt;form&gt;
 </code></pre>
 </div>
 
-<p>- - - - - -
-<strong>参考资料</strong></p>
+<ul>
+  <li>块级元素特点</li>
+</ul>
 
 <ol>
-  <li><a href="http://www.jb51.net/css/154155.html">css控制背景示例(css设置背景图片、设置背景颜色)</a></li>
-  <li><a href="http://blog.csdn.net/adenfeng/article/details/8199362/">http://blog.csdn.net/adenfeng/article/details/8199362/</a></li>
+  <li>每个块级元素都从新的一行开始，并且其后的元素也另起一行。（真霸道，一个块级元素独占一行）</li>
+  <li>元素的高度、宽度、行高以及顶和底边距都可设置。</li>
+  <li>元素宽度在不设置的情况下，是它本身父容器的100%（和父元素的宽度一致），除非设定一个宽度。</li>
 </ol>
+
+<p>可以通过设置display:block将元素显示为块级元素。如下代码就是将行内元素a转换为块状元素，使a元素具有块状元素特点。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>a{display:block;}
+</code></pre>
+</div>
+
+<h2 id="section-1">内联元素</h2>
+
+<ul>
+  <li>常用的内联元素</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;a&gt;、&lt;span&gt;、&lt;br&gt;、&lt;i&gt;、&lt;em&gt;、&lt;strong&gt;、&lt;label&gt;、&lt;q&gt;、&lt;var&gt;、&lt;cite&gt;、&lt;code&gt;
+</code></pre>
+</div>
+<p>在html中，块状元素也可以通过代码display:inline将元素设置为行内元素。</p>
+
+<ul>
+  <li>行内元素特点</li>
+</ul>
+
+<ol>
+  <li>和其他元素都在一行上；</li>
+  <li>元素的高度、宽度、行高及顶部和底部边距不可设置；</li>
+  <li>元素的宽度就是它包含的文字或图片的宽度，不可改变。</li>
+</ol>
+
+<h2 id="section-2">内联块状元素</h2>
+<p>内联块状元素(inline-block)就是同时具备内联元素、块状元素的特点，代码display:inline-block就是将元素设置为内联块状元素。</p>
+
+<ul>
+  <li>常用的内联块状元素</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;img&gt;、&lt;input&gt;
+</code></pre>
+</div>
+<ul>
+  <li>内联块状元素特点
+    <ol>
+      <li>和其他元素都在一行上；</li>
+      <li>元素的高度、宽度、行高以及顶和底边距都可设置</li>
+    </ol>
+  </li>
+</ul>
+
+<p>- - - - - -</p>
 
 </section>
 <section class="meta">
@@ -164,9 +152,9 @@ background-repeat: repeat-y;
 
 
 <span>
-	<a  href="http://xukuang.github.io/blog/2016/06/css/" class="pageNav"  >Previous</a>
+	<a  href="http://xukuang.github.io/blog/2016/06/css-background-image/" class="pageNav"  >Previous</a>
 	&nbsp;&nbsp;&nbsp;
-	<a  href="http://xukuang.github.io/blog/2016/06/html-clements-class/" class="pageNav"  >Next</a>
+	<a   class="pageNavInvalid"  >Next</a>
 </span>
 
 
@@ -175,7 +163,7 @@ background-repeat: repeat-y;
 </span>
 <span class="time">
   /
-  <time datetime="2016-06-09">2016-06-09</time>
+  <time datetime="2016-06-10">2016-06-10</time>
 </span>
 <br />
 <span class="license">
@@ -228,13 +216,11 @@ $(function(){
     var url = false;
         if (e.which == 37 || e.which == 74) {  // Left arrow and J
             
-        url = 'http://xukuang.github.io/blog/2016/06/css/';
+        url = 'http://xukuang.github.io/blog/2016/06/css-background-image/';
         
         }
         else if (e.which == 39 || e.which == 75) {  // Right arrow and K
             
-        url = 'http://xukuang.github.io/blog/2016/06/html-clements-class/';
-        
         }
         if (url) {
             window.location = url;

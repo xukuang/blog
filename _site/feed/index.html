@@ -7,8 +7,86 @@
     <title>Xu Kuang</title>
     <atom:link href="http://xukuang.github.io/blog/feed/" rel="self" type="application/rss+xml" />
     <link>http://xukuang.github.io/</link>
-    <lastBuildDate>2016-06-09T22:56:12+08:00</lastBuildDate>
+    <lastBuildDate>2016-06-10T08:27:08+08:00</lastBuildDate>
     <webMaster>kuang_xu@126.com</webMaster>
+    
+    <item>
+      <title>HTML标签元素的分类</title>
+      <link>http://xukuang.github.io/blog/2016/06/html-clements-class/</link>
+      <pubDate>2016-06-10T06:22:29+08:00</pubDate>
+      <author>Xu Kuang</author>
+      <guid>http://xukuang.github.io/blog/2016/06/html-clements-class</guid>
+      <content:encoded><![CDATA[<p>在CSS中，HTML中的标签在文档类型定义内有默认的分类，可以通过CSS修改分类的定义。元素大体被分为三种不同的类型：块状元素、内联元素和内联块状元素。</p>
+
+<h2 id="section">块级元素</h2>
+
+<ul>
+  <li>常用的块状元素</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;div&gt;、&lt;p&gt;、&lt;h1&gt;...&lt;h6&gt;、&lt;ol&gt;、&lt;ul&gt;、&lt;dl&gt;、&lt;table&gt;、&lt;address&gt;、&lt;blockquote&gt; 、&lt;form&gt;
+</code></pre>
+</div>
+
+<ul>
+  <li>块级元素特点</li>
+</ul>
+
+<ol>
+  <li>每个块级元素都从新的一行开始，并且其后的元素也另起一行。（真霸道，一个块级元素独占一行）</li>
+  <li>元素的高度、宽度、行高以及顶和底边距都可设置。</li>
+  <li>元素宽度在不设置的情况下，是它本身父容器的100%（和父元素的宽度一致），除非设定一个宽度。</li>
+</ol>
+
+<p>可以通过设置display:block将元素显示为块级元素。如下代码就是将行内元素a转换为块状元素，使a元素具有块状元素特点。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>a{display:block;}
+</code></pre>
+</div>
+
+<h2 id="section-1">内联元素</h2>
+
+<ul>
+  <li>常用的内联元素</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;a&gt;、&lt;span&gt;、&lt;br&gt;、&lt;i&gt;、&lt;em&gt;、&lt;strong&gt;、&lt;label&gt;、&lt;q&gt;、&lt;var&gt;、&lt;cite&gt;、&lt;code&gt;
+</code></pre>
+</div>
+<p>在html中，块状元素也可以通过代码display:inline将元素设置为行内元素。</p>
+
+<ul>
+  <li>行内元素特点</li>
+</ul>
+
+<ol>
+  <li>和其他元素都在一行上；</li>
+  <li>元素的高度、宽度、行高及顶部和底部边距不可设置；</li>
+  <li>元素的宽度就是它包含的文字或图片的宽度，不可改变。</li>
+</ol>
+
+<h2 id="section-2">内联块状元素</h2>
+<p>内联块状元素(inline-block)就是同时具备内联元素、块状元素的特点，代码display:inline-block就是将元素设置为内联块状元素。</p>
+
+<ul>
+  <li>常用的内联块状元素</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;img&gt;、&lt;input&gt;
+</code></pre>
+</div>
+<ul>
+  <li>内联块状元素特点
+    <ol>
+      <li>和其他元素都在一行上；</li>
+      <li>元素的高度、宽度、行高以及顶和底边距都可设置</li>
+    </ol>
+  </li>
+</ul>
+
+<p>- - - - - -</p>
+]]></content:encoded>
+    </item>
     
     <item>
       <title>css控制背景图片</title>
@@ -2889,64 +2967,6 @@ adjustrsquare
 
 <h2 id="section-10">话外篇</h2>
 <p>在R中，lm(y ~ x)和lm(y ~ x + 1)的效果是相同的。此外，lm(y ~ 1)中截距的估计值为y的平均值，残差为每个y与均值的离差。</p>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>离散型随机变量的常用统计指标</title>
-      <link>http://xukuang.github.io/blog/2016/04/moment-in_statistics/</link>
-      <pubDate>2016-04-07T06:25:50+08:00</pubDate>
-      <author>Xu Kuang</author>
-      <guid>http://xukuang.github.io/blog/2016/04/moment-in_statistics</guid>
-      <content:encoded><![CDATA[<h2 id="section">期望</h2>
-
-<script type="math/tex; mode=display">E[X] = \sum_{i=1}^n x_i</script>
-
-<p>期望存在一下特性:</p>
-
-<p>1.<script type="math/tex">E[aX + bY] = aE[X] + bE(Y)</script></p>
-
-<p>2.一般情况下，<script type="math/tex">E[X Y] \neq E[X]E(Y)</script>；当X和Y相互独立时，才有<script type="math/tex">E[X Y] = E[X]E(Y)</script></p>
-
-<h2 id="section-1">方差</h2>
-<p>方差描述的是随机变量的离散程度，也就是该变量离其期望值的距离。</p>
-
-<script type="math/tex; mode=display">Var(X) = E[(X -E[X])^2] = E[X^{2} - 2X E[X] + (E[X])^{2}] = E[X^{2}] - (E[X])^{2}</script>
-
-<p>此外，方差还可以看作是随机变量和自身的协方差<script type="math/tex">Var(X) = Cov(X, X)</script>。</p>
-
-<h2 id="section-2">标准差</h2>
-<p>标准差是一组数值自平均值分散开来的程度的一种测量观念。</p>
-
-<p>总体的标准差</p>
-
-<script type="math/tex; mode=display">SD = \sqrt{\frac{Var(x)}{N}}</script>
-
-<p>样本的标准差</p>
-
-<script type="math/tex; mode=display">SD = \sqrt{\frac{Var(x)}{N - 1}}</script>
-
-<h2 id="section-3">标准误</h2>
-<p>标准误差针对样本统计量而言，是某个样本统计量的标准差。当谈及标准误差时，一般须指明对应的样本统计量才有意义。以下以样本均值（样本均值是一种样本统计量）作为例子。于是，假设可以从总体中随机选取无限的大小相同的样本，那每个样本都可以有一个样本均值。依此法可以到一个由无限多样本均值组成的总体，该总体的标准差即为标准误差。</p>
-
-<script type="math/tex; mode=display">SE = \frac{SD}{\sqrt{N}}</script>
-
-<h2 id="section-4">协方差</h2>
-<p>协方差用于衡量两个变量的总体误差。而方差是协方差的一种特殊情况，即当两个变量是相同的情况。</p>
-
-<script type="math/tex; mode=display">Cov(X, Y) = E((X - E[X])(Y - E(Y)) = E[XY] - E[X] E[Y]</script>
-
-<p>协方差表示的是两个变量的总体的误差，这与只表示一个变量误差的方差不同。 如果两个变量的变化趋势一致，也就是说如果其中一个大于自身的期望值，另外一个也大于自身的期望值，那么两个变量之间的协方差就是正值。如果两个变量的变化趋势相反，即其中一个大于自身的期望值，另外一个却小于自身的期望值，那么两个变量之间的协方差就是负值。如果X与Y是统计独立的，那么二者之间的协方差就是0，但是反过来并不成立，即如果X与Y的协方差为0，二者并不一定是统计独立的。</p>
-
-<h2 id="section-5">协方差的相关性η(线性相关)</h2>
-
-<script type="math/tex; mode=display">\eta =  \frac{cov(X, Y)}{\sqrt{var(X) \cdot var(Y)}}</script>
-
-<p>协方差的相关性η更准确地说是线性相关的相关系数r，是一个衡量线性独立的无量纲数，其取值在[－1,+1]之间。相关性η = 1时称为“完全线性相关”(相关性η = -1时称为“完全线性负相关”)，此时将<script type="math/tex">Y_{i}</script>对<script type="math/tex">X_{i}</script>作Y-X散点图，将得到一组精确排列在直线上的点；相关性数值介于－1到1之间时，其绝对值越接近1表明线性相关性越好，作散点图得到的点的排布越接近一条直线。相关性为0(因而协方差也为0)的两个随机变量又被称为是不相关的，或者更准确地说叫作“线性无关”、“线性不相关”，这仅仅表明X 与Y两随机变量之间没有线性相关性，并非表示它们之间一定没有任何内在的（非线性）函数关系，和前面所说的“X、Y二者并不一定是统计独立的”说法一致。</p>
-
-<p>-—–</p>
-
-<p><strong>本篇文章整理自维基百科。</strong></p>
 ]]></content:encoded>
     </item>
     
