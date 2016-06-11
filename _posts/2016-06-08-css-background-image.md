@@ -71,6 +71,7 @@ background: url(image.jpg) 50% 0 repeat-y;
 ```
 
 \- - - - - -
+
 **参考资料**
 
 1. [css控制背景示例(css设置背景图片、设置背景颜色)](http://www.jb51.net/css/154155.html)
