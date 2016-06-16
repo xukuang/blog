@@ -13,7 +13,7 @@ tags: [html]
 * 常用的块状元素
 
 ```
-<div>、<p>、<h1>...<h6>、<ol>、<ul>、<dl>、<table>、<address>、<blockquote> 、<form>
+<div>、<p>、<h1>...<h6>、<ol>、<ul>、<dl>、<table>、<address>、<blockquote>、<form>
 ```
 
 * 块级元素特点
