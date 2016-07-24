@@ -10,7 +10,7 @@ tags: [R, dplyr]
 ## 添加新列
 使用的数据companiesData来自于网络，它是苹果、谷歌以及微软等三家公司在2010到2013年3年间的营收与利润数额，其中fy为年份，company为公司名称，revenue为公司营收，profit为公司利润。创建两列：公司所属国家(country)，其值为America；利润列（margin），其值等于利润(profit)除以营收(revenue)再乘以100。
 
-```R
+```
 fy <- c(2010,2011,2012,2010,2011,2012,2010,2011,2012)  
 company <- c("Apple","Apple","Apple","Google","Google","Google","Microsoft",  
 "Microsoft","Microsoft")  
@@ -22,7 +22,7 @@ companiesData <- data.frame(fy, company, revenue, profit)
 
 * 为列简单创建一个变量名称
 
-```R
+```
 companiesData <- data.frame(fy, company, revenue, profit)
 companiesData$country <- 'America'
 companiesData$margin <- (companiesData$profit / companiesData$revenue) * 100
@@ -41,7 +41,7 @@ companiesData
 
 * 利用transform函数
 
-```R
+```
 companiesData <- data.frame(fy, company, revenue, profit)
 companiesData <- transform(companiesData,  country = 'Aerica', margin = (profit/revenue) * 100)
 companiesData
@@ -73,7 +73,7 @@ companiesData <- transform(companiesData,  country = 'Aerica', margin = (profit/
 
 对于mutate函数来说，是正确的。
 
-```R
+```
 library(dplyr)
 companiesData <- data.frame(fy, company, revenue, profit)
 companiesData <- mutate(companiesData, country = 'Aerica', margin = (profit/revenue) * 100, margin.new = margin * 1.2)
@@ -122,7 +122,7 @@ hf = arrange(hflights, desc(ArrDelay))
 
 数据同样使用自R包hflights的hflights。数据筛选是选择满足符合某些条件的数据行。
 
-```R
+```
 # 查看各月数据行，方便下面的结果的确认
 table(hlihgts$Month)
 		1     2     3     4     5     6     7     8     9    10    11    12 
@@ -133,7 +133,7 @@ table(hlihgts$Month)
 	
 满足一个条件；
 	
-```R
+```
 ## 满足数据框hflights中Month列等于1
 hf1 = hflights[hflights$Month == 1]
 nrow(hf1)
@@ -142,7 +142,7 @@ nrow(hf1)
 
 两个以上的条件：同时满足(相当于逻辑“且”)；
 
-```R
+```
 # 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1和2
 hf2 = hflights[c(hflights$Month == 1 & hflights$Month == 2), ]
@@ -157,7 +157,7 @@ nrow(hf3)
 
 两个以上的条件：至少满足其中一个(相当于逻辑“或”)。
 
-```R
+```
 # 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1或2
 hf4 = hflights[c(hflights$Month == 1 | hflights$Month == 2), ]
@@ -174,7 +174,7 @@ nrow(hf5)
 
 满足一个条件；
 
-```R
+```
 ## 满足数据框hflights中Month列等于1
 hf1 = subset(hflights, Month == 1)
 nrow(hf1)
@@ -183,7 +183,7 @@ nrow(hf1)
 
 两个以上的条件：同时满足(相当于逻辑“且”)；
 
-```R
+```
 # 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1和2
 hf2 = subset(hflights, Month == 1 & Month == 2)
@@ -198,7 +198,7 @@ nrow(hf3)
 
 两个以上的条件：至少满足其中一个(相当于逻辑“或”)。
 
-```R
+```
 # 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1或2
 hf4 = subset(hflights, Month == 1 | Month == 2)
@@ -220,7 +220,7 @@ plyr包中并没有相似功能的filter函数。
 
 满足一个条件；
 
-```R
+```
 require(dplyr)
 ## 满足数据框hflights中Month列等于1
 hf1 = filter(hflights, Month == 1)
@@ -230,7 +230,7 @@ nrow(hf1)
 
 两个以上的条件：同时满足(相当于逻辑“且”)；
 
-```R
+```
 # 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1和2
 hf2 = filter(hflights, Month == 1 & Month == 2)
@@ -251,7 +251,7 @@ nrow(hf3)
 
 两个以上的条件：至少满足其中一个(相当于逻辑“或”)。
 
-```R
+```
 # 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1或2
 hf4 = filter(hflights, Month == 1 | Month == 2)
@@ -268,7 +268,7 @@ nrow(hf5)
 
 数据选择是选择数据框中的制定的列，这里使用的数据是dplyr包中自带的iris函数。
 
-```R
+```
 head(iris)
 	  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 	1          5.1         3.5          1.4         0.2  setosa
@@ -283,7 +283,7 @@ head(iris)
 
 利用字符向量选取指定列；
 
-```R
+```
 iris.part1 = iris[,c('Sepal.Length', 'Sepal.Width')]
 head(iris.part1)
 	  Sepal.Length Sepal.Width
@@ -297,7 +297,7 @@ head(iris.part1)
 	
 利用数字向量选择指定列；
 
-```R
+```
 # 利用":"选取相邻列
 iris.part2 = iris[,1:2]
 head(iris.part2)
@@ -323,7 +323,7 @@ head(iris.part3)
 
 利用“-”结合数字向量排除数据框的某些列。
 
-```R
+```
 iris.part4 = iris[,-(1:2)]
 head(iris.part4)
 	  Petal.Length Petal.Width Species
@@ -348,7 +348,7 @@ head(iris.part5)
 
 select函数能完成上部分基础函数的所有操作。plyr包中也没有相似功能的select函数。
 
-```R
+```
 # 利用列名选取指定列
 iris.part1 = select(iris, Sepal.Length, Sepal.Width)
 # 甚至可以对选取的列进行重命名
@@ -373,7 +373,7 @@ select函数还有自己的特点：
 
 * ":"支持相邻列名的选取
 
-```R
+```
 iris.part6 = select(iris,Sepal.Length:Petal.Length)
 head(iris.part6)
 	  Sepal.Length Sepal.Width Petal.Length
@@ -424,7 +424,7 @@ select(iris, -Petal.Length, -Petal.Width)
 
 * “-”去除指定列
 
-```R
+```
 iris.part7 = select(iris,-(Sepal.Length:Petal.Length))
 head(iris.part7)
 	  Petal.Width Species

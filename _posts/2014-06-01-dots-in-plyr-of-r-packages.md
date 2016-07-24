@@ -9,9 +9,9 @@ tags: [plyr, R]
 　　**summarise**和**mutate**是**R**中**plyr**包的两个函数。**plyr**是**R**中用来数据汇总的超强R包，肖凯对**plyr**的使用在网易云课堂(该链接已经失效)有较为详细的讲述。本文只对其中的**summarise**和**mutate**函数进行简单介绍，并讲述一下它和**ddply**函数的搭配使用。(注意，这两个函数在plyr包升级后的dplyr包中依然适用)
 
 ## summarise 和 mutate 函数
-　　**summarise**和**mutate**函数都可以对一个数据框的某一列**(而不是整个数据框)**进行修改和汇总，两者的主要区别在于返回结果的方式不同，其中**summarise**函数返回一个只包含修改或汇总后数据的数据框，而**mutate**函数则返回一个由原始数据和修改或汇总后数据两部分构成的数据框。具体内容加下面代码：<!--more-->
+　　**summarise**和**mutate**函数都可以对一个数据框的某一列**(而不是整个数据框)**进行修改和汇总，两者的主要区别在于返回结果的方式不同，其中**summarise**函数返回一个只包含修改或汇总后数据的数据框，而**mutate**函数则返回一个由原始数据和修改或汇总后数据两部分构成的数据框(mutate函数与基础包的transform函数相似，两者的区别在于；muate函数可以对刚刚建立起来的列进行计算，而transform函数只能针对数据的原始列进行计算，详细内容可以参考[这篇文章](http://xukuang.github.io/blog/2015/05/common-methods-of-dealing-with-data-frame/))。具体内容加下面代码：<!--more-->
 
-```R
+```
 require(plyr)
 set.seed(1) # 保证每次产生的数据框的唯一性
 dfx <- data.frame(
