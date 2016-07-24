@@ -272,50 +272,6 @@ normalizePath(c(R.home(), tempdir()))
 shortPathName(c(R.home(), tempdir()))
 ```
 
-
-## 几个特殊的目录
-
-**R.home()** 查看R软件的相关目录
-
-**.Library** 查看R核心包的目录
-
-**.libPaths() ** 查看R所有包的存放目录
-
-**ystem.file()** 查看指定包所在的目录
-
-* R软件的相关目录
-
-```
-# R.home() 查看R软件的相关目录
-
-## 打印R软件安装目录
-R.home()
-
-## 打印R软件bin的目录
-R.home(component="bin")
-
-## 打印R软件文件的目录
-R.home(component="doc")
-```
-
-* R软件的包目录
-
-```
-# 打印核心包的目录
-.Library
-# 打印所有包的存放目录
-.libPaths()
-```
-
-* 查看指定包所在的目录
-
-```
-# base包的存放目录
-system.file()
-# dplyr包的存放目录
-system.file(package = "dplyr")
-```
-
 ## 小结
 正如张丹所说，用R语言操作文件系统还是很方便的，但其对于函数命名不太规范,比如文件和目录的操作函数名有时区分，有时又不区分。最后，对文件和目录的操作进行简单的小结以方便自己的记忆。
 
