@@ -13,7 +13,7 @@ tags: [dplyr, R]
 ### 原始数据 
 原始数据的概况。<!--more-->
 
-```R
+```
 library(dplyr)
 ## 原始数据
 ### 这是一个32X12的数据框
@@ -56,7 +56,7 @@ mtcars
 ### group_by & ungroup
 **group_by**函数对数据进行分组时，默认情况下对处理的数据的分组情况是忽略掉的，只有把参数add = TRUE才在原始数据的基础上添加新的分类。因此，在默认情况下，在第二次分组时，可以对已分组数据直接进行第二次分组，而不必先用**ungroup**函数拆除已有分组指标。
 
-```R
+```
 ## 对数据mtcars进行分组，分组依据为cyl
 by_cyl <- group_by(mtcars, cyl)
 groups(by_cyl)
@@ -92,7 +92,7 @@ groups(group_by(by_cyl, vs, am, add = TRUE))
 
 ### filter函数
 
-```R
+```
 ### 这里按cyl进行分组，所以筛选结果有3条
 filter(by_cyl, disp == max(disp))
     # Source: local data frame [3 x 11]
