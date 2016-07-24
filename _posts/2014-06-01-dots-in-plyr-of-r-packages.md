@@ -92,7 +92,7 @@ ddply(dfx, .(sex), mutate, worktime.mean = mean(worktime))
 ddply(dfx, .(sex), mutate, worktime.sd = sd(worktime))
 ddply(dfx, .(sex), mutate, worktime.sd = median(worktime))
 ```
-　　注意：这种方式下，summarise或者mutate参数至少要选择其中的一个，否则不能得到想要的结果。
+　　注意：这种方式下，summarise或者mutate参数至少要选择其中的一个，否则不能得到想要的结果。此外，这种方式下，只是对数据的原始列进行计算时，mutate可以用基础包里的transform替换，一旦对新生成的数据进行计算transform替换mutate将会发生错误，所以推荐用mutate。
 
 ### 通用汇总方式（编写函数）
 	
