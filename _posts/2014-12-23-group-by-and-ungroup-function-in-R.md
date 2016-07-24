@@ -89,6 +89,7 @@ groups(group_by(by_cyl, vs, am, add = TRUE))
 
 ## group_by & ungroup延伸
 使用**group_by**函数进行分组的数据，数据本身常常包含着分组依据，所以在未去除分组（**ungroup**）或下一次分组（使用**group_by**）前，分组依据常常保留，这会影响一些函数的运算结果，其中包括**filter**，**arrange**函数和指标函数。
+
 ### filter函数
 
 ```R
