@@ -165,6 +165,7 @@ summarise_all(hflights.dat, sum))
 ```
 
 * mutate_all()函数
+
 区别于summarise_all()函数在于mutate_all()函数产生与原数据相同行和列数的结果，这里mutate_all以及下面的mutate_at()和mutate_if()函数也不同于dplyr包的mutate()函数，mutate函数在原始数据后面产生新的结果，而mutate_系列函数则直接产生与原数据相同行和列数的结果。	
 
 ```
@@ -174,6 +175,7 @@ head(temp)
 ```
 
 此外，summarise_all()和mutate_all()函数中使用的函数还可以使用完全形式，这时候不仅可以更改结果列的名字。mutate_all()的结果将与mutate函数一样在原始数据后面产生新的结果。
+
 ```
 mutate_all(hflights, funs("in" = . / 2.54))
 mutate_all(hflights,funs(med = median))
