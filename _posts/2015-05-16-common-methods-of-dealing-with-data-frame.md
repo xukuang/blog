@@ -456,52 +456,47 @@ colSums(hflights.dat, na.rm = T)
 colMeans(hflights.dat, na.rm = T)
 ```
 
-* dplyr包的summarise_each或者mutate_each
+* dplyr包的summarise_all()或者mutate_all()函数
 
-summarise_each可以进行求平均值、标准差、方差、最小值和最大值，此时被处理的数据列也不需要必须是数字类型(只是此时会有警告提示)。然而，无论如何要进行求和操作时，所有数据列必须是数字类型(原因是sum函数对字符求和，直接返回错误，而求平均值、标准差和方差只是返回NA，并提示警告，最小值和最大值时返回真实的结果)。当然也可以多个指标同时计算。
+summarise_all()或者mutate_all()函数可以进行求平均值、标准差、方差、最小值和最大值，此时被处理的数据列也不需要必须是数字类型(只是此时会有警告提示)。然而，无论如何要进行求和操作时，所有数据列必须是数字类型(原因是sum函数对字符求和，直接返回错误，而求平均值、标准差和方差只是返回NA，并提示警告，最小值和最大值时返回真实的结果)。
+
+* summarise_all()函数
 
 ```
 # 平均值，字符平均值返回NA
-summarise_each(hflights, funs(mean))
+summarise_all(hflights, mean)
 # 标准差，字符标准差返回NA
-summarise_each(hflights, funs(sd))
+summarise_all(hflights, sd)
 # 方差，字符方差返回NA
-summarise_each(hflights, funs(var))
+summarise_all(hflights, var)
 # 最小值，字符最小值也是可以运算的
-summarise_each(hflights, funs(min))
+summarise_all(hflights, min)
 # 最大值，字符最大值也是可以运算的
-summarise_each(hflights, funs(max))
-# 平均值、最小值和最大值
-summarise_each(hflights, funs(mean, min, max))
+summarise_all(hflights, max)
 
 # 求和
 hflights.dat = hflights[,! colnames(hflights) %in% c('CancellationCode', 'UniqueCarrier', 'TailNum', 'Origin', 'Dest')]
-summarise_each(hflights.dat, funs(sum))
-
-# 若果某一列中有NA，要想得到结果可以通过调整函数内部的na.rm参数来实现
-# 平均值
-summarise_each(hflights, funs(mean(., na.rm = T)))
-# 标准差
-summarise_each(hflights, funs(sd(., na.rm = T)))
-# 方差
-summarise_each(hflights, funs(var(., na.rm = T)))
-# 最小值
-summarise_each(hflights, funs(min(., na.rm = T)))
-# 最大值
-summarise_each(hflights, funs(max(., na.rm = T)))
-# 求和
-summarise_each(hflights.dat, funs(sum(., na.rm = T)))
-```
-
-mutate_each跟summarise_each最大的不同在于产生于原数据相同行数的结果，所以mutate_each除了可以进行summarise_each函数的操作以外，还可进行简单四则运算，当然进行四则运算时，要保证所有列都是数字型。	
+summarise_all(hflights.dat, sum))
 
 ```
-# 四则运算
-temp1 = mutate_each(hflights.dat, funs( . + 1))
+
+* mutate_all()函数
+区别于summarise_all()函数在于mutate_all()函数产生与原数据相同行和列数的结果，这里mutate_all以及下面的mutate_at()和mutate_if()函数也不同于dplyr包的mutate()函数，mutate函数在原始数据后面产生新的结果，而mutate_系列函数则直接产生与原数据相同行和列数的结果。	
+
+```
+temp = mutate_all(hflights.dat,  mean))
 head(hflights)
-head(temp1)
-# 事实上四则运算根本不需要借助函数来实现
-temp2 = hflights.dat + 1
+head(temp)
+```
+
+此外，summarise_all()和mutate_all()函数中使用的函数还可以使用完全形式，这时候不仅可以更改结果列的名字。mutate_all()的结果将与mutate函数一样在原始数据后面产生新的结果。
+```
+mutate_all(hflights, funs("in" = . / 2.54))
+mutate_all(hflights,funs(med = median))
+summarise_all(hflights,funs(med = median))
+# 平均值、最小值和最大值
+summarise_all(hflights, funs(mean, min, max))
+
 ```
 
 * plyr包的colwise函数

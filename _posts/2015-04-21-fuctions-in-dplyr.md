@@ -88,10 +88,13 @@ select(hflights_df, Year:DayOfWeek)
 # 用 - 来排除列名:
 select(hflights_df, -(Year:DayOfWeek))
 ```
+
 ### select_if()函数
-iris %>% select_if(is.factor)
-iris %>% select_if(is.numeric)
-iris %>% select_if(function(col) is.numeric(col) && mean(col) > 3.5)
+```
+hflights %>% select_if(is.factor)
+hflights %>% select_if(is.numeric)
+hflights %>% select_if(function(col) is.numeric(col) && mean(col) > 3.5)
+```
 
 ## 数据变形
 
@@ -113,46 +116,35 @@ transform(hflights,
 )
 ```
 
-## 数据分组
-数据分组是指按指定列的内容进行分类统计分析，具体可以参考[group和ungroup函数](http://xukuang.github.io/blog/2014/12/group-by-and-ungroup-function-in-R/)。
+## 数据分组（group_by()函数）
+数据分组是指按指定列的内容进行分类统计分析，分类汇总后会影响一些函数的计算结果，具体可以参考[group和ungroup函数](http://xukuang.github.io/blog/2014/12/group-by-and-ungroup-function-in-R/)。
 
 ```
-# 分组动作 group_by()
 planes <- group_by(hflights_df, TailNum)
 delay <- summarise(planes, 
   count = n(), 
   dist = mean(Distance, na.rm = TRUE), 
   delay = mean(ArrDelay, na.rm = TRUE))
 delay <- filter(delay, count > 20, dist < 2000)
-
-# 另: 一些汇总时的小函数
-# n(): 计算个数
-# n_distinct(): 计算 x 中唯一值的个数. (原文为 count_distinct(x), 测试无用)
-# first(x), last(x) 和 nth(x, n): 返回对应秩的值, 类似于自带函数 x[1], x[length(x)], 和 x[n]
 ```
+
+此外，分类汇总时，一些也可用到：
+
+* n()计算个数
+* n_distinct()计算唯一值的个数
+* first(x), last(x) 和 nth(x, n): 返回值, 类似于基本包函数 x[1], x[length(x)], 和 x[n]
 
 ## 连接符（%>%）
 
 ```
-# 连接符 
-# dplyr包里还新引进了一个操作符, 使用时把数据名作为开头, 然后依次对此数据进行多步操作
-Batting %>%
-    group_by(playerID) %>%
-    summarise(total = sum(G)) %>%
-    arrange(desc(total)) %>%
-    head(5)
-# 这样可以按进行数据处理时的思路写代码, 一步步深入, 既易写又易读, 接近于从左到右的自然语言顺序
-#  对比一下用R自带函数实现的:
-head(arrange(summarise(group_by(Batting, playerID), total = sum(G)) , desc(total)), 5)
-# 或者像这篇文章所用的方法:
-totals <- aggregate(. ~ playerID, data=Batting[,c("playerID","R")], sum)
-ranks <- sort.list(-totals$R)
-totals[ranks[1:5],]
+Batting %>% group_by(playerID) %>%
+summarise(total = sum(G)) %>% arrange(desc(total)) %>% head(5)
 ```
 
 ### 对所有列进行相同操作
-dpyr包中对所有列进行相同的操作最初采用的是summarise_each()和mutate_each()函数，在0.5.0版本以后的dplyr包将逐渐使用summarise_all()和mutate_all()函数。
-* summarise_all可以进行求平均值、标准差、方差、最小值和最大值，此时被处理的数据列也不需要必须是数字类型(只是此时会有警告提示)。然而，无论如何要进行求和操作时，所有数据列必须是数字类型(原因是sum函数对字符求和，直接返回错误，而求平均值、标准差、方差、最小值和最大值只是返回NA，并提示警告)。当然也可以多个指标同时计算。
+dpyr包中对所有列进行相同的操作最初采用的是summarise_each()和mutate_each()函数，在0.5.0版本以后的dplyr包将逐渐使用summarise_all()和mutate_all()函数，这里也主要将summarise_all()和mutate_all()函数。这里的相同操作主要包括求平均值、标准差、方差、最小值和最大值，此时被处理的数据列不需要必须是数字类型(只是此时会有警告提示)。然而，无论如何要进行求和操作时，所有数据列必须是数字类型(原因是sum函数对字符求和，直接返回错误，而求平均值、标准差、方差、最小值和最大值只是返回NA，并提示警告)。
+
+* summarise_all()函数
 
 ```
 # 平均值，字符平均值返回NA
@@ -172,7 +164,8 @@ summarise_all(hflights.dat, sum))
 
 ```
 
-* mutate_all跟summarise_all最大的不同在于产生于原数据相同行数的结果，所以mutate_all除了可以进行summarise_all函数的操作以外，还可进行简单四则运算，当然进行四则运算时，要保证所有列都是数字型。	
+* mutate_all()函数
+区别于summarise_all()函数在于mutate_all()函数产生与原数据相同行和列数的结果，这里mutate_all以及下面的mutate_at()和mutate_if()函数也不同于dplyr包的mutate()函数，mutate函数在原始数据后面产生新的结果，而mutate_系列函数则直接产生与原数据相同行和列数的结果。	
 
 ```
 temp = mutate_all(hflights.dat,  mean))
@@ -180,12 +173,16 @@ head(hflights)
 head(temp)
 ```
 
-此外，summarise_all()和mutate_all()函数中的函数还可以使用完全形式，这时候不仅可以更改结果列的名字，对于mutate_all()的结果还包含原始数据。
+此外，summarise_all()和mutate_all()函数中使用的函数还可以使用完全形式，这时候不仅可以更改结果列的名字。mutate_all()的结果将与mutate函数一样在原始数据后面产生新的结果。
 ```
 mutate_all(hflights, funs("in" = . / 2.54))
 mutate_all(hflights,funs(med = median))
 summarise_all(hflights,funs(med = median))
+# 平均值、最小值和最大值
+summarise_all(hflights, funs(mean, min, max))
+
 ```
+
 ### 对特定列进行相同操作
 
 #### summarise_at()和mutate_at()函数
@@ -203,4 +200,4 @@ mtcars %>% group_by(cyl) %>% mutate_at(vars(mpg, wt), mean)
 iris %>% summarise_if(is.numeric, mean, trim = 0.25)
 iris %>% mutate_if(is.numeric, mean, trim = 0.25)
 ```
-同样，summarise_at()和mutate_at() && summarise_if()和mutate_if()函数函数中的函数也可以使用完全形式，mutate_at()和mutate_if()的结果也包含原始数据。
+同样，summarise_at()和mutate_at() && summarise_if()和mutate_if()函数函数中的函数也可以使用完全形式，其结果也包含原始数据。
