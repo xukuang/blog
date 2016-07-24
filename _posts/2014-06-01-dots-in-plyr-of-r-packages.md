@@ -56,10 +56,11 @@ ddply(dfx, .(sex), c("nrow","ncol"))
 　　注意：这种方式是对整个数据框进行的，不能使用summarise或者mutate参数。
 
 ### 数据框中某一列的汇总
-对某一列的汇总主要包括最大值，最小值，平均值，方差，标准差， 中位数。
+
+#### 关于指标函数（最大值，最小值，平均值，方差，标准差， 中位数）的计算
 	
 ```
-## 数据框某一列的汇总，函数中包含参数，需借助summarise或mutate参数
+## 关于指标函数的计算，函数中包含参数，需借助summarise或mutate参数
 ## summarise参数和mutate参数的区别与函数summarise和mutate的区别一样，
 ## summarise参数返回的结果只包含汇总结果，mutate参数返回结果包含原始数据和汇总数据
 	## summarise
@@ -76,7 +77,7 @@ ddply(dfx, .(sex), mutate, sd(worktime))
 ddply(dfx, .(sex), mutate, median(worktime))
 ```
 
-注意：三种汇总方式中，只有这种方式可以选择性对汇总结果进行命名，即下面的使用方式也是对的。
+注意：三种汇总方式中，只有这种方式且计算指标函数时可以选择性对汇总结果进行命名，即下面的使用方式也是对的。
 	
 ```
 ## summarise
@@ -93,6 +94,12 @@ ddply(dfx, .(sex), mutate, worktime.sd = sd(worktime))
 ddply(dfx, .(sex), mutate, worktime.sd = median(worktime))
 ```
 　　注意：这种方式下，summarise或者mutate参数至少要选择其中的一个，否则不能得到想要的结果。此外，这种方式下，只是对数据的原始列进行计算时，mutate可以用基础包里的transform替换，一旦对新生成的数据进行计算transform替换mutate将会发生错误，所以推荐用mutate。
+
+#### 通过subset实现对数据的筛选
+```
+ddply(dfx, .(sex), subset,  age > mean(age))
+```
+
 
 ### 通用汇总方式（编写函数）
 	
