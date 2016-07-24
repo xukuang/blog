@@ -125,7 +125,7 @@ ddply(dfx, .(sex), function(x){median(x$worktime)})
 
 * colwise函数
 
-　　colwise函数是plyr包的内置函数，可以对数据框中所有的数据列进行相同的操作，省去每一例的大量重复操作。(类似的功能在dplyr包中可以通过summarise_each或mutate_each来实现)
+　　colwise函数是plyr包的内置函数，可以对数据框中所有的数据列进行相同的操作，省去每一例的大量重复操作。(类似的功能在dplyr包中可以通过summarise_all或mutate_all来实现)
 
 * 直接对数据列进行相同操作
 

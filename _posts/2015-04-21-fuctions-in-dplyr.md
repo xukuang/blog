@@ -55,6 +55,14 @@ filter(hflights_df, Month == 1 | Month == 2)
 # 注意: 表示 AND 时要使用 & 而避免 &&
 ```
 
+## 无重复内容的筛选
+
+```
+# distinct函数
+distinct(hflights_df, Month, .keep_all = TRUE)
+```
+这里参数.keep_all = TRUE指保留除Month以外的其它列的内容。
+
 ## 数据排列
 
 ```
@@ -70,6 +78,7 @@ hflights[order(desc(hflights$ArrDelay)), ]
 
 ## 数据选择
 
+### select函数
 ```
 #  选择: select()
 # 用列名作参数来选择子数据集:
@@ -79,6 +88,10 @@ select(hflights_df, Year:DayOfWeek)
 # 用 - 来排除列名:
 select(hflights_df, -(Year:DayOfWeek))
 ```
+### select_if()函数
+iris %>% select_if(is.factor)
+iris %>% select_if(is.numeric)
+iris %>% select_if(function(col) is.numeric(col) && mean(col) > 3.5)
 
 ## 数据变形
 
@@ -118,15 +131,15 @@ delay <- filter(delay, count > 20, dist < 2000)
 # first(x), last(x) 和 nth(x, n): 返回对应秩的值, 类似于自带函数 x[1], x[length(x)], 和 x[n]
 ```
 
-## 连接符
+## 连接符（%>%）
 
 ```
-# 3 连接符 %.%
-# 包里还新引进了一个操作符, 使用时把数据名作为开头, 然后依次对此数据进行多步操作.
-Batting %.%
-    group_by(playerID) %.%
-    summarise(total = sum(G)) %.%
-    arrange(desc(total)) %.%
+# 连接符 
+# dplyr包里还新引进了一个操作符, 使用时把数据名作为开头, 然后依次对此数据进行多步操作
+Batting %>%
+    group_by(playerID) %>%
+    summarise(total = sum(G)) %>%
+    arrange(desc(total)) %>%
     head(5)
 # 这样可以按进行数据处理时的思路写代码, 一步步深入, 既易写又易读, 接近于从左到右的自然语言顺序
 #  对比一下用R自带函数实现的:
@@ -135,51 +148,59 @@ head(arrange(summarise(group_by(Batting, playerID), total = sum(G)) , desc(total
 totals <- aggregate(. ~ playerID, data=Batting[,c("playerID","R")], sum)
 ranks <- sort.list(-totals$R)
 totals[ranks[1:5],]
-# 文章里还表示: 用他的 MacBook Air 跑 %.% 那段代码用了 0.036 秒, 
-# 跑上面这段代码则用了 0.266 秒, 运算速度提升了近7倍. (当然这只是一例, 还有其它更大的数字.)
 ```
 
 ### 对所有列进行相同操作
-
-* summarise_each可以进行求平均值、标准差、方差、最小值和最大值，此时被处理的数据列也不需要必须是数字类型(只是此时会有警告提示)。然而，无论如何要进行求和操作时，所有数据列必须是数字类型(原因是sum函数对字符求和，直接返回错误，而求平均值、标准差、方差、最小值和最大值只是返回NA，并提示警告)。当然也可以多个指标同时计算。
+dpyr包中对所有列进行相同的操作最初采用的是summarise_each()和mutate_each()函数，在0.5.0版本以后的dplyr包将逐渐使用summarise_all()和mutate_all()函数。
+* summarise_all可以进行求平均值、标准差、方差、最小值和最大值，此时被处理的数据列也不需要必须是数字类型(只是此时会有警告提示)。然而，无论如何要进行求和操作时，所有数据列必须是数字类型(原因是sum函数对字符求和，直接返回错误，而求平均值、标准差、方差、最小值和最大值只是返回NA，并提示警告)。当然也可以多个指标同时计算。
 
 ```
 # 平均值，字符平均值返回NA
-summarise_each(hflights, funs(mean))
+summarise_all(hflights, mean)
 # 标准差，字符标准差返回NA
-summarise_each(hflights, funs(sd))
+summarise_all(hflights, sd)
 # 方差，字符方差返回NA
-summarise_each(hflights, funs(var))
+summarise_all(hflights, var)
 # 最小值，字符最小值也是可以运算的
-summarise_each(hflights, funs(min))
+summarise_all(hflights, min)
 # 最大值，字符最大值也是可以运算的
-summarise_each(hflights, funs(max))
-# 平均值、最小值和最大值
-summarise_each(hflights, funs(mean, min, max))
+summarise_all(hflights, max)
 
 # 求和
 hflights.dat = hflights[,! colnames(hflights) %in% c('CancellationCode', 'UniqueCarrier', 'TailNum', 'Origin', 'Dest')]
-summarise_each(hflights.dat, funs(sum))
-
-# 若果某一列中有NA，要想得到结果可以通过调整函数内部的na.rm参数来实现
-# 平均值
-summarise_each(hflights, funs(mean(., na.rm = T)))
-# 标准差
-summarise_each(hflights, funs(sd(., na.rm = T)))
-# 方差
-summarise_each(hflights, funs(var(., na.rm = T)))
-# 最小值
-summarise_each(hflights, funs(min(., na.rm = T)))
-# 最大值
-summarise_each(hflights, funs(max(., na.rm = T)))
-# 求和
-summarise_each(hflights.dat, funs(sum(., na.rm = T)))
-```
-
-* mutate_each跟summarise_each最大的不同在于产生于原数据相同行数的结果，所以mutate_each除了可以进行summarise_each函数的操作以外，还可进行简单四则运算，当然进行四则运算时，要保证所有列都是数字型。	
+summarise_all(hflights.dat, sum))
 
 ```
-temp = mutate_each(hflights.dat, funs( . + 1))
+
+* mutate_all跟summarise_all最大的不同在于产生于原数据相同行数的结果，所以mutate_all除了可以进行summarise_all函数的操作以外，还可进行简单四则运算，当然进行四则运算时，要保证所有列都是数字型。	
+
+```
+temp = mutate_all(hflights.dat,  mean))
 head(hflights)
 head(temp)
 ```
+
+此外，summarise_all()和mutate_all()函数中的函数还可以使用完全形式，这时候不仅可以更改结果列的名字，对于mutate_all()的结果还包含原始数据。
+```
+mutate_all(hflights, funs("in" = . / 2.54))
+mutate_all(hflights,funs(med = median))
+summarise_all(hflights,funs(med = median))
+```
+### 对特定列进行相同操作
+
+#### summarise_at()和mutate_at()函数
+
+```
+mtcars %>% group_by(cyl) %>% summarise_at(c("mpg", "wt"), mean)
+mtcars %>% group_by(cyl) %>% summarise_at(vars(mpg, wt), mean)
+mtcars %>% group_by(cyl) %>% mutate_at(c("mpg", "wt"), mean)
+mtcars %>% group_by(cyl) %>% mutate_at(vars(mpg, wt), mean)
+```
+
+#### summarise_if()和mutate_if()函数
+
+```
+iris %>% summarise_if(is.numeric, mean, trim = 0.25)
+iris %>% mutate_if(is.numeric, mean, trim = 0.25)
+```
+同样，summarise_at()和mutate_at() && summarise_if()和mutate_if()函数函数中的函数也可以使用完全形式，mutate_at()和mutate_if()的结果也包含原始数据。
