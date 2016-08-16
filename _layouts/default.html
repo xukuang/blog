@@ -23,7 +23,7 @@
       </script>
       <!--mathjax end-->
    </head>
-   <script type="text/javascript">
+  <!-- <script type="text/javascript">
     function setTimeSpan(){
     	var date = new Date();
     	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
@@ -49,7 +49,8 @@
     	return format;
 		}
   </script>
-   <body onLoad="setInterval(setTimeSpan,1000);">
+   <body onLoad="setInterval(setTimeSpan,1000);">-->
+   <body>
      <div id="container">
        <div id="main" role="main">
          <header>
@@ -81,10 +82,12 @@
 	   
 	   
 	  
-	   <footer>
+	   <!--<footer>
            <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> & <a href="http://pages.github.com">GitHub</a>| Copyright  {{site.time | date:"%Y"}} by <a href="{{ site.url }}/about/">Xu Kuang</a> | <span class="label label-info" id="timeSpan" ></span></small></p>
+       </footer>-->
+	   <footer>
+           <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> & <a href="http://pages.github.com">GitHub</a>| Copyright  {{site.time | date:"%Y"}} by <a href="{{ site.url }}/about/">Xu Kuang</a></small></p>
        </footer> 
-	   
 	   </div>
        
 	   <!--<script type="text/javascript">
