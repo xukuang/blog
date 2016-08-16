@@ -6,7 +6,7 @@ layout: default
 {{ content }}
 </section>
 <section class="meta">
-
+<span>
 {% if site.duoshuo_share && site.duoshuo_username %}
                 <!-- 多说 Share start -->
 				<div class="ds-share"
@@ -30,6 +30,7 @@ layout: default
                 </div>
                 <!-- 多说 Share end-->
                 {% endif %}
+</span>
 
 <span>
 	<a {% if page.previous %} href="{{ site.url }}{{ page.previous.url }}" class="pageNav"{% endif %} {% unless page.previous %} class="pageNavInvalid" {% endunless %} >Previous</a>
