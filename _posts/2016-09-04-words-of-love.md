@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "关于沟通"
+title: "沟通"
 date: 2016-09-04 17:36:35 +0800
 categories: [心理篇]
 tags: [沟通]
