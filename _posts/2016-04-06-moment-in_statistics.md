@@ -111,8 +111,8 @@ skewness(x, method = 'moment', na.rm = T)
 
 峰度衡量实数随机变量概率分布的峰态。峰度高就意味着方差增大是由低频度的大于或小于平均值的极端差值引起的。
 样本峰度g2：
+![](http://xukuang.github.io/blog/images/g2.png)
 
-$$g_{2}={\frac  {m_{4}}{m_{{2}}^{2}}}-3={\frac  {{\tfrac  {1}{n}}\sum _{{i=1}}^{n}(x_{i}-\overline {x})^{4}}{\left({\tfrac  {1}{n}}\sum _{{i=1}}^{n}(x_{i}-\overline {x})^{2}\right)^{2}}}-3$$
 
 为超值峰度（excess kurtosis）。“减3”是为了让正态分布的峰度为0
 
