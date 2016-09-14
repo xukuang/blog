@@ -141,6 +141,7 @@ kurtosis(x, method = 'moment', na.rm = T)
 
 
 **后面的话**
+
 fBasics包中的basicStats函数可以对常用统计量进行快速计算。主要给出各个指标的基础信息和常用统计量，也可以比较全面的展现数据信息。nobs为观测值个数，NAs为缺失值个数，SE Mean为标准误均值，UCL\LCL Mean为95%置信水平下均值的上下限，Variance与Stdev为方差和标准差。
 
 \- - - - -
