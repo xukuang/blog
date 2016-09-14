@@ -18,6 +18,7 @@ tags: [重命名]
 3. 在命令行上依次输入“cd c:/picture”，回车键，再输入“dir /b>rename.xls”。
  * 该步的目的是把“picture”文件夹下的所有文件名导入的“renname.xls”中。
  * 此处的“rename.xls”不能用“renname.xslx”替换。
+ 
  注：你也可以复制当前文件夹的地址粘贴到chrome浏览器的地址栏中，也能快速生成当前文件夹下的所有文件名，然后可以把网页页面内容复制到excel中。
  
 4. 回到“picture”文件夹，打开该文件夹在里面新建了一个“rename.xls”文件，打开它即可进入到excel界面了。
