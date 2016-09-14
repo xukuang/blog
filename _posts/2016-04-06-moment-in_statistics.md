@@ -96,7 +96,7 @@ $$\gamma _{1}=\operatorname {E} {\bigg [}{\Big (}{\frac {X-\mu }{\sigma }}{\Big 
 
 具有n个值的样本的样本偏度g1:
 
-$$\frac {m_{3}}{{m_{2}}^{3/2}}}={\frac {{\frac {1}{n}}\sum _{i=1}^{n}(x_{i}-{\overline {x}})^{3}}{\left({\frac {1}{n}}\sum _{i=1}^{n}(x_{i}-{\overline {x}})^{2}\right)^{3/2}}}$$
+![](http://xukuang.github.io/blog/images/g1.png)
 
 在R中的代码实现:
 ```
