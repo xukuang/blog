@@ -129,7 +129,9 @@ skewness(x, method = 'moment', na.rm = T)
 
 ```
 # kurtosis
-## kurtosis = sum((x-mean(x))^4)/(sum((x-mean(x))^2))^2 * length(x) -3; kurtosis 这个公式手工计算居然不对，怎么也找不到原因，期待牛人指点
+## 这个公式手工计算居然不对，怎么也找不到原因，期待牛人指点
+## kurtosis = sum((x-mean(x))^4)/(sum((x-mean(x))^2))^2 * length(x) -3; kurtosis 
+
 # 利用fBasics包
 library(fBasics)
 kurtosis(x, method = 'moment', na.rm = T)
