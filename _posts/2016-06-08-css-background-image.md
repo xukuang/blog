@@ -4,6 +4,7 @@ title: "css控制背景图片"
 date: 2016-06-08 22:11:08
 categories: [技术篇]
 tags: [html]
+published: false
 ---
 背景(background)是css中一个重要的的部分，也是需要知道的css的基础知识之一。这篇文章将会涉及css背景(background)的基本用法，包括诸如 background-attachment 等的属性，也会介绍一些有关背景(background)的常用技巧，以及 css3 中的 背景(background)(包含4个新的背景(background)属性)。
 
