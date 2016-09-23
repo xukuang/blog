@@ -1,2 +1,2 @@
-/blog/_site/
-/blog/.gitgnore
+_site
+.gitgnore
