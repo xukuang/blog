@@ -23,7 +23,7 @@
       </script>
       <!--mathjax end-->
    </head>
-   <script type="text/javascript">
+  <!-- <script type="text/javascript">
     function setTimeSpan(){
     	var date = new Date();
     	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
@@ -49,7 +49,8 @@
     	return format;
 		}
   </script>
-   <body onLoad="setInterval(setTimeSpan,1000);">
+   <body onLoad="setInterval(setTimeSpan,1000);">-->
+   <body>
      <div id="container">
        <div id="main" role="main">
          <header>
@@ -618,7 +619,8 @@ foo[[7,2,5],[0,2,2]]
 
 <p>这里的三元函数只有一个，而且不是接受 3 个数组参数的意思。它其实是一个条件运算函数，即 foo if cond else bar 这个表达式的 numpy 版——where(condition, [x, y])</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arr = np.arange(12).reshape(3,4)arr
+<div class="highlighter-rouge"><pre class="highlight"><code>arr = np.arange(12).reshape(3,4)
+arr
 	## array([[ 0,  1,  2,  3],
 	##        [ 4,  5,  6,  7],
 	##        [ 8,  9, 10, 11]])
@@ -641,7 +643,7 @@ np.where(arr%2==0,1,0)
 
 </section>
 <section class="meta">
-
+<span>
 
 
 <span>
@@ -650,6 +652,7 @@ np.where(arr%2==0,1,0)
 	<a  href="http://xukuang.github.io/blog/2016/05/pandas/" class="pageNav"  >Next</a>
 </span>
 
+         
 
 <span class="author">
   <a href="http://xukuang.github.io/blog">Xu Kuang</a>
@@ -681,28 +684,46 @@ np.where(arr%2==0,1,0)
 </span>
 
 </section>
-<div id="disqus_thread"></div>
-<script>
-/**
-* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<!-- 多说 Share start -->
+	<div class="ds-share"
+                    style="text-align: right"
+                    data-thread-key="/2016/04/numpy"
+                    data-title="Numpy包的学习"
+                    data-url="http://xukuang.github.io/blog/2016/04/numpy/"
+                    data-images="http://xukuang.github.io/blog"
+                    data-content="|  | ." >
+                    <div class="ds-share-inline">
+                      <ul  class="ds-share-icons-16">
+                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                      </ul>
+                      <div class="ds-share-icons-more">
+                      </div>
+                    </div>
+                <hr>
+                </div>
+ <!-- 多说 Share end-->
+				
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2016/04/numpy" data-title="Numpy包的学习 | " data-url="http://xukuang.github.io/blog/2016/04/numpy/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"yiyuzhijian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
 
-s.src = '//httpxukuanggithubio.disqus.com/embed.js';
-
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
 <script type="text/javascript">
 $(function(){
@@ -730,12 +751,11 @@ $(function(){
          </article>
        </div>
 	   
-	   
-	  
 	   <footer>
-           <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> & <a href="http://pages.github.com">GitHub</a>| Copyright  2016 by <a href="http://xukuang.github.io/blog/about/">Xu Kuang</a> | <span class="label label-info" id="timeSpan" ></span></small></p>
-       </footer> 
+	   <p><small><center>© 2014-2016 Maintained by <a href="http://xukuang.github.io" title="Xu Kuang">Xu Kuang</a> ｜ Powered by <a href="https://github.com/mojombo/jekyll" target="_blank">Jekyll</a> on <a href="https://github.com/xukuang" target="_blank">GitHub</a> ｜ Themed by <a href="http://yihui.name" title="Yihui" target="_blank">Yihui</a> and <a href="http://spatial-r.com/" title="Bing Zhang" target="_blank">Bing Zhang</a> </center></small></p>
 	   
+       </footer>
+
 	   </div>
        
 	   <!--<script type="text/javascript">

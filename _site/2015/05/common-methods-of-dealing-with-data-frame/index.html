@@ -23,7 +23,7 @@
       </script>
       <!--mathjax end-->
    </head>
-   <script type="text/javascript">
+  <!-- <script type="text/javascript">
     function setTimeSpan(){
     	var date = new Date();
     	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
@@ -49,7 +49,8 @@
     	return format;
 		}
   </script>
-   <body onLoad="setInterval(setTimeSpan,1000);">
+   <body onLoad="setInterval(setTimeSpan,1000);">-->
+   <body>
      <div id="container">
        <div id="main" role="main">
          <header>
@@ -81,13 +82,13 @@
 <h2 id="section">添加新列</h2>
 <p>使用的数据companiesData来自于网络，它是苹果、谷歌以及微软等三家公司在2010到2013年3年间的营收与利润数额，其中fy为年份，company为公司名称，revenue为公司营收，profit为公司利润。创建两列：公司所属国家(country)，其值为America；利润列（margin），其值等于利润(profit)除以营收(revenue)再乘以100。</p>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="n">fy</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">2010</span><span class="p">,</span><span class="m">2011</span><span class="p">,</span><span class="m">2012</span><span class="p">,</span><span class="m">2010</span><span class="p">,</span><span class="m">2011</span><span class="p">,</span><span class="m">2012</span><span class="p">,</span><span class="m">2010</span><span class="p">,</span><span class="m">2011</span><span class="p">,</span><span class="m">2012</span><span class="p">)</span><span class="w">  
-</span><span class="n">company</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Apple"</span><span class="p">,</span><span class="s2">"Apple"</span><span class="p">,</span><span class="s2">"Apple"</span><span class="p">,</span><span class="s2">"Google"</span><span class="p">,</span><span class="s2">"Google"</span><span class="p">,</span><span class="s2">"Google"</span><span class="p">,</span><span class="s2">"Microsoft"</span><span class="p">,</span><span class="w">  
-</span><span class="s2">"Microsoft"</span><span class="p">,</span><span class="s2">"Microsoft"</span><span class="p">)</span><span class="w">  
-</span><span class="n">revenue</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">65225</span><span class="p">,</span><span class="m">108249</span><span class="p">,</span><span class="m">156508</span><span class="p">,</span><span class="m">29321</span><span class="p">,</span><span class="m">37905</span><span class="p">,</span><span class="m">50175</span><span class="p">,</span><span class="m">62484</span><span class="p">,</span><span class="m">69943</span><span class="p">,</span><span class="m">73723</span><span class="p">)</span><span class="w">  
-</span><span class="n">profit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">14013</span><span class="p">,</span><span class="m">25922</span><span class="p">,</span><span class="m">41733</span><span class="p">,</span><span class="m">8505</span><span class="p">,</span><span class="m">9737</span><span class="p">,</span><span class="m">10737</span><span class="p">,</span><span class="m">18760</span><span class="p">,</span><span class="m">23150</span><span class="p">,</span><span class="m">16978</span><span class="p">)</span><span class="w">  
-</span><span class="n">companiesData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">fy</span><span class="p">,</span><span class="w"> </span><span class="n">company</span><span class="p">,</span><span class="w"> </span><span class="n">revenue</span><span class="p">,</span><span class="w"> </span><span class="n">profit</span><span class="p">)</span><span class="w">
-</span></code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code>fy &lt;- c(2010,2011,2012,2010,2011,2012,2010,2011,2012)  
+company &lt;- c("Apple","Apple","Apple","Google","Google","Google","Microsoft",  
+"Microsoft","Microsoft")  
+revenue &lt;- c(65225,108249,156508,29321,37905,50175,62484,69943,73723)  
+profit &lt;- c(14013,25922,41733,8505,9737,10737,18760,23150,16978)  
+companiesData &lt;- data.frame(fy, company, revenue, profit)
+</code></pre>
 </div>
 <!--more-->
 
@@ -95,41 +96,41 @@
   <li>为列简单创建一个变量名称</li>
 </ul>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="n">companiesData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">fy</span><span class="p">,</span><span class="w"> </span><span class="n">company</span><span class="p">,</span><span class="w"> </span><span class="n">revenue</span><span class="p">,</span><span class="w"> </span><span class="n">profit</span><span class="p">)</span><span class="w">
-</span><span class="n">companiesData</span><span class="o">$</span><span class="n">country</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s1">'America'</span><span class="w">
-</span><span class="n">companiesData</span><span class="o">$</span><span class="n">margin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="p">(</span><span class="n">companiesData</span><span class="o">$</span><span class="n">profit</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">companiesData</span><span class="o">$</span><span class="n">revenue</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">100</span><span class="w">
-</span><span class="n">companiesData</span><span class="w">
-		</span><span class="n">fy</span><span class="w">   </span><span class="n">company</span><span class="w"> </span><span class="n">revenue</span><span class="w"> </span><span class="n">profit</span><span class="w"> </span><span class="n">country</span><span class="w">   </span><span class="n">margin</span><span class="w">
-	</span><span class="m">1</span><span class="w"> </span><span class="m">2010</span><span class="w">     </span><span class="n">Apple</span><span class="w">   </span><span class="m">65225</span><span class="w">  </span><span class="m">14013</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">21.48409</span><span class="w">
-	</span><span class="m">2</span><span class="w"> </span><span class="m">2011</span><span class="w">     </span><span class="n">Apple</span><span class="w">  </span><span class="m">108249</span><span class="w">  </span><span class="m">25922</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">23.94664</span><span class="w">
-	</span><span class="m">3</span><span class="w"> </span><span class="m">2012</span><span class="w">     </span><span class="n">Apple</span><span class="w">  </span><span class="m">156508</span><span class="w">  </span><span class="m">41733</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">26.66509</span><span class="w">
-	</span><span class="m">4</span><span class="w"> </span><span class="m">2010</span><span class="w">    </span><span class="n">Google</span><span class="w">   </span><span class="m">29321</span><span class="w">   </span><span class="m">8505</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">29.00651</span><span class="w">
-	</span><span class="m">5</span><span class="w"> </span><span class="m">2011</span><span class="w">    </span><span class="n">Google</span><span class="w">   </span><span class="m">37905</span><span class="w">   </span><span class="m">9737</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">25.68790</span><span class="w">
-	</span><span class="m">6</span><span class="w"> </span><span class="m">2012</span><span class="w">    </span><span class="n">Google</span><span class="w">   </span><span class="m">50175</span><span class="w">  </span><span class="m">10737</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">21.39910</span><span class="w">
-	</span><span class="m">7</span><span class="w"> </span><span class="m">2010</span><span class="w"> </span><span class="n">Microsoft</span><span class="w">   </span><span class="m">62484</span><span class="w">  </span><span class="m">18760</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">30.02369</span><span class="w">
-	</span><span class="m">8</span><span class="w"> </span><span class="m">2011</span><span class="w"> </span><span class="n">Microsoft</span><span class="w">   </span><span class="m">69943</span><span class="w">  </span><span class="m">23150</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">33.09838</span><span class="w">
-	</span><span class="m">9</span><span class="w"> </span><span class="m">2012</span><span class="w"> </span><span class="n">Microsoft</span><span class="w">   </span><span class="m">73723</span><span class="w">  </span><span class="m">16978</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">23.02945</span><span class="w">
-</span></code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code>companiesData &lt;- data.frame(fy, company, revenue, profit)
+companiesData$country &lt;- 'America'
+companiesData$margin &lt;- (companiesData$profit / companiesData$revenue) * 100
+companiesData
+		fy   company revenue profit country   margin
+	1 2010     Apple   65225  14013  Aerica 21.48409
+	2 2011     Apple  108249  25922  Aerica 23.94664
+	3 2012     Apple  156508  41733  Aerica 26.66509
+	4 2010    Google   29321   8505  Aerica 29.00651
+	5 2011    Google   37905   9737  Aerica 25.68790
+	6 2012    Google   50175  10737  Aerica 21.39910
+	7 2010 Microsoft   62484  18760  Aerica 30.02369
+	8 2011 Microsoft   69943  23150  Aerica 33.09838
+	9 2012 Microsoft   73723  16978  Aerica 23.02945
+</code></pre>
 </div>
 
 <ul>
   <li>利用transform函数</li>
 </ul>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="n">companiesData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">fy</span><span class="p">,</span><span class="w"> </span><span class="n">company</span><span class="p">,</span><span class="w"> </span><span class="n">revenue</span><span class="p">,</span><span class="w"> </span><span class="n">profit</span><span class="p">)</span><span class="w">
-</span><span class="n">companiesData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">transform</span><span class="p">(</span><span class="n">companiesData</span><span class="p">,</span><span class="w">  </span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Aerica'</span><span class="p">,</span><span class="w"> </span><span class="n">margin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">profit</span><span class="o">/</span><span class="n">revenue</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">100</span><span class="p">)</span><span class="w">
-</span><span class="n">companiesData</span><span class="w">
-		</span><span class="n">fy</span><span class="w">   </span><span class="n">company</span><span class="w"> </span><span class="n">revenue</span><span class="w"> </span><span class="n">profit</span><span class="w"> </span><span class="n">country</span><span class="w">   </span><span class="n">margin</span><span class="w">
-	</span><span class="m">1</span><span class="w"> </span><span class="m">2010</span><span class="w">     </span><span class="n">Apple</span><span class="w">   </span><span class="m">65225</span><span class="w">  </span><span class="m">14013</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">21.48409</span><span class="w">
-	</span><span class="m">2</span><span class="w"> </span><span class="m">2011</span><span class="w">     </span><span class="n">Apple</span><span class="w">  </span><span class="m">108249</span><span class="w">  </span><span class="m">25922</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">23.94664</span><span class="w">
-	</span><span class="m">3</span><span class="w"> </span><span class="m">2012</span><span class="w">     </span><span class="n">Apple</span><span class="w">  </span><span class="m">156508</span><span class="w">  </span><span class="m">41733</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">26.66509</span><span class="w">
-	</span><span class="m">4</span><span class="w"> </span><span class="m">2010</span><span class="w">    </span><span class="n">Google</span><span class="w">   </span><span class="m">29321</span><span class="w">   </span><span class="m">8505</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">29.00651</span><span class="w">
-	</span><span class="m">5</span><span class="w"> </span><span class="m">2011</span><span class="w">    </span><span class="n">Google</span><span class="w">   </span><span class="m">37905</span><span class="w">   </span><span class="m">9737</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">25.68790</span><span class="w">
-	</span><span class="m">6</span><span class="w"> </span><span class="m">2012</span><span class="w">    </span><span class="n">Google</span><span class="w">   </span><span class="m">50175</span><span class="w">  </span><span class="m">10737</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">21.39910</span><span class="w">
-	</span><span class="m">7</span><span class="w"> </span><span class="m">2010</span><span class="w"> </span><span class="n">Microsoft</span><span class="w">   </span><span class="m">62484</span><span class="w">  </span><span class="m">18760</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">30.02369</span><span class="w">
-	</span><span class="m">8</span><span class="w"> </span><span class="m">2011</span><span class="w"> </span><span class="n">Microsoft</span><span class="w">   </span><span class="m">69943</span><span class="w">  </span><span class="m">23150</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">33.09838</span><span class="w">
-	</span><span class="m">9</span><span class="w"> </span><span class="m">2012</span><span class="w"> </span><span class="n">Microsoft</span><span class="w">   </span><span class="m">73723</span><span class="w">  </span><span class="m">16978</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">23.02945</span><span class="w">
-</span></code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code>companiesData &lt;- data.frame(fy, company, revenue, profit)
+companiesData &lt;- transform(companiesData,  country = 'Aerica', margin = (profit/revenue) * 100)
+companiesData
+		fy   company revenue profit country   margin
+	1 2010     Apple   65225  14013  Aerica 21.48409
+	2 2011     Apple  108249  25922  Aerica 23.94664
+	3 2012     Apple  156508  41733  Aerica 26.66509
+	4 2010    Google   29321   8505  Aerica 29.00651
+	5 2011    Google   37905   9737  Aerica 25.68790
+	6 2012    Google   50175  10737  Aerica 21.39910
+	7 2010 Microsoft   62484  18760  Aerica 30.02369
+	8 2011 Microsoft   69943  23150  Aerica 33.09838
+	9 2012 Microsoft   73723  16978  Aerica 23.02945
+</code></pre>
 </div>
 
 <p>相对第一种方法，transform可以同时添加多列，书写相对简单，但是利用tranform时，新列必须是原始列的计算，而不能对刚刚建立起来的列进行计算，换句话说上面的第二条语句，如果要写成下面这样是错误的,原因就在于margin.new = margin * 1.2中margin是新生的数据列，而非数据中原有的列。</p>
@@ -150,21 +151,21 @@
 
 <p>对于mutate函数来说，是正确的。</p>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span><span class="w">
-</span><span class="n">companiesData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">fy</span><span class="p">,</span><span class="w"> </span><span class="n">company</span><span class="p">,</span><span class="w"> </span><span class="n">revenue</span><span class="p">,</span><span class="w"> </span><span class="n">profit</span><span class="p">)</span><span class="w">
-</span><span class="n">companiesData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mutate</span><span class="p">(</span><span class="n">companiesData</span><span class="p">,</span><span class="w"> </span><span class="n">country</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Aerica'</span><span class="p">,</span><span class="w"> </span><span class="n">margin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">profit</span><span class="o">/</span><span class="n">revenue</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="n">margin.new</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">margin</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">1.2</span><span class="p">)</span><span class="w">
-</span><span class="n">companiesData</span><span class="w">
-		</span><span class="n">fy</span><span class="w">   </span><span class="n">company</span><span class="w"> </span><span class="n">revenue</span><span class="w"> </span><span class="n">profit</span><span class="w"> </span><span class="n">country</span><span class="w">   </span><span class="n">margin</span><span class="w"> </span><span class="n">margin.new</span><span class="w">
-	</span><span class="m">1</span><span class="w"> </span><span class="m">2010</span><span class="w">     </span><span class="n">Apple</span><span class="w">   </span><span class="m">65225</span><span class="w">  </span><span class="m">14013</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">21.48409</span><span class="w">   </span><span class="m">25.78091</span><span class="w">
-	</span><span class="m">2</span><span class="w"> </span><span class="m">2011</span><span class="w">     </span><span class="n">Apple</span><span class="w">  </span><span class="m">108249</span><span class="w">  </span><span class="m">25922</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">23.94664</span><span class="w">   </span><span class="m">28.73597</span><span class="w">
-	</span><span class="m">3</span><span class="w"> </span><span class="m">2012</span><span class="w">     </span><span class="n">Apple</span><span class="w">  </span><span class="m">156508</span><span class="w">  </span><span class="m">41733</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">26.66509</span><span class="w">   </span><span class="m">31.99811</span><span class="w">
-	</span><span class="m">4</span><span class="w"> </span><span class="m">2010</span><span class="w">    </span><span class="n">Google</span><span class="w">   </span><span class="m">29321</span><span class="w">   </span><span class="m">8505</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">29.00651</span><span class="w">   </span><span class="m">34.80782</span><span class="w">
-	</span><span class="m">5</span><span class="w"> </span><span class="m">2011</span><span class="w">    </span><span class="n">Google</span><span class="w">   </span><span class="m">37905</span><span class="w">   </span><span class="m">9737</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">25.68790</span><span class="w">   </span><span class="m">30.82548</span><span class="w">
-	</span><span class="m">6</span><span class="w"> </span><span class="m">2012</span><span class="w">    </span><span class="n">Google</span><span class="w">   </span><span class="m">50175</span><span class="w">  </span><span class="m">10737</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">21.39910</span><span class="w">   </span><span class="m">25.67892</span><span class="w">
-	</span><span class="m">7</span><span class="w"> </span><span class="m">2010</span><span class="w"> </span><span class="n">Microsoft</span><span class="w">   </span><span class="m">62484</span><span class="w">  </span><span class="m">18760</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">30.02369</span><span class="w">   </span><span class="m">36.02842</span><span class="w">
-	</span><span class="m">8</span><span class="w"> </span><span class="m">2011</span><span class="w"> </span><span class="n">Microsoft</span><span class="w">   </span><span class="m">69943</span><span class="w">  </span><span class="m">23150</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">33.09838</span><span class="w">   </span><span class="m">39.71806</span><span class="w">
-	</span><span class="m">9</span><span class="w"> </span><span class="m">2012</span><span class="w"> </span><span class="n">Microsoft</span><span class="w">   </span><span class="m">73723</span><span class="w">  </span><span class="m">16978</span><span class="w">  </span><span class="n">Aerica</span><span class="w"> </span><span class="m">23.02945</span><span class="w">   </span><span class="m">27.63534</span><span class="w">
-</span></code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code>library(dplyr)
+companiesData &lt;- data.frame(fy, company, revenue, profit)
+companiesData &lt;- mutate(companiesData, country = 'Aerica', margin = (profit/revenue) * 100, margin.new = margin * 1.2)
+companiesData
+		fy   company revenue profit country   margin margin.new
+	1 2010     Apple   65225  14013  Aerica 21.48409   25.78091
+	2 2011     Apple  108249  25922  Aerica 23.94664   28.73597
+	3 2012     Apple  156508  41733  Aerica 26.66509   31.99811
+	4 2010    Google   29321   8505  Aerica 29.00651   34.80782
+	5 2011    Google   37905   9737  Aerica 25.68790   30.82548
+	6 2012    Google   50175  10737  Aerica 21.39910   25.67892
+	7 2010 Microsoft   62484  18760  Aerica 30.02369   36.02842
+	8 2011 Microsoft   69943  23150  Aerica 33.09838   39.71806
+	9 2012 Microsoft   73723  16978  Aerica 23.02945   27.63534
+</code></pre>
 </div>
 
 <h2 id="section-1">数据排列</h2>
@@ -203,11 +204,11 @@ hf = arrange(hflights, desc(ArrDelay))
 
 <p>数据同样使用自R包hflights的hflights。数据筛选是选择满足符合某些条件的数据行。</p>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="c1"># 查看各月数据行，方便下面的结果的确认
-</span><span class="n">table</span><span class="p">(</span><span class="n">hlihgts</span><span class="o">$</span><span class="n">Month</span><span class="p">)</span><span class="w">
-		</span><span class="m">1</span><span class="w">     </span><span class="m">2</span><span class="w">     </span><span class="m">3</span><span class="w">     </span><span class="m">4</span><span class="w">     </span><span class="m">5</span><span class="w">     </span><span class="m">6</span><span class="w">     </span><span class="m">7</span><span class="w">     </span><span class="m">8</span><span class="w">     </span><span class="m">9</span><span class="w">    </span><span class="m">10</span><span class="w">    </span><span class="m">11</span><span class="w">    </span><span class="m">12</span><span class="w"> 
-	</span><span class="m">18910</span><span class="w"> </span><span class="m">17128</span><span class="w"> </span><span class="m">19470</span><span class="w"> </span><span class="m">18593</span><span class="w"> </span><span class="m">19172</span><span class="w"> </span><span class="m">19600</span><span class="w"> </span><span class="m">20548</span><span class="w"> </span><span class="m">20176</span><span class="w"> </span><span class="m">18065</span><span class="w"> </span><span class="m">18696</span><span class="w"> </span><span class="m">18021</span><span class="w"> </span><span class="m">19117</span><span class="w"> 
-</span></code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code># 查看各月数据行，方便下面的结果的确认
+table(hlihgts$Month)
+		1     2     3     4     5     6     7     8     9    10    11    12 
+	18910 17128 19470 18593 19172 19600 20548 20176 18065 18696 18021 19117 
+</code></pre>
 </div>
 
 <ul>
@@ -216,41 +217,41 @@ hf = arrange(hflights, desc(ArrDelay))
 
 <p>满足一个条件；</p>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="c1">## 满足数据框hflights中Month列等于1
-</span><span class="n">hf1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hflights</span><span class="p">[</span><span class="n">hflights</span><span class="o">$</span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">]</span><span class="w">
-</span><span class="n">nrow</span><span class="p">(</span><span class="n">hf1</span><span class="p">)</span><span class="w">
-	</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">18910</span><span class="w">
-</span></code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code>## 满足数据框hflights中Month列等于1
+hf1 = hflights[hflights$Month == 1]
+nrow(hf1)
+	[1] 18910
+</code></pre>
 </div>
 
 <p>两个以上的条件：同时满足(相当于逻辑“且”)；</p>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="c1"># 这里以两个条件为例
+<div class="highlighter-rouge"><pre class="highlight"><code># 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1和2
-</span><span class="n">hf2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hflights</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="n">hflights</span><span class="o">$</span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">hflights</span><span class="o">$</span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="p">]</span><span class="w">
-</span><span class="c1">## 其值等于0，数据框hflights的Month列没有同时等于1，又等于2的数据行
-</span><span class="n">nrow</span><span class="p">(</span><span class="n">hf2</span><span class="p">)</span><span class="w">
-	</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">0</span><span class="w">
-</span><span class="c1">## 例子2：满足数据框hflights中Month列等于1且DayofMonth列等于2
-</span><span class="n">hf3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hflights</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="n">hflights</span><span class="o">$</span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">hflights</span><span class="o">$</span><span class="n">DayofMonth</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="p">]</span><span class="w">
-</span><span class="n">nrow</span><span class="p">(</span><span class="n">hf3</span><span class="p">)</span><span class="w">
-	</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">678</span><span class="w">
-</span></code></pre>
+hf2 = hflights[c(hflights$Month == 1 &amp; hflights$Month == 2), ]
+## 其值等于0，数据框hflights的Month列没有同时等于1，又等于2的数据行
+nrow(hf2)
+	[1] 0
+## 例子2：满足数据框hflights中Month列等于1且DayofMonth列等于2
+hf3 = hflights[c(hflights$Month == 1 &amp; hflights$DayofMonth == 2), ]
+nrow(hf3)
+	[1] 678
+</code></pre>
 </div>
 
 <p>两个以上的条件：至少满足其中一个(相当于逻辑“或”)。</p>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="c1"># 这里以两个条件为例
+<div class="highlighter-rouge"><pre class="highlight"><code># 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1或2
-</span><span class="n">hf4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hflights</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="n">hflights</span><span class="o">$</span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">hflights</span><span class="o">$</span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="p">]</span><span class="w">
-</span><span class="c1">## 其值等于18910(Month = 1) + 17128(Month = 1)
-</span><span class="n">nrow</span><span class="p">(</span><span class="n">hf4</span><span class="p">)</span><span class="w">
-	</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">36038</span><span class="w">
-</span><span class="c1">## 例子2：满足数据框hflights中Month列等于1或DayofMonth列等于2
-</span><span class="n">hf5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hflights</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="n">hflights</span><span class="o">$</span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">hflights</span><span class="o">$</span><span class="n">DayofMonth</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="p">]</span><span class="w">
-</span><span class="n">nrow</span><span class="p">(</span><span class="n">hf5</span><span class="p">)</span><span class="w">
-	</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">25764</span><span class="w">
-</span></code></pre>
+hf4 = hflights[c(hflights$Month == 1 | hflights$Month == 2), ]
+## 其值等于18910(Month = 1) + 17128(Month = 1)
+nrow(hf4)
+	[1] 36038
+## 例子2：满足数据框hflights中Month列等于1或DayofMonth列等于2
+hf5 = hflights[c(hflights$Month == 1 | hflights$DayofMonth == 2), ]
+nrow(hf5)
+	[1] 25764
+</code></pre>
 </div>
 
 <ul>
@@ -259,44 +260,44 @@ hf = arrange(hflights, desc(ArrDelay))
 
 <p>满足一个条件；</p>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="c1">## 满足数据框hflights中Month列等于1
-</span><span class="n">hf1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">hflights</span><span class="p">,</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
-</span><span class="n">nrow</span><span class="p">(</span><span class="n">hf1</span><span class="p">)</span><span class="w">
-	</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">18910</span><span class="w">
-</span></code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code>## 满足数据框hflights中Month列等于1
+hf1 = subset(hflights, Month == 1)
+nrow(hf1)
+	[1] 18910
+</code></pre>
 </div>
 
 <p>两个以上的条件：同时满足(相当于逻辑“且”)；</p>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="c1"># 这里以两个条件为例
+<div class="highlighter-rouge"><pre class="highlight"><code># 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1和2
-</span><span class="n">hf2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">hflights</span><span class="p">,</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
-</span><span class="c1">## 其值等于0，数据框hflights的Month列没有同时等于1，又等于2的数据行
-</span><span class="n">nrow</span><span class="p">(</span><span class="n">hf2</span><span class="p">)</span><span class="w">
-	</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">0</span><span class="w">
-</span><span class="c1">## 例子2：满足数据框hflights中Month列等于1且DayofMonth列等于2
-</span><span class="n">hf3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">hflights</span><span class="p">,</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">DayofMonth</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
-</span><span class="n">nrow</span><span class="p">(</span><span class="n">hf3</span><span class="p">)</span><span class="w">
-	</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">678</span><span class="w">
-</span></code></pre>
+hf2 = subset(hflights, Month == 1 &amp; Month == 2)
+## 其值等于0，数据框hflights的Month列没有同时等于1，又等于2的数据行
+nrow(hf2)
+	[1] 0
+## 例子2：满足数据框hflights中Month列等于1且DayofMonth列等于2
+hf3 = subset(hflights, Month == 1 &amp; DayofMonth == 2)
+nrow(hf3)
+	[1] 678
+</code></pre>
 </div>
 
 <p>两个以上的条件：至少满足其中一个(相当于逻辑“或”)。</p>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="c1"># 这里以两个条件为例
+<div class="highlighter-rouge"><pre class="highlight"><code># 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1或2
-</span><span class="n">hf4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">hflights</span><span class="p">,</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
-</span><span class="c1">## 此时也只有此时，subset函数可以写多个条件
+hf4 = subset(hflights, Month == 1 | Month == 2)
+## 此时也只有此时，subset函数可以写多个条件
 ## 这种方法不建议使用
-</span><span class="n">hf4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">hflights</span><span class="p">,</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
-</span><span class="c1">## 其值等于18910(Month = 1) + 17128(Month = 1)
-</span><span class="n">nrow</span><span class="p">(</span><span class="n">hf4</span><span class="p">)</span><span class="w">
-	</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">36038</span><span class="w">
-</span><span class="c1">## 例子2：满足数据框hflights中Month列等于1或DayofMonth列等于2
-</span><span class="n">hf5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subset</span><span class="p">(</span><span class="n">hflights</span><span class="p">,</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">DayofMonth</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
-</span><span class="n">nrow</span><span class="p">(</span><span class="n">hf5</span><span class="p">)</span><span class="w">
-	</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">25764</span><span class="w">
-</span></code></pre>
+hf4 = subset(hflights, Month == 1, Month == 2)
+## 其值等于18910(Month = 1) + 17128(Month = 1)
+nrow(hf4)
+	[1] 36038
+## 例子2：满足数据框hflights中Month列等于1或DayofMonth列等于2
+hf5 = subset(hflights, Month == 1 | DayofMonth == 2)
+nrow(hf5)
+	[1] 25764
+</code></pre>
 </div>
 
 <ul>
@@ -307,63 +308,63 @@ hf = arrange(hflights, desc(ArrDelay))
 
 <p>满足一个条件；</p>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span><span class="w">
-</span><span class="c1">## 满足数据框hflights中Month列等于1
-</span><span class="n">hf1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">filter</span><span class="p">(</span><span class="n">hflights</span><span class="p">,</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
-</span><span class="n">nrow</span><span class="p">(</span><span class="n">hf1</span><span class="p">)</span><span class="w">
-	</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">18910</span><span class="w">
-</span></code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code>require(dplyr)
+## 满足数据框hflights中Month列等于1
+hf1 = filter(hflights, Month == 1)
+nrow(hf1)
+	[1] 18910
+</code></pre>
 </div>
 
 <p>两个以上的条件：同时满足(相当于逻辑“且”)；</p>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="c1"># 这里以两个条件为例
+<div class="highlighter-rouge"><pre class="highlight"><code># 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1和2
-</span><span class="n">hf2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">filter</span><span class="p">(</span><span class="n">hflights</span><span class="p">,</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
-</span><span class="c1">##在filter中,','直接相当于'&amp;'
-</span><span class="n">hf2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">filter</span><span class="p">(</span><span class="n">hflights</span><span class="p">,</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
-</span><span class="c1">## 为了统一，这种方法也不推荐使用
-## 其值等于0，数据框hflights的Month列没有同时等于1，又等于2的数据行
-</span><span class="n">nrow</span><span class="p">(</span><span class="n">hf2</span><span class="p">)</span><span class="w">
-	</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">0</span><span class="w">
-</span><span class="c1">## 例子2：满足数据框hflights中Month列等于1且DayofMonth列等于2
-</span><span class="n">hf3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">filter</span><span class="p">(</span><span class="n">hflights</span><span class="p">,</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">DayofMonth</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
-</span><span class="c1">## 在filter中,','直接相当于'&amp;'
+hf2 = filter(hflights, Month == 1 &amp; Month == 2)
+##在filter中,','直接相当于'&amp;'
+hf2 = filter(hflights, Month == 1, Month == 2)
 ## 为了统一，这种方法也不推荐使用
-</span><span class="n">hf3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">filter</span><span class="p">(</span><span class="n">hflights</span><span class="p">,</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">DayofMonth</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
-</span><span class="n">nrow</span><span class="p">(</span><span class="n">hf3</span><span class="p">)</span><span class="w">
-	</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">678</span><span class="w">
-</span></code></pre>
+## 其值等于0，数据框hflights的Month列没有同时等于1，又等于2的数据行
+nrow(hf2)
+	[1] 0
+## 例子2：满足数据框hflights中Month列等于1且DayofMonth列等于2
+hf3 = filter(hflights, Month == 1 &amp; DayofMonth == 2)
+## 在filter中,','直接相当于'&amp;'
+## 为了统一，这种方法也不推荐使用
+hf3 = filter(hflights, Month == 1, DayofMonth == 2)
+nrow(hf3)
+	[1] 678
+</code></pre>
 </div>
 
 <p>两个以上的条件：至少满足其中一个(相当于逻辑“或”)。</p>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="c1"># 这里以两个条件为例
+<div class="highlighter-rouge"><pre class="highlight"><code># 这里以两个条件为例
 ## 例子1：满足数据框hflights中Month列同时等于1或2
-</span><span class="n">hf4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">filter</span><span class="p">(</span><span class="n">hflights</span><span class="p">,</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
-</span><span class="c1">## 其值等于18910(Month = 1) + 17128(Month = 1)
-</span><span class="n">nrow</span><span class="p">(</span><span class="n">hf4</span><span class="p">)</span><span class="w">
-	</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">36038</span><span class="w">
-</span><span class="c1">## 例子2：满足数据框hflights中Month列等于1或DayofMonth列等于2
-</span><span class="n">hf5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">filter</span><span class="p">(</span><span class="n">hflights</span><span class="p">,</span><span class="w"> </span><span class="n">Month</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">DayofMonth</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
-</span><span class="n">nrow</span><span class="p">(</span><span class="n">hf5</span><span class="p">)</span><span class="w">
-	</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">25764</span><span class="w">
-</span></code></pre>
+hf4 = filter(hflights, Month == 1 | Month == 2)
+## 其值等于18910(Month = 1) + 17128(Month = 1)
+nrow(hf4)
+	[1] 36038
+## 例子2：满足数据框hflights中Month列等于1或DayofMonth列等于2
+hf5 = filter(hflights, Month == 1 | DayofMonth == 2)
+nrow(hf5)
+	[1] 25764
+</code></pre>
 </div>
 
 <h2 id="section-3">数据选择</h2>
 
 <p>数据选择是选择数据框中的制定的列，这里使用的数据是dplyr包中自带的iris函数。</p>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="n">head</span><span class="p">(</span><span class="n">iris</span><span class="p">)</span><span class="w">
-	  </span><span class="n">Sepal.Length</span><span class="w"> </span><span class="n">Sepal.Width</span><span class="w"> </span><span class="n">Petal.Length</span><span class="w"> </span><span class="n">Petal.Width</span><span class="w"> </span><span class="n">Species</span><span class="w">
-	</span><span class="m">1</span><span class="w">          </span><span class="m">5.1</span><span class="w">         </span><span class="m">3.5</span><span class="w">          </span><span class="m">1.4</span><span class="w">         </span><span class="m">0.2</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">2</span><span class="w">          </span><span class="m">4.9</span><span class="w">         </span><span class="m">3.0</span><span class="w">          </span><span class="m">1.4</span><span class="w">         </span><span class="m">0.2</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">3</span><span class="w">          </span><span class="m">4.7</span><span class="w">         </span><span class="m">3.2</span><span class="w">          </span><span class="m">1.3</span><span class="w">         </span><span class="m">0.2</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">4</span><span class="w">          </span><span class="m">4.6</span><span class="w">         </span><span class="m">3.1</span><span class="w">          </span><span class="m">1.5</span><span class="w">         </span><span class="m">0.2</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">5</span><span class="w">          </span><span class="m">5.0</span><span class="w">         </span><span class="m">3.6</span><span class="w">          </span><span class="m">1.4</span><span class="w">         </span><span class="m">0.2</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">6</span><span class="w">          </span><span class="m">5.4</span><span class="w">         </span><span class="m">3.9</span><span class="w">          </span><span class="m">1.7</span><span class="w">         </span><span class="m">0.4</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-</span></code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code>head(iris)
+	  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+	1          5.1         3.5          1.4         0.2  setosa
+	2          4.9         3.0          1.4         0.2  setosa
+	3          4.7         3.2          1.3         0.2  setosa
+	4          4.6         3.1          1.5         0.2  setosa
+	5          5.0         3.6          1.4         0.2  setosa
+	6          5.4         3.9          1.7         0.4  setosa
+</code></pre>
 </div>
 
 <ul>
@@ -372,65 +373,65 @@ hf = arrange(hflights, desc(ArrDelay))
 
 <p>利用字符向量选取指定列；</p>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="n">iris.part1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iris</span><span class="p">[,</span><span class="nf">c</span><span class="p">(</span><span class="s1">'Sepal.Length'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Sepal.Width'</span><span class="p">)]</span><span class="w">
-</span><span class="n">head</span><span class="p">(</span><span class="n">iris.part1</span><span class="p">)</span><span class="w">
-	  </span><span class="n">Sepal.Length</span><span class="w"> </span><span class="n">Sepal.Width</span><span class="w">
-	</span><span class="m">1</span><span class="w">          </span><span class="m">5.1</span><span class="w">         </span><span class="m">3.5</span><span class="w">
-	</span><span class="m">2</span><span class="w">          </span><span class="m">4.9</span><span class="w">         </span><span class="m">3.0</span><span class="w">
-	</span><span class="m">3</span><span class="w">          </span><span class="m">4.7</span><span class="w">         </span><span class="m">3.2</span><span class="w">
-	</span><span class="m">4</span><span class="w">          </span><span class="m">4.6</span><span class="w">         </span><span class="m">3.1</span><span class="w">
-	</span><span class="m">5</span><span class="w">          </span><span class="m">5.0</span><span class="w">         </span><span class="m">3.6</span><span class="w">
-	</span><span class="m">6</span><span class="w">          </span><span class="m">5.4</span><span class="w">         </span><span class="m">3.9</span><span class="w">
-</span></code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code>iris.part1 = iris[,c('Sepal.Length', 'Sepal.Width')]
+head(iris.part1)
+	  Sepal.Length Sepal.Width
+	1          5.1         3.5
+	2          4.9         3.0
+	3          4.7         3.2
+	4          4.6         3.1
+	5          5.0         3.6
+	6          5.4         3.9
+</code></pre>
 </div>
 
 <p>利用数字向量选择指定列；</p>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="c1"># 利用":"选取相邻列
-</span><span class="n">iris.part2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iris</span><span class="p">[,</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]</span><span class="w">
-</span><span class="n">head</span><span class="p">(</span><span class="n">iris.part2</span><span class="p">)</span><span class="w">
-	  </span><span class="n">Sepal.Length</span><span class="w"> </span><span class="n">Sepal.Width</span><span class="w">
-	</span><span class="m">1</span><span class="w">          </span><span class="m">5.1</span><span class="w">         </span><span class="m">3.5</span><span class="w">
-	</span><span class="m">2</span><span class="w">          </span><span class="m">4.9</span><span class="w">         </span><span class="m">3.0</span><span class="w">
-	</span><span class="m">3</span><span class="w">          </span><span class="m">4.7</span><span class="w">         </span><span class="m">3.2</span><span class="w">
-	</span><span class="m">4</span><span class="w">          </span><span class="m">4.6</span><span class="w">         </span><span class="m">3.1</span><span class="w">
-	</span><span class="m">5</span><span class="w">          </span><span class="m">5.0</span><span class="w">         </span><span class="m">3.6</span><span class="w">
-	</span><span class="m">6</span><span class="w">          </span><span class="m">5.4</span><span class="w">         </span><span class="m">3.9</span><span class="w">
-</span><span class="c1"># 利用一般数字向量选取相邻列
-</span><span class="n">iris.part3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iris</span><span class="p">[,</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)]</span><span class="w">
-</span><span class="n">head</span><span class="p">(</span><span class="n">iris.part3</span><span class="p">)</span><span class="w">
-	  </span><span class="n">Sepal.Length</span><span class="w"> </span><span class="n">Petal.Length</span><span class="w"> </span><span class="n">Petal.Width</span><span class="w">
-	</span><span class="m">1</span><span class="w">          </span><span class="m">5.1</span><span class="w">          </span><span class="m">1.4</span><span class="w">         </span><span class="m">0.2</span><span class="w">
-	</span><span class="m">2</span><span class="w">          </span><span class="m">4.9</span><span class="w">          </span><span class="m">1.4</span><span class="w">         </span><span class="m">0.2</span><span class="w">
-	</span><span class="m">3</span><span class="w">          </span><span class="m">4.7</span><span class="w">          </span><span class="m">1.3</span><span class="w">         </span><span class="m">0.2</span><span class="w">
-	</span><span class="m">4</span><span class="w">          </span><span class="m">4.6</span><span class="w">          </span><span class="m">1.5</span><span class="w">         </span><span class="m">0.2</span><span class="w">
-	</span><span class="m">5</span><span class="w">          </span><span class="m">5.0</span><span class="w">          </span><span class="m">1.4</span><span class="w">         </span><span class="m">0.2</span><span class="w">
-	</span><span class="m">6</span><span class="w">          </span><span class="m">5.4</span><span class="w">          </span><span class="m">1.7</span><span class="w">         </span><span class="m">0.4</span><span class="w">
+<div class="highlighter-rouge"><pre class="highlight"><code># 利用":"选取相邻列
+iris.part2 = iris[,1:2]
+head(iris.part2)
+	  Sepal.Length Sepal.Width
+	1          5.1         3.5
+	2          4.9         3.0
+	3          4.7         3.2
+	4          4.6         3.1
+	5          5.0         3.6
+	6          5.4         3.9
+# 利用一般数字向量选取相邻列
+iris.part3 = iris[,c(1, 3, 4)]
+head(iris.part3)
+	  Sepal.Length Petal.Length Petal.Width
+	1          5.1          1.4         0.2
+	2          4.9          1.4         0.2
+	3          4.7          1.3         0.2
+	4          4.6          1.5         0.2
+	5          5.0          1.4         0.2
+	6          5.4          1.7         0.4
 
-</span></code></pre>
+</code></pre>
 </div>
 
 <p>利用“-”结合数字向量排除数据框的某些列。</p>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="n">iris.part4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iris</span><span class="p">[,</span><span class="o">-</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)]</span><span class="w">
-</span><span class="n">head</span><span class="p">(</span><span class="n">iris.part4</span><span class="p">)</span><span class="w">
-	  </span><span class="n">Petal.Length</span><span class="w"> </span><span class="n">Petal.Width</span><span class="w"> </span><span class="n">Species</span><span class="w">
-	</span><span class="m">1</span><span class="w">          </span><span class="m">1.4</span><span class="w">         </span><span class="m">0.2</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">2</span><span class="w">          </span><span class="m">1.4</span><span class="w">         </span><span class="m">0.2</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">3</span><span class="w">          </span><span class="m">1.3</span><span class="w">         </span><span class="m">0.2</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">4</span><span class="w">          </span><span class="m">1.5</span><span class="w">         </span><span class="m">0.2</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">5</span><span class="w">          </span><span class="m">1.4</span><span class="w">         </span><span class="m">0.2</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">6</span><span class="w">          </span><span class="m">1.7</span><span class="w">         </span><span class="m">0.4</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-</span><span class="n">iris.part5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iris</span><span class="p">[,</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)]</span><span class="w">
-</span><span class="n">head</span><span class="p">(</span><span class="n">iris.part5</span><span class="p">)</span><span class="w">
-	  </span><span class="n">Sepal.Width</span><span class="w"> </span><span class="n">Species</span><span class="w">
-	</span><span class="m">1</span><span class="w">         </span><span class="m">3.5</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">2</span><span class="w">         </span><span class="m">3.0</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">3</span><span class="w">         </span><span class="m">3.2</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">4</span><span class="w">         </span><span class="m">3.1</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">5</span><span class="w">         </span><span class="m">3.6</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">6</span><span class="w">         </span><span class="m">3.9</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-</span></code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code>iris.part4 = iris[,-(1:2)]
+head(iris.part4)
+	  Petal.Length Petal.Width Species
+	1          1.4         0.2  setosa
+	2          1.4         0.2  setosa
+	3          1.3         0.2  setosa
+	4          1.5         0.2  setosa
+	5          1.4         0.2  setosa
+	6          1.7         0.4  setosa
+iris.part5 = iris[,-c(1, 3, 4)]
+head(iris.part5)
+	  Sepal.Width Species
+	1         3.5  setosa
+	2         3.0  setosa
+	3         3.2  setosa
+	4         3.1  setosa
+	5         3.6  setosa
+	6         3.9  setosa
+</code></pre>
 </div>
 
 <ul>
@@ -439,25 +440,25 @@ hf = arrange(hflights, desc(ArrDelay))
 
 <p>select函数能完成上部分基础函数的所有操作。plyr包中也没有相似功能的select函数。</p>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="c1"># 利用列名选取指定列
-</span><span class="n">iris.part1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">select</span><span class="p">(</span><span class="n">iris</span><span class="p">,</span><span class="w"> </span><span class="n">Sepal.Length</span><span class="p">,</span><span class="w"> </span><span class="n">Sepal.Width</span><span class="p">)</span><span class="w">
-</span><span class="c1"># 甚至可以对选取的列进行重命名
-</span><span class="n">iris.part1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">select</span><span class="p">(</span><span class="n">iris</span><span class="p">,</span><span class="w"> </span><span class="n">Sepal_length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Sepal.Length</span><span class="p">,</span><span class="w"> </span><span class="n">Sepal_Width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Sepal.Width</span><span class="p">)</span><span class="w">
-</span><span class="n">head</span><span class="p">(</span><span class="n">iris.part1</span><span class="p">)</span><span class="w">
-	  </span><span class="n">Sepal_length</span><span class="w"> </span><span class="n">Sepal_Width</span><span class="w">
-	</span><span class="m">1</span><span class="w">          </span><span class="m">5.1</span><span class="w">         </span><span class="m">3.5</span><span class="w">
-	</span><span class="m">2</span><span class="w">          </span><span class="m">4.9</span><span class="w">         </span><span class="m">3.0</span><span class="w">
-	</span><span class="m">3</span><span class="w">          </span><span class="m">4.7</span><span class="w">         </span><span class="m">3.2</span><span class="w">
-	</span><span class="m">4</span><span class="w">          </span><span class="m">4.6</span><span class="w">         </span><span class="m">3.1</span><span class="w">
-	</span><span class="m">5</span><span class="w">          </span><span class="m">5.0</span><span class="w">         </span><span class="m">3.6</span><span class="w">
-	</span><span class="m">6</span><span class="w">          </span><span class="m">5.4</span><span class="w">         </span><span class="m">3.9</span><span class="w">
-</span><span class="c1"># 利用数字向量选择指定列
-</span><span class="n">iris.part2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">select</span><span class="p">(</span><span class="n">iris</span><span class="p">,</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)</span><span class="w">
-</span><span class="n">iris.part3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">iris</span><span class="p">[,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)]</span><span class="w">
-</span><span class="c1"># * 利用"-"结合数字向量排除数据框的某些列 
-</span><span class="n">iris.part4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">select</span><span class="p">(</span><span class="n">iris</span><span class="p">,</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">))</span><span class="w">
-</span><span class="n">iris.part5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">select</span><span class="p">(</span><span class="n">iris</span><span class="p">,</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">))</span><span class="w">
-</span></code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code># 利用列名选取指定列
+iris.part1 = select(iris, Sepal.Length, Sepal.Width)
+# 甚至可以对选取的列进行重命名
+iris.part1 = select(iris, Sepal_length = Sepal.Length, Sepal_Width = Sepal.Width)
+head(iris.part1)
+	  Sepal_length Sepal_Width
+	1          5.1         3.5
+	2          4.9         3.0
+	3          4.7         3.2
+	4          4.6         3.1
+	5          5.0         3.6
+	6          5.4         3.9
+# 利用数字向量选择指定列
+iris.part2 = select(iris,1:2)
+iris.part3 = iris[, c(1, 3, 4)]
+# * 利用"-"结合数字向量排除数据框的某些列 
+iris.part4 = select(iris,-c(1:2))
+iris.part5 = select(iris,-c(1, 3, 4))
+</code></pre>
 </div>
 
 <p>select函数还有自己的特点：</p>
@@ -466,16 +467,16 @@ hf = arrange(hflights, desc(ArrDelay))
   <li>”:”支持相邻列名的选取</li>
 </ul>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="n">iris.part6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">select</span><span class="p">(</span><span class="n">iris</span><span class="p">,</span><span class="n">Sepal.Length</span><span class="o">:</span><span class="n">Petal.Length</span><span class="p">)</span><span class="w">
-</span><span class="n">head</span><span class="p">(</span><span class="n">iris.part6</span><span class="p">)</span><span class="w">
-	  </span><span class="n">Sepal.Length</span><span class="w"> </span><span class="n">Sepal.Width</span><span class="w"> </span><span class="n">Petal.Length</span><span class="w">
-	</span><span class="m">1</span><span class="w">          </span><span class="m">5.1</span><span class="w">         </span><span class="m">3.5</span><span class="w">          </span><span class="m">1.4</span><span class="w">
-	</span><span class="m">2</span><span class="w">          </span><span class="m">4.9</span><span class="w">         </span><span class="m">3.0</span><span class="w">          </span><span class="m">1.4</span><span class="w">
-	</span><span class="m">3</span><span class="w">          </span><span class="m">4.7</span><span class="w">         </span><span class="m">3.2</span><span class="w">          </span><span class="m">1.3</span><span class="w">
-	</span><span class="m">4</span><span class="w">          </span><span class="m">4.6</span><span class="w">         </span><span class="m">3.1</span><span class="w">          </span><span class="m">1.5</span><span class="w">
-	</span><span class="m">5</span><span class="w">          </span><span class="m">5.0</span><span class="w">         </span><span class="m">3.6</span><span class="w">          </span><span class="m">1.4</span><span class="w">
-	</span><span class="m">6</span><span class="w">          </span><span class="m">5.4</span><span class="w">         </span><span class="m">3.9</span><span class="w">          </span><span class="m">1.7</span><span class="w">
-</span></code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code>iris.part6 = select(iris,Sepal.Length:Petal.Length)
+head(iris.part6)
+	  Sepal.Length Sepal.Width Petal.Length
+	1          5.1         3.5          1.4
+	2          4.9         3.0          1.4
+	3          4.7         3.2          1.3
+	4          4.6         3.1          1.5
+	5          5.0         3.6          1.4
+	6          5.4         3.9          1.7
+</code></pre>
 </div>
 
 <ul>
@@ -521,16 +522,16 @@ select(iris, -Petal.Length, -Petal.Width)
   <li>“-”去除指定列</li>
 </ul>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="n">iris.part7</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">select</span><span class="p">(</span><span class="n">iris</span><span class="p">,</span><span class="o">-</span><span class="p">(</span><span class="n">Sepal.Length</span><span class="o">:</span><span class="n">Petal.Length</span><span class="p">))</span><span class="w">
-</span><span class="n">head</span><span class="p">(</span><span class="n">iris.part7</span><span class="p">)</span><span class="w">
-	  </span><span class="n">Petal.Width</span><span class="w"> </span><span class="n">Species</span><span class="w">
-	</span><span class="m">1</span><span class="w">         </span><span class="m">0.2</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">2</span><span class="w">         </span><span class="m">0.2</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">3</span><span class="w">         </span><span class="m">0.2</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">4</span><span class="w">         </span><span class="m">0.2</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">5</span><span class="w">         </span><span class="m">0.2</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-	</span><span class="m">6</span><span class="w">         </span><span class="m">0.4</span><span class="w">  </span><span class="n">setosa</span><span class="w">
-</span></code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code>iris.part7 = select(iris,-(Sepal.Length:Petal.Length))
+head(iris.part7)
+	  Petal.Width Species
+	1         0.2  setosa
+	2         0.2  setosa
+	3         0.2  setosa
+	4         0.2  setosa
+	5         0.2  setosa
+	6         0.4  setosa
+</code></pre>
 </div>
 <p>这里，主要讲述的是结合“:”的使用方法。其实正如上个例子那样，”-“也可与特定的语法格式结合使用。</p>
 
@@ -556,52 +557,53 @@ colMeans(hflights.dat, na.rm = T)
 </div>
 
 <ul>
-  <li>dplyr包的summarise_each或者mutate_each</li>
+  <li>dplyr包的summarise_all()或者mutate_all()函数</li>
 </ul>
 
-<p>summarise_each可以进行求平均值、标准差、方差、最小值和最大值，此时被处理的数据列也不需要必须是数字类型(只是此时会有警告提示)。然而，无论如何要进行求和操作时，所有数据列必须是数字类型(原因是sum函数对字符求和，直接返回错误，而求平均值、标准差和方差只是返回NA，并提示警告，最小值和最大值时返回真实的结果)。当然也可以多个指标同时计算。</p>
+<p>summarise_all()或者mutate_all()函数可以进行求平均值、标准差、方差、最小值和最大值，此时被处理的数据列也不需要必须是数字类型(只是此时会有警告提示)。然而，无论如何要进行求和操作时，所有数据列必须是数字类型(原因是sum函数对字符求和，直接返回错误，而求平均值、标准差和方差只是返回NA，并提示警告，最小值和最大值时返回真实的结果)。</p>
+
+<ul>
+  <li>summarise_all()函数</li>
+</ul>
 
 <div class="highlighter-rouge"><pre class="highlight"><code># 平均值，字符平均值返回NA
-summarise_each(hflights, funs(mean))
+summarise_all(hflights, mean)
 # 标准差，字符标准差返回NA
-summarise_each(hflights, funs(sd))
+summarise_all(hflights, sd)
 # 方差，字符方差返回NA
-summarise_each(hflights, funs(var))
+summarise_all(hflights, var)
 # 最小值，字符最小值也是可以运算的
-summarise_each(hflights, funs(min))
+summarise_all(hflights, min)
 # 最大值，字符最大值也是可以运算的
-summarise_each(hflights, funs(max))
-# 平均值、最小值和最大值
-summarise_each(hflights, funs(mean, min, max))
+summarise_all(hflights, max)
 
 # 求和
 hflights.dat = hflights[,! colnames(hflights) %in% c('CancellationCode', 'UniqueCarrier', 'TailNum', 'Origin', 'Dest')]
-summarise_each(hflights.dat, funs(sum))
+summarise_all(hflights.dat, sum))
 
-# 若果某一列中有NA，要想得到结果可以通过调整函数内部的na.rm参数来实现
-# 平均值
-summarise_each(hflights, funs(mean(., na.rm = T)))
-# 标准差
-summarise_each(hflights, funs(sd(., na.rm = T)))
-# 方差
-summarise_each(hflights, funs(var(., na.rm = T)))
-# 最小值
-summarise_each(hflights, funs(min(., na.rm = T)))
-# 最大值
-summarise_each(hflights, funs(max(., na.rm = T)))
-# 求和
-summarise_each(hflights.dat, funs(sum(., na.rm = T)))
 </code></pre>
 </div>
 
-<p>mutate_each跟summarise_each最大的不同在于产生于原数据相同行数的结果，所以mutate_each除了可以进行summarise_each函数的操作以外，还可进行简单四则运算，当然进行四则运算时，要保证所有列都是数字型。</p>
+<ul>
+  <li>mutate_all()函数</li>
+</ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code># 四则运算
-temp1 = mutate_each(hflights.dat, funs( . + 1))
+<p>区别于summarise_all()函数在于mutate_all()函数产生与原数据相同行和列数的结果，这里mutate_all以及下面的mutate_at()和mutate_if()函数也不同于dplyr包的mutate()函数，mutate函数在原始数据后面产生新的结果，而mutate_系列函数则直接产生与原数据相同行和列数的结果。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>temp = mutate_all(hflights.dat,  mean))
 head(hflights)
-head(temp1)
-# 事实上四则运算根本不需要借助函数来实现
-temp2 = hflights.dat + 1
+head(temp)
+</code></pre>
+</div>
+
+<p>此外，summarise_all()和mutate_all()函数中使用的函数还可以使用完全形式，这时候不仅可以更改结果列的名字。mutate_all()的结果将与mutate函数一样在原始数据后面产生新的结果。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>mutate_all(hflights, funs("in" = . / 2.54))
+mutate_all(hflights,funs(med = median))
+summarise_all(hflights,funs(med = median))
+# 平均值、最小值和最大值
+summarise_all(hflights, funs(mean, min, max))
+
 </code></pre>
 </div>
 
@@ -652,7 +654,7 @@ temp2 = hflights.dat + 1
 
 </section>
 <section class="meta">
-
+<span>
 
 
 <span>
@@ -661,6 +663,7 @@ temp2 = hflights.dat + 1
 	<a  href="http://xukuang.github.io/blog/2015/05/merge-function-in-R/" class="pageNav"  >Next</a>
 </span>
 
+         
 
 <span class="author">
   <a href="http://xukuang.github.io/blog">Xu Kuang</a>
@@ -692,28 +695,46 @@ temp2 = hflights.dat + 1
 </span>
 
 </section>
-<div id="disqus_thread"></div>
-<script>
-/**
-* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<!-- 多说 Share start -->
+	<div class="ds-share"
+                    style="text-align: right"
+                    data-thread-key="/2015/05/common-methods-of-dealing-with-data-frame"
+                    data-title="数据框基本操作的常见方法"
+                    data-url="http://xukuang.github.io/blog/2015/05/common-methods-of-dealing-with-data-frame/"
+                    data-images="http://xukuang.github.io/blog"
+                    data-content="|  | ." >
+                    <div class="ds-share-inline">
+                      <ul  class="ds-share-icons-16">
+                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                      </ul>
+                      <div class="ds-share-icons-more">
+                      </div>
+                    </div>
+                <hr>
+                </div>
+ <!-- 多说 Share end-->
+				
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2015/05/common-methods-of-dealing-with-data-frame" data-title="数据框基本操作的常见方法 | " data-url="http://xukuang.github.io/blog/2015/05/common-methods-of-dealing-with-data-frame/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"yiyuzhijian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
 
-s.src = '//httpxukuanggithubio.disqus.com/embed.js';
-
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
 <script type="text/javascript">
 $(function(){
@@ -741,12 +762,11 @@ $(function(){
          </article>
        </div>
 	   
-	   
-	  
 	   <footer>
-           <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> & <a href="http://pages.github.com">GitHub</a>| Copyright  2016 by <a href="http://xukuang.github.io/blog/about/">Xu Kuang</a> | <span class="label label-info" id="timeSpan" ></span></small></p>
-       </footer> 
+	   <p><small><center>© 2014-2016 Maintained by <a href="http://xukuang.github.io" title="Xu Kuang">Xu Kuang</a> ｜ Powered by <a href="https://github.com/mojombo/jekyll" target="_blank">Jekyll</a> on <a href="https://github.com/xukuang" target="_blank">GitHub</a> ｜ Themed by <a href="http://yihui.name" title="Yihui" target="_blank">Yihui</a> and <a href="http://spatial-r.com/" title="Bing Zhang" target="_blank">Bing Zhang</a> </center></small></p>
 	   
+       </footer>
+
 	   </div>
        
 	   <!--<script type="text/javascript">

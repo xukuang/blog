@@ -23,7 +23,7 @@
       </script>
       <!--mathjax end-->
    </head>
-   <script type="text/javascript">
+  <!-- <script type="text/javascript">
     function setTimeSpan(){
     	var date = new Date();
     	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
@@ -49,7 +49,8 @@
     	return format;
 		}
   </script>
-   <body onLoad="setInterval(setTimeSpan,1000);">
+   <body onLoad="setInterval(setTimeSpan,1000);">-->
+   <body>
      <div id="container">
        <div id="main" role="main">
          <header>
@@ -126,7 +127,15 @@ filter(hflights_df, Month == 1 | Month == 2)
 </code></pre>
 </div>
 
-<h2 id="section-2">数据排列</h2>
+<h2 id="section-2">无重复内容的筛选</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># distinct函数
+distinct(hflights_df, Month, .keep_all = TRUE)
+</code></pre>
+</div>
+<p>这里参数.keep_all = TRUE指保留除Month以外的其它列的内容。</p>
+
+<h2 id="section-3">数据排列</h2>
 
 <div class="highlighter-rouge"><pre class="highlight"><code># 排列: arrange(),按给定的列名依次对行进行排序.
 arrange(hflights_df, DayofMonth, Month, Year)
@@ -139,8 +148,9 @@ hflights[order(desc(hflights$ArrDelay)), ]
 </code></pre>
 </div>
 
-<h2 id="section-3">数据选择</h2>
+<h2 id="section-4">数据选择</h2>
 
+<h3 id="select">select函数</h3>
 <div class="highlighter-rouge"><pre class="highlight"><code>#  选择: select()
 # 用列名作参数来选择子数据集:
 select(hflights_df, Year, Month, DayOfWeek)
@@ -151,7 +161,14 @@ select(hflights_df, -(Year:DayOfWeek))
 </code></pre>
 </div>
 
-<h2 id="section-4">数据变形</h2>
+<h3 id="selectif">select_if()函数</h3>
+<div class="highlighter-rouge"><pre class="highlight"><code>hflights %&gt;% select_if(is.factor)
+hflights %&gt;% select_if(is.numeric)
+hflights %&gt;% select_if(function(col) is.numeric(col) &amp;&amp; mean(col) &gt; 3.5)
+</code></pre>
+</div>
+
+<h2 id="section-5">数据变形</h2>
 
 <div class="highlighter-rouge"><pre class="highlight"><code># 变形: mutate()
 # 对已有列进行数据运算并添加为新列:
@@ -171,97 +188,103 @@ transform(hflights,
 </code></pre>
 </div>
 
-<h2 id="section-5">数据分组</h2>
-<p>数据分组是指按指定列的内容进行分类统计分析，具体可以参考<a href="http://xukuang.github.io/blog/2014/12/group-by-and-ungroup-function-in-R/">group和ungroup函数</a>。</p>
+<h2 id="groupby">数据分组（group_by()函数）</h2>
+<p>数据分组是指按指定列的内容进行分类统计分析，分类汇总后会影响一些函数的计算结果，具体可以参考<a href="http://xukuang.github.io/blog/2014/12/group-by-and-ungroup-function-in-R/">group和ungroup函数</a>。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code># 分组动作 group_by()
-planes &lt;- group_by(hflights_df, TailNum)
+<div class="highlighter-rouge"><pre class="highlight"><code>planes &lt;- group_by(hflights_df, TailNum)
 delay &lt;- summarise(planes, 
   count = n(), 
   dist = mean(Distance, na.rm = TRUE), 
   delay = mean(ArrDelay, na.rm = TRUE))
 delay &lt;- filter(delay, count &gt; 20, dist &lt; 2000)
-
-# 另: 一些汇总时的小函数
-# n(): 计算个数
-# n_distinct(): 计算 x 中唯一值的个数. (原文为 count_distinct(x), 测试无用)
-# first(x), last(x) 和 nth(x, n): 返回对应秩的值, 类似于自带函数 x[1], x[length(x)], 和 x[n]
 </code></pre>
 </div>
 
-<h2 id="section-6">连接符</h2>
+<p>此外，分类汇总时，一些也可用到：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code># 3 连接符 %.%
-# 包里还新引进了一个操作符, 使用时把数据名作为开头, 然后依次对此数据进行多步操作.
-Batting %.%
-    group_by(playerID) %.%
-    summarise(total = sum(G)) %.%
-    arrange(desc(total)) %.%
-    head(5)
-# 这样可以按进行数据处理时的思路写代码, 一步步深入, 既易写又易读, 接近于从左到右的自然语言顺序
-#  对比一下用R自带函数实现的:
-head(arrange(summarise(group_by(Batting, playerID), total = sum(G)) , desc(total)), 5)
-# 或者像这篇文章所用的方法:
-totals &lt;- aggregate(. ~ playerID, data=Batting[,c("playerID","R")], sum)
-ranks &lt;- sort.list(-totals$R)
-totals[ranks[1:5],]
-# 文章里还表示: 用他的 MacBook Air 跑 %.% 那段代码用了 0.036 秒, 
-# 跑上面这段代码则用了 0.266 秒, 运算速度提升了近7倍. (当然这只是一例, 还有其它更大的数字.)
+<ul>
+  <li>n()计算个数</li>
+  <li>n_distinct()计算唯一值的个数</li>
+  <li>first(x), last(x) 和 nth(x, n): 返回值, 类似于基本包函数 x[1], x[length(x)], 和 x[n]</li>
+</ul>
+
+<h2 id="section-6">连接符（%&gt;%）</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Batting %&gt;% group_by(playerID) %&gt;%
+summarise(total = sum(G)) %&gt;% arrange(desc(total)) %&gt;% head(5)
 </code></pre>
 </div>
 
 <h3 id="section-7">对所有列进行相同操作</h3>
+<p>dpyr包中对所有列进行相同的操作最初采用的是summarise_each()和mutate_each()函数，在0.5.0版本以后的dplyr包将逐渐使用summarise_all()和mutate_all()函数，这里也主要将summarise_all()和mutate_all()函数。这里的相同操作主要包括求平均值、标准差、方差、最小值和最大值，此时被处理的数据列不需要必须是数字类型(只是此时会有警告提示)。然而，无论如何要进行求和操作时，所有数据列必须是数字类型(原因是sum函数对字符求和，直接返回错误，而求平均值、标准差、方差、最小值和最大值只是返回NA，并提示警告)。</p>
 
 <ul>
-  <li>summarise_each可以进行求平均值、标准差、方差、最小值和最大值，此时被处理的数据列也不需要必须是数字类型(只是此时会有警告提示)。然而，无论如何要进行求和操作时，所有数据列必须是数字类型(原因是sum函数对字符求和，直接返回错误，而求求平均值、标准差、方差、最小值和最大值只是返回NA，并提示警告)。当然也可以多个指标同时计算。</li>
+  <li>summarise_all()函数</li>
 </ul>
 
 <div class="highlighter-rouge"><pre class="highlight"><code># 平均值，字符平均值返回NA
-summarise_each(hflights, funs(mean))
+summarise_all(hflights, mean)
 # 标准差，字符标准差返回NA
-summarise_each(hflights, funs(sd))
+summarise_all(hflights, sd)
 # 方差，字符方差返回NA
-summarise_each(hflights, funs(var))
+summarise_all(hflights, var)
 # 最小值，字符最小值也是可以运算的
-summarise_each(hflights, funs(min))
+summarise_all(hflights, min)
 # 最大值，字符最大值也是可以运算的
-summarise_each(hflights, funs(max))
-# 平均值、最小值和最大值
-summarise_each(hflights, funs(mean, min, max))
+summarise_all(hflights, max)
 
 # 求和
 hflights.dat = hflights[,! colnames(hflights) %in% c('CancellationCode', 'UniqueCarrier', 'TailNum', 'Origin', 'Dest')]
-summarise_each(hflights.dat, funs(sum))
+summarise_all(hflights.dat, sum))
 
-# 若果某一列中有NA，要想得到结果可以通过调整函数内部的na.rm参数来实现
-# 平均值
-summarise_each(hflights, funs(mean(., na.rm = T)))
-# 标准差
-summarise_each(hflights, funs(sd(., na.rm = T)))
-# 方差
-summarise_each(hflights, funs(var(., na.rm = T)))
-# 最小值
-summarise_each(hflights, funs(min(., na.rm = T)))
-# 最大值
-summarise_each(hflights, funs(max(., na.rm = T)))
-# 求和
-summarise_each(hflights.dat, funs(sum(., na.rm = T)))
 </code></pre>
 </div>
 
 <ul>
-  <li>mutate_each跟summarise_each最大的不同在于产生于原数据相同行数的结果，所以mutate_each除了可以进行summarise_each函数的操作以外，还可进行简单四则运算，当然进行四则运算时，要保证所有列都是数字型。</li>
+  <li>mutate_all()函数</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>temp = mutate_each(hflights.dat, funs( . + 1))
+<p>区别于summarise_all()函数在于mutate_all()函数产生与原数据相同行和列数的结果，这里mutate_all以及下面的mutate_at()和mutate_if()函数也不同于dplyr包的mutate()函数，mutate函数在原始数据后面产生新的结果，而mutate_系列函数则直接产生与原数据相同行和列数的结果。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>temp = mutate_all(hflights.dat,  mean))
 head(hflights)
 head(temp)
 </code></pre>
 </div>
 
+<p>此外，summarise_all()和mutate_all()函数中使用的函数还可以使用完全形式，这时候不仅可以更改结果列的名字。mutate_all()的结果将与mutate函数一样在原始数据后面产生新的结果。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>mutate_all(hflights, funs("in" = . / 2.54))
+mutate_all(hflights,funs(med = median))
+summarise_all(hflights,funs(med = median))
+# 平均值、最小值和最大值
+summarise_all(hflights, funs(mean, min, max))
+
+</code></pre>
+</div>
+
+<h3 id="section-8">对特定列进行相同操作</h3>
+
+<h4 id="summariseatmutateat">summarise_at()和mutate_at()函数</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>mtcars %&gt;% group_by(cyl) %&gt;% summarise_at(c("mpg", "wt"), mean)
+mtcars %&gt;% group_by(cyl) %&gt;% summarise_at(vars(mpg, wt), mean)
+mtcars %&gt;% group_by(cyl) %&gt;% mutate_at(c("mpg", "wt"), mean)
+mtcars %&gt;% group_by(cyl) %&gt;% mutate_at(vars(mpg, wt), mean)
+</code></pre>
+</div>
+
+<h4 id="summariseifmutateif">summarise_if()和mutate_if()函数</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>iris %&gt;% summarise_if(is.numeric, mean, trim = 0.25)
+iris %&gt;% mutate_if(is.numeric, mean, trim = 0.25)
+</code></pre>
+</div>
+<p>同样，summarise_at()和mutate_at() &amp;&amp; summarise_if()和mutate_if()函数函数中的函数也可以使用完全形式，其结果也包含原始数据。</p>
+
 </section>
 <section class="meta">
-
+<span>
 
 
 <span>
@@ -270,6 +293,7 @@ head(temp)
 	<a  href="http://xukuang.github.io/blog/2015/05/flaunt/" class="pageNav"  >Next</a>
 </span>
 
+         
 
 <span class="author">
   <a href="http://xukuang.github.io/blog">Xu Kuang</a>
@@ -301,28 +325,46 @@ head(temp)
 </span>
 
 </section>
-<div id="disqus_thread"></div>
-<script>
-/**
-* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<!-- 多说 Share start -->
+	<div class="ds-share"
+                    style="text-align: right"
+                    data-thread-key="/2015/04/fuctions-in-dplyr"
+                    data-title="dplyr包中的基础操作"
+                    data-url="http://xukuang.github.io/blog/2015/04/fuctions-in-dplyr/"
+                    data-images="http://xukuang.github.io/blog"
+                    data-content="|  | ." >
+                    <div class="ds-share-inline">
+                      <ul  class="ds-share-icons-16">
+                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                      </ul>
+                      <div class="ds-share-icons-more">
+                      </div>
+                    </div>
+                <hr>
+                </div>
+ <!-- 多说 Share end-->
+				
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2015/04/fuctions-in-dplyr" data-title="dplyr包中的基础操作 | " data-url="http://xukuang.github.io/blog/2015/04/fuctions-in-dplyr/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"yiyuzhijian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
 
-s.src = '//httpxukuanggithubio.disqus.com/embed.js';
-
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
 <script type="text/javascript">
 $(function(){
@@ -350,12 +392,11 @@ $(function(){
          </article>
        </div>
 	   
-	   
-	  
 	   <footer>
-           <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> & <a href="http://pages.github.com">GitHub</a>| Copyright  2016 by <a href="http://xukuang.github.io/blog/about/">Xu Kuang</a> | <span class="label label-info" id="timeSpan" ></span></small></p>
-       </footer> 
+	   <p><small><center>© 2014-2016 Maintained by <a href="http://xukuang.github.io" title="Xu Kuang">Xu Kuang</a> ｜ Powered by <a href="https://github.com/mojombo/jekyll" target="_blank">Jekyll</a> on <a href="https://github.com/xukuang" target="_blank">GitHub</a> ｜ Themed by <a href="http://yihui.name" title="Yihui" target="_blank">Yihui</a> and <a href="http://spatial-r.com/" title="Bing Zhang" target="_blank">Bing Zhang</a> </center></small></p>
 	   
+       </footer>
+
 	   </div>
        
 	   <!--<script type="text/javascript">

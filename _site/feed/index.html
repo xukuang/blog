@@ -7,8 +7,175 @@
     <title>Xu Kuang</title>
     <atom:link href="http://xukuang.github.io/blog/feed/" rel="self" type="application/rss+xml" />
     <link>http://xukuang.github.io/</link>
-    <lastBuildDate>2016-06-13T10:10:38+08:00</lastBuildDate>
+    <lastBuildDate>2016-09-23T21:10:57+08:00</lastBuildDate>
     <webMaster>kuang_xu@126.com</webMaster>
+    
+    <item>
+      <title>HTML头部标记</title>
+      <link>http://xukuang.github.io/blog/2016/09/html-head/</link>
+      <pubDate>2016-09-12T19:09:15+08:00</pubDate>
+      <author>Xu Kuang</author>
+      <guid>http://xukuang.github.io/blog/2016/09/html-head</guid>
+      <content:encoded><![CDATA[<p>&lt;head&gt;……&lt;/head&gt;是html文件的头部标记， 所有头部内标记的容器。这部分的内容会影响到搜索引擎对网页的收录和排序，以及网页的各种全局设置，但不会在页面中显示，内容可包含脚本，指示浏览器在何处可以找到样式表，提供元信息，等等。为了能够对网页进行设置，你可以在这部分插入title, base, link, meta, style等标记。</p>
+
+<h3 id="title">title标记</h3>
+<p>title标记定义了html文档的标题，该标记在所有 HTML/XHTML文档中都是必需的。如同整个html头部文件不会在网页页面中显示一样，这个标题是指浏览器标签中的标题，而与网页页面中的各类标题无关。</p>
+
+<h3 id="base">base标记</h3>
+<p>base标记规定了页面上所有链接的默认地址或默认目标。主要属性有：</p>
+
+<ul>
+  <li>href 规定页面中所有相对链接的基准URL</li>
+  <li>target 规定页面中所有的超链接和表单在何处打开</li>
+</ul>
+
+<h3 id="link">link标记</h3>
+<p>link标记定义了该文档与外部资源之间的关系，通常用于链接到样式表。该标记可在于head部分不过多次出现。link 元素是空元素，它仅包含属性。主要属性有</p>
+
+<ul>
+  <li>href 规定被链接文档的位置</li>
+  <li>rel 规定当前文档与被链接文档之间的关系</li>
+  <li>type 规定被链接文档的MIME类型</li>
+</ul>
+
+<h3 id="meta">meta标记</h3>
+<p>meta标记是元信息标记，属于头部信息的基本标记。该标记用于规定页面的描述、关键词、文档的作者、最后修改时间以及其他元数据。同样，标记不会显示在页面上，但是对于机器是可读的。meta标记属性分两种：页面描述属性（name）和http标题信息（http-equiv）。</p>
+
+<p>name属性主要用于描述网页的内容，用于对搜索引擎的优化。name的取值如下:</p>
+
+<ol>
+  <li>keywords。即关键字，用于说明网页所包含的关键字等信息，从而提高被搜索引擎搜索到的概率。编写格式为&lt;meta name=”keywords” content =“关键字”/&gt;，content属性的值为用户所设置的具体关键字。（一般可设置多个关键字，他们之间用英文半角的逗号分开，搜索引擎都限制关键字的数量，所以关键字内容要简洁精练）</li>
+  <li>
+    <p>description。即描述，用于描述网页的主要内容、主题等，合理设置也可以提高被搜索引擎搜索到的概率。格式为&lt;meta name=”description” content =“对页面的描述”/&gt;，content属性值为用户所设置的页面具体描述的内容，最多容纳1024个字符，但搜索引擎一般只显示约前175个字符。</p>
+  </li>
+  <li>author。作者，用于设置网站作者的名称，比较专业的网站经常用到。格式为&lt;meta name=”author” content =“作者名称”/&gt;</li>
+  <li>generator。生成器，用于设置网站编辑工具的名称，比较专业的网站页面上经常用到。格式&lt;meta name=”generator” content =“网站编辑工具名称”/&gt;</li>
+  <li>
+    <p>robots。机器人，用于限制页面搜索方式。搜索引擎的搜索机器人，沿着网页上的链接（如http和src链接），不断地检索资料建立自己的数据库。通过这种meta标记可以限制部分内容不被搜索引擎检测到，降低部分信息公开性。编写格式为&lt;meta name=“robots” content=”指令组合”&gt;。该属性的主要有：</p>
+
+    <ul>
+      <li>信息参数为all：文件将被检索，且页面上的链接可以被查询</li>
+      <li>信息参数为none：文件将不被检索，且页面上的链接不可以被查询</li>
+      <li>信息参数为index：文件将被检索</li>
+      <li>信息参数为follow：页面上的链接可以被查询</li>
+      <li>信息参数为noindex：文件将不被检索，但页面上的链接可以被查询</li>
+      <li>信息参数为nofollow：文件将被检索，但页面上的链接不可以被查询</li>
+    </ul>
+  </li>
+</ol>
+
+<p>http-equiv属性的取值具体如下：</p>
+
+<ol>
+  <li>content-type。内容类别，用于设置页面的类别和语言字符集。编写格式&lt;meta http-equiv=“content-type” context=“text/html”；charset=“gb2312”/&gt;，content属性的值代表页面采用HTML代码输出，字符集为gb2312（简体中文），国际化网站开发的话，为了字符统一，建议charset采用utf-8</li>
+  <li>refresh。刷新，用于设置多长时间内网页自己刷新一次，或者用一段时间自动跳转到其他页面，第一种编写格式&lt;meta http-equiv=“refresh” context=“30”/&gt;表示隔30秒刷新一次，第二种编写格式&lt;meta http-equiv=“refresh” context=“30；url=www.google.com”/&gt;，表示30秒后页面自动跳转到www.google.com网站
+3.expires。中文意思为“到期”，用于设置页面到期时间。一旦网页过期，必须到服务器上重新调用网页。第一种编写格式为&lt;meta http-equiv=“expires” context=“Wed,10 Mar 2011 12：00：00 GMT”/&gt;，content值代表网页过期的时间，必须使用GMT时间格式。第二种编写格式为&lt;meta http-equiv=“expires” context=“30”/&gt;，表示多少秒后过期。</li>
+  <li>cache-control。缓存控制，用于禁止在缓存中调用网页，编写格式为&lt;meta http-equiv=“cache-control” context=“no-cache”/&gt;，no-cache代表不允许缓存。</li>
+  <li>set-cookie。设置cookie，用于设置本页面cookie多久过期，编写格式为&lt;meta http-equiv=“set-cookie” context=“Wed,10 Mar 2011 12：00：00 GMT”/&gt;，代表到这个时间，cookie将被删除。</li>
+</ol>
+
+<p>此外，&lt;meta http-equiv=”imagetoolbar” content=”false”/&gt; 指定是否显示图片工具栏，当为false代表不显示，当为true代表显示；&lt;meta http-equiv=”pragma” content=”no-cache”&gt;代表禁止浏览器从本地计算机的缓存中访问页面内容,这样设定，访问者将无法脱机浏览。</p>
+
+<p>content 属性始终要和 name 属性或 http-equiv 属性一起使用，该属性提供了名称/值对中的值。该值可以是任何有效的字符串。</p>
+
+<p>- - - - -</p>
+
+<p>本文主要整理自一下3篇文章：</p>
+
+<ol>
+  <li>w3school的<a href="http://www.w3school.com.cn/html/html_head.asp">html系列教程-HTML头部元素</a></li>
+  <li>脚本之家<a href="http://www.jb51.net/web/120748.html">HTML网页头部代码实例详解</a></li>
+  <li>脚本之家<a href="http://www.jb51.net/web/20317.html">HTML网页头部代码全清楚</a></li>
+</ol>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>守时</title>
+      <link>http://xukuang.github.io/blog/2016/09/punctuality/</link>
+      <pubDate>2016-09-06T19:25:16+08:00</pubDate>
+      <author>Xu Kuang</author>
+      <guid>http://xukuang.github.io/blog/2016/09/punctuality</guid>
+      <content:encoded><![CDATA[<p>我讨厌不守时的行为，所以，一般会要求自己赶在约定时间前。在我看来，守时首先是原则问题，迟到就是迟到了，那怕只是一分钟。我会刻意要求自己提前到，但不会苛求其他人也提早到，只要按时来就好，非关键时刻五分钟以内都可以接受。对于不守时的行为，我总忍不住要指出来，希望他/他能明白他/她让大家等了很久，需要向大家致歉，下次请一定要守时。表示歉意，我认为，是迟到后第一件该做的事情，纵然你的迟到有千万个理由。然而，总会遇到一些人会不守时，你刚一开口要说迟到这件事，他/她总会有一堆理由在等着你。貌似，不守时的他/她总是很无辜的，而批评的你却总那么不通情达理，不招人喜欢。</p>
+
+<p>其实，把守时这一小内容放到这儿当成一篇文章，更多的是想说一下我的困惑。一方面，我认为守时是一个人的基本素质，因为基本所以不需要表扬。可是，如果不守时都不能被批评了，那么守时是不是应该被大加表扬呢？同样，不守时的行为很容易地让我本能的不高兴情绪无法抑制的表现出来。这样的情绪释放，又很容易就把周围的人给得罪了。我在想为了守时而不招人喜欢究竟值不值？另一方面，我又在想是不是小题大作了，没有展现出应有气量？守时是否也有一个度的衡量？当事情没有到危急时刻，迟到让周围人等一下根本就没什么大不了的，或者说这种迟到根本不叫不守时。</p>
+
+<p>为了守时，也为了避免迟到的各种让人无语的理由，我想这几步是必须要做的。</p>
+
+<ol>
+  <li>通过回复的形式确认每个人都知道约定的时间点。现在的通讯方式实在是太多了，无论是那种方式总有一些人或真或假的假的看不到。</li>
+  <li>通知的末尾一定要加上，如果有任何原因不按时，请及时回复，并说明什么时间出现。我想这是我现在能想到一个为了让大家守时的一个稍微可行的办法吧。</li>
+</ol>
+
+<p>如果我要是迟到了，也提醒自己几步是必须要做的。</p>
+
+<ol>
+  <li>当面明确地表示歉意。</li>
+  <li>不要讲迟到的讲理由。</li>
+</ol>
+
+<p>- - - - - -</p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>沟通</title>
+      <link>http://xukuang.github.io/blog/2016/09/words-of-love/</link>
+      <pubDate>2016-09-04T17:36:35+08:00</pubDate>
+      <author>Xu Kuang</author>
+      <guid>http://xukuang.github.io/blog/2016/09/words-of-love</guid>
+      <content:encoded><![CDATA[<p>一直都不是善于言谈的人，所以也特别介意这个。偶尔从喜马拉雅听的《爱的语言智商》栏目里听到了几期关于交流沟通的节目，觉得挺有意思的。这里做个听书笔记，希望能帮助自己。</p>
+
+<h2 id="section">批评的法则</h2>
+
+<blockquote>
+  <p>攻人之恶勿太严，要思其堪受。（批评别人的坏人处，不要过于严厉，一定要心里想着这人还有可爱之处。） —《菜根谭》</p>
+</blockquote>
+
+<ul>
+  <li>不要去做批评</li>
+</ul>
+
+<p>尽量不要去做批评，因为怒火中烧的时候，无论如何小心措辞，都有可能中伤到对方，或者就是想伤到对方。</p>
+
+<ul>
+  <li>控制语气</li>
+</ul>
+
+<p>控制语气，降低火药味。常用来可以缓和语句：
+让我们聊聊吧；我懂你的心情；这件事，我也有责任；我知道你也不想这样；换成我可能也会这样做 ；我能为你做点什么吗？</p>
+
+<ul>
+  <li>清晰地表达感受</li>
+</ul>
+
+<p>清晰地表达感受 = 行为（对方的） + 理解（我对行为的） + 感觉 （我的感受）+ 意图（让对方怎么做补酒）</p>
+
+<ul>
+  <li>
+    <p>不当众批评</p>
+  </li>
+  <li>
+    <p>不翻旧账</p>
+  </li>
+</ul>
+
+<h2 id="section-1">改善口才</h2>
+
+<ul>
+  <li>找对师傅</li>
+</ul>
+
+<p><strong>这个对我来说，简直就是白说。</strong></p>
+
+<ul>
+  <li>争取更多的说话机会</li>
+</ul>
+
+<p>抓住一切一起机会，有意识的说话。</p>
+
+]]></content:encoded>
+    </item>
     
     <item>
       <title>HTML标签元素的分类</title>
@@ -24,7 +191,7 @@
   <li>常用的块状元素</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;div&gt;、&lt;p&gt;、&lt;h1&gt;...&lt;h6&gt;、&lt;ol&gt;、&lt;ul&gt;、&lt;dl&gt;、&lt;table&gt;、&lt;address&gt;、&lt;blockquote&gt; 、&lt;form&gt;
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;div&gt;、&lt;p&gt;、&lt;h1&gt;...&lt;h6&gt;、&lt;ol&gt;、&lt;ul&gt;、&lt;dl&gt;、&lt;table&gt;、&lt;address&gt;、&lt;blockquote&gt;、&lt;form&gt;
 </code></pre>
 </div>
 
@@ -325,8 +492,8 @@ background-repeat: repeat-y;
 
 <ol>
   <li>&lt;html&gt;……&lt;/html&gt;标识网页文件的开始与结束，所有的html元素都要放在这对标记中。</li>
-  <li>&lt;head&gt;……&lt;/head&gt;标识网页文件的头部信息，如标题、搜索引擎关键字等。</li>
-  <li>&lt;titel&gt;……&lt;/title&gt;标识网页文件的标题。</li>
+  <li>&lt;head&gt;……&lt;/head&gt;标识网页文件的头部信息，这部分的内容不会在页面中显示，主要影响到搜索引擎对网页的收录和排序，以及网页的各种全局设置。</li>
+  <li>&lt;titel&gt;……&lt;/title&gt;标识网页文件的标题，这里的标题是指浏览器标签页的标题，与网页页面中的各类标题无关。</li>
   <li>&lt;body&gt;……&lt;/body&gt;标识网页文件的主体部分。</li>
 </ol>
 
@@ -1600,7 +1767,8 @@ foo[[7,2,5],[0,2,2]]
 
 <p>这里的三元函数只有一个，而且不是接受 3 个数组参数的意思。它其实是一个条件运算函数，即 foo if cond else bar 这个表达式的 numpy 版——where(condition, [x, y])</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>arr = np.arange(12).reshape(3,4)arr
+<div class="highlighter-rouge"><pre class="highlight"><code>arr = np.arange(12).reshape(3,4)
+arr
 	## array([[ 0,  1,  2,  3],
 	##        [ 4,  5,  6,  7],
 	##        [ 8,  9, 10, 11]])
@@ -1635,7 +1803,7 @@ np.where(arr%2==0,1,0)
 <p>在查看多个变量之间的两两相关性的时候，可以使用picante包中的cor.table()函数。</p>
 
 <h2 id="section-1">场景二</h2>
-<p>在R中加载了多个R包时，希望查看当前环境中都加载了哪些R包的find.package()函数，临时卸载某个R包可以使用函数detach(package:包名)。如要卸载dplyr包，则为detach(package:dplyr)。</p>
+<p>在使用R时，library()函数，或者(.packages(all.available=TRUE))函数可以查看本地下载了哪些R包，当希望查看当前的R环境中都加载了哪些R包可以使用search()函数，或者(.packages())函数，或者find.package()函数，临时卸载某个R包可以使用函数detach(package:包名)。安装R包使用install.packages(‘包名’)，删除R包使用remove.packages(“包名”)函数，用于更新R包使用update.packages()函数，查看已下载的所有R包的详细信息使用installed.packages()。查看某一个特定R包详细信息使用help(package=’包名’)</p>
 
 <h2 id="section-2">场景三</h2>
 <p>expand.grid()用来建立一些factor相乘出来的矩阵或data.frame。<!--more--></p>
@@ -1727,1249 +1895,73 @@ cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf), right = F
 
 <h2 id="section-6">场景七</h2>
 <p>split()函数能将数据框按某一列分为包含若干个数据框的列表。然后，unsplit()可以将这个列表合并。</p>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>data.table的包的简单介绍</title>
-      <link>http://xukuang.github.io/blog/2016/04/data-table-in-R/</link>
-      <pubDate>2016-04-13T21:56:01+08:00</pubDate>
-      <author>Xu Kuang</author>
-      <guid>http://xukuang.github.io/blog/2016/04/data-table-in-R</guid>
-      <content:encoded><![CDATA[<p>相比dplyr包，data.table包能够更大程度地提高数据的处理速度，这里就简单介绍一下data.tale包的使用方法。</p>
 
-<h2 id="section">数据的读取</h2>
-<p>data.table包中数据读取的函数是fread()。</p>
+<h2 id="section-7">场景八</h2>
 
-<h2 id="datatable-">data.table 的创建</h2>
+<p>psych包中的describe() 函数，可以简单查看数据的基础信息。Hmisc包中的describe() 函数也有类似功能。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>library(data.table)
-DT = data.table(x=rep(c("a","b","c"),each=3), y=c(1,3,6), v=1:9)
-DT
-	#    x y v
-	# 1: a 1 1
-	# 2: a 3 2
-	# 3: a 6 3
-	# 4: b 1 4
-	# 5: b 3 5
-	# 6: b 6 6
-	# 7: c 1 7
-	# 8: c 3 8
-	# 9: c 6 9
-</code></pre>
-</div>
-<!--more-->
+<h2 id="section-8">场景九</h2>
+<p>Sys.timezone()查看R的时区设置</p>
 
-<h2 id="section-1">基础操作</h2>
+<p>devtools::session_info()查看R软件的相关信息</p>
 
-<h3 id="section-2">行提取</h3>
-<p>行提取分为单行提取和多行提取。</p>
+<p>sessionInfo()查看R软件的相关信息，更加侧重编码信息</p>
 
-<h4 id="section-3">单行提取</h4>
+<h2 id="section-9">场景十</h2>
+<p>关于R的几个特殊的目录。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[2]                      # 2nd row
-	#    x y v
-	# 1: a 3 2
-DT[2,]                     # same
-	#    x y v
-	# 1: a 3 2
-</code></pre>
-</div>
-<p>这里DT[2]和DT[2,]是完全相同的，这里的『,』只是说明还有其他参数可设置，而其他参数按默认值进行计算。下文所有这样的最后一个『,』都不再写出来。</p>
+<p><strong>R.home()</strong> 查看R软件的相关目录</p>
 
-<h4 id="section-4">多行提取</h4>
+<p><strong>.Library</strong> 查看R核心包的目录</p>
+
+<p><strong>.libPaths()</strong> 查看R所有包的存放目录</p>
+
+<p><strong>ystem.file()</strong> 查看指定包所在的目录</p>
 
 <ul>
-  <li>数字提取</li>
+  <li>R软件的相关目录</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[1:2]
-	#    x y v
-	# 1: a 1 1
-	# 2: a 3 2
-DT[c(2,5)]
-	#   x y v
-	#1: a 3 2
-	#2: b 3 5
+<div class="highlighter-rouge"><pre class="highlight"><code># R.home() 查看R软件的相关目录
+
+## 打印R软件安装目录
+R.home()
+
+## 打印R软件bin的目录
+R.home(component="bin")
+
+## 打印R软件文件的目录
+R.home(component="doc")
 </code></pre>
 </div>
 
 <ul>
-  <li>逻辑提取</li>
+  <li>R软件的包目录</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[c(FALSE,TRUE)]          # even rows (usual recycling)
-	#    x y v
-	# 1: a 3 2
-	# 2: b 1 4
-	# 3: b 6 6
-	# 4: c 3 8
-</code></pre>
-</div>
-
-<p>此时,c(FALSE,TRUE)会自己重复匹配成与DT的行数相同的向量</p>
-
-<h3 id="section-5">列提取</h3>
-<p>与行提取相同，列的提取也包含单列提取和多列提取。</p>
-
-<h4 id="section-6">单列提取</h4>
-
-<ul>
-  <li>数字提取</li>
-</ul>
-
-<p>数字提取时，一定要把wth参数设置为FALSE。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,2,with=FALSE]          # 2nd column
-	#    y
-	# 1: 1
-	# 2: 3
-	# 3: 6
-	# 4: 1
-	# 5: 3
-	# 6: 6
-	# 7: 1
-	# 8: 3
-	# 9: 6
+<div class="highlighter-rouge"><pre class="highlight"><code># 打印核心包的目录
+.Library
+# 打印所有包的存放目录
+.libPaths()
 </code></pre>
 </div>
 
 <ul>
-  <li>列名提取</li>
+  <li>查看指定包所在的目录</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,list(v)]               # v column (as data.table
-	#    v
-	# 1: 1
-	# 2: 2
-	# 3: 3
-	# 4: 4
-	# 5: 5
-	# 6: 6
-	# 7: 7
-	# 8: 8
-	# 9: 9
+<div class="highlighter-rouge"><pre class="highlight"><code># base包的存放目录
+system.file()
+# dplyr包的存放目录
+system.file(package = "dplyr")
 </code></pre>
 </div>
 
-<h3 id="section-7">列名的修改</h3>
-<p>列名的修改可以使用setnames()函数，这个函数好像比对data.frame类型数据名更改的names()和colnames()函数也要快一些。</p>
+<h2 id="section-10">场景十一</h2>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>dt = data.table(a=1:2,b=3:4,c=5:6) # compare to data.table
-try(tracemem(dt))                  # by reference, no deep or shallow copies
-setnames(dt,"b","B")               # by name, no match() needed (warning if "b" is missing)
-setnames(dt,3,"C")                 # by position with warning if 3 &gt; ncol(dt)
-setnames(dt,2:3,c("D","E"))        # multiple
-setnames(dt,c("a","E"),c("A","F")) # multiple by name (warning if either "a" or "E" is missing)
-setnames(dt,c("X","Y","Z"))        # replace all (length of names must be == ncol(DT))  
-</code></pre>
-</div>
+<p>tidyr包中的fill函数可以用来填充向量中的NA。</p>
 
-<h4 id="section-8">多列提取</h4>
-
-<ul>
-  <li>数字提取</li>
-</ul>
-
-<p>如同上面对按数字对单列的提取，对多列提取也要设置with参数为FALSE。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,2:3,with=FALSE]
-	#    y v
-	# 1: 1 1
-	# 2: 3 2
-	# 3: 6 3
-	# 4: 1 4
-	# 5: 3 5
-	# 6: 6 6
-	# 7: 1 7
-	# 8: 3 8
-	# 9: 6 9
-DT[,c(1,3),with=FALSE] 
-	#    x v
-	# 1: a 1
-	# 2: a 2
-	# 3: a 3
-	# 4: b 4
-	# 5: b 5
-	# 6: b 6
-	# 7: c 7
-	# 8: c 8
-	# 9: c 9      
-</code></pre>
-</div>
-
-<ul>
-  <li>按列名提取</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,list(y, v)]
-	#    y v
-	# 1: 1 1
-	# 2: 3 2
-	# 3: 6 3
-	# 4: 1 4
-	# 5: 3 5
-	# 6: 6 6
-	# 7: 1 7
-	# 8: 3 8
-	# 9: 6 9
-</code></pre>
-</div>
-
-<p>如果按列名提取时，不使用列表，仍然能对列进行提取，只是结果以向量的形式输出。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,v]                     # v column (as vector)
-	# [1] 1 2 3 4 5 6 7 8 9
-DT[,c(v)]                  # same
-	# [1] 1 2 3 4 5 6 7 8 9   
-DT[, c(y, v)]
-	# [1] 1 3 6 1 3 6 1 3 6 1 2 3 4 5 6 7 8 9
-</code></pre>
-</div>
-
-<h3 id="section-9">列的添加与删除</h3>
-
-<h4 id="section-10">列的添加</h4>
-
-<ul>
-  <li>单列添加</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>DT
-	#    x y v
-	# 1: a 1 1
-	# 2: a 3 2
-	# 3: a 6 3
-	# 4: b 1 4
-	# 5: b 3 5
-	# 6: b 6 6
-	# 7: c 1 7
-	# 8: c 3 8
-	# 9: c 6 9
-DT[, a := 'k']
-DT
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: a 3 2 k
-	# 3: a 6 3 k
-	# 4: b 1 4 k
-	# 5: b 3 5 k
-	# 6: b 6 6 k
-	# 7: c 1 7 k
-	# 8: c 3 8 k
-	# 9: c 6 9 k
-DT[,c:=8]        # add a numeric column, 8 for all rows
-DT
-	#    x y v a c
-	# 1: a 1 1 k 8
-	# 2: a 3 2 k 8
-	# 3: a 6 3 k 8
-	# 4: b 1 4 k 8
-	# 5: b 3 5 k 8
-	# 6: b 6 6 k 8
-	# 7: c 1 7 k 8
-	# 8: c 3 8 k 8
-	# 9: c 6 9 k 8 
-DT[,d:=9L]       # add an integer column, 9L for all rows
-DT[2,d:=10L]     # subassign by reference to column d
-DT
-	#    x y v a c  d
-	# 1: a 1 1 k 8  9
-	# 2: a 3 2 k 8 10
-	# 3: a 6 3 k 8  9
-	# 4: b 1 4 k 8  9
-	# 5: b 3 5 k 8  9
-	# 6: b 6 6 k 8  9
-	# 7: c 1 7 k 8  9
-	# 8: c 3 8 k 8  9
-	# 9: c 6 9 k 8  9
-DT[, e := d + 2]
-DT
-	#    x y v a c  d  e
-	# 1: a 1 1 k 8  9 11
-	# 2: a 3 2 k 8 10 12
-	# 3: a 6 3 k 8  9 11
-	# 4: b 1 4 k 8  9 11
-	# 5: b 3 5 k 8  9 11
-	# 6: b 6 6 k 8  9 11
-	# 7: c 1 7 k 8  9 11
-	# 8: c 3 8 k 8  9 11
-	# 9: c 6 9 k 8  9 11
-</code></pre>
-</div>
-<p>如果添加的列名，数据中已经包含则是对这一列数据的修改。</p>
-
-<ul>
-  <li>多列的添加</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[, c('f', 'g') := list( d + 1, c)]
-DT[, ':='( f =  d + 1, g = c)]          # same
-DT
-	#    x y v a c  d  e  f g
-	# 1: a 1 1 k 8  9 11 10 8
-	# 2: a 3 2 k 8 10 12 11 8
-	# 3: a 6 3 k 8  9 11 10 8
-	# 4: b 1 4 k 8  9 11 10 8
-	# 5: b 3 5 k 8  9 11 10 8
-	# 6: b 6 6 k 8  9 11 10 8
-	# 7: c 1 7 k 8  9 11 10 8
-	# 8: c 3 8 k 8  9 11 10 8
-	# 9: c 6 9 k 8  9 11 10 8
-</code></pre>
-</div>
-<p>此处，需要注意的是新创建的列只能依照原有数据列，而不能依照新创建的列。例如这个例子中，g = c是可以运行，而g = f则会提示错误。</p>
-
-<h4 id="section-11">列的删除</h4>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,c:=NULL]     # remove column c
-DT
-	#    x y v a  d  e  f g
-	# 1: a 1 1 k  9 11 10 8
-	# 2: a 3 2 k 10 12 11 8
-	# 3: a 6 3 k  9 11 10 8
-	# 4: b 1 4 k  9 11 10 8
-	# 5: b 3 5 k  9 11 10 8
-	# 6: b 6 6 k  9 11 10 8
-	# 7: c 1 7 k  9 11 10 8
-	# 8: c 3 8 k  9 11 10 8
-	# 9: c 6 9 k  9 11 10 8
-DT[, c('d', 'e', 'f', 'g'):=NULL]     
-DT
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: a 3 2 k
-	# 3: a 6 3 k
-	# 4: b 1 4 k
-	# 5: b 3 5 k
-	# 6: b 6 6 k
-	# 7: c 1 7 k
-	# 8: c 3 8 k
-	# 9: c 6 9 k
-</code></pre>
-</div>
-
-<h2 id="section-12">列指标的简单操作</h2>
-<p>简单操作主要包括求和、平均值、方差和标准差等。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[2:3,sum(v)]             # sum(v) over rows 2 and 3
-# [1] 5
-DT[2:3,mean(v)]             # sum(v) over rows 2 and 3
-# [1] 2.5
-</code></pre>
-</div>
-
-<h2 id="key">索引key</h2>
-
-<h3 id="section-13">查看和创建索引</h3>
-<p>索引是对列而言的，索引创建后，数据将自动按索引值进行重新排序，所以每个数据最多只能有一个索引，但是索引可以由多列组成，这些列可以是数字、因子、字符串或其他格式。</p>
-
-<h4 id="section-14">单列索引的创建</h4>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>
-## methdod first
-key(DT)                    # key
-	# NULL 
-setkey(DT,x)               # set a 1-column key. No quotes, for convenience.
-key(DT)
-[1] "x"
-DT
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: a 3 2 k
-	# 3: a 6 3 k
-	# 4: b 1 4 k
-	# 5: b 3 5 k
-	# 6: b 6 6 k
-	# 7: c 1 7 k
-	# 8: c 3 8 k
-	# 9: c 6 9 k
-
-## method second
-setkeyv(DT,"y")            # same (v in setkeyv stands for vector)
-key(DT)
-	# [1] "y"
-</code></pre>
-</div>
-<p>一旦对数据进行新的索引，原有的索引将消失。</p>
-
-<h4 id="section-15">多列索引的创建</h4>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>## methdod first                    # key 
-setkey(DT,x,v)               # set a 1-column key. No quotes, for convenience.
-key(DT)
-	# [1] "x" "v"
-DT
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: a 3 2 k
-	# 3: a 6 3 k
-	# 4: b 1 4 k
-	# 5: b 3 5 k
-	# 6: b 6 6 k
-	# 7: c 1 7 k
-	# 8: c 3 8 k
-	# 9: c 6 9 k
-
-
-## method second
-setkeyv(DT,c("x", "y"))           # same (v in setkeyv stands for vector)
-key(DT)
-	# [1] "x" "v"
-DT
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: a 3 2 k
-	# 3: a 6 3 k
-	# 4: b 1 4 k
-	# 5: b 3 5 k
-	# 6: b 6 6 k
-	# 7: c 1 7 k
-	# 8: c 3 8 k
-	# 9: c 6 9 k
-</code></pre>
-</div>
-
-<h3 id="section-16">通过索引进行数据的提取</h3>
-<p>按照索引对数据提取，可以加快提取数据的速度。</p>
-
-<h4 id="section-17">单索引</h4>
-<p>正向提取</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>setkey(DT, x)
-DT["a"]                    # binary search (fast)
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: a 3 2 k
-	# 3: a 6 3 k
-DT[.(x=="a")]                 # same; i.e. binary search (fast)
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: a 3 2 k
-	# 3: a 6 3 k
-DT[x=="a"]                 # same; i.e. binary search (fast)
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: a 3 2 k
-	# 3: a 6 3 k
-</code></pre>
-</div>
-
-<ul>
-  <li>反向提取</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[!.("a")]                # not join
-	#    x y v a
-	# 1: b 1 4 k
-	# 2: b 3 5 k
-	# 3: b 6 6 k
-	# 4: c 1 7 k
-	# 5: c 3 8 k
-	# 6: c 6 9 k
-DT[!"a"]                   # same
-	#    x y v a
-	# 1: b 1 4 k
-	# 2: b 3 5 k
-	# 3: b 6 6 k
-	# 4: c 1 7 k
-	# 5: c 3 8 k
-	# 6: c 6 9 k
-DT[!2:4]                   # all rows other than 2:4
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: b 3 5 k
-	# 3: b 6 6 k
-	# 4: c 1 7 k
-	# 5: c 3 8 k
-	# 6: c 6 9 k
-
-</code></pre>
-</div>
-
-<h4 id="section-18">多索引</h4>
-
-<ul>
-  <li>正向提取</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>setkey(DT, x, y)
-# Mehtod First
-DT["a"]                    # join to 1st column of key
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: a 3 2 k
-	# 3: a 6 3 k
-DT[.("a")]                 # same, .() is an alias for list()
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: a 3 2 k
-	# 3: a 6 3 k
-DT[.("a",3)]               # join to 2 columns
-    #    x y v a
-	# 1: a 3 2 k
-DT[.("a",3:6)]             # join 4 rows (2 missing)
-	#    x y  v  a
-	# 1: a 3  2  k
-	# 2: a 4 NA NA
-	# 3: a 5 NA NA
-	# 4: a 6  3  k
-DT[.("a",3:6),nomatch=0]   # remove missing
-	#    x y v a
-	# 1: a 3 2 k
-	# 2: a 6 3 k
-DT[.("a",3:6),roll=TRUE]   # rolling join (locf)
-	#    x y v a
-	# 1: a 3 2 k
-	# 2: a 4 2 k
-	# 3: a 5 2 k
-	# 4: a 6 3 k
-
-## Method Second
-DT[J('a')]
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: a 3 2 k
-	# 3: a 6 3 k
-DT[J("a",3)]               # binary search (fast)
-	#    x y v a
-	# 1: a 3 2 k
-DT[J("a",3:6)]              # same; i.e. binary search (fast)
-	#    x y  v  a
-	# 1: a 3  2  k
-	# 2: a 4 NA NA
-	# 3: a 5 NA NA
-	# 4: a 6  3  k
-DT[J("a",3:6), nomatch = 0]
-	#    x y v a
-	# 1: a 3 2 k
-	# 2: a 6 3 k
-DT[J("a",3:6), roll = T]
-	#    x y v a
-	# 1: a 3 2 k
-	# 2: a 4 2 k
-	# 3: a 5 2 k
-	# 4: a 6 3 k
-
-
-## Method Third
-DT[list("a")]
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: a 3 2 k
-	# 3: a 6 3 k
-DT[list("a",3)]
-    #    x y v a
-	# 1: a 3 2 k
-DT[list("a", 3:6)]
-	#    x y  v  a
-	# 1: a 3  2  k
-	# 2: a 4 NA NA
-	# 3: a 5 NA NA
-	# 4: a 6  3  k
-DT[list("a", 3:6), nomatch = 0]
-	#    x y v a
-	# 1: a 3 2 k
-	# 2: a 6 3 k
-DT[list("a", 3:6), roll = T]
-	#    x y v a
-	# 1: a 3 2 k
-	# 2: a 4 2 k
-	# 3: a 5 2 k
-	# 4: a 6 3 k
-</code></pre>
-</div>
-
-<ul>
-  <li>反向提取</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[x!="b" | y!=3]          # not yet optimized, currently vector scans
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: a 3 2 k
-	# 3: a 6 3 k
-	# 4: b 1 4 k
-	# 5: b 6 6 k
-	# 6: c 1 7 k
-	# 7: c 3 8 k
-	# 8: c 6 9 k
-DT[!.("b",3)]              # same result but much faster
-	#    x y v a
-	# 1: a 1 1 k
-	# 2: a 3 2 k
-	# 3: a 6 3 k
-	# 4: b 1 4 k
-	# 5: b 6 6 k
-	# 6: c 1 7 k
-	# 7: c 3 8 k
-	# 8: c 6 9 k
-
-</code></pre>
-</div>
-
-<h2 id="section-19">分类汇总</h2>
-<p>分类汇总是指按某列的分类指标进行简单操作，这里借助by参数实现。此外，by参数与索引相互没有影响。</p>
-
-<h3 id="section-20">单指标的分类汇总</h3>
-
-<ul>
-  <li>默认汇总名称</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,sum(v),by=x]
-	#    x V1
-	# 1: a  6
-	# 2: b 15
-	# 3: c 24           
-DT[,sum(v),by=y] 
-	#    y V1
-	# 1: 1 12
-	# 2: 3 15
-	# 3: 6 18          
-</code></pre>
-</div>
-<ul>
-  <li>自定义汇总名称</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,list(sum.v.x = sum(v)),by=x]
-	#    x sum.v.x
-	# 1: a       6
-	# 2: b      15
-	# 3: c      24           
-DT[,list(sum.v.y = sum(v)),by=y] 
-	#    y sum.v.y
-	# 1: 1      12
-	# 2: 3      15
-	# 3: 6      18 
-DT[,sum.v.y := sum(v) ,by=y]
-	#    x y v a sum.v.y
-	# 1: a 1 1 k      12
-	# 2: a 3 2 k      15
-	# 3: a 6 3 k      18
-	# 4: b 1 4 k      12
-	# 5: b 3 5 k      15
-	# 6: b 6 6 k      18
-	# 7: c 1 7 k      12
-	# 8: c 3 8 k      15
-	# 9: c 6 9 k      18 	
-</code></pre>
-</div>
-
-<ul>
-  <li>汇总结果与原始数据进行匹配</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,sum.v.y := sum(v) ,by=y]
-	#    x y v a sum.v.y
-	# 1: a 1 1 k      12
-	# 2: a 3 2 k      15
-	# 3: a 6 3 k      18
-	# 4: b 1 4 k      12
-	# 5: b 3 5 k      15
-	# 6: b 6 6 k      18
-	# 7: c 1 7 k      12
-	# 8: c 3 8 k      15
-	# 9: c 6 9 k      18
-</code></pre>
-</div>
-
-<h3 id="section-21">多指标的多个分类汇总</h3>
-
-<ul>
-  <li>默认汇总名称</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,list(mean(v),sum(v)),by=list(x,y)]   # keyed by
-	#    x y V1 V2
-	# 1: a 1  1  1
-	# 2: a 3  2  2
-	# 3: a 6  3  3
-	# 4: b 1  4  4
-	# 5: b 3  5  5
-	# 6: b 6  6  6
-	# 7: c 1  7  7
-	# 8: c 3  8  8
-	# 9: c 6  9  9
-</code></pre>
-</div>
-
-<ul>
-  <li>自定义汇总名称</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,list(mean.v = mean(v),sum.v = sum(v)),by=list(x,y)]   # keyed by
-	#   x y mean.v sum.v
-	#1: a 1      1     1
-	#2: a 3      2     2
-	#3: a 6      3     3
-	#4: b 1      4     4
-	#5: b 3      5     5
-	#6: b 6      6     6
-	#7: c 1      7     7
-	#8: c 3      8     8
-	#9: c 6      9     9
-</code></pre>
-</div>
-
-<ul>
-  <li>汇总结果与原始数据进行匹配</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>DT[,c("mean.v", "sum.v.y") := list(mean(v),sum(v)) ,by=list(x,y)]
-	#    x y v a sum.v.y mean.v
-	# 1: a 1 1 k       1      1
-	# 2: a 3 2 k       2      2
-	# 3: a 6 3 k       3      3
-	# 4: b 1 4 k       4      4
-	# 5: b 3 5 k       5      5
-	# 6: b 6 6 k       6      6
-	# 7: c 1 7 k       7      7
-	# 8: c 3 8 k       8      8
-	# 9: c 6 9 k       9      9
-
-</code></pre>
-</div>
-
-<h2 id="datatabledataframe">data.table与data.frame的转化</h2>
-<p>data.table格式加快了处理速度，而data.frame则更为基础。两者的转化可以通过data.table(),setDT()和setDT()来实现，其中data.table()和setDT()函数可以将数据从data.frame转化为data.table，setDF()函数可以将数据从data.table转化为data.frame。注意使用data.table(),setDT()和setDT()时，参数本身的数据类型也会发生变化。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>class(DT)
-	# [1] "data.table" "data.frame"  
-class(setDF(DT))
-	# [1] "data.frame"
-class(DT)
-	# [1] "data.frame"
-</code></pre>
-</div>
-<p>此外，data.table包还可以与基础包中的duplicated()、unique()、subset() 函数结合使用。 不仅如此，data.table包还有一些基础包的替代函数。rbind()升级版的rbindlist()，可以合并列数不同和列位置不同的数据。比dplyr包中arrange()函数更快的setorder()排序函数。</p>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>长宽数据之间的转化(二)</title>
-      <link>http://xukuang.github.io/blog/2016/04/data-fomrat/</link>
-      <pubDate>2016-04-10T18:32:19+08:00</pubDate>
-      <author>Xu Kuang</author>
-      <guid>http://xukuang.github.io/blog/2016/04/data-fomrat</guid>
-      <content:encoded><![CDATA[<p>前面一篇<a href="http://xukuang.github.io/2016/01/18/melt-and-dcast/">文章</a>讲了用reshape2包中的函数实现长宽数据的转化，而tidyr是reshape2的升级版，主要用于数据框。这篇文章将介绍一下如何使用tidyr包中的函数实现长宽数据的转化。</p>
-
-<h2 id="section">1. 宽数据转化为长数据</h2>
-
-<h3 id="gather">gather函数</h3>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>gather(data, key, value, ..., na.rm = FALSE, convert = FALSE)
-</code></pre>
-</div>
-
-<p><strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型</p>
-
-<p><strong>key</strong>  指定转化后数据框的指标列的列名，用于存放原数据中不同的数据指标</p>
-
-<p><strong>value</strong>  指定转化后数据框的数据列的列名，用于存放原数据中不同的数据指标对应的值</p>
-
-<p><strong>…</strong> 指定哪些列聚到一列中。按那些列数据作为标准转化，这个参数接不能有那些列</p>
-
-<p><strong>na.rm</strong> 确定是否去除数据中的NA，默认情况下为FALSE，不去除NA
-<!--more--></p>
-
-<h3 id="section-1">实例</h3>
-
-<ul>
-  <li>将所有列排成长数据(默认情况下)</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code># 加载数据
-library(reshape2)
-head(airquality)
-	# 	Month Day variable value
-	# 1     5   1    Ozone    41
-	# 2     5   2    Ozone    36
-	# 3     5   3    Ozone    12
-	# 4     5   4    Ozone    18
-	# 5     5   5    Ozone    NA
-	# 6     5   6    Ozone    28
-dim(airquality)
-	# [1] 612   4
-library(tidyr)
-dat1 = gather(airquality, time, value)
-head(dat1)
-    #    time value
-    # 1 Ozone    41
-    # 2 Ozone    36
-    # 3 Ozone    12
-    # 4 Ozone    18
-    # 5 Ozone    NA
-    # 6 Ozone    28
-tail(dat1)
-    #         time value
-    # 913  Day    25
-    # 914  Day    26
-    # 915  Day    27
-    # 916  Day    28
-    # 917  Day    29
-    # 918  Day    30
-dim(dat1)	
-	# [1] 918   2
-</code></pre>
-</div>
-
-<ul>
-  <li>按Month将其他指标排成长数据</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code># 方法一
-dat2 = gather(airquality, time, value, Ozone:Temp, Day)
-# 方法二
-dat2 = gather(airquality, time, value, -Month)
-head(dat2)
-	#    Month Day  time value
-	# 1     5   1 Ozone    41
-	# 2     5   2 Ozone    36
-	# 3     5   3 Ozone    12
-	# 4     5   4 Ozone    18
-	# 5     5   5 Ozone    NA
-	# 6     5   6 Ozone    28
-tail(dat2)
-	#     Month Day time value
-	# 607     9  25 Temp    63
-	# 608     9  26 Temp    70
-	# 609     9  27 Temp    77
-	# 610     9  28 Temp    75
-	# 611     9  29 Temp    76
-	# 612     9  30 Temp    68
-</code></pre>
-</div>
-
-<ul>
-  <li>按Month和Day列将其它列指标排成长数据</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>dat3 = gather(airquality, type, value.type, Ozone:Temp)
-dat3 = gather(airquality, type, value.type, -Month, -Day)
-head(dat3) 
-	# 	 Month Day  type value.type
-	# 1     5   1 Ozone         41
-	# 2     5   2 Ozone         36
-	# 3     5   3 Ozone         12
-	# 4     5   4 Ozone         18
-	# 5     5   5 Ozone         NA
-	# 6     5   6 Ozone         28
-dim(dat3)
-	# [1] 612   4
-</code></pre>
-</div>
-
-<ul>
-  <li>去除排列后数据中的NA</li>
-</ul>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>#　 airquality$Ozone 数的前四列有44 个NA
-table(is.na(airquality$Ozone)) # 37
-	# FALSE  TRUE 
-	#   116    37 
-table(is.na(airquality$Solar.R)) # 4
-	# FALSE  TRUE 
-	#   146     7 
-table(is.na(airquality$Temp)) # 0
-	# FALSE 
-	#   153 
-table(is.na(airquality$Wind)) # 0
-	# FALSE 
-	#   153 
-dat4 = gather(airquality, type, value.type, Ozone:Temp, na.rm = TRUE)
-head(dat4)
-	#   Month Day  type value.type
-	# 1     5   1 Ozone         41
-	# 2     5   2 Ozone         36
-	# 3     5   3 Ozone         12
-	# 4     5   4 Ozone         18
-	# 6     5   6 Ozone         28
-	# 7     5   7 Ozone         23
-dim(dat4)# 比dat3少44行
-	# [1] 568   4	
-</code></pre>
-</div>
-
-<h2 id="section-2">2. 长数据转化为宽数据</h2>
-
-<h3 id="spread">spread函数</h3>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>spread(data, key, value, fill = NA, convert = FALSE, drop = TRUE)
-</code></pre>
-</div>
-
-<p><strong>data</strong> 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型</p>
-
-<p><strong>key</strong>  指定需要将变量值拓展为字段的变量</p>
-
-<p><strong>value</strong>  指定要分散的值</p>
-
-<p><strong>fill</strong> 确认不存在的组合值的显示结果。默认的显示为NA。数据类型为数值型向量</p>
-
-<p><strong>drop</strong> 确认不存在分分类组合是否显示，默认情况下显示。当然，如果drop = T，那么fill参数的设置将失去意义</p>
-
-<h3 id="section-3">实例</h3>
-
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="n">air1</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">spread</span><span class="p">(</span><span class="n">dat4</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">value.type</span><span class="p">)</span><span class="w">
-</span><span class="nf">dim</span><span class="p">(</span><span class="n">air1</span><span class="p">)</span><span class="w">
-	</span><span class="c1"># [1] 153   6
-</span><span class="n">head</span><span class="p">(</span><span class="n">air1</span><span class="p">)</span><span class="w"> </span><span class="c1"># 数据与airquality相同
-</span><span class="w">	</span><span class="c1"># 	Month Day Ozone Solar.R Wind Temp
-</span><span class="w">	</span><span class="c1"># 1     5   1    41     190  7.4   67
-</span><span class="w">	</span><span class="c1"># 2     5   2    36     118  8.0   72
-</span><span class="w">	</span><span class="c1"># 3     5   3    12     149 12.6   74
-</span><span class="w">	</span><span class="c1"># 4     5   4    18     313 11.5   62
-</span><span class="w">	</span><span class="c1"># 5     5   5    NA      NA 14.3   56
-</span><span class="w">	</span><span class="c1"># 6     5   6    28      NA 14.9   66
-</span></code></pre>
-</div>
-
-<p>不存在的分类是否显示，以及怎么显示</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>air5 = spread(dat4, type, value.type, drop = F) # 组合上存在的结果都显示
-tail(air5) # 这里的最后一行只是组合上存在，原数据中并不在
-	# 		 Month Day Ozone Solar.R Wind Temp
-	# 150      9  26     1       1    1    1
-	# 151      9  27     1       1    1    1
-	# 152      9  28     1       1    1    1
-	# 153      9  29     1       1    1    1
-	# 154      9  30     1       1    1    1
-	# 155      9  31     0       0    0    0
-tail(spread(dat4, type, value.type, drop = F, fill= -1)) # 更改不存在结果的显示值，最后一行显示为-1
-	# 		Month Day Ozone Solar.R Wind Temp
-	# 150     9  26     1       1    1    1
-	# 151     9  27     1       1    1    1
-	# 152     9  28     1       1    1    1
-	# 153     9  29     1       1    1    1
-	# 154     9  30     1       1    1    1
-	# 155     9  31    -1      -1   -1   -1
-</code></pre>
-</div>
-
-<h2 id="tidyr">tidyr包中的其它函数</h2>
-
-<h3 id="seperate">seperate函数</h3>
-
-<p>unite()函数可将多列合并为一列。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>unite(data, col, ..., sep = "_", remove = TRUE)
-</code></pre>
-</div>
-
-<p><strong>data</strong> 要处理的数据框</p>
-
-<p><strong>col</strong> 被组合的新列名称</p>
-
-<p><strong>…</strong> 指定哪些列需要被组合</p>
-
-<p><strong>sep</strong> 组合列之间的连接符，默认为下划线</p>
-
-<p><strong>remove</strong> 是否删除被组合的列，默认删除</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>set.seed(10)
-date &lt;- as.Date('2016-04-10') + 0:14
-hour &lt;- sample(1:24, 15)
-min &lt;- sample(1:60, 15)
-second &lt;- sample(1:60, 15)
-event &lt;- sample(letters, 15)
-data &lt;- data.frame(date, hour, min, second, event)
-data
-	# 			date hour min second event
-	# 1  2016-04-10   13  26     33     e
-	# 2  2016-04-11    8   4      6     a
-	# 3  2016-04-12   10  16     10     l
-	# 4  2016-04-13   15  23     52     c
-	# 5  2016-04-14    2  47     24     r
-	# 6  2016-04-15    5  48     42     h
-	# 7  2016-04-16   19  34     45     s
-	# 8  2016-04-17   18  42     51     z
-	# 9  2016-04-18   22  19     36     i
-	# 10 2016-04-19    7  21     26     d
-	# 11 2016-04-20   16  36     14     j
-	# 12 2016-04-21   23  53     12     g
-	# 13 2016-04-22   20  12      1     o
-	# 14 2016-04-23   21  37     35     f
-	# 15 2016-04-24    4  17     49     n
-
-dataNew &lt;- data %&gt;%
-  unite(datehour, date, hour, sep = ' ') %&gt;%
-  unite(datetime, datehour, min, second, sep = ':')
-	#              datetime event
-	#1  2016-04-10 13:26:33     e
-	#2     2016-04-11 8:4:6     a
-	#3  2016-04-12 10:16:10     l
-	#4  2016-04-13 15:23:52     c
-	#5   2016-04-14 2:47:24     r
-	#6   2016-04-15 5:48:42     h
-	#7  2016-04-16 19:34:45     s
-	#8  2016-04-17 18:42:51     z
-	#9  2016-04-18 22:19:36     i
-	#10  2016-04-19 7:21:26     d
-	#11 2016-04-20 16:36:14     j
-	#12 2016-04-21 23:53:12     g
-	#13  2016-04-22 20:12:1     o
-	#14 2016-04-23 21:37:35     f
-	#15  2016-04-24 4:17:49     n
-
-</code></pre>
-</div>
-<p>tidyr包中的函数也可使用管道操作符%&gt;%。</p>
-
-<h3 id="seperate-1">seperate函数</h3>
-<p>separate()函数可将一列拆分为多列，一般可用于日志数据或日期时间型数据的拆分。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>separate(data, col, into, sep = "[^[:alnum:]]+", remove = TRUE,
-  convert = FALSE, extra = "warn", fill = "warn", ...)
-</code></pre>
-</div>
-
-<p><strong>data</strong> 要处理的数据框</p>
-
-<p><strong>col</strong> 需要被拆分的列</p>
-
-<p><strong>into</strong> 新建的列名，为字符串向量</p>
-
-<p><strong>sep</strong> 被拆分列的分隔符</p>
-
-<p><strong>remove</strong> 是否删除被分割的列，默认删除</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>dataold &lt;- dataNew %&gt;% 
-  separate(datetime, c('date', 'time'), sep = ' ') %&gt;% 
-  separate(time, c('hour', 'min', 'second'), sep = ':')
-dataold
-	# 		date hour min second event
-	# 1  2016-04-10   13  26     33     e
-	# 2  2016-04-11    8   4      6     a
-	# 3  2016-04-12   10  16     10     l
-	# 4  2016-04-13   15  23     52     c
-	# 5  2016-04-14    2  47     24     r
-	# 6  2016-04-15    5  48     42     h
-	# 7  2016-04-16   19  34     45     s
-	# 8  2016-04-17   18  42     51     z
-	# 9  2016-04-18   22  19     36     i
-	# 10 2016-04-19    7  21     26     d
-	# 11 2016-04-20   16  36     14     j
-	# 12 2016-04-21   23  53     12     g
-	# 13 2016-04-22   20  12      1     o
-	# 14 2016-04-23   21  37     35     f
-	# 15 2016-04-24    4  17     49     n
-</code></pre>
-</div>
-
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>简单线性回归中各指标在R中的计算</title>
-      <link>http://xukuang.github.io/blog/2016/04/simple-linear-regression/</link>
-      <pubDate>2016-04-07T22:50:50+08:00</pubDate>
-      <author>Xu Kuang</author>
-      <guid>http://xukuang.github.io/blog/2016/04/simple-linear-regression</guid>
-      <content:encoded><![CDATA[<h2 id="section">前话</h2>
-<p>简单线性回归用于计算两个连续型变量(如X，Y)之间的线性关系，具体地说就是计算下面公式中的<script type="math/tex">\alpha和\beta</script>。</p>
-
-<script type="math/tex; mode=display">Y = \alpha + \beta X + \varepsilon</script>
-
-<p>其中<script type="math/tex">\varepsilon</script>称为残差,服从从<script type="math/tex">N(0,\sigma^2)</script>的正态分布，自由度为(n-1) - (2-1) = n-2
-为了找到这条直线的位置，我们使用最小二乘法(least squares approach)。最小二乘法确保所有点处的残差的平方和最小时计算<script type="math/tex">\alpha和\beta</script>，即下面示意图中<script type="math/tex">\sum_{i=1}^{4}\varepsilon_i^2 = \varepsilon_1^2 + \varepsilon_2^2 + \varepsilon_3^2 + \varepsilon_4^2</script>有最小值。</p>
-
-<p><img src="http://xukuang.github.io/blog/images/y_x_scatter_plot.png" alt="简单线性相关示意图" /><!--more--></p>
-
-<h2 id="section-1">各指标的计算</h2>
-
-<p>运用最小二乘法找出的这条最优直线一定经过点<script type="math/tex">(\overline{x}, \overline{y})</script>。其中</p>
-
-<h3 id="betaalpha">斜率<script type="math/tex">\beta</script>和截距<script type="math/tex">\alpha</script>的估计值</h3>
-
-<p><img src="http://xukuang.github.io/blog/images/beta.png" alt="" /></p>
-
-<h3 id="pearsonr">Pearson相关系数r</h3>
-
-<script type="math/tex; mode=display">r_{xy} = \frac{\overline{xy} - \bar{x}\bar{y} }{ \sqrt{ \left(\overline{x^2} - \bar{x}^2\right)\left(\overline{y^2} - \bar{y}^2\right)}}</script>
-
-<h3 id="section-2">方差分析</h3>
-<p>在方差分析(ANOVA)中，总的平方和包含回归平方和残差平方和两部分。</p>
-
-<ul>
-  <li>总的平方和</li>
-</ul>
-
-<p><script type="math/tex">SS_{tot}=\sum_i (y_i-\bar{y})^2</script>
-其自由度为 n - 1，这里n为观测点的个数。</p>
-
-<ul>
-  <li>回归的平方和</li>
-</ul>
-
-<p><script type="math/tex">SS_\text{reg}=\sum_i (\hat y_i -\bar{y})^2</script>
-其自由度为 2 - 1 = 1。</p>
-
-<ul>
-  <li>残差的平方和</li>
-</ul>
-
-<p><script type="math/tex">SS_\text{res}=\sum_i (y_i - \hat y_i)^2=\sum_i e_i^2</script>
-其自由度为 (n -1) - (2 - 1) = n -2。</p>
-
-<h3 id="section-3">决定系数(拟合优势度)</h3>
-
-<p><img src="http://xukuang.github.io/blog/images/error.png" alt="" />
-决定系数是用来表示模型的解释度，理论上与相关系数没有关系，只是在简单线性回归中，决定系数$R^2 $值等于Pearson相关系数r的平方。</p>
-
-<h2 id="r">R中的实现</h2>
-
-<h3 id="section-4">线性模拟</h3>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>x = c(0.10, 0.11, 0.12, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.20, 0.21, 0.23)
-y = c(42.0, 43.5, 45.0, 45.5, 45.0, 47.5, 49.0, 53.0, 50.0, 55.0, 55.0, 60.0)
-fit = lm(y ~ x)
-summary(fit)
-	## Call:
-	## lm(formula = y ~ x)
-	## 
-	## Residuals:
-	##	 #Min      1Q  Median      3Q     Max 
-	## -2.0431 -0.7056  0.1694  0.6633  2.2653 
-	## 
-	## Coefficients:
-	## 				#Estimate Std. Error t value Pr(&gt;|t|)    
-	## (Intercept)   28.493      1.580   18.04 5.88e-09 ***
-	## x            130.835      9.683   13.51 9.50e-08 ***
-	## ---
-	## Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-	## 
-	## Residual standard error: 1.319 on 10 degrees of freedom
-	## Multiple R-squared:  0.9481,    Adjusted R-squared:  0.9429 
-	## F-statistic: 182.6 on 1 and 10 DF,  p-value: 9.505e-08
-anova(fit)
-	##Analysis of Variance Table
-	##
-	##Response: y
-	##			#Df Sum Sq Mean Sq F value    Pr(&gt;F)    
-	##x          1 317.82  317.82  182.55 9.505e-08 ***
-	##Residuals 10  17.41    1.74                      
-	##---
-	##Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-</code></pre>
-</div>
-
-<h3 id="section-5">线性模拟各参数的提取</h3>
-
-<div class="highlighter-rouge"><pre class="highlight"><code># 可以通过names函数查看summary(fit)中个具体参数的提取方法
-names(summary(fit))
-# 提取R square
-summary(fit)$r.squared ## 依照该形式可以提取names(summary(fit))中任意指标
-# 其它常用指标的提取
-# 提取模型lm或glm提取回归系数
-coefficients(fit)
-# 还可简化为
-coef(fit)
-# 提取模型lm或glm的残差
-# 也可简化为
-residuals(fit)
-resid(fit)
-# 提取lm或glm对象中残差的平方和
-deviance(fit)
-# 提取lm或glm对象中的方差分析表
-# 其中p值越小，差异越显著, beita1越不可能为0
-anova(fit)
-# 预测数据
-new &lt;- data.frame(x=c(0.16, 2.3))
-predict(fit, new)
-
-## 也可以做出预测区间
-predict(fit, new, interval = 'prediction', levels = 0.95)
-</code></pre>
-</div>
-
-<h3 id="section-6">线性模拟各参数中各量的算法</h3>
-
-<h4 id="section-7">五个和的计算</h4>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>## 预备统计量(Sums of square and sums of producte)
-Sx = sum(x)
-Sy = sum(y)
-Sxx = sum((x - mean(x))^2)
-Syy = sum((y - mean(y))^2)
-Sxy = sum((x - mean(x)) * (y - mean(y)))
-
-## 这里仅仅作为补充,具体原因不是很清楚
-Syy = deviance(lm(y~1))
-n = length(x)
-</code></pre>
-</div>
-
-<h4 id="section-8">回归系数</h4>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>## 回归系数$\alpha$和$beta$（这样计算，residuals有最小值)
-beta = Sxy/Sxx
-beta
-alpha = mean(y) - beta*mean(x)
-alpha
-# 提取lm或glm对象中的回归系数
-coef(fit)
-</code></pre>
-</div>
-
-<h4 id="section-9">残差及五分位数</h4>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>residuals = y - (beta + alpha * x)
-residuals
-quantile(residuals)
-# 提取模型lm或glm的残差
-# 也可简化为
-residuals(fit)
-</code></pre>
-</div>
-
-<h4 id="pearsonr-1">Pearson相关系数r</h4>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>r = sqrt(Sxy/(Sxx * Syy))
-r
-</code></pre>
-</div>
-
-<h4 id="r-1">R平方</h4>
-<p>决定系数，其值为 回归的平方和/总的平方和。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>rsquare = (Syy - sum(residuals^2))/Syy
-rsquare
-</code></pre>
-</div>
-
-<h4 id="adjust-r">adjust R平方</h4>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>## 考虑到了自变量的个数, 包括截距在内, 本例子中k = 2
-n = length(x)
-k = 2
-adjustrsquare = 1- (1-rsquare)*(n-1)/(n-k)
-adjustrsquare
-</code></pre>
-</div>
-
-<h3 id="f">回归方程的F检验</h3>
-<p>在简单线性回归的模型，我们可以在<script type="math/tex">β = 0</script>时，对F统计量进行检验。
-在F检验中统计量F</p>
-
-<script type="math/tex; mode=display">F = \frac{(回归的平方和/回归的自由度)}{(误差的平方和/误差的自由度}</script>
-
-<p>对应p值越小，说明此时越小的概率时间发生了，越不能接受原假设。</p>
-
-<h3 id="t">斜率β的t检验</h3>
-<p>在简单线性回归的模型，我们可以检验回归系数(斜率)β是否相等于特定的$β_0$(通常使$β_0 = 0$以检验$x_i$对$y_i$是否有关联)。
-统计量t</p>
-
-<p><img src="http://xukuang.github.io/blog/images/student_t.png" alt="" />
-在零假设为$β = β_0$的情况下服从自由度为n − 2之t分布，其中</p>
-
-<p><img src="http://xukuang.github.io/blog/images/student_se.png" alt="" />
-同F检验一样，p值越小，说明此时越小的概率事件发生了，越不能接受原假设。</p>
-
-<h2 id="section-10">话外篇</h2>
-<p>在R中，lm(y ~ x)和lm(y ~ x + 1)的效果是相同的。此外，lm(y ~ 1)中截距的估计值为y的平均值，残差为每个y与均值的离差。</p>
+<p>##</p>
 ]]></content:encoded>
     </item>
     

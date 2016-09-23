@@ -23,7 +23,7 @@
       </script>
       <!--mathjax end-->
    </head>
-   <script type="text/javascript">
+  <!-- <script type="text/javascript">
     function setTimeSpan(){
     	var date = new Date();
     	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
@@ -49,7 +49,8 @@
     	return format;
 		}
   </script>
-   <body onLoad="setInterval(setTimeSpan,1000);">
+   <body onLoad="setInterval(setTimeSpan,1000);">-->
+   <body>
      <div id="container">
        <div id="main" role="main">
          <header>
@@ -79,23 +80,23 @@
 <p>　　<strong>summarise</strong>和<strong>mutate</strong>是<strong>R</strong>中<strong>plyr</strong>包的两个函数。<strong>plyr</strong>是<strong>R</strong>中用来数据汇总的超强R包，肖凯对<strong>plyr</strong>的使用在网易云课堂(该链接已经失效)有较为详细的讲述。本文只对其中的<strong>summarise</strong>和<strong>mutate</strong>函数进行简单介绍，并讲述一下它和<strong>ddply</strong>函数的搭配使用。(注意，这两个函数在plyr包升级后的dplyr包中依然适用)</p>
 
 <h2 id="summarise--mutate-">summarise 和 mutate 函数</h2>
-<p>　　<strong>summarise</strong>和<strong>mutate</strong>函数都可以对一个数据框的某一列<strong>(而不是整个数据框)</strong>进行修改和汇总，两者的主要区别在于返回结果的方式不同，其中<strong>summarise</strong>函数返回一个只包含修改或汇总后数据的数据框，而<strong>mutate</strong>函数则返回一个由原始数据和修改或汇总后数据两部分构成的数据框。具体内容加下面代码：<!--more--></p>
+<p>　　<strong>summarise</strong>和<strong>mutate</strong>函数都可以对一个数据框的某一列<strong>(而不是整个数据框)</strong>进行修改和汇总，两者的主要区别在于返回结果的方式不同，其中<strong>summarise</strong>函数返回一个只包含修改或汇总后数据的数据框，而<strong>mutate</strong>函数则返回一个由原始数据和修改或汇总后数据两部分构成的数据框(mutate函数与基础包的transform函数相似，两者的区别在于；muate函数可以对刚刚建立起来的列进行计算，而transform函数只能针对数据的原始列进行计算，详细内容可以参考<a href="http://xukuang.github.io/blog/2015/05/common-methods-of-dealing-with-data-frame/">这篇文章</a>)。具体内容加下面代码：<!--more--></p>
 
-<div class="language-R highlighter-rouge"><pre class="highlight"><code><span class="n">require</span><span class="p">(</span><span class="n">plyr</span><span class="p">)</span><span class="w">
-</span><span class="n">set.seed</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="c1"># 保证每次产生的数据框的唯一性
-</span><span class="n">dfx</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="w">
-  </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="s1">'A'</span><span class="p">,</span><span class="w"> </span><span class="m">8</span><span class="p">),</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="s1">'B'</span><span class="p">,</span><span class="w"> </span><span class="m">15</span><span class="p">),</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="s1">'C'</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">)),</span><span class="w">
-  </span><span class="n">sex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sample</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s2">"M"</span><span class="p">,</span><span class="w"> </span><span class="s2">"F"</span><span class="p">),</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">29</span><span class="p">,</span><span class="w"> </span><span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w">
-  </span><span class="n">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sample</span><span class="p">(</span><span class="m">20</span><span class="o">:</span><span class="m">30</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">29</span><span class="p">,</span><span class="w"> </span><span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w">
-  </span><span class="n">worktime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">29</span><span class="p">,</span><span class="w"> </span><span class="n">replace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
-</span><span class="p">)</span><span class="w">
-</span><span class="c1">### 数据修改
-</span><span class="n">summarise</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="c1"># 返回一个只含一列age的数据框
-</span><span class="n">mutate</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="c1"># 返回一个和dfx列数一样的4列数据框，但age列的数值已经修改
+<div class="highlighter-rouge"><pre class="highlight"><code>require(plyr)
+set.seed(1) # 保证每次产生的数据框的唯一性
+dfx &lt;- data.frame(
+  group = c(rep('A', 8), rep('B', 15), rep('C', 6)),
+  sex = sample(c("M", "F"), size = 29, replace = TRUE),
+  age = sample(20:30, size = 29, replace = TRUE),
+  worktime = sample(1:5, size = 29, replace = TRUE)
+)
+### 数据修改
+summarise(dfx, age = age + 1) # 返回一个只含一列age的数据框
+mutate(dfx, age = age + 1) # 返回一个和dfx列数一样的4列数据框，但age列的数值已经修改
 ### 数据汇总
-</span><span class="n">summarise</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span><span class="w"> </span><span class="n">mean.age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">age</span><span class="p">),</span><span class="w"> </span><span class="n">sd.age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sd</span><span class="p">(</span><span class="n">age</span><span class="p">))</span><span class="w"> </span><span class="c1"># 返回一个只含汇总结果的2列数据框
-</span><span class="n">mutate</span><span class="p">(</span><span class="n">dfx</span><span class="p">,</span><span class="w"> </span><span class="n">mean.age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">age</span><span class="p">),</span><span class="w"> </span><span class="n">sd.age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sd</span><span class="p">(</span><span class="n">age</span><span class="p">))</span><span class="w"> </span><span class="c1"># 返回一个由dfx和汇总结果组成的4列数据框
-</span></code></pre>
+summarise(dfx, mean.age = mean(age), sd.age = sd(age)) # 返回一个只含汇总结果的2列数据框
+mutate(dfx, mean.age = mean(age), sd.age = sd(age)) # 返回一个由dfx和汇总结果组成的4列数据框
+</code></pre>
 </div>
 
 <h2 id="ddply">ddply函数</h2>
@@ -126,9 +127,10 @@ ddply(dfx, .(sex), c("nrow","ncol"))
 <p>　　注意：这种方式是对整个数据框进行的，不能使用summarise或者mutate参数。</p>
 
 <h3 id="section-1">数据框中某一列的汇总</h3>
-<p>对某一列的汇总主要包括最大值，最小值，平均值，方差，标准差， 中位数。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>## 数据框某一列的汇总，函数中包含参数，需借助summarise或mutate参数
+<h4 id="section-2">关于指标函数（最大值，最小值，平均值，方差，标准差， 中位数）的计算</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## 关于指标函数的计算，函数中包含参数，需借助summarise或mutate参数
 ## summarise参数和mutate参数的区别与函数summarise和mutate的区别一样，
 ## summarise参数返回的结果只包含汇总结果，mutate参数返回结果包含原始数据和汇总数据
 	## summarise
@@ -146,7 +148,7 @@ ddply(dfx, .(sex), mutate, median(worktime))
 </code></pre>
 </div>
 
-<p>注意：三种汇总方式中，只有这种方式可以选择性对汇总结果进行命名，即下面的使用方式也是对的。</p>
+<p>注意：三种汇总方式中，只有这种方式且计算指标函数时可以选择性对汇总结果进行命名，即下面的使用方式也是对的。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>## summarise
 ddply(dfx, .(sex), summarise, worktime.max = max(worktime))
@@ -162,9 +164,14 @@ ddply(dfx, .(sex), mutate, worktime.sd = sd(worktime))
 ddply(dfx, .(sex), mutate, worktime.sd = median(worktime))
 </code></pre>
 </div>
-<p>　　注意：这种方式下，summarise或者mutate参数至少要选择其中的一个，否则不能得到想要的结果。</p>
+<p>　　注意：这种方式下，summarise或者mutate参数至少要选择其中的一个，否则不能得到想要的结果。此外，这种方式下，只是对数据的原始列进行计算时，mutate可以用基础包里的transform替换，一旦对新生成的数据进行计算transform替换mutate将会发生错误，所以推荐用mutate。</p>
 
-<h3 id="section-2">通用汇总方式（编写函数）</h3>
+<h4 id="subset">通过subset实现对数据的筛选</h4>
+<div class="highlighter-rouge"><pre class="highlight"><code>ddply(dfx, .(sex), subset,  age &gt; mean(age))
+</code></pre>
+</div>
+
+<h3 id="section-3">通用汇总方式（编写函数）</h3>
 
 <p>　　这种汇总方式是最通用的汇总方式，其中的函数参数为数据框。事实上，1,2的汇总方式都可以通过3的汇总方式调用函数实现。</p>
 
@@ -194,7 +201,7 @@ ddply(dfx, .(sex), function(x){median(x$worktime)})
   <li>colwise函数</li>
 </ul>
 
-<p>　　colwise函数是plyr包的内置函数，可以对数据框中所有的数据列进行相同的操作，省去每一例的大量重复操作。(类似的功能在dplyr包中可以通过summarise_each或mutate_each来实现)</p>
+<p>　　colwise函数是plyr包的内置函数，可以对数据框中所有的数据列进行相同的操作，省去每一例的大量重复操作。(类似的功能在dplyr包中可以通过summarise_all或mutate_all来实现)</p>
 
 <ul>
   <li>直接对数据列进行相同操作</li>
@@ -222,7 +229,7 @@ colwise(mean)(dfx)
 </div>
 <p>　　事实上，通用汇总方式的用途比我们的例子强大的多，这里有点就事论事的味道，反而限制了该方式的灵活运用。</p>
 
-<h2 id="section-3">多变量的汇总</h2>
+<h2 id="section-4">多变量的汇总</h2>
 <p>plyr包当然不仅仅可以对单一列变量进行分析，还可以以进行多变量的分析。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>ddply(dfx, .(sex, age), function(x){mean(x$worktime)})
@@ -236,7 +243,7 @@ ddply(dfx, .(sex, age), function(x){mean(x$worktime)}, .drop = F)
 
 </section>
 <section class="meta">
-
+<span>
 
 
 <span>
@@ -245,6 +252,7 @@ ddply(dfx, .(sex, age), function(x){mean(x$worktime)}, .drop = F)
 	<a  href="http://xukuang.github.io/blog/2014/07/talk-abut-dropbox/" class="pageNav"  >Next</a>
 </span>
 
+         
 
 <span class="author">
   <a href="http://xukuang.github.io/blog">Xu Kuang</a>
@@ -276,28 +284,46 @@ ddply(dfx, .(sex, age), function(x){mean(x$worktime)}, .drop = F)
 </span>
 
 </section>
-<div id="disqus_thread"></div>
-<script>
-/**
-* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<!-- 多说 Share start -->
+	<div class="ds-share"
+                    style="text-align: right"
+                    data-thread-key="/2014/06/dots-in-plyr-of-r-packages"
+                    data-title="summarise 和 mulate 函数使用"
+                    data-url="http://xukuang.github.io/blog/2014/06/dots-in-plyr-of-r-packages/"
+                    data-images="http://xukuang.github.io/blog"
+                    data-content="|  | ." >
+                    <div class="ds-share-inline">
+                      <ul  class="ds-share-icons-16">
+                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                      </ul>
+                      <div class="ds-share-icons-more">
+                      </div>
+                    </div>
+                <hr>
+                </div>
+ <!-- 多说 Share end-->
+				
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2014/06/dots-in-plyr-of-r-packages" data-title="summarise 和 mulate 函数使用 | " data-url="http://xukuang.github.io/blog/2014/06/dots-in-plyr-of-r-packages/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"yiyuzhijian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
 
-s.src = '//httpxukuanggithubio.disqus.com/embed.js';
-
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
 <script type="text/javascript">
 $(function(){
@@ -325,12 +351,11 @@ $(function(){
          </article>
        </div>
 	   
-	   
-	  
 	   <footer>
-           <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> & <a href="http://pages.github.com">GitHub</a>| Copyright  2016 by <a href="http://xukuang.github.io/blog/about/">Xu Kuang</a> | <span class="label label-info" id="timeSpan" ></span></small></p>
-       </footer> 
+	   <p><small><center>© 2014-2016 Maintained by <a href="http://xukuang.github.io" title="Xu Kuang">Xu Kuang</a> ｜ Powered by <a href="https://github.com/mojombo/jekyll" target="_blank">Jekyll</a> on <a href="https://github.com/xukuang" target="_blank">GitHub</a> ｜ Themed by <a href="http://yihui.name" title="Yihui" target="_blank">Yihui</a> and <a href="http://spatial-r.com/" title="Bing Zhang" target="_blank">Bing Zhang</a> </center></small></p>
 	   
+       </footer>
+
 	   </div>
        
 	   <!--<script type="text/javascript">

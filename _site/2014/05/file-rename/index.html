@@ -23,7 +23,7 @@
       </script>
       <!--mathjax end-->
    </head>
-   <script type="text/javascript">
+  <!-- <script type="text/javascript">
     function setTimeSpan(){
     	var date = new Date();
     	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
@@ -49,7 +49,8 @@
     	return format;
 		}
   </script>
-   <body onLoad="setInterval(setTimeSpan,1000);">
+   <body onLoad="setInterval(setTimeSpan,1000);">-->
+   <body>
      <div id="container">
        <div id="main" role="main">
          <header>
@@ -108,20 +109,29 @@
 <p>通过上述方法，可以学习两个小技巧。</p>
 
 <ul>
-  <li>某个文件夹下，所有文件名的生成，包含方法中的步骤1-3。</li>
+  <li>某个文件夹下，所有文件名的生成，包含方法中的步骤1-3。
+ 生成某个文件夹下，所有文件的文件名。你也可以复制当前文件夹的地址粘贴到chrome浏览器的地址栏中，也能快速生成当前文件夹下的所有文件名，然后可以把网页页面内容复制到excel中。</li>
   <li>批量更改文件名，包含方法中的步骤4-8。</li>
 </ul>
 
 <h2 id="section-3">后话</h2>
-<p>对于在网络上搜索，一定要有耐心，不要怕麻烦。说这些话，既包括这篇文章本身，又包括这个博客。早就想弄一个自己的博客，记录下自己的想法。可是，限于技术，一直无法实现，今天终于借助网络实现了一箭双雕，这里要非常感谢<a href="http://zipperary.com">zippera</a>，博客中hexo系列教程让人受益匪浅。</p>
+<p>对于在网络上搜索，一定要有耐心，不要怕麻烦。说这些话，既包括这篇文章本身，又包括这个博客。早就想弄一个自己的博客，记录下自己的想法。可是，限于技术，一直无法实现，今天终于借助网络实现了一箭双雕，这里要非常感谢<a href="http://weibo.com/sovey">zippera</a>，博客中hexo系列教程让人受益匪浅。</p>
 
 <p>- - - - - -</p>
 
-<p>2015年4月10日，第一次修改，关于引号在hexo不能友好显示的修改</p>
+<ul>
+  <li>2015年4月10日，第一次修改，关于引号在hexo不能友好显示的修改</li>
+  <li>2016年9月14日，第二次修改
+    <ul>
+      <li>添加使用chrome浏览器生成本地文件夹下文件的方法</li>
+      <li>将zippera无效的博客地址换成了他的微博地址</li>
+    </ul>
+  </li>
+</ul>
 
 </section>
 <section class="meta">
-
+<span>
 
 
 <span>
@@ -130,6 +140,7 @@
 	<a  href="http://xukuang.github.io/blog/2014/05/blog-build/" class="pageNav"  >Next</a>
 </span>
 
+         
 
 <span class="author">
   <a href="http://xukuang.github.io/blog">Xu Kuang</a>
@@ -159,28 +170,46 @@
 </span>
 
 </section>
-<div id="disqus_thread"></div>
-<script>
-/**
-* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<!-- 多说 Share start -->
+	<div class="ds-share"
+                    style="text-align: right"
+                    data-thread-key="/2014/05/file-rename"
+                    data-title="文件名的批量修改"
+                    data-url="http://xukuang.github.io/blog/2014/05/file-rename/"
+                    data-images="http://xukuang.github.io/blog"
+                    data-content="|  | ." >
+                    <div class="ds-share-inline">
+                      <ul  class="ds-share-icons-16">
+                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                      </ul>
+                      <div class="ds-share-icons-more">
+                      </div>
+                    </div>
+                <hr>
+                </div>
+ <!-- 多说 Share end-->
+				
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2014/05/file-rename" data-title="文件名的批量修改 | " data-url="http://xukuang.github.io/blog/2014/05/file-rename/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"yiyuzhijian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
 
-s.src = '//httpxukuanggithubio.disqus.com/embed.js';
-
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
 <script type="text/javascript">
 $(function(){
@@ -206,12 +235,11 @@ $(function(){
          </article>
        </div>
 	   
-	   
-	  
 	   <footer>
-           <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> & <a href="http://pages.github.com">GitHub</a>| Copyright  2016 by <a href="http://xukuang.github.io/blog/about/">Xu Kuang</a> | <span class="label label-info" id="timeSpan" ></span></small></p>
-       </footer> 
+	   <p><small><center>© 2014-2016 Maintained by <a href="http://xukuang.github.io" title="Xu Kuang">Xu Kuang</a> ｜ Powered by <a href="https://github.com/mojombo/jekyll" target="_blank">Jekyll</a> on <a href="https://github.com/xukuang" target="_blank">GitHub</a> ｜ Themed by <a href="http://yihui.name" title="Yihui" target="_blank">Yihui</a> and <a href="http://spatial-r.com/" title="Bing Zhang" target="_blank">Bing Zhang</a> </center></small></p>
 	   
+       </footer>
+
 	   </div>
        
 	   <!--<script type="text/javascript">

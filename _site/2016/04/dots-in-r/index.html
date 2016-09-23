@@ -23,7 +23,7 @@
       </script>
       <!--mathjax end-->
    </head>
-   <script type="text/javascript">
+  <!-- <script type="text/javascript">
     function setTimeSpan(){
     	var date = new Date();
     	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
@@ -49,7 +49,8 @@
     	return format;
 		}
   </script>
-   <body onLoad="setInterval(setTimeSpan,1000);">
+   <body onLoad="setInterval(setTimeSpan,1000);">-->
+   <body>
      <div id="container">
        <div id="main" role="main">
          <header>
@@ -82,7 +83,7 @@
 <p>在查看多个变量之间的两两相关性的时候，可以使用picante包中的cor.table()函数。</p>
 
 <h2 id="section-1">场景二</h2>
-<p>在R中加载了多个R包时，希望查看当前环境中都加载了哪些R包的find.package()函数，临时卸载某个R包可以使用函数detach(package:包名)。如要卸载dplyr包，则为detach(package:dplyr)。</p>
+<p>在使用R时，library()函数，或者(.packages(all.available=TRUE))函数可以查看本地下载了哪些R包，当希望查看当前的R环境中都加载了哪些R包可以使用search()函数，或者(.packages())函数，或者find.package()函数，临时卸载某个R包可以使用函数detach(package:包名)。安装R包使用install.packages(‘包名’)，删除R包使用remove.packages(“包名”)函数，用于更新R包使用update.packages()函数，查看已下载的所有R包的详细信息使用installed.packages()。查看某一个特定R包详细信息使用help(package=’包名’)</p>
 
 <h2 id="section-2">场景三</h2>
 <p>expand.grid()用来建立一些factor相乘出来的矩阵或data.frame。<!--more--></p>
@@ -175,9 +176,76 @@ cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf), right = F
 <h2 id="section-6">场景七</h2>
 <p>split()函数能将数据框按某一列分为包含若干个数据框的列表。然后，unsplit()可以将这个列表合并。</p>
 
+<h2 id="section-7">场景八</h2>
+
+<p>psych包中的describe() 函数，可以简单查看数据的基础信息。Hmisc包中的describe() 函数也有类似功能。</p>
+
+<h2 id="section-8">场景九</h2>
+<p>Sys.timezone()查看R的时区设置</p>
+
+<p>devtools::session_info()查看R软件的相关信息</p>
+
+<p>sessionInfo()查看R软件的相关信息，更加侧重编码信息</p>
+
+<h2 id="section-9">场景十</h2>
+<p>关于R的几个特殊的目录。</p>
+
+<p><strong>R.home()</strong> 查看R软件的相关目录</p>
+
+<p><strong>.Library</strong> 查看R核心包的目录</p>
+
+<p><strong>.libPaths()</strong> 查看R所有包的存放目录</p>
+
+<p><strong>ystem.file()</strong> 查看指定包所在的目录</p>
+
+<ul>
+  <li>R软件的相关目录</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># R.home() 查看R软件的相关目录
+
+## 打印R软件安装目录
+R.home()
+
+## 打印R软件bin的目录
+R.home(component="bin")
+
+## 打印R软件文件的目录
+R.home(component="doc")
+</code></pre>
+</div>
+
+<ul>
+  <li>R软件的包目录</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># 打印核心包的目录
+.Library
+# 打印所有包的存放目录
+.libPaths()
+</code></pre>
+</div>
+
+<ul>
+  <li>查看指定包所在的目录</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># base包的存放目录
+system.file()
+# dplyr包的存放目录
+system.file(package = "dplyr")
+</code></pre>
+</div>
+
+<h2 id="section-10">场景十一</h2>
+
+<p>tidyr包中的fill函数可以用来填充向量中的NA。</p>
+
+<p>##</p>
+
 </section>
 <section class="meta">
-
+<span>
 
 
 <span>
@@ -186,6 +254,7 @@ cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf), right = F
 	<a  href="http://xukuang.github.io/blog/2016/04/numpy/" class="pageNav"  >Next</a>
 </span>
 
+         
 
 <span class="author">
   <a href="http://xukuang.github.io/blog">Xu Kuang</a>
@@ -215,28 +284,46 @@ cut(c(1,4, 5, 7, 9, 2, 4, 6, 8, 3, 1,7), breaks = c(1, 2.224, 5, Inf), right = F
 </span>
 
 </section>
-<div id="disqus_thread"></div>
-<script>
-/**
-* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<!-- 多说 Share start -->
+	<div class="ds-share"
+                    style="text-align: right"
+                    data-thread-key="/2016/04/dots-in-r"
+                    data-title="实用的R函数"
+                    data-url="http://xukuang.github.io/blog/2016/04/dots-in-r/"
+                    data-images="http://xukuang.github.io/blog"
+                    data-content="|  | ." >
+                    <div class="ds-share-inline">
+                      <ul  class="ds-share-icons-16">
+                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                      </ul>
+                      <div class="ds-share-icons-more">
+                      </div>
+                    </div>
+                <hr>
+                </div>
+ <!-- 多说 Share end-->
+				
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2016/04/dots-in-r" data-title="实用的R函数 | " data-url="http://xukuang.github.io/blog/2016/04/dots-in-r/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"yiyuzhijian"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
 
-s.src = '//httpxukuanggithubio.disqus.com/embed.js';
-
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
 <script type="text/javascript">
 $(function(){
@@ -264,12 +351,11 @@ $(function(){
          </article>
        </div>
 	   
-	   
-	  
 	   <footer>
-           <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> & <a href="http://pages.github.com">GitHub</a>| Copyright  2016 by <a href="http://xukuang.github.io/blog/about/">Xu Kuang</a> | <span class="label label-info" id="timeSpan" ></span></small></p>
-       </footer> 
+	   <p><small><center>© 2014-2016 Maintained by <a href="http://xukuang.github.io" title="Xu Kuang">Xu Kuang</a> ｜ Powered by <a href="https://github.com/mojombo/jekyll" target="_blank">Jekyll</a> on <a href="https://github.com/xukuang" target="_blank">GitHub</a> ｜ Themed by <a href="http://yihui.name" title="Yihui" target="_blank">Yihui</a> and <a href="http://spatial-r.com/" title="Bing Zhang" target="_blank">Bing Zhang</a> </center></small></p>
 	   
+       </footer>
+
 	   </div>
        
 	   <!--<script type="text/javascript">
