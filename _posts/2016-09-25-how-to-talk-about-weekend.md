@@ -9,7 +9,7 @@ published: true
 ## 周末祝福
 * Have a nice weekend.
 * Enjoy your weekend.
-* See you next weekend.
+* See you next week.
 
 ## 周末计划？
 * What are you doing this weekend?
