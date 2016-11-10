@@ -5,11 +5,13 @@ date: 2016-01-18 10:32:19
 categories: 技术篇
 tags: [R, reshape2]
 ---
-这里将数据框分为两种：宽数据和长数据，宽数据便于数据成果的展示，长数据则便于数据在R中进行分析。reshape2包中的melt函数可以实现宽数据向长数据的转换，而dcast可以实现宽数据向长数据的转化。 
+这里将数据框分为两种：宽数据和长数据。宽数据是指把指标作为列名，把每个这个指标的记录作为行，这种数据便于数据成果的展示；长数据是把所有指标也作为一列来展示数据，这种数据便于在R中进行分析。reshape2包中的melt函数可以实现宽数据向长数据的转换，而dcast可以实现宽数据向长数据的转化。 
 
 ## 宽数据转化为长数据
 
 ### melt函数
+
+melt()函数可以将宽数据转化为长数据。其具体用法如下：
 
 ```
 melt(data, id.vars, measure.vars,
@@ -35,8 +37,8 @@ melt(data, id.vars, measure.vars,
 
 ### 实例
 
-* 按Month和Day列将其他指标排成长数据
-
+* 将全部数据转化为宽数据
+此时是把宽数据的转化为两列，第一列对应的是原数据的列名，第二列对应的是原数据列的值。
 ```
 # 加载数据
 library(reshape2)
@@ -50,6 +52,54 @@ head(airquality)
 	# 6    28      NA 14.9   66     5   6
 dim(airquality)	
 	# [1] 153   6
+	
+dat = melt(airquality)
+	# No id variables; using all as measure variables
+head(dat)
+	#  	variable value
+	# 1    Ozone    41
+	# 2    Ozone    36
+	# 3    Ozone    12
+	# 4    Ozone    18
+	# 5    Ozone    NA
+	# 6    Ozone    28
+tail(dat)
+	# 	  variable value
+	# 913      Day    25
+	# 914      Day    26
+	# 915      Day    27
+	# 916      Day    28
+	# 917      Day    29
+	# 918      Day    30
+dim(dat)
+	# 918   2
+```
+* 按某一列将其他指标排成长数据
+这里以Month列为例，即保持Month列的每一个唯一值不变作为第一列，然后将各指标及其对应值放在第二和第三列。
+```
+dat0 = melt(airquality, id.vars = c('Month', 'Day'))
+head(dat0)
+dat0 = melt(airquality, id.vars = c('Month'))
+head(dat0)
+	#   Month variable value
+	# 1     5    Ozone    41
+	# 2     5    Ozone    36
+	# 3     5    Ozone    12
+	# 4     5    Ozone    18
+	# 5     5    Ozone    NA
+	# 6     5    Ozone    28
+	#     Month variable value
+	# 760     9      Day    25
+	# 761     9      Day    26
+	# 762     9      Day    27
+	# 763     9      Day    28
+	# 764     9      Day    29
+	# 765     9      Day    30
+```
+* 按某两列为将其他指标排成长数据
+这里以Month和Day列为例，其结果为保持Month列和Day列的每一个唯一值的组合作为第一和第二列，然后将各指标及其对应值放在第三和第四列。
+
+```
 dat1 = melt(airquality, id.vars = c('Month', 'Day'))
 head(dat1)
 	# 	Month Day variable value
@@ -62,7 +112,7 @@ head(dat1)
 dim(dat1)
 	# [1] 612   4
 ```
-需要注意的是melt函数当中如果id.vars参数不指定值，则会把所有数据转化为两列输出。
+
 
 * 按Month和Day列将Ozone和Solar.R列指标排成长数据
 
@@ -99,7 +149,7 @@ dim(dat3)
 ```
 
 * 去除排列后数据中的NA
-
+由于结果是展示的Month和Day列所有唯一值的组合，所以这里就会出现原始数据中不存在的组合(例如，2月29日，2月30日和2月31日等)，其值为NA。这里所谓的去除NA，即去除原始数据中不存在的组合。
 ```
 #　 airquality$Ozone 数的前四列有44 个NA
 table(is.na(airquality$Ozone)) # 37
@@ -144,8 +194,10 @@ head(dat5)
 
 ## 长数据转化为宽数据
 
-### dcast函数
+长数据转化为宽数据是宽数据转化长数据的你过程。
 
+### dcast函数
+dcast()函数可以将长数据转化为宽数据。其具体用法如下：
 ```
 dcast(data, formula, fun.aggregate = NULL, ..., margins = NULL,
   subset = NULL, fill = NULL, drop = TRUE,

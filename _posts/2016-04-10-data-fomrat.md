@@ -16,7 +16,7 @@ gather(data, key, value, ..., na.rm = FALSE, convert = FALSE)
 ```
 
 **data** 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型
-	
+​	
 **key**  指定转化后数据框的指标列的列名，用于存放原数据中不同的数据指标
 
 **value**  指定转化后数据框的数据列的列名，用于存放原数据中不同的数据指标对应的值		
@@ -157,7 +157,7 @@ spread(data, key, value, fill = NA, convert = FALSE, drop = TRUE)
 
 ### 实例
 
-```R
+```
 air1 =  spread(dat4, type, value.type)
 dim(air1)
 	# [1] 153   6
