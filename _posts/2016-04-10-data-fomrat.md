@@ -5,7 +5,7 @@ date: 2016-04-10 10:32:19
 categories: 技术篇
 tags: [R, tidyr]
 ---
-前面一篇[文章](http://xukuang.github.io/2016/01/18/melt-and-dcast/)讲了用reshape2包中的函数实现长宽数据的转化，而tidyr是reshape2的升级版，主要用于数据框。这篇文章将介绍一下如何使用tidyr包中的函数实现长宽数据的转化。
+前面一篇[文章](http://xukuang.github.io/2016/01/18/melt-and-dcast/)讲了用reshape2包中的函数实现长宽数据的转化，而tidyr是reshape2的升级版，主要用于数据框。这篇文章将介绍一下如何使用tidyr包中的函数实现长宽数据的转化，不过，在读这篇文章之前，建议你还是读一下前面的那一篇文章了解一下基本的知识。
 
 ## 1. 宽数据转化为长数据
 
@@ -16,7 +16,7 @@ gather(data, key, value, ..., na.rm = FALSE, convert = FALSE)
 ```
 
 **data** 要转化的数据，数据格式为数据框类型或者可以转化为数据框类型
-​	
+
 **key**  指定转化后数据框的指标列的列名，用于存放原数据中不同的数据指标
 
 **value**  指定转化后数据框的数据列的列名，用于存放原数据中不同的数据指标对应的值		
@@ -34,19 +34,20 @@ gather(data, key, value, ..., na.rm = FALSE, convert = FALSE)
 # 加载数据
 library(reshape2)
 head(airquality)
-	# 	Month Day variable value
-	# 1     5   1    Ozone    41
-	# 2     5   2    Ozone    36
-	# 3     5   3    Ozone    12
-	# 4     5   4    Ozone    18
-	# 5     5   5    Ozone    NA
-	# 6     5   6    Ozone    28
-dim(airquality)
-	# [1] 612   4
+	#   Ozone Solar.R Wind Temp Month Day
+	# 1    41     190  7.4   67     5   1
+	# 2    36     118  8.0   72     5   2
+	# 3    12     149 12.6   74     5   3
+	# 4    18     313 11.5   62     5   4
+	# 5    NA      NA 14.3   56     5   5
+	# 6    28      NA 14.9   66     5   6
+dim(airquality)	
+	# [1] 153   6
+	
 library(tidyr)
-dat1 = gather(airquality, time, value)
+dat1 = gather(airquality, index, value)
 head(dat1)
-    #    time value
+    #    index value
     # 1 Ozone    41
     # 2 Ozone    36
     # 3 Ozone    12
@@ -54,7 +55,7 @@ head(dat1)
     # 5 Ozone    NA
     # 6 Ozone    28
 tail(dat1)
-    #         time value
+    #    index value
     # 913  Day    25
     # 914  Day    26
     # 915  Day    27
@@ -69,11 +70,11 @@ dim(dat1)
 
 ```
 # 方法一
-dat2 = gather(airquality, time, value, Ozone:Temp, Day)
+dat2 = gather(airquality, index, value, Ozone:Temp, Day)
 # 方法二
-dat2 = gather(airquality, time, value, -Month)
+dat2 = gather(airquality, index, value, -Month)
 head(dat2)
-	#    Month Day  time value
+	#    Month Day  index value
 	# 1     5   1 Ozone    41
 	# 2     5   2 Ozone    36
 	# 3     5   3 Ozone    12
@@ -81,7 +82,7 @@ head(dat2)
 	# 5     5   5 Ozone    NA
 	# 6     5   6 Ozone    28
 tail(dat2)
-	#     Month Day time value
+	#     Month Day index value
 	# 607     9  25 Temp    63
 	# 608     9  26 Temp    70
 	# 609     9  27 Temp    77
@@ -140,7 +141,7 @@ dim(dat4)# 比dat3少44行
 ## 2. 长数据转化为宽数据
 
 ### spread函数
-
+尽管spread()和reshape中的dcast()函数都能实现长数据向宽数据的转化，但两者的的使用方法存在很大的差异。
 ```
 spread(data, key, value, fill = NA, convert = FALSE, drop = TRUE)
 ```
@@ -241,8 +242,8 @@ data
 
 dataNew <- data %>%
   unite(datehour, date, hour, sep = ' ') %>%
-  unite(datetime, datehour, min, second, sep = ':')
-	#              datetime event
+  unite(dateindex, datehour, min, second, sep = ':')
+	#              dateindex event
 	#1  2016-04-10 13:26:33     e
 	#2     2016-04-11 8:4:6     a
 	#3  2016-04-12 10:16:10     l
@@ -282,8 +283,8 @@ separate(data, col, into, sep = "[^[:alnum:]]+", remove = TRUE,
 
 ```
 dataold <- dataNew %>% 
-  separate(datetime, c('date', 'time'), sep = ' ') %>% 
-  separate(time, c('hour', 'min', 'second'), sep = ':')
+  separate(dateindex, c('date', 'index'), sep = ' ') %>% 
+  separate(index, c('hour', 'min', 'second'), sep = ':')
 dataold
 	# 		date hour min second event
 	# 1  2016-04-10   13  26     33     e

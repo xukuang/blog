@@ -225,7 +225,7 @@ dcast(data, formula, fun.aggregate = NULL, ..., margins = NULL,
 
 * 每个分类结果有一个数据，此时不需要使用汇总函数
 
-```R
+```
 air1 =  dcast(dat4, Month + Day ~ type)
 dim(air1)
 	# [1] 153   6

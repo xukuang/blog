@@ -16,43 +16,41 @@ library(dplyr)
 library(Lahman) # Lahman包的棒球比赛数据
 library(hflights) # hflights包里的飞机航班数据
 head(hflights)
-		 Year Month DayofMonth DayOfWeek DepTime ArrTime UniqueCarrier FlightNum TailNum ActualElapsedTime
-	5424 2011     1          1         6    1400    1500            AA       428  N576AA                60
-	5425 2011     1          2         7    1401    1501            AA       428  N557AA                60
-	5426 2011     1          3         1    1352    1502            AA       428  N541AA                70
-	5427 2011     1          4         2    1403    1513            AA       428  N403AA                70
-	5428 2011     1          5         3    1405    1507            AA       428  N492AA                62
-	5429 2011     1          6         4    1359    1503            AA       428  N262AA                64
-		 AirTime ArrDelay DepDelay Origin Dest Distance TaxiIn TaxiOut Cancelled CancellationCode Diverted
-	5424      40      -10        0    IAH  DFW      224      7      13         0                         0
-	5425      45       -9        1    IAH  DFW      224      6       9         0                         0
-	5426      48       -8       -8    IAH  DFW      224      5      17         0                         0
-	5427      39        3        3    IAH  DFW      224      9      22         0                         0
-	5428      44       -3        5    IAH  DFW      224      9       9         0                         0
-	5429      45       -7       -1    IAH  DFW      224      6      13         0                         0
+	# 	   Year Month DayofMonth DayOfWeek DepTime ArrTime UniqueCarrier FlightNum TailNum ActualElapsedTime
+	# 5424 2011     1          1         6    1400    1500            AA       428  N576AA                60
+	# 5425 2011     1          2         7    1401    1501            AA       428  N557AA                60
+	# 5426 2011     1          3         1    1352    1502            AA       428  N541AA                70
+	# 5427 2011     1          4         2    1403    1513            AA       428  N403AA                70
+	# 5428 2011     1          5         3    1405    1507            AA       428  N492AA                62
+	# 5429 2011     1          6         4    1359    1503            AA       428  N262AA                64
+	# 	   AirTime ArrDelay DepDelay Origin Dest Distance TaxiIn TaxiOut Cancelled CancellationCode Diverted
+	# 5424      40      -10        0    IAH  DFW      224      7      13         0                         0
+	# 5425      45       -9        1    IAH  DFW      224      6       9         0                         0
+	# 5426      48       -8       -8    IAH  DFW      224      5      17         0                         0
+	# 5427      39        3        3    IAH  DFW      224      9      22         0                         0
+	# 5428      44       -3        5    IAH  DFW      224      9       9         0                         0
+	# 5429      45       -7       -1    IAH  DFW      224      6      13         0                         0
 class(hflights)
-	[1] "data.frame"
+	# [1] "data.frame"
 ```
 <!--more-->
 
 ## 数据转换
 
+将过长过大的数据集转换为显示更友好的 tbl_df 类型，这一步通常不需要单独操作，而在使用dplyr包中函数时一般函数会自动调整。
 ```
-## 将过长过大的数据集转换为显示更友好的 tbl_df 类型
 hflights_df <- tbl_df(hflights)
 ```
 
 ## 数据筛选
 
 ```
-# 筛选filter,类似于base::subset()函数
-filter(hflights_df, Month == 1, DayofMonth == 1)
+# 一下两个语句作用相同，为了与其它格式保持一致，建议使用第二种
 filter(hflights, Month == 1, DayofMonth == 1)
-# 用R自带函数实现:
-hflights[hflights$Month == 1 & hflights$DayofMonth == 1, ]
-# 除了代码简洁外, 还支持对同一对象的任意个条件组合, 如:
-filter(hflights_df, Month == 1 | Month == 2)
-# 注意: 表示 AND 时要使用 & 而避免 &&
+filter(hflights, Month == 1 & DayofMonth == 1)
+
+filter(hflights_df, Month == 1 | DayofMonth == 1)
+
 ```
 
 ## 无重复内容的筛选
@@ -61,35 +59,35 @@ filter(hflights_df, Month == 1 | Month == 2)
 # distinct函数
 distinct(hflights_df, Month, .keep_all = TRUE)
 ```
-这里参数.keep_all = TRUE指保留除Month以外的其它列的内容。
+这里参数.keep_all = TRUE指保留除Month以外的其它列的内容。默认的情况是不保存其他列的。
 
 ## 数据排列
+arrange(),按给定的列名依次对行进行排序，使用arrange()函数。
 
 ```
-# 排列: arrange(),按给定的列名依次对行进行排序.
 arrange(hflights_df, DayofMonth, Month, Year)
 # 对列名加 desc() 进行倒序
 arrange(hflights_df, desc(ArrDelay))
-# 这个函数和 plyr::arrange() 是一样的, 类似于 order()
-# 用R自带函数实现:
-hflights[order(hflights$DayofMonth, hflights$Month, hflights$Year), ]
-hflights[order(desc(hflights$ArrDelay)), ]
+
 ```
 
 ## 数据选择
 
 ### select函数
+select()函数实现对指定列的选择。
+
 ```
-#  选择: select()
-# 用列名作参数来选择子数据集:
 select(hflights_df, Year, Month, DayOfWeek)
-# 还可以用 : 来连接列名, 没错, 就是把列名当作数字一样使用:
+# 可以用 : 来连接列名, 没错, 就是把列名当作数字一样使用
 select(hflights_df, Year:DayOfWeek)
-# 用 - 来排除列名:
+# 用 - 来排除列名
 select(hflights_df, -(Year:DayOfWeek))
 ```
 
 ### select_if()函数
+
+select_if()函数对不同条件列的选择。
+
 ```
 hflights %>% select_if(is.factor)
 hflights %>% select_if(is.numeric)
