@@ -74,21 +74,21 @@ dat2 = gather(airquality, index, value, Ozone:Temp, Day)
 # 方法二
 dat2 = gather(airquality, index, value, -Month)
 head(dat2)
-	#    Month Day  index value
-	# 1     5   1 Ozone    41
-	# 2     5   2 Ozone    36
-	# 3     5   3 Ozone    12
-	# 4     5   4 Ozone    18
-	# 5     5   5 Ozone    NA
-	# 6     5   6 Ozone    28
+	#　　Month index value
+	#　1     5 Ozone    41
+	#　2     5 Ozone    36
+	#　3     5 Ozone    12
+	#　4     5 Ozone    18
+	#　5     5 Ozone    NA
+	#　6     5 Ozone    28
 tail(dat2)
-	#     Month Day index value
-	# 607     9  25 Temp    63
-	# 608     9  26 Temp    70
-	# 609     9  27 Temp    77
-	# 610     9  28 Temp    75
-	# 611     9  29 Temp    76
-	# 612     9  30 Temp    68
+	#     Month index value
+	# 760     9   Day    25
+	# 761     9   Day    26
+	# 762     9   Day    27
+	# 763     9   Day    28
+	# 764     9   Day    29
+	# 765     9   Day    30
 ```
 
 * 按Month和Day列将其它列指标排成长数据
