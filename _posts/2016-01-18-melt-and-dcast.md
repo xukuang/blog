@@ -5,7 +5,62 @@ date: 2016-01-18 10:32:19
 categories: 技术篇
 tags: [R, reshape2]
 ---
-这里将数据框分为两种：宽数据和长数据。宽数据是指把指标作为列名，把每个指标的记录作为行，这种数据便于直观理解；长数据是把所有指标也作为一列来展示数据，这种数据便于在R中进行分析。reshape2包中的melt函数可以实现宽数据向长数据的转换，而dcast可以实现宽数据向长数据的转化。 
+这里将数据框分为两种：宽数据和长数据。宽数据是指把指标作为列名，把每个指标的观测值作为行，这种数据便于直观理解；长数据是把所有指标也作为一列来展示数据，这种数据便于在R中进行分析。reshape2包中的melt函数可以实现宽数据向长数据的转换，而dcast可以实现宽数据向长数据的转化。  
+
+## 长宽数据
+
+### 宽数据
+
+宽数据每一列为一个指标，每一行为指标对应的观测值。
+
+```
+	#   Ozone Solar.R Wind Temp Month Day
+	# 1    41     190  7.4   67     5   1
+	# 2    36     118  8.0   72     5   2
+	# 3    12     149 12.6   74     5   3
+	# 4    18     313 11.5   62     5   4
+	# 5    NA      NA 14.3   56     5   5
+	# 6    28      NA 14.9   66     5   6
+```
+
+### 长数据
+长数据的其中有一列包含了多个指标，还有一列则是与之对应的观测值。
+* 只有两列的长数据
+```
+	#  	variable value
+	# 1    Ozone    41
+	# 2    Ozone    36
+	# 3    Ozone    12
+	# 4    Ozone    18
+	# 5    Ozone    NA
+	# 6    Ozone    28
+	....................
+	# 913      Day    25
+	# 914      Day    26
+	# 915      Day    27
+	# 916      Day    28
+	# 917      Day    29
+	# 918      Day    30
+```
+* 拥有多列的长数据
+
+```
+	# 	Month Day variable value
+	# 1     5   1    Ozone    41
+	# 2     5   2    Ozone    36
+	# 3     5   3    Ozone    12
+	# 4     5   4    Ozone    18
+	# 5     5   5    Ozone    NA
+	# 6     5   6    Ozone    28
+	..............................
+	# 607     9  25     Temp    63
+	# 608     9  26     Temp    70
+	# 609     9  27     Temp    77
+	# 610     9  28     Temp    75
+	# 611     9  29     Temp    76
+	# 612     9  30     Temp    68
+```
+
 
 ## 宽数据转化为长数据
 
@@ -38,9 +93,9 @@ melt(data, id.vars, measure.vars,
 ### 实例
 
 * 将全部数据转化为宽数据
-  
+
   此时是把宽数据的转化为两列，第一列对应的是原数据的列名，第二列对应的是原数据列的值。
-  
+
 ```
 # 加载数据
 library(reshape2)
@@ -92,6 +147,7 @@ head(dat0)
 	# 4     5    Ozone    18
 	# 5     5    Ozone    NA
 	# 6     5    Ozone    28
+tail(dat0)	
 	#     Month variable value
 	# 760     9      Day    25
 	# 761     9      Day    26
@@ -114,6 +170,14 @@ head(dat1)
 	# 4     5   4    Ozone    18
 	# 5     5   5    Ozone    NA
 	# 6     5   6    Ozone    28
+tail(dat1)
+	#     Month Day variable value
+	# 607     9  25     Temp    63
+	# 608     9  26     Temp    70
+	# 609     9  27     Temp    77
+	# 610     9  28     Temp    75
+	# 611     9  29     Temp    76
+	# 612     9  30     Temp    68
 dim(dat1)
 	# [1] 612   4
 ```
@@ -132,7 +196,15 @@ head(dat2)
 	# 4     5   4    Ozone    18
 	# 5     5   5    Ozone    NA
 	# 6     5   6    Ozone    28
-dim(dat2) # 函数是dat1的1/2
+tail(dat2)
+	#     Month Day variable value
+	# 301     9  25  Solar.R    20
+	# 302     9  26  Solar.R   193
+	# 303     9  27  Solar.R   145
+	# 304     9  28  Solar.R   191
+	# 305     9  29  Solar.R   131
+	# 306     9  30  Solar.R   223	
+dim(dat2) # 行数是dat1的1/2
 	# [1] 306   4 
 ```
 
