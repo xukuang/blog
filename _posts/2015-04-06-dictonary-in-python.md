@@ -58,7 +58,7 @@ D['food']['egg']
 
 ###  字典长度
 
-```python
+```
 D = {'Spam': 2, 'eggs': 3, 'food': {'ham': 1, 'egg': 2}}
 # len字典长度
 len(D)
@@ -86,7 +86,7 @@ list(D.items())
 
 ### 判断键是否在字典中存在
 
-```python
+```
 # dict.get，键存在与字典则返回键的值，否则什么也不返回
 D = {'Spam': 2, 'ham':1, 'eggs': 3}
 D.get('Spam')
@@ -110,7 +110,7 @@ D.items() | D # {('a', 1), ('b', 2), ('c', 3), 'a', 'b', 'c'}
 
 ## 4. 字典的修改
 
-```python
+```
 D = {'Spam': 2, 'ham':1, 'eggs': 3}
 # 直接改变某个键的值
 D['ham'] = ['grill', 'bake', 'fry']
