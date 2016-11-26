@@ -16,7 +16,7 @@ tags: [python]
 
 ### 空列表的创建
 
-```python
+```
 # 空列表的创建
 L = list()
 L
@@ -27,7 +27,7 @@ L = [] # 两种方法效果相同
 
 ### 一般列表创建
 
-```python
+```
 # 方法一，利用[]
 L = ['Spam', 'eggs', ['ham', 'egg']]
 # 方法二，list()
@@ -44,7 +44,7 @@ L = [x * 4 for x in 'spam']
 
 ### 列表的索引，返回该位置的对象
 
-```python
+```
 L = ['Spam', 'eggs', ['ham', 'egg']]
 L[2] # 返回一个列表
 L[2][1] # 返回一个字符串
@@ -52,7 +52,7 @@ L[2][1] # 返回一个字符串
 
 ### 列表的分片，返回一个列表
 
-```python
+```
 L = ['Spam', 'eggs', ['ham', 'egg']]
 L[0:2]
 ```
@@ -61,7 +61,7 @@ L[0:2]
 
 ###  列表长度
 
-```python
+```
 L = ['Spam', 'eggs', ['ham', 'egg']]
 # len列表长度
 len(L)
@@ -69,7 +69,7 @@ len(L)
 
 ### 成员关系判断
 
-```python
+```
 # in
 L = ['Spam', 'eggs', ['ham', 'egg']]
 'Spam' in L
@@ -79,7 +79,7 @@ L.index('Spam') # 返回参数在列表中的位置
 
 ### 列表某项出现次数统计
 
-```python
+```
 # L.count
 L = ['Spam', 'eggs', 'I', 'eggs']
 L.count('eggs')
@@ -89,7 +89,7 @@ L.count('eggs')
 
 列表排序时，要求列表的每一项的类型应该相同，且该类型可以比较。对列表排序后，列表本身发生了变化。
 
-```python
+```
 # L.sort升序排列
 L = ['Spam', 'eggs', 'I'] 
 L.sort() # 字符串只比较首字符
@@ -101,7 +101,7 @@ L.sort()
 
 ### 列表原地翻转
 
-```python
+```
 # L.reverse
 L = ['Spam', 'eggs', 'I']
 L.reverse()
@@ -109,14 +109,14 @@ L.reverse()
 
 ### 列表重复
 
-```python
+```
 L = ['Spam', 'eggs', ['ham', 'egg']]
 L * 3
 ```
 
 ## 4. 列表的修改
 
-```python
+```
 L = ['Spam', 'eggs', ['ham', 'egg']]
 # 根据索引和分片改变列表
 L[2] = 'apples'
