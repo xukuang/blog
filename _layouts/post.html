@@ -6,7 +6,7 @@ layout: default
 {{ content }}
 </section>
 
-
+<section class="meta">
 <span>
 	<a {% if page.previous %} href="{{ site.url }}{{ page.previous.url }}" class="pageNav"{% endif %} {% unless page.previous %} class="pageNavInvalid" {% endunless %} >Previous</a>
 	&nbsp;&nbsp;&nbsp;
@@ -64,3 +64,4 @@ $(function(){
 })
 </script>
 
+</section>
