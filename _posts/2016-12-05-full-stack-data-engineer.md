@@ -4,7 +4,7 @@ title: "开篇"
 date: 2016-12-05 22:28:35 +0800
 categories: [跟着宏伦学习全栈工程师]
 tags: [R]
-published: false
+published: ture
 ---
 
 [张宏伦](http://zhanghonglun.cn/blog/)，何许人也？上海交通大学的博士生。在我看来，他是一枚”真的大牛“。[《全栈数据工程师养成攻略》](http://zhanghonglun.cn/blog/project/%E5%85%A8%E6%A0%88%E6%95%B0%E6%8D%AE%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%85%BB%E6%88%90%E6%94%BB%E7%95%A5/)足见他的”大牛“本性，这个系列课程不在于它有多难(不过，我相信厚积才能薄发，而一切把知识讲的不知所云才是耍流氓)，而在于他精准的实现了课程期望达到的效果：
