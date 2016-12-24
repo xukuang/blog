@@ -1,0 +1,83 @@
+
+## 行操作
+### INSERT INTO语句
+INSERT INTO语句用于向表中插入新记录。有两种语法形式：
+
+```
+# 第一种形式
+# 无需指定要插入数据的列名，只需提供被插入的值即可
+INSERT INTO table_name
+VALUES (value1,value2,value3,...);
+
+# 第二种形式
+# 需要指定列名及被插入的值：
+INSERT INTO table_name (column1,column2,column3,...)
+VALUES (value1,value2,value3,...);
+```
+INSERT INTO语句可以结合SELECT语句从一个表复制数据，然后把数据插入到一个已存在的表中，而目标表中任何已存在的行都不会受影响。
+* 从一个表中复制所有的列插入到另一个已存在的表中
+```
+INSERT INTO table2
+SELECT * FROM table1;
+* 只复制希望的列插入到另一个已存在的表中
+```
+INSERT INTO table2
+(column_name(s))
+SELECT column_name(s)
+FROM table1;
+```
+### UPDATE 语句
+UPDATE语句用于更新表中已存在的记录。其语法为：
+```
+UPDATE table_name
+SET column1=value1,column2=value2,...
+WHERE some_column=some_value;
+```
+需要注意的是WHERE子句规定哪条记录或者哪些记录需要更新。如果您省略了 WHERE 子句，所有的记录都将被更新！
+
+### DELETE语句
+DELETE语句用于删除表中的记录。其语法为：
+```
+DELETE FROM table_name
+WHERE some_column=some_value;
+```
+同样，需要注意WHERE子句！WHERE子句规定哪条记录或者哪些记录需要删除。如果您省略了 WHERE子句，所有的记录都将被删除！不过，可以通过这个方法，可以在不删除表的情况下，删除表中所有的行。这意味着表结构、属性、索引将保持不变。
+
+## 列操作
+ALTER TABLE语句用于在已有的表中添加、删除或修改列。
+### 添加列
+```
+ALTER TABLE table_name
+ADD column_name datatype
+```
+### 删除列
+```
+ALTER TABLE table_name
+DROP COLUMN column_name
+```
+### 改变表中列的数据类型
+```
+ALTER TABLE table_name
+MODIFY COLUMN column_name datatype
+```
+
+## 约束（Constraints）
+约束用于规定表中的数据规则。如果存在违反约束的数据行为，行为会被约束终止。
+约束可以在创建表时规定（通过 CREATE TABLE 语句），或者在表创建之后规定（通过 ALTER TABLE 语句）。
+```
+SQL CREATE TABLE + CONSTRAINT 语法
+CREATE TABLE table_name
+(
+column_name1 data_type(size) constraint_name,
+column_name2 data_type(size) constraint_name,
+column_name3 data_type(size) constraint_name,
+....
+);
+```
+在 SQL 中，我们有如下约束：
+NOT NULL: 指示某列不能存储 NULL 值。这意味着，如果不向字段添加值，就无法插入新记录或者更新记录。
+UNIQUE: 保证某列的每行必须有唯一的值。
+PRIMARY KEY: NOT NULL 和 UNIQUE 的结合。确保某列（或两个列多个列的结合）有唯一标识，有助于更容易更快速地找到表中的一个特定的记录。
+FOREIGN KEY: 保证一个表中的数据匹配另一个表中的值的参照完整性。
+CHECK: 保证列中的值符合指定的条件。
+DEFAULT: 规定没有给列赋值时的默认值。

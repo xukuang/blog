@@ -33,11 +33,10 @@ FROM table_name;
 # 表的别名
 SELECT column_name(s)
 FROM table_name AS alias_name;
-``
+```
 
 ## SELECT DISTINCT语句
 SELECT DISTINCT语句用于返回唯一不同的值。语法为：
-
 ```
 # 从数据表table_name的列column_name1和column_name2选出不同的值
 SELECT DISTINCT column_name1,column_name2
@@ -73,7 +72,7 @@ LIKE操作还涉及到字符的匹配，包括通配符和正则表达式。
 * %:替代 0 个或多个字符
 * _:替代一个字符
 * [charlist]:字符列中的任何单一字符
-* [^charlist]或[!charlist]:	不在字符列中的
+  * [^charlist]或[!charlist]:不在字符列中的
 
 #### 正则表达式
 MySQL中使用REGEXP或NOT REGEXP运算符(或RLIKE和NOT RLIKE)来操作正则表达式。其语法为：
@@ -114,37 +113,6 @@ SELECT column_name(s)
 FROM table_name
 LIMIT number;
 ```
-
-## INSERT INTO语句
-INSERT INTO语句用于向表中插入新记录。有两种语法形式：
-
-```
-# 第一种形式
-# 无需指定要插入数据的列名，只需提供被插入的值即可
-INSERT INTO table_name
-VALUES (value1,value2,value3,...);
-
-# 第二种形式
-# 需要指定列名及被插入的值：
-INSERT INTO table_name (column1,column2,column3,...)
-VALUES (value1,value2,value3,...);
-```
-## UPDATE 语句
-UPDATE语句用于更新表中已存在的记录。其语法为：
-```
-UPDATE table_name
-SET column1=value1,column2=value2,...
-WHERE some_column=some_value;
-```
-需要注意的是WHERE子句规定哪条记录或者哪些记录需要更新。如果您省略了 WHERE 子句，所有的记录都将被更新！
-
-## DELETE语句
-DELETE语句用于删除表中的记录。其语法为：
-```
-DELETE FROM table_name
-WHERE some_column=some_value;
-```
-同样，需要注意WHERE子句！WHERE子句规定哪条记录或者哪些记录需要删除。如果您省略了 WHERE子句，所有的记录都将被删除！不过，可以通过这个方法，可以在不删除表的情况下，删除表中所有的行。这意味着表结构、属性、索引将保持不变。
 
 \- - - - - -
 

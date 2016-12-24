@@ -1,4 +1,4 @@
-title：SQL中的字符匹配
+title：SQL中的创建和删除
 
 ## 数据库、数据表和索引的创建
 ### 创建数据库
@@ -38,3 +38,29 @@ ON table_name (column_name)
 CREATE UNIQUE INDEX index_name
 ON table_name (column_name)
 ```
+## 索引、表和数据库的撤销
+
+### 删除索引
+
+```
+ALTER TABLE table_name DROP INDEX index_name
+```
+
+### 删除表
+
+```
+DROP TABLE table_name
+```
+
+### 删除数据库
+
+```
+DROP DATABASE database_name
+```
+
+如果我们仅仅需要删除表内的数据，但并不删除表本身，可以使用 TRUNCATE TABLE 语句：
+
+```
+TRUNCATE TABLE table_name
+```
+

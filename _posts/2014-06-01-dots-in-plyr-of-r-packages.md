@@ -1,6 +1,6 @@
 ---
 layout: post
-title: summarise 和 mulate 函数使用
+title: summarise 和 mutate 函数使用
 date: 2014-06-01 16:16:37
 categories: 技术篇
 tags: [plyr, R]
@@ -40,13 +40,13 @@ ddply(.data, .variables, .fun = NULL, ..., .progress = "none",.inform = FALSE, .
 .variables 分类依据，这里是数据框中分类列的列名
 .fun 汇总的方式，这里有三种常用的形式
 .drop 是否去除不存在的汇总行，默认的方式是去除不存在的汇总行
- 
+
 ## 单变量的汇总
- 
+
 常见汇总方式有三种，这里我们用单变量进行举例说明。
 
 ### 整个数据框的汇总（统计数据框的行数和列数，即nrow和ncol）
- 	
+
 ```
 ## 数据框的汇总，只有函数，但其中没有参数
 ddply(dfx, .(sex), nrow) #这里不能对汇总结果进行命名，即 numrow = nrow 是错误的
@@ -58,7 +58,7 @@ ddply(dfx, .(sex), c("nrow","ncol"))
 ### 数据框中某一列的汇总
 
 #### 关于指标函数（最大值，最小值，平均值，方差，标准差， 中位数）的计算
-	
+
 ```
 ## 关于指标函数的计算，函数中包含参数，需借助summarise或mutate参数
 ## summarise参数和mutate参数的区别与函数summarise和mutate的区别一样，
@@ -78,7 +78,7 @@ ddply(dfx, .(sex), mutate, median(worktime))
 ```
 
 注意：三种汇总方式中，只有这种方式且计算指标函数时可以选择性对汇总结果进行命名，即下面的使用方式也是对的。
-	
+​	
 ```
 ## summarise
 ddply(dfx, .(sex), summarise, worktime.max = max(worktime))
@@ -102,11 +102,11 @@ ddply(dfx, .(sex), subset,  age > mean(age))
 
 
 ### 通用汇总方式（编写函数）
-	
+
 　　这种汇总方式是最通用的汇总方式，其中的函数参数为数据框。事实上，1,2的汇总方式都可以通过3的汇总方式调用函数实现。
 
 * 1对应的函数调用方式
-	
+
 ```
 ddply(dfx, .(sex), function(x){nrow(x)}) # 不能对汇总结果进行重新命名，即numrow = nrow(x)是错误的
 ddply(dfx, .(sex), function(x){ncol(x)}) # 不能对汇总结果进行重新命名，即numcol = ncol(x)是错误的
@@ -150,7 +150,7 @@ ddply(dfx, .(group), colwise(mean))
 　　事实上，通用汇总方式的用途比我们的例子强大的多，这里有点就事论事的味道，反而限制了该方式的灵活运用。
 
 ## 多变量的汇总
-plyr包当然不仅仅可以对单一列变量进行分析，还可以以进行多变量的分析。
+plyr包当然不仅仅可以对单一列变量进行分析，还可以进行多变量的分析。
 
 ```
 ddply(dfx, .(sex, age), function(x){mean(x$worktime)})
