@@ -1,4 +1,3 @@
-
 ## 行操作
 ### INSERT INTO语句
 INSERT INTO语句用于向表中插入新记录。有两种语法形式：
