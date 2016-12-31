@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "css控制背景图片"
+title: "css中背景控制"
 date: 2016-06-08 22:11:08
 categories: [技术篇]
 tags: [html]
@@ -18,6 +18,7 @@ published: true
 ## 设置背景图片
 
 1. 引入背景图片(background-image)
+
 background-image:url("bg.jpg");
 
 
