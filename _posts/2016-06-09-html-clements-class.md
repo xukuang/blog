@@ -13,11 +13,21 @@ tags: [html]
 ### 常用的块状元素
 
 ```
-<div>、<p>、<h1>...<h6>、<ol>、<ul>、<dl>、<table>、<address>、<blockquote>、<form>
+<h1>...<h6>、<p>、div>、<table>、<ol>、<ul>、<select>、<dl>、<address>、<blockquote>、<form>
 ```
-h1-h6：定义1到6号标记；
+h1-h6：定义1到6级标记；
+
 p：定义段落；
 
+div：定义一个块级元素；
+
+table: 定义一个表格：
+
+ol: 定义一个有序列表；
+
+ul: 定义一个无序列表；
+
+select: 定义一个下拉选项。
 
 ### 块级元素特点
 
@@ -36,9 +46,13 @@ a{display:block;}
 ### 常用的内联元素
 
 ```
-<a>、<span>、<br>、<i>、<em>、<strong>、<label>、<q>、<var>、<cite>、<code>
+<a>、<img>、<span>、<br>、<i>、<em>、<strong>、<label>、<q>、<var>、<cite>、<code>
 ```
 a；用以定义链接，href属性定义链接地址，target='_blank'指定在新的标签页打开链接；
+
+img: 用以显示图片，src属性指定图片的途径，width属性指定图片的宽度，height属性指定图片的高度；
+
+span: 定义一个内联元素。
 
 在html中，块状元素也可以通过代码display:inline将元素设置为行内元素。
 
@@ -58,6 +72,7 @@ a；用以定义链接，href属性定义链接地址，target='_blank'指定在
 ```
 <img>、<input>
 ```
+
 ### 内联块状元素特点
 1. 和其他元素都在一行上；
 2. 元素的高度、宽度、行高以及顶和底边距都可设置
