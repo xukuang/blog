@@ -43,13 +43,15 @@ background-image:url("bg.jpg");
 
 4. 背景附着(background-attachment)
 
-	设置背景图像是否会随视窗滚动而滚动。
+	
+设置背景图像是否会随视窗滚动而滚动。
 	
 	* 设置背景图像会随视窗滚动条的移动而移动(默认) background-attachment: scroll
 	* 设置背景图像不会随视窗滚动条的移动而移动 background-attachment: fixed 
 
 
 ## 背景的简写属性
+
 可以把背景的各个属性合为一行，而不用每次都单独把他们写出来。
 
 例如，下面的声明:
