@@ -5,7 +5,7 @@ date: 2017-02-04 18:00:36 +0800
 categories: [技术篇]
 tags: [html]
 ---
-<script>
+<script type="text/javascript">
 	if("12345678"==prompt("请输入密码"))
 	{
 		alert("正确");
