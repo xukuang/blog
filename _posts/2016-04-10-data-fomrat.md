@@ -196,7 +196,7 @@ tail(spread(dat4, type, value.type, drop = F, fill= -1)) # 更改不存在结果
 
 ## tidyr包中的其它函数
 
-### seperate函数
+### unite函数
 
 unite()函数可将多列合并为一列。
 
