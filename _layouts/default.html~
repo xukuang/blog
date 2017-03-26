@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+    <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+      <meta name="author" content="{{ site.author }}" />
+      <title>{{ page.title }} | {{ site.author }}</title>
+      <link rel="shortcut icon" href="/favicon.ico">
+      <link href="{{ site.url }}/feed/" rel="alternate" title="{{ site.author }}" type="application/atom+xml" />
+      <link rel="stylesheet" href="/media/css/style.css"><!--博文中标签样式定义-->
+      <link rel="stylesheet" href="/media/css/highlight.css">
+      <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+      <!--highlight.js Start-->
+      <link rel="stylesheet" title="Default" href="/media/js/styles/tomorrow-night-blue.css">
+      <script type="text/javascript" src="/media/js/highlight.pack.js"></script>
+      <script>
+         hljs.configure({tabReplace: '    '});
+         hljs.initHighlightingOnLoad();
+      </script>
+      <!--highlight.js End-->
+      <!--mathjax start-->
+      <script type="text/javascript"
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+      </script>
+      <!--mathjax end-->
+   </head>
+  <!-- <script type="text/javascript">
+    function setTimeSpan(){
+    	var date = new Date();
+    	timeSpan.innerText=date.format('yyyy-MM-dd hh:mm:ss');
+    }
+    
+    Date.prototype.format = function(format)
+		{
+    var o =
+    	{
+    	    "M+" : this.getMonth()+1, //month
+    	    "d+" : this.getDate(),    //day
+    	    "h+" : this.getHours(),   //hour
+    	    "m+" : this.getMinutes(), //minute
+    	    "s+" : this.getSeconds(), //second
+    	    "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+    	    "S" : this.getMilliseconds() //millisecond
+    	}
+    	if(/(y+)/.test(format))
+    	format=format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+    	for(var k in o)
+    	if(new RegExp("("+ k +")").test(format))
+    	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+    	return format;
+		}
+  </script>
+   <body onLoad="setInterval(setTimeSpan,1000);">-->
+   <body>
+     <div id="container">
+       <div id="main" role="main">
+         <header>
+           <h1>{{ page.title }}</h1>
+         </header>
+         <nav>
+           <!-- Sidebar -->
+           <h5 id="logo" style="text-align:center;">
+             <a href="http://xukuang.github.io/">HOME</a>
+		   </h5>
+           <span><a title="blog" class="" href="{{ site.url }}/">BLOG</a></span>
+           <span><a title="about" class="" href="{{ site.url }}/about/">ABOUT</a></span>
+           <span><a title="categories" class="" href="{{ site.url }}/categories/">CATEGORIES</a></span>
+           <span><a title="vitae" class="" href="{{ site.url }}/vitae/">VITAE</a></span>
+           <span><a title="tags" class="" href="{{ site.url }}/tags/">TAGS</a></span>
+           <span><a title="links" class="" href="{{ site.url }}/links/">LINKS</a></span>
+           <span><a title="subscribe by RSS" class="" href="{{ site.url }}/feed/">SUBSCRIBE</a></span>
+	       <!--<ul class="entry-right-list">
+            <li class="date">获取每日の能量源</li>
+            <li class="qr">
+              <img src="http://xukuang.github.io/blog/images/beta.png" width="148" height="148" alt="ATP" style="margin-left: -10px;">
+            </li>
+           </ul>-->
+         </nav>
+         <article class="content">
+           {{ content }}
+         </article>
+       </div>
+	   
+	   <footer>
+	   <p><small><center>© 2014-{{site.time | date:"%Y"}} Maintained by <a href="http://xukuang.github.io" title="Xu Kuang">Xu Kuang</a> ｜ Powered by <a href="https://github.com/mojombo/jekyll" target="_blank">Jekyll</a> on <a href="https://github.com/xukuang" target="_blank">GitHub</a> ｜ Themed by <a href="http://yihui.name" title="Yihui" target="_blank">Yihui</a> and <a href="http://spatial-r.com/" title="Bing Zhang" target="_blank">Bing Zhang</a> </center></small></p>
+	   
+       </footer>
+
+	   </div>
+       
+	   <!--<script type="text/javascript">
+         var _gaq = _gaq || [];
+         _gaq.push(['_setAccount', '']);
+         _gaq.push(['_trackPageview']);
+         (function() {
+           var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+           ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        </script> -->
+	
+    <!-- Baidu share-->
+	<!-- <script type="text/javascript">
+	window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"32"},"slide":{"type":"slide","bdImg":"0","bdPos":"right","bdTop":"100"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+	</script> -->
+
+    <!-- Baidu Button BEGIN -->
+	<!-- <script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?310f86f887042ea3a15786be6e96eb30";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script> -->
+	<!-- Baidu Button END --> 
+	
+    </body>
+  </html>
+                                                    
