@@ -17,15 +17,14 @@ get_theme(theme = "Dark", lineColor = "Random",
   borderColor = "rgba(100,149,237,1)", regionColor = "#1b1b1b")
 ```
 
-
-- ```
+```
   theme
-  ```
+```
 
 
   默认主题,除了12个内置主题,可以使用“none”来自定义颜色
 
-![background](http://xukuang.github.io\images\background.png)
+![background](http://xukuang.github.io/blog/images/background.png)
 
   - ​
 
