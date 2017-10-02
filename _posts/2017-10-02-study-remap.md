@@ -288,10 +288,8 @@ out = remap(dat,title = "REmap实例数据",subtitle = "theme:Bright",
 plot(out)
 ```
 
-
 \- - - - - -
-```
 
-```
+学习资料：
 
-```
+[REmap使用手册1-5](http://langdawei.com/categories/R/)
