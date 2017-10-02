@@ -125,7 +125,7 @@ remapB(center = c(104.114129,37.550339),
 library(devtools)
 install_github('lchiffon/REmap')
 library(REmap)
-
+```
 ## 没有标点和标线的Bmap效果
 ```
 remapB()
@@ -147,7 +147,7 @@ markLineData 标线使用的数据，第一列为出发地，第二列为目的�
 ```
 remapB(title = "Bmap迁徙图示例",
         color = "Blue",
-		markLineData = demoC)
+    	markLineData = demoC)
 ```
 
 ### 标线风格
@@ -290,6 +290,8 @@ plot(out)
 
 
 \- - - - - -
+```
+
 ```
 
 ```
