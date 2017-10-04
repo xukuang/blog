@@ -3,7 +3,7 @@ layout: post
 title: "REmap的作用"
 date: 2017-10-02 16:31:23 +0800
 categories: [技术篇]
-tags: [R, REmap]
+tags: [R, REmap, 地图]
 published: true
 ---
 

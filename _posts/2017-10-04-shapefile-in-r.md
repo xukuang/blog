@@ -10,7 +10,7 @@ Shapefile文件是美国环境系统研究所ESRI所研制的GIS文件系统格�
 
 R有多个包可以读取shapfile文件并作地图，下面介绍几种用来读取shapefile文件的方法。其中前两种方法要依赖sp包，它定义了一个spatial类型的集合，事实上是R里边标准的空间数据格式。
 
-方法一：maptools包 
+## 方法一：maptools包 
 maptools包提供了多个函数用来对R当中的空间对象进行读、写、转换或者其他的处理。用来读shapefile的通用函数是readShapeSpatial，这个函数可以自动识别shapefile（或其他R对象）中是否包含点、线或面，然后对特殊的类型采用专门的函数把数据读入。这些专门的函数包括readShapePoints，readShapeLines，readShapePoly等，用来分别读点、线、面。这样做的好处是当你搞错类型时，它会报错。和下边rgdal包的对应方法不同的是，maptools的函数并不读入投影信息，而是留给你手工处理（如果需要的话）。
 
 ```
@@ -31,7 +31,7 @@ china_map@data
 ```
 
 
-方法二：rgdal包 
+## 方法二：rgdal包 
 rgdal包提供了GDAL/OGR library（The Geospatial Data Abstraction Library）的接口。rgdal包里边的函数readOGR可以读包括shapefile在内的多种基于向量的数据格式。ogrInfo函数可以在不读全部数据集的情况下检索数据的细节，看一下数据的情况： 
 ```
 library(rgdal)
@@ -61,7 +61,7 @@ print(proj4string(china_map1))
   # [1] NA 
  plot(china_map1, axes=TRUE, border="gray") 
 ```
-3. 方法三：PBSmapping包 
+## 方法三：PBSmapping包 
 PBSmapping包只能读不能写shapefile数据。这个包采用自定义的空间数据类型，因此不能利用许多基于sp包开发的R包。 
 ```
 library(PBSmapping)
@@ -69,7 +69,7 @@ china_map2 <- importShapefile("bou2_4p",readDBF=FALSE)
 str(china_map2)#看数据集的属性 
 plotPolys(china_map2) 
 ```
-4. 方法四： shapefiles包 
+## 方法四： shapefiles包 
 这个包是专门用来读写ESRIhapefile数据文件的。read.shapefile函数可以读入完整的shapefile文件（包括.shp, .shx和.dbf），但是，它读进来之后的数据格式是列表的列表，对于ggplot2作图还是麻烦的很。画图时需要先把数据格式进行转化。 
 ```
 library(shapefiles)
